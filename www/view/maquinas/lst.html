@@ -1,0 +1,35 @@
+<div class="blocoTop">
+    <div id="localAtual" ng-if="usuario.MAPS.ENDERECO.length">
+        <b>Próximo a {{usuario.MAPS.ENDERECO}} <i class="mdi mdi-navigation-expand-more"></i></b>
+    </div>
+
+    <div id="pesquisarFiltro">
+        <i class="mdi mdi-action-search"></i>
+        <input ng-keyup="getLst(true)" ng-model="$root.pesquisa" placeholder="Local ou endereço">
+        <i ng-if="$root.pesquisa && $root.pesquisa != ''" ng-click="clearPesquisa()" class="mdi mdi-content-clear"></i>
+    </div>
+
+    <ul id="status">
+        <li status="green"><span></span> Disponível</li>
+        <li status="yellow"><span></span> Parcialmente disponível</li>
+        <li><span></span> Indisponível (falha na comunicação)</li>
+    </ul>
+</div>
+
+<md-content class="scrollable-content" scroll flex md-scroll-y>
+    <ul ng-if="LST.length">
+        <li ng-repeat="MAQUINA in LST" ng-click="click(MAQUINA)">
+            <div class="img" status="{{MAQUINA.STATUS}}"><img src="{{MAQUINA.IMAGEM}}" onerror="onErrorMaquina(this)"></div>
+            <div class="info">
+                <b>Cód. {{MAQUINA.CODIGO}}</b><h4 ng-if="MAQUINA.NOME">{{MAQUINA.NOME}}</h4>
+                <h4>{{MAQUINA.ENDERECO}}, {{MAQUINA.NUMERO}} - {{MAQUINA.BAIRRO}} - {{MAQUINA.ESTADO}}</h4>
+                <span ng-if="MAQUINA.MAPS.DISTANCE"><i class="mdi mdi-maps-directions-bike"></i> {{MAQUINA.MAPS.DISTANCE}} - {{MAQUINA.MAPS.DURATION}}</span>
+                <a class="a-btn" ng-if="MAQUINA.ROUTER" ng-click="AppBrowser(MAQUINA.ROUTER);$event.stopPropagation();"><i class="mdi mdi-maps-place"></i></a>
+                <a class="a-btn" ng-click="$event.stopPropagation();$root.location('#!/payment/'+MAQUINA.ID)"><i class="mdi mdi-action-shopping-cart"></i></a>
+            </div>
+            <div class="clearBoth"></div>
+        </li>
+    </ul>
+
+    <h4 id="nenhumRegLocalizado" ng-if="!LST.length">Nenhum registro localizado!</h4>
+</md-content>

@@ -1,0 +1,62 @@
+<h4 class="pague_com" ng-if="!$root.FORMAS_PG['VOUCHER']">Pague com</h4>
+<ul>
+    <li ng-if="VALOR_PG>=PG.VALOR_MIN && (PG.TIPO=='SALDO'||PG.TIPO=='VOUCHER'?true:VALOR_PG)" class="{{PG.ACTIVE?'active':''}} {{PG.ACTIVE_SALDO?'active_checkbox':''}}" tipo="{{PG.TIPO}}" ng-repeat="PG in $root.FORMAS_PG" ng-click="$root.selectFormaPg(PG)">
+        <label class="utilizado_saldo checkbox_custom" ng-if="PG.TIPO=='SALDO'">Usar saldo ao pagar
+            <span class="checkmark"></span>
+        </label>
+        <label class="utilizado_voucher" ng-if="PG.TIPO=='VOUCHER'">Vouchers</label>
+        {{PG.TIPO=='SALDO'||PG.TIPO=='VOUCHER'?'':PG.NOME}} <i class="mdi mdi-action-done"></i>
+        <label class="valor" ng-if="PG.TIPO=='SALDO'">{{usuario.MEUSALDO_FORMAT}}</label>
+        <div class="clearBoth"></div>
+        <ul ng-if="PG.TIPO=='VOUCHER'">
+            <li class="{{V.ACTIVE?'active':''}} itens" ng-repeat="V in PG.ITENS" ng-click="selectVoucher(PG.ITENS, V)">
+                <span ng-if="V.CODIGO"><i class="mdi mdi-action-done"></i> {{V.CODIGO}} - </span><i>{{V.NOME}}</i>
+            </li>
+            <li class="c">
+                Código
+                <br><input id="ADD_VOUCHER" placeholder="Insira um código promocional" maxlength="5" ng-model="$root.ADD_VOUCHER">
+                <a class="a-btn" ng-click="addVoucher()"><i class="mdi mdi-action-loyalty"></i> Adicionar</a>
+                <div class="clearBoth"></div>
+            </li>
+        </ul>
+        <h4 class="pague_com" ng-if="PG.TIPO=='VOUCHER' && ($root.FORMAS_PG['SALDO'] || VALOR_PG)">Pague com</h4>
+        <h4 class="valor_restante" ng-if="((PG.TIPO=='VOUCHER' && !$root.FORMAS_PG['SALDO']) || PG.TIPO=='SALDO') && VALOR_PG && transacaoId">Total R$ {{VALOR_PG_FORMAT}}</h4>
+        <div id="boxDescricao" ng-if="PG.DESCRICAO&&PG.ACTIVE" ng-bind-html="PG.DESCRICAO"></div>
+        <div id="boxCC" ng-if="PG.CC==1&&PG.ACTIVE">
+            <label>Número do cartão</label>
+            <div class="box1">
+                <input type="text" id="cardNumber" ng-model="PG.cardNumber" placeholder="9999 9999 9999 9999" />
+                <span class="msgValidator">Número do cartão inválido</span>
+                <script type="application/javascript">mask('#cardNumber', ['9999 9999 9999 9999', '9999 9999 9999 9999999999999'], 19);</script>
+            </div>
+            <img id="imgBandeira" onerror="$(this).hide()" />
+            <ul id="bandeiras" ng-if="$root.BANDEIRAS">
+                <li ng-repeat="b in $root.BANDEIRAS">
+                    <img src="{{b}}">
+                </li>
+                <div class="clearBoth"></div>
+            </ul>
+
+            <div class="margin_t_10">
+                <div class="float-left">
+                    <label class="margin_t_10">Validade</label>
+                    <div>
+                        <div class="box1 float-left" style="width: 102px;">
+                            <input maxlength="5" type="text" id="expirationMonthYear" ng-model="PG.expirationMonthYear" placeholder="mm/aa" />
+                            <span class="msgValidator" style="width: 130px;">Validade inválido</span>
+                            <script type="application/javascript">mask('#expirationMonthYear', ['99/9999']);</script>
+                        </div>
+                        <div class="clearBoth"></div>
+                    </div>
+                </div>
+                <div class="float-right">
+                    <label class="margin_t_10">Cód. de segurança</label>
+                    <div class="box1">
+                        <input type="text" id="cvv" ng-model="PG.cvv" placeholder="999" />
+                    </div>
+                </div>
+                <div class="clearBoth"></div>
+            </div>
+        </div>
+    </li>
+</ul>

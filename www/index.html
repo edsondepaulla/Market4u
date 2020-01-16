@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <title>Market4u</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Language" content="pt_BR">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta content="IE=edge" http-equiv="x-ua-compatible">
+  <meta content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport">
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta content="yes" name="apple-touch-fullscreen">
+
+  <link href="favicon.png" rel="shortcut icon" >
+
+  <link href="css/style-sistema.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href="css/keyframes.css" rel="stylesheet" type="text/css">
+  <link href="css/materialize.min.css" rel="stylesheet" type="text/css">
+
+  <link href="plugins/angular/css/mobile-angular-ui-base.css" rel="stylesheet" />
+  <link href="plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css">
+
+  <script src="plugins/jquery-2.1.1.min.js"></script>
+  <script src="plugins/pace/pace.min.js"></script>
+  <script src="plugins/angular.min.js"></script>
+  <script src="plugins/angular-route.min.js"></script>
+  <script src="plugins/angular-animate.min.js"></script>
+  <script src="plugins/angular/js/mobile-angular-ui.min.js"></script>
+  <script src="plugins/angular/js/mobile-angular-ui.gestures.min.js"></script>
+  <script src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>
+
+  <script src="plugins/mn-touch/mn-touch.min.js"></script>
+
+  <script src="plugins/device-detector/ng-device-detector.min.js"></script>
+  <script src="plugins/device-detector/re-tree.min.js"></script>
+
+  <script src="cordova.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/functions.js"></script>
+
+  <script type="text/javascript">
+    'use strict';
+    var app = angular.module(
+            'App', [
+              'ngRoute',
+              'mobile-angular-ui',
+              'mobile-angular-ui.gestures',
+              'mn',
+              'ngAnimate',
+              'ngMaterial',
+              'ngSanitize',
+              'ng.deviceDetector',
+              'monospaced.elastic'
+            ]
+    );
+  </script>
+
+  <script src="js/modulos/login.js"></script>
+  <script src="js/modulos/payment.js"></script>
+  <script src="js/modulos/qr-code.js"></script>
+  <script src="js/modulos/index.js"></script>
+  <script src="js/modulos/maquinas.js"></script>
+  <script src="js/modulos/produtos.js"></script>
+
+  <script src="js/app.js"></script>
+
+  <link rel="stylesheet" href="css/angular-material.min.css">
+  <script src="plugins/angular-aria.js"></script>
+  <script src="plugins/angular-material.min.js"></script>
+  <script src="plugins/angular-sanitize.js"></script>
+  <script src="plugins/vanilla-masker.min.js"></script>
+
+  <script src="plugins/elastic.js"></script>
+</head>
+<body mn-touch device="{{device}}" controller="{{controller}}" ng-app="App">
+  <div class="app" ng-controller="Main" ui-prevent-touchmove-defaults>
+    <div mn-touch swipe-right="swipeRight()" ng-if="toolbar" id="toolbar">
+      <div id="top" ng-if="controller == 'Index'">
+        <div ng-if="usuario.MEUSALDO_ATIVADO" ng-click="location('#!/cadastro')" style="display: inline-block;">
+          MEU SALDO
+          <b>{{usuario.MEUSALDO_FORMAT}}</b>
+        </div>
+        <div id="sem_saldo" ng-if="!usuario.MEUSALDO && usuario.MEUSALDO_ATIVADO" ng-click="location('#!/minha-carteira')">
+          Adicionar saldo <i class="mdi mdi-content-add-circle"></i>
+        </div>
+      </div>
+      <div id="topTitulo" ng-if="controller != 'Index'">
+        <a class="open-left" ng-click="backpageTop()">
+          <i class="mdi mdi-navigation-chevron-left"></i>
+        </a>
+        <div id="textoTitulo">{{Titulo}}</div>
+      </div>
+      <img ng-click="location('#!/')" src="img/introLogo.png" border="0">
+    </div>
+
+    <i mn-touch swipe-right="swipeRight()" ng-if="controller == 'Index'" class="btn_maps mdi mdi-action-view-headline" ng-click="menuOpen()"></i>
+
+    <div id="carregando">
+      <img ng-click="location('#!/')" src="img/logo.png" border="0" width="100" role="button"><br><br>
+      Aguarde por favor, carregando...
+    </div>
+
+    <a ng-if="usuario.WHATSAPP.ATIVO && $root.NO_WHATSAPP" id="whatsapp" ng-click="whatsapp()">
+      <img src="img/whatsapp.png">
+    </a>
+
+    <div class="app-body">
+      <div class="app-content">
+        <div class="scrollable ng-scope" border-top="{{border_top}}" ng-view></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="fundo_transparente" ng-click="menuClose()" mn-touch swipe-left="swipeLeft()" swipe-right="swipeRight()" ui-prevent-touchmove-defaults></div>
+
+  <div id="menuLeft" class="Menuleft " mn-touch swipe-left="swipeLeft()" swipe-right="swipeRight()">
+    <div id="contentLeft" ui-prevent-touchmove-defaults>
+      <div id="userLeft">
+        <img ng-if="!usuario.ID" border="0" src="" ng-click="location('#!/conecte-se')" onerror="onErrorUser(this)">
+        <img ng-if="usuario.ID" border="0" src="" ng-click="location('#!/cadastro')" onerror="onErrorUser(this)">
+        <div ng-if="!usuario.ID" ng-click="location('#!/conecte-se')">
+          <b>Olá</b>
+          <label>Conecte-se</label>
+        </div>
+        <div ng-if="usuario.ID" ng-click="location('#!/cadastro')">
+          <b>{{usuario.NOME}}</b>
+          <label>{{usuario.EMAIL}}</label>
+        </div>
+      </div>
+      <ul>
+        <li ng-repeat="menu in MenuLeft" ng-if="usuario.ID || menu.logado">
+          <a ng-click="location(menu.url, menu.external)">
+            <i ng-if="menu.icon" class="mdi {{menu.icon}}"></i>
+            <img ng-if="menu.img" src="img/{{menu.img}}" border="0">
+            {{menu.titulo}}
+          </a>
+        </li>
+        <li ng-if="usuario.ID">
+          <a ng-click="logout()">
+            <i class="mdi mdi-content-clear"></i>
+            Sair
+          </a>
+        </li>
+      </ul>
+      <div id="bottom">
+        v.{{versao_app_mobile}}
+      </div>
+    </div>
+  </div>
+</body>
+</html>

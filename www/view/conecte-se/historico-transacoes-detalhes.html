@@ -1,0 +1,31 @@
+<md-content style="padding: 15px 0;" class="scrollable-content" scroll flex md-scroll-y>
+    <i style="font-size: 26px;vertical-align: sub;" class="mdi mdi-editor-attach-money"></i> <span ng-bind-html="REG.TIPO_DESCRICAO"></span>
+
+    <div ng-if="REG.TOTAL">
+        <br><b>TOTAL</b><br>
+        {{REG.TOTAL}}
+    </div>
+
+    <div ng-if="REG.FP.length">
+        <br><b>FORMAS DE PAGAMENTO</b><br>
+        <i ng-repeat="fp in REG.FP">
+            {{fp.NOME}} ({{fp.VALOR}}{{fp.DESCRICAO}}) <br>
+            <a style="text-decoration: underline" ng-click="AppBrowser(fp.open_browser)" ng-if="REG.AG_PG&&fp.open_browser">Pagar agora</a>
+        </i>
+    </div>
+
+    <div ng-if="REG.M_ID">
+        <br><b>MÁQUINA</b><br>
+        {{REG.M_NOME?REG.M_NOME+' - ':''}}{{REG.M_ENDERECO}}, {{REG.M_NUMERO}} - {{REG.M_BAIRRO}} - {{REG.M_ESTADO}}
+    </div>
+
+    <div ng-if="REG.P_ID">
+        <br><b>PRODUTO</b><br>
+        {{REG.P_UPC_CODE}} - {{REG.P_NOME}}
+    </div>
+
+    <div>
+        <br><b>DATA</b><br>
+        {{REG.DATAHORA}}
+    </div>
+</md-content>

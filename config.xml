@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="br.com.mobile.market4u" version="1.0.7" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Market4u</name>
+    <description>
+        Market4u
+    </description>
+    <content src="index.html#!/" />
+    <access origin="*" />
+    <allow-navigation href="*" />
+    <allow-intent href="*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <allow-intent href="maps:*" />
+    <allow-intent href="market4uapp:" />
+    <preference name="HideKeyboardFormAccessoryBar" value="true"/>
+    <preference name="SplashScreen" value="screen" />
+    <preference name="SplashScreenDelay" value="3000" />
+    <preference name="ShowSplashScreenSpinner" value="3000" />
+    <preference name="StatusBarOverlaysWebView" value="true" />
+    <preference name="StatusBarStyle" value="lightcontent" />
+    <preference name="StatusBarBackgroundColor" value="#0b6340" />
+    <preference name="FadeSplashScreen" value="false" />
+    <preference name="FadeSplashScreenDuration" value="0" />
+    <preference name="SplashScreenSpinnerColor" value="#0aa699" />
+    <preference name="SplashScreenBackgroundColor" value="#00bfff" />
+    <preference name="DisallowOverscroll" value="false" />
+    <preference name="SplashMaintainAspectRatio" value="true" />
+    <preference name="SplashShowOnlyFirstTime" value="true" />
+    <preference name="AutoHideSplashScreen" value="true" />
+    <preference name="fullscreen" value="false" />
+    <preference name="orientation" value="portrait" />
+    <preference name="target-device" value="handset" />
+    <preference name="webviewbounce" value="false" />
+    <preference name="UIWebView" value="false" />
+    <preference name="WKWebViewOnly" value="false" />
+    <preference name="WKWebview " value="false" />
+    <preference name="phonegap-version" value="cli-9.0.0" />
+    <preference name="ios-version" value="cli-10.0.0" />
+    <preference name="SwiftVersion" value="3.0" />
+    <platform name="android">
+        <allow-intent href="market:*" />
+        <icon density="ldpi" src="res/android/icon32.png" />
+        <icon density="mdpi" src="res/android/icon48.png" />
+        <icon density="hdpi" src="res/android/icon72.png" />
+        <icon density="xhdpi" src="res/android/icon96.png" />
+        <preference name="android-minSdkVersion" value="23" />
+        <preference name="android-targetSdkVersion" value="28" />
+        <splash density="port-hdpi" src="res/screen/android/480.png" />
+        <splash density="port-ldpi" src="res/screen/android/200.png" />
+        <splash density="port-mdpi" src="res/screen/android/320.png" />
+        <splash density="port-xhdpi" src="res/screen/android/720.png" />
+    </platform>
+    <platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+        <icon height="180" src="res/ios/icon180.png" width="180" />
+        <icon height="60" src="res/ios/icon60.png" width="60" />
+        <icon height="120" src="res/ios/icon120.png" width="120" />
+        <icon height="76" src="res/ios/icon76.png" width="76" />
+        <icon height="152" src="res/ios/icon152.png" width="152" />
+        <icon height="40" src="res/ios/icon40.png" width="40" />
+        <icon height="80" src="res/ios/icon80.png" width="80" />
+        <icon height="57" src="res/ios/icon57.png" width="57" />
+        <icon height="114" src="res/ios/icon114.png" width="114" />
+        <icon height="72" src="res/ios/icon72.png" width="72" />
+        <icon height="144" src="res/ios/icon144.png" width="144" />
+        <icon height="29" src="res/ios/icon29.png" width="29" />
+        <icon height="58" src="res/ios/icon58.png" width="58" />
+        <icon height="50" src="res/ios/icon50.png" width="50" />
+        <icon height="100" src="res/ios/icon100.png" width="100" />
+        <icon height="1024" src="res/ios/icon1024.png" width="1024" />
+        <splash height="480" src="res/screen/ios/320.png" width="320" />
+        <splash height="960" src="res/screen/ios/640.png" width="640" />
+        <splash height="1136" src="res/screen/ios/540.png" width="640" />
+        <splash height="1334" src="res/screen/ios/750.png" width="750" />
+        <splash height="2208" src="res/screen/ios/1242.png" width="1242" />
+        <preference name="DisallowOverscroll" value="false" />
+        <preference name="SplashScreenDelay" value="0" />
+        <preference name="SplashMaintainAspectRatio" value="false" />
+        <preference name="SplashShowOnlyFirstTime" value="false" />
+        <preference name="StatusBarStyle" value="lightcontent" />
+        <preference name="ShowSplashScreenSpinner" value="false" />
+        <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+            <string>Permissões de acesso</string>
+        </edit-config>
+        <edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
+            <string>Permissões de acesso</string>
+        </edit-config>
+    </platform>
+    <engine name="ios" spec="^5.0.1" />
+    <engine name="android" spec="~8.0.0" />
+    <plugin name="cordova-plugin-ios-non-exempt-encryption" />
+    <plugin name="cordova-plugin-keyboard" spec="^1.1.5" />
+    <plugin name="cordova-plugin-splashscreen" />
+    <plugin name="cordova-plugin-whitelist" spec="1" />
+    <plugin name="cordova-plugin-x-toast" spec="^2.6.0" />
+    <plugin name="cordova-plugin-statusbar" spec="~2.2.3" />
+    <plugin name="cordova-plugin-safariviewcontroller" spec="~1.6.0" />
+    <plugin name="cordova-plugin-geolocation" />
+    <plugin name="cordova-plugin-dialogs" spec="^2.0.1" />
+    <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.2" />
+    <plugin name="cordova-plugin-qrscanner" spec="2.6.0" />
+    <plugin name="cordova-plugin-customurlscheme" spec="5.0.0">
+        <param name="URL_SCHEME" value="market4uapp" />
+    </plugin>
+    <plugin name="cordova-plugin-health" source="npm">
+        <variable name="HEALTH_READ_PERMISSION" value="O aplicativo precisa de acesso de leitura"/>
+        <variable name="HEALTH_WRITE_PERMISSION" value="O aplicativo precisa de acesso de gravação"/>
+        <variable name="GMS_VERSION" value="16.0.1"/>
+    </plugin>
+    <config-file platform="ios" parent="NSHealthShareUsageDescription">
+        <string>O aplicativo precisa de acesso de leitura</string>
+    </config-file>
+    <config-file platform="ios" parent="NSHealthUpdateUsageDescription">
+        <string>O aplicativo precisa de acesso de gravação</string>
+    </config-file>
+</widget>

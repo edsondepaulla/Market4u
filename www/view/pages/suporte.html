@@ -1,0 +1,18 @@
+<ul>
+    <li ng-click="location('#!/faq')">
+        <i class="mdi mdi-communication-live-help"></i>
+        <a>FAQ</a>
+    </li>
+    <li ng-click="AppBrowser($root.usuario.TERMOS_DE_USO)">
+        <i class="mdi mdi-action-list"></i>
+        <a>Termos de Uso</a>
+    </li>
+    <li ng-click="AppBrowser($root.usuario.POLITICA_DE_PRIVACIDADE)">
+        <i class="mdi mdi-action-list"></i>
+        <a>Termos de Privacidade</a>
+    </li>
+    <li ng-if="usuario.WHATSAPP.ATIVO" ng-click="whatsapp()">
+        <img src="img/whatsapp.png">
+        <a>Contatar suporte</a>
+    </li>
+</ul>

@@ -1,0 +1,114 @@
+<md-content class="scrollable-content" scroll flex md-scroll-y>
+    <form id="formCadastro" class="form" onsubmit="return false;" autocomplete="off" method="post">
+        <h2 ng-if="!usuario.ID">Preencha seus dados</h2>
+
+        <div id="boxImg" ng-if="usuario.ID">
+            <input style="display: none" type="file" id="fotoCadastro" name="fotoCadastro" ext="png,jpg,jpge" />
+            <img id="fotoCadastroImg" onclick="$('#fotoCadastro').click();" src="{{$root.usuario.url_avatar}}" onerror="onErrorUser(this)" alt="Enviar foto" width="35" height="35" border="0" />
+            <i onclick="$('#fotoCadastro').click();" class="mdi mdi-image-photo-camera"></i>
+        </div>
+        <div id="saldo" class="float-right" ng-if="usuario.ID">
+            <b ng-if="usuario.MEUSALDO_ATIVADO">{{usuario.MEUSALDO_FORMAT}}</b>
+            <br><a ng-if="usuario.MEUSALDO_ATIVADO" ng-click="location('#!/minha-carteira')">Adicionar saldo</a>
+            <a ng-click="location('#!/historico-transacoes')">Histórico de transações</a>
+        </div>
+        <div class="clearBoth"></div>
+
+        <label class="margin_t_10">Nome completo</label>
+        <div class="box1">
+            <input type="text" id="nome_completo" placeholder="Insira seu nome completo" ng-model="$root.usuario.NOME" />
+            <span class="msgValidator">Insira seu nome completo</span>
+        </div>
+
+        <label class="margin_t_10">E-mail</label>
+        <div class="box1">
+            <input placeholder="Insira seu e-mail válido" type="email" id="email" ng-model="$root.usuario.EMAIL" />
+            <span class="msgValidator">E-mail inválido</span>
+            <span class="msgValidator2">E-mail já utilizado</span>
+        </div>
+
+        <label class="margin_t_10">{{usuario.ID?'Nova senha':'Senha'}}</label>
+        <div class="box1" id="boxSenha">
+            <input type="password" id="senha" placeholder="Insira sua senha" ng-model="$root.usuario.SENHA" />
+            <i id="showPassword" onclick="showPassword()" class="mdi mdi-action-visibility"></i>
+            <span class="msgValidator">Possuir no mínino 8 caracteres</span>
+        </div>
+
+        <label class="margin_t_10">Número de celular</label>
+        <div class="box" id="boxTelefone">
+            <label>
+                <span>+55</span>
+            </label>
+            <input id="numero_celular" placeholder="(99) 99999-9999" type="text" ng-model="$root.usuario.CELULAR" />
+            <span class="msgValidator">Insira um número de celular válido</span>
+        </div>
+
+        <div class="margin_t_10" ng-show="usuario.ID">
+            <label>Data de nascimento</label>
+            <div class="box1">
+                <input type="text" id="data_nascimento" placeholder="99/99/9999" ng-model="$root.usuario.DATA_NASCIMENTO" />
+                <span class="msgValidator">Data de nascimento inválido</span>
+            </div>
+
+            <h2 style="margin: 20px 0 5px;">Dados para pagamento</h2>
+            <label class="margin_t_10">CPF</label>
+            <div class="box1">
+                <input type="text" id="cpf" placeholder="999.999.999-99" ng-model="$root.usuario.CPF" />
+                <span class="msgValidator">CPF inválido</span>
+            </div>
+
+            <label class="margin_t_10">CEP</label>
+            <div class="box1">
+                <input type="text" id="postalcode" placeholder="99999-999" ng-model="$root.usuario.POSTALCODE" />
+                <span class="msgValidator">CEP inválido</span>
+            </div>
+
+            <label class="margin_t_10">Endereço</label>
+            <div class="box1">
+                <input type="text" id="street" placeholder="Insira o endereço" ng-model="$root.usuario.STREET" />
+            </div>
+
+            <label class="margin_t_10">Número</label>
+            <div class="box1">
+                <input type="text" id="number" placeholder="Insira o número" ng-model="$root.usuario.NUMBER" />
+            </div>
+
+            <label class="margin_t_10">Complemento</label>
+            <div class="box1">
+                <input type="text" id="complement" placeholder="Insira um complemento" ng-model="$root.usuario.COMPLEMENT" />
+            </div>
+
+            <label class="margin_t_10">Bairro</label>
+            <div class="box1">
+                <input type="text" id="district" placeholder="Insira o complemento" ng-model="$root.usuario.DISTRICT" />
+            </div>
+
+            <label class="margin_t_10">Cidade</label>
+            <div class="box1">
+                <input type="text" id="city" placeholder="Insira a cidade" ng-model="$root.usuario.CITY" />
+            </div>
+
+            <label class="margin_t_10">Estado</label>
+            <div class="box1">
+                <select id="state" ng-model="$root.usuario.STATE">
+                    <option value="{{ESTADO.UF}}" ng-repeat="ESTADO in $root.usuario.ESTADOS">{{ESTADO.NOME}}</option>
+                </select>
+            </div>
+        </div>
+
+        <h3 class="{{$root.usuario.CONCORDO_TERMOS_POLITICA?'active_checkbox':''}}">
+            <label ng-click="$root.usuario.CONCORDO_TERMOS_POLITICA = $root.usuario.CONCORDO_TERMOS_POLITICA?0:1" class="checkbox_custom">Concordo com os <span class="checkmark"></span></label>
+            <a ng-click="AppBrowser($root.usuario.TERMOS_DE_USO)">Termos de Uso</a> e a <a ng-click="AppBrowser($root.usuario.POLITICA_DE_PRIVACIDADE)">Política de Privacidade</a>
+        </h3>
+
+        <button class="btn-salvar" type="submit" ng-click="salvar()">{{usuario.ID?'SALVAR':'COMEÇAR'}}</button>
+        <div class="clearBoth"></div>
+    </form>
+    <script type="application/javascript">
+        fotoCadastro();
+        mask('#numero_celular', ['(99) 9999-99999', '(99) 99999-9999'], 14);
+        mask('#cpf', ['999.999.999-99']);
+        mask('#data_nascimento', ['99/99/9999']);
+        mask('#postalcode', ['99999-999']);
+    </script>
+</md-content>

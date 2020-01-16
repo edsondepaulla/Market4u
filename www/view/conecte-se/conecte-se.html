@@ -1,0 +1,36 @@
+<form id="formLogin" class="form" onsubmit="return false;" method="post">
+    <div style="text-align: center; margin-top: 50px;">
+        <!--<br><a class="a-btn" type="google" ng-click="login('google')">Google</a>
+
+        <br><a class="a-btn" type="strava" ng-click="login('strava')">Entrar com o Strava</a>
+
+        <br><a class="a-btn" type="facebook" ng-click="login('facebook')">Entrar com o Facebook</a>
+
+        <br><br>ou<br><br>-->
+        <br><br>
+    </div>
+
+    <label>E-mail</label>
+    <div class="box1">
+        <input placeholder="Insira seu e-mail" type="email" id="email" ng-model="$root.usuario.EMAIL" />
+    </div>
+
+    <label ng-if="!$root.usuario.ESQUECEU_SENHA" class="margin_t_10">Senha</label>
+    <div ng-if="!$root.usuario.ESQUECEU_SENHA" class="box1">
+        <input type="password" id="senha" placeholder="Insira sua senha" ng-model="$root.usuario.SENHA" />
+        <i id="showPassword" onclick="showPassword()" class="mdi mdi-action-visibility"></i>
+        <span class="msgValidator">Possuir no mínino 8 caracteres</span>
+    </div>
+
+    <button class="btn-salvar" type="submit" ng-click="entrar()">{{$root.usuario.ESQUECEU_SENHA?'RECUPERAR':'LOGIN'}}</button>
+
+    <div id="boxUrlLink">
+        <a ng-click="$root.usuario.ESQUECEU_SENHA = !$root.usuario.ESQUECEU_SENHA">{{$root.usuario.ESQUECEU_SENHA?'Tentar logar novamente!':'Esqueceu a senha?'}}</a>
+
+        <a ng-click="location('#!/cadastro', 0, 1)">Criar conta</a>
+    </div>
+
+    <div class="clearBoth"></div>
+</form>
+
+

@@ -1,0 +1,20 @@
+<form class="form" id="formCadastroCodigo" onsubmit="return false;" method="post">
+    <label>Foi enviado para <b>{{$root.usuario.ENVIADO_PARA.MSG}}</b></label>
+    <span ng-if="$root.usuario.ENVIADO_PARA.TIPO == 'EMAIL'">
+        <br>Verifique sua caixa de SPAM
+    </span>
+
+    <br><label class="margin_t_10">Código</label>
+    <div class="box1" id="boxCodigo">
+        <input id="codigo" placeholder="Insira o código enviado" type="number" ng-model="$root.usuario.CODIGO" />
+    </div>
+
+    <label ng-if="$root.usuario.ESQUECEU_SENHA" class="margin_t_10">Nova senha</label>
+    <div ng-if="$root.usuario.ESQUECEU_SENHA" class="box1">
+        <input type="password" id="senha" placeholder="Insira sua senha" ng-model="$root.usuario.SENHA" />
+        <i id="showPassword" onclick="showPassword()" class="mdi mdi-action-visibility"></i>
+        <span class="msgValidator">Possuir no mínino 8 caracteres</span>
+    </div>
+
+    <button style="display: block !important;" class="btn-salvar" type="button" ng-click="seguinte()">CONFIRME</button>
+</form>

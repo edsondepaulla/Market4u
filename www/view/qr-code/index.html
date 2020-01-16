@@ -1,0 +1,14 @@
+<div id="qr-code-texto">
+    <img src="img/qrcode.png"><br>
+    Escaneia o código QR que está na<br> máquina.
+</div>
+<div id="qr-code-background" mn-touch swipe-right="swipeRight()">
+    <div id="btn-digite-qrcode" ng-click="digite()">
+        <i class="mdi mdi-content-text-format"></i><br>
+        Digite o<br>código QR
+    </div>
+    <div id="btn-flash" ng-click="flash()">
+        <i class="mdi mdi-image-flash-{{flashAtivo}}"></i><br>
+        {{flashTexto}} as lanternas
+    </div>
+</div>

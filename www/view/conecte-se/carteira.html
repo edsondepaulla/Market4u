@@ -1,0 +1,20 @@
+<md-content class="scrollable-content" scroll flex md-scroll-y>
+    <form id="formMinhaCarteira" class="form" onsubmit="return false;" method="post">
+        Meu <b>saldo</b>:
+        <h4>{{usuario.MEUSALDO_FORMAT}}</h4>
+
+        Escolha o <b>valor</b>:
+
+        <ul>
+            <li class="{{item.active?'active':''}}" ng-click="select(item)" ng-repeat="item in itens">
+                <label ng-if="item.popular">Popular</label>
+                R$ {{item.value}}
+            </li>
+        </ul>
+        <div class="clearBoth"></div>
+
+        <div id="boxPg" ng-include src="'view/payment/formas_pg.html'"></div>
+
+        <button id="btnConfirme" style="width: auto;display: block !important;" class="btn-salvar" type="button" ng-click="$root.confirmPayment('saldo')">CONFIRME</button>
+    </form>
+</md-content>

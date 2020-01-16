@@ -1,0 +1,17 @@
+<div id="codigo">
+    Código
+    <br><input id="ADD_VOUCHER" placeholder="Insira um código promocional" maxlength="5" ng-model="$root.ADD_VOUCHER">
+    <a class="a-btn" ng-click="addVoucher()"><i class="mdi mdi-action-loyalty"></i> Adicionar</a>
+    <div class="clearBoth"></div>
+</div>
+
+<md-content class="scrollable-content" scroll flex md-scroll-y>
+    <ul>
+        <li ng-repeat="item in LST" ng-click="click(item)">
+            <label>{{item.DATAHORA}}</label>
+            <span ng-bind-html="item.TIPO_DESCRICAO"></span>
+            <b>{{item.VALOR_LST}} <i class="mdi mdi-navigation-chevron-right"></i></b>
+            <i ng-bind-html="item.DESCRICAO"></i>
+        </li>
+    </ul>
+</md-content>

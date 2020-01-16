@@ -1,0 +1,34 @@
+<label>{{STATUS_TEXTO}}</label>
+
+<div class="progress-circle progress-{{PERCENTUAL}}">
+    <span>{{$root.ICON_PROGRESS?'':PERCENTUAL+'%'}}<i ng-if="$root.ICON_PROGRESS" class="mdi {{$root.ICON_PROGRESS}}"></i></span>
+</div>
+
+<span>{{SUB_STATUS}}</span>
+
+<div id="Payment" ng-if="$root.showPaymentFlag">
+    <md-content class="scrollable-content" scroll flex md-scroll-y>
+        <div id="prod">
+            <img src="{{PROD.IMAGEM}}">
+            <h4>{{PROD.NOME}} <i ng-if="PROD.CONTEUDO != NULL">({{PROD.CONTEUDO}})</i></h4>
+
+            <label class="total_de" ng-if="PROD.TOTAL_DE && !$root.VOUCHER"><span>de</span> <span class="v">{{PROD.TOTAL_DE}}</span></label>
+            <label ng-if="!$root.VOUCHER"><span ng-if="PROD.TOTAL_DE">por</span> <span class="v">{{PROD.TOTAL_POR}}</span></label>
+
+            <label ng-if="$root.VOUCHER" class="total_de"><span>de</span> <span class="v">{{VOUCHER_SOBRE_PROMOCAO||!PROD.TOTAL_DE?PROD.TOTAL_POR:PROD.TOTAL_DE}}</span></label>
+            <label ng-if="$root.VOUCHER"><span>por</span> <span class="v">{{VOUCHER_VALOR}}</span></label>
+
+            <div class="clearBoth"></div>
+        </div>
+
+        <div id="boxPg" ng-include src="'view/payment/formas_pg.html'"></div>
+
+        <button id="btnConfirme" class="btn" ng-click="$root.confirmPayment('compra')">FINALIZAR COMPRA</button>
+        <div class="clearBoth"></div>
+    </md-content>
+</div>
+
+<div id="btns">
+    <a class="a-btn" ng-if="showBtnVoltar" ng-click="location('#!/')"><i class="mdi mdi-action-home"></i> Voltar ao início</a>
+    <a class="a-btn" ng-if="showBtnCancel" ng-click="cancel()"><i class="mdi mdi-navigation-cancel"></i> Cancelar</a>
+</div>

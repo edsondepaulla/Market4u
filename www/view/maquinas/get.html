@@ -1,0 +1,33 @@
+<div class="blocoTop" id="maquina">
+    <div>
+        <img status="{{REG.STATUS}}" src="{{REG.IMAGEM}}" onerror="onErrorMaquina(this)">
+        <b id="cod">Cód. {{REG.CODIGO}}</b><h4 ng-if="REG.NOME">{{REG.NOME}}</h4>
+        <b>{{REG.ENDERECO}}, {{REG.NUMERO}} - {{REG.BAIRRO}} - {{REG.ESTADO}}</b>
+        <label ng-if="REG.MAPS.DISTANCE"><i class="mdi mdi-maps-directions-bike"></i> {{REG.MAPS.DISTANCE}} - {{REG.MAPS.DURATION}}<br></label>
+        <a class="a-btn" ng-if="REG.ROUTER" ng-click="AppBrowser(REG.ROUTER)"><i class="mdi mdi-maps-place"></i> Como chegar?</a>
+        <a class="a-btn" ng-click="$root.location('#!/payment/'+REG.ID)"><i class="mdi mdi-action-shopping-cart"></i> Comprar</a>
+
+        <div class="clearBoth"></div>
+    </div>
+    <p ng-if="REG.DESCRICAO">{{REG.DESCRICAO}}</p>
+</div>
+
+<md-content class="scrollable-content" scroll flex md-scroll-y>
+    <ul ng-if="REG.PRODUTOS">
+        <li ng-repeat="PROD in REG.PRODUTOS" ng-click="produto(REG.ID, PROD)">
+            <div class="info">
+                <h4>{{PROD.NOME}} <i ng-if="PROD.CONTEUDO != NULL">({{PROD.CONTEUDO}})</i></h4>
+                <span>{{PROD.CAT_DESCRICAO}} - {{PROD.FAB_DESCRICAO}}</span>
+                <span ng-if="PROD.PLANOGRAMA.QTDE != NULL">Em estoque <b>{{PROD.PLANOGRAMA.QTDE}}</b></span>
+                <span ng-if="PROD.PLANOGRAMA.CANALETA != NULL">Canaleta <b>{{PROD.PLANOGRAMA.CANALETA}}</b></span>
+                <label class="total_de" ng-if="PROD.PLANOGRAMA.DE_PRECO_FORMAT"><span>de</span> <span class="v">{{PROD.PLANOGRAMA.DE_PRECO_FORMAT}}</span></label>
+                <label><span ng-if="PROD.PLANOGRAMA.DE_PRECO_FORMAT">por</span> <span class="v">{{PROD.PLANOGRAMA.PRECO_FORMAT}}</span></label>
+                <p ng-if="PROD.DESCRICAO != NULL">{{PROD.DESCRICAO}}</p>
+            </div>
+            <div class="img"><img src="{{PROD.IMAGEM}}" onerror="onErrorProd(this)"></div>
+            <div class="clearBoth"></div>
+        </li>
+    </ul>
+
+    <h4 id="nenhumRegLocalizado" ng-if="!REG.PRODUTOS.length">Nenhum registro localizado!</h4>
+</md-content>
