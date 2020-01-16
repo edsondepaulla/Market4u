@@ -2,7 +2,7 @@ app.controller('QrCode', function($rootScope, $scope) {
     $rootScope.NO_WHATSAPP = false;
     $rootScope.REDIRECT = '';
     if (Page.active) {
-        $rootScope.Titulo = 'Escaneia o código';
+        $rootScope.Titulo = 'LER O QRCODE';
 
         QRScannerConf.show();
 
@@ -94,8 +94,8 @@ var QRScannerConf = {
         } catch (err) {
         }
     },
-    scan: function(text, qrcode){
-        if(text.length) {
+    scan: function (text, qrcode) {
+        if (text.length) {
             Factory.ajax(
                 {
                     action: 'qrcode/get',
@@ -104,10 +104,11 @@ var QRScannerConf = {
                     }
                 },
                 function (data) {
-                    if (data.status == 1)
+                    if (data.status == 1) {
+                        Factory.$rootScope.transacaoId = parseInt(data.TRANSACAO_ID);
                         Factory.$rootScope.location(data.url);
-                    else{
-                        if(qrcode) {
+                    } else {
+                        if (qrcode) {
                             try {
                                 QRScanner.destroy();
                                 QRScannerConf.show();

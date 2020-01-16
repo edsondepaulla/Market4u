@@ -9,9 +9,29 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
     $routeProvider
         .when("/qr-code", {
             templateUrl: "view/qr-code/index.html",
-            controller: 'QrCode'
+            controller: 'QrCode',
+            resolve: {
+                ReturnData: function ($route, $rootScope) {
+                    if (Page.active) {
+                        if (parseInt(Login.getData().ID)) {
+                            if (!parseInt(Login.getData().DADOS_ATUALIZADO)) {
+                                $rootScope.REDIRECT = btoa('#!/qr-code');
+                                $rootScope.location('#!/cadastro');
+                            }
+                        } else {
+                            $rootScope.REDIRECT = btoa('#!/qr-code');
+                            $rootScope.location('#!/conecte-se');
+                        }
+                    } else
+                        window.history.go(-1);
+                }
+            }
         })
         .when("/", {
+            templateUrl: "view/index/index.html",
+            controller: 'Index'
+        })
+        .when("/index/:STEP", {
             templateUrl: "view/index/index.html",
             controller: 'Index'
         })
@@ -433,9 +453,9 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
             logado: 1
         },
         {
-            titulo: 'Máquinas',
+            titulo: 'Condomínios',
             url: '#!/maquinas',
-            img: 'machine.png',
+            icon: 'mdi-social-domain',
             logado: 1
         },
         {
@@ -710,6 +730,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                 $rootScope.processPayment(origem);
         }
     };
+    $rootScope.transacaoId = 0;
 });
 
 app.directive('onErrorSrc', function() {

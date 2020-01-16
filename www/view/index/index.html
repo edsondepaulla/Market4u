@@ -1,9 +1,21 @@
-fdfs
-<br>fdsfs
-<br>fdsfs
-<br>fdsfs
-<br>fdsfs
-<br>fdsfs
-<br>fdsfs
-<br>fdsfs
-<br>fdsfs
+<md-content class="scrollable-content" scroll flex md-scroll-y>
+    <ul>
+        <li class="{{STEP>=1?'active':''}}">
+            <span>1</span>
+            Produtos no carrinho
+        </li>
+        <li class="{{STEP>=2?'active':''}}">
+            <span>2</span>
+            Ler o QRCode
+        </li>
+        <li class="{{STEP>=3?'active':''}}">
+            <span>3</span>
+            Pagamento
+        </li>
+        <li class="{{STEP>=4?'active':''}}">
+            <span>4</span>
+            Compra realizada com sucesso
+        </li>
+    </ul>
+    <a id="btn-home" ng-click="nextStep()" ng-bind-html="TEXTO_BTN"></a>
+</md-content>

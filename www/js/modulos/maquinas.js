@@ -4,7 +4,7 @@ app.controller('MaquinasFiltros', function($rootScope, $scope, $routeParams) {
 });
 
 app.controller('MaquinasLst', function($rootScope, $scope, $routeParams, ReturnData) {
-    $rootScope.Titulo = "Máquinas";
+    $rootScope.Titulo = "Condomínios";
     QRScannerConf.destroy();
     $rootScope.REDIRECT = '';
 
