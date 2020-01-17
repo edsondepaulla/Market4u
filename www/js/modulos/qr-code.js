@@ -105,7 +105,8 @@ var QRScannerConf = {
                 },
                 function (data) {
                     if (data.status == 1) {
-                        Factory.$rootScope.transacaoId = parseInt(data.TRANSACAO_ID);
+                        if (parseInt(data.TRANSACAO_ID))
+                            Factory.$rootScope.transacaoId = parseInt(data.TRANSACAO_ID);
                         Factory.$rootScope.location(data.url);
                     } else {
                         if (qrcode) {

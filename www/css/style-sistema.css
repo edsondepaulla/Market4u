@@ -2490,13 +2490,13 @@ margin-bottom: 30px;
 }
 
 div#qr-code-background #btn-flash{
-  position: absolute;
-  bottom: -151px;
-  z-index: 2;
-  font-size: 13px;
-  color: #FFF;
-  text-align: center;
-  left: calc(50% - 71px);
+position: absolute;
+bottom: -151px;
+right: -53px;
+z-index: 2;
+font-size: 13px;
+color: #FFF;
+text-align: center;
 }
 
 div#qr-code-background #btn-digite-qrcode{
@@ -4181,19 +4181,19 @@ body[controller="Faq"] .scrollable-content ul li p{
  * Index
  */
 body[controller="Index"] .scrollable-content{
-  padding-top: 75px;
+  padding-top: 60px;
 }
 
-body[controller="Index"] .scrollable-content ul li{
-  padding: 25px 0 30px 40px;
+body[controller="Index"] .scrollable-content > ul li{
+  padding: 25px 0 30px 0;
 }
 
-body[controller="Index"] .scrollable-content ul li.active span{
+body[controller="Index"] .scrollable-content > ul li.active > span{
   background: #00ab46;
   color: #FFF;
 }
 
-body[controller="Index"] .scrollable-content ul li span{
+body[controller="Index"] .scrollable-content > ul li > span{
   border: 2px solid #043d22;
   border-radius: 50%;
   width: 40px;
@@ -4203,6 +4203,22 @@ body[controller="Index"] .scrollable-content ul li span{
   font-size: 17px;
   margin-right: 10px;
   line-height: 36px;
+  margin-left: 30px;
+  font-weight: bold;
+}
+
+body[controller="Index"] .scrollable-content > ul li[step="X"]{
+  font-weight: bold;
+  text-align: center;
+}
+
+body[controller="Index"] .scrollable-content > ul li > h4{
+  font-size: 16px;
+  margin: 50px 0 0 0;
+  line-height: 1.7;
+  font-family: unset;
+  text-align: center;
+  font-weight: normal;
 }
 
 body[controller="Index"] #btn-home{
@@ -4216,10 +4232,141 @@ body[controller="Index"] #btn-home{
   font-size: 29px;
   display: block;
   padding: 10px 0;
+  border: 0;
 }
+
+body[controller="Index"] .scrollable-content[t="CANCEL"] #btn-home{
+  background-color: #043d22;
+}
+
 body[controller="Index"] #btn-home i{
   vertical-align: middle;
   margin-left: 15px;
   font-size: 30px;
   transition: 1s;
+}
+
+body[controller="Index"] .scrollable-content > h4{
+  font-size: 16px;
+  line-height: 1.3;
+  font-family: unset;
+  text-align: center;
+  font-weight: bold;
+}
+
+body[controller="Index"] .scrollable-content #Payment{
+  padding-top: 50px;
+}
+
+body[controller="Index"] .scrollable-content #Payment > #ver-carrinho{
+  text-align: center;
+  display: block;
+  text-decoration: underline;
+  font-size: 18px;
+}
+
+body[controller="Index"] .scrollable-content #Payment > h4{
+  font-size: 16px;
+  margin: 0;
+  line-height: 1.3;
+  font-family: unset;
+  text-align: center;
+  font-weight: bold;
+}
+
+body[controller="Index"] .scrollable-content #Produtos{
+  position: fixed;
+  top: 70px;
+  background: #FFF;
+  height: 100%;
+  z-index: 1;
+  left: 0;
+  width: 100%;
+  padding: 15px;
+  display: none;
+  padding-bottom: 86px;
+}
+
+body[controller="Index"] .scrollable-content #Produtos > h5{
+  font-size: 20px;
+  margin: 0;
+  line-height: 1.3;
+  font-family: unset;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+body[controller="Index"] .scrollable-content #Produtos > i.mdi-navigation-close{
+  position: absolute;
+  top: 0;
+  right: 15px;
+  font-size: 30px;
+}
+
+body[controller="Index"] .scrollable-content #Produtos ul li{
+  border-bottom: 1px solid rgba(11, 99, 64, 0.1);
+  padding: 10px 0;
+  position: relative;
+  min-height: 112px;
+}
+
+body[controller="Index"] .scrollable-content #Produtos ul li:first-child{
+  padding-top: 0;
+}
+
+body[controller="Index"] .scrollable-content #Produtos ul li:last-child{
+  border-bottom: 0;
+}
+body[controller="Index"] .scrollable-content #Produtos ul li > div.img{
+  float: right;
+  width: 20%;
+  position: relative;
+  min-width: 90px;
+  display: block;
+}
+body[controller="Index"] .scrollable-content #Produtos ul li > div.img img{
+  width: 90px;
+  height: 90px;
+  border-radius: 100%;
+  border: 1px solid #EEE;
+  padding: 3px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+body[controller="Index"] .scrollable-content #Produtos ul li > div.info{
+  float: left;
+  width: 67%;
+}
+body[controller="Index"] .scrollable-content #Produtos ul li > div.info > span{
+  color: #CCC;
+  font-weight: 500;
+  font-size: 12px;
+  display: block;
+}
+
+body[controller="Index"] .scrollable-content #Produtos ul li > div.info p{
+  margin: 1em 0 0;
+  font-size: 14px;
+}
+body[controller="Index"] .scrollable-content #Produtos ul li > div.info h4{
+  font-size: 20px;
+  margin: 0;
+  line-height: 1.3;
+  font-family: unset;
+}
+body[controller="Index"] .scrollable-content #Produtos ul li > div.info label{
+  display: inline-block;
+  color: #043d22;
+}
+body[controller="Index"] .scrollable-content #Produtos ul li > div.info label.total_de{
+  color: #e94847;
+  margin-right: 15px;
+}
+body[controller="Index"] .scrollable-content #Produtos ul li > div.info label.total_de .v{
+  text-decoration: line-through;
+}
+body[controller="Index"] .scrollable-content #Produtos ul li > div.info label .v{
+  font-size: 20px;
+  text-decoration: underline;
 }

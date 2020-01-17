@@ -1,4 +1,4 @@
-<h4 class="pague_com" ng-if="!$root.FORMAS_PG['VOUCHER']">Pague com</h4>
+<h4 class="pague_com" ng-if="$root.FORMAS_PG.length&&!$root.FORMAS_PG['VOUCHER']">Pague com</h4>
 <ul>
     <li ng-if="VALOR_PG>=PG.VALOR_MIN && (PG.TIPO=='SALDO'||PG.TIPO=='VOUCHER'?true:VALOR_PG)" class="{{PG.ACTIVE?'active':''}} {{PG.ACTIVE_SALDO?'active_checkbox':''}}" tipo="{{PG.TIPO}}" ng-repeat="PG in $root.FORMAS_PG" ng-click="$root.selectFormaPg(PG)">
         <label class="utilizado_saldo checkbox_custom" ng-if="PG.TIPO=='SALDO'">Usar saldo ao pagar

@@ -1,21 +1,41 @@
-<md-content class="scrollable-content" scroll flex md-scroll-y>
-    <ul>
-        <li class="{{STEP>=1?'active':''}}">
-            <span>1</span>
-            Produtos no carrinho
-        </li>
-        <li class="{{STEP>=2?'active':''}}">
-            <span>2</span>
-            Ler o QRCode
-        </li>
-        <li class="{{STEP>=3?'active':''}}">
-            <span>3</span>
-            Pagamento
-        </li>
-        <li class="{{STEP>=4?'active':''}}">
-            <span>4</span>
-            Compra realizada com sucesso
+<md-content t="{{$root.BTN_TYPE}}" class="scrollable-content" scroll flex md-scroll-y>
+    <h4 ng-if="!$root.STEPS.length">
+        Aguarde por favor, carregando...
+    </h4>
+    <ul ng-if="$root.STEPS">
+        <li step="{{ITEM.STEP}}" ng-repeat="ITEM in $root.STEPS" class="{{STEP>=ITEM.STEP?'active':''}}">
+            <span ng-if="ITEM.STEP != 'X'">{{ITEM.STEP}}</span>
+            {{ITEM.TEXTO}}
+            <h4 ng-if="ITEM.SUB_TEXTO">{{ITEM.SUB_TEXTO}}</h4>
+            <div ng-if="STEP==ITEM.STEP&&STEP==3" id="Payment">
+                <h4 ng-if="$root.STATUS_TEXTO">{{$root.STATUS_TEXTO}}</h4>
+
+                <a id="ver-carrinho" ng-if="$root.PRODUTOS.length" onclick="$('#Produtos').show();">Ver carrinho</a>
+
+                <div id="Produtos" class="scrollable-content" scroll flex md-scroll-y>
+                    <h5>Carrinho</h5>
+
+                    <i class="mdi-navigation-close" onclick="$('#Produtos').hide();"></i>
+
+                    <ul ng-if="$root.PRODUTOS">
+                        <li ng-repeat="PROD in $root.PRODUTOS">
+                            <div class="info">
+                                <h4>{{PROD.NOME}} <i ng-if="PROD.CONTEUDO != NULL">({{PROD.CONTEUDO}})</i></h4>
+                                <span>{{PROD.CAT_DESCRICAO}} - {{PROD.FAB_DESCRICAO}}</span>
+                                <span ng-if="PROD.PLANOGRAMA.QTDE != NULL">Quantidade <b>{{PROD.PLANOGRAMA.QTDE}}</b></span>
+                                <label class="total_de" ng-if="PROD.PLANOGRAMA.DE_PRECO_FORMAT"><span>de</span> <span class="v">{{PROD.PLANOGRAMA.DE_PRECO_FORMAT}}</span></label>
+                                <label><span ng-if="PROD.PLANOGRAMA.DE_PRECO_FORMAT">por</span> <span class="v">{{PROD.PLANOGRAMA.PRECO_FORMAT}}</span></label>
+                                <p ng-if="PROD.DESCRICAO != NULL">{{PROD.DESCRICAO}}</p>
+                            </div>
+                            <div class="img"><img src="{{PROD.IMAGEM}}" onerror="onErrorProd(this)"></div>
+                            <div class="clearBoth"></div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="boxPg" ng-include src="'view/payment/formas_pg.html'"></div>
+            </div>
         </li>
     </ul>
-    <a id="btn-home" ng-click="nextStep()" ng-bind-html="TEXTO_BTN"></a>
+    <button id="btn-home" ng-click="clickBtnHome()" ng-if="$root.STEPS.length && BTN_HOME" ng-bind-html="TEXTO_BTN"></button>
 </md-content>

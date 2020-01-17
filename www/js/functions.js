@@ -54,6 +54,7 @@ var Factory = {
             case 'cadastro/setgeolocation':
             case 'maquinas/getpoints':
             case 'payment/confirm':
+            case 'payment/start':
             case 'payment/verify':
             case 'payment/pagseguro':
             case 'payment/cancel':
@@ -284,18 +285,26 @@ var Factory = {
             }
         }
         if (open_browser.window_open) {
-            window.device = { platform: 'Browser' };
-            switch (open_browser.type) {
-                case 'load_url':
-                    navigator.app.loadUrl(url, { openExternal: true });
-                    break;
-                default:
-                    window.open(
-                        url,
-                        open_browser.target ? open_browser.target : '_system',
-                        open_browser.options ? open_browser.options : 'location=yes'
-                    );
-                    break;
+            window.device = {platform: 'Browser'};
+            try {
+                switch (open_browser.type) {
+                    case 'load_url':
+                        navigator.app.loadUrl(url, {openExternal: true});
+                        break;
+                    default:
+                        window.open(
+                            url,
+                            open_browser.target ? open_browser.target : '_system',
+                            open_browser.options ? open_browser.options : 'location=yes'
+                        );
+                        break;
+                }
+            } catch (e) {
+                window.open(
+                    url,
+                    open_browser.target ? open_browser.target : '_system',
+                    open_browser.options ? open_browser.options : 'location=yes'
+                );
             }
         }
     },

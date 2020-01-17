@@ -354,7 +354,6 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     $rootScope.NO_WHATSAPP = true;
     $rootScope.$on('$routeChangeStart', function () {
         $rootScope.menuClose();
-        Payment.clear(1);
     });
 
     $rootScope.controller = 'Index';
@@ -369,6 +368,8 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                 $('.scrollable-content').css('padding-bottom', position.top + 70);
             $('body').attr('scroll-top', $('.scrollable-content:visible').scrollTop() || 0);
         }, 1000);
+        if($rootScope.controller != 'Index' || (parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1) == 1)
+            Payment.clear(1);
     });
 
     $rootScope.trustAsHtml = function (string) {
@@ -730,6 +731,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                 $rootScope.processPayment(origem);
         }
     };
+    $rootScope.STEPS = [];
     $rootScope.transacaoId = 0;
 });
 
