@@ -3,8 +3,8 @@
         Aguarde por favor, carregando...
     </h4>
     <ul ng-if="$root.STEPS">
-        <li step="{{ITEM.STEP}}" ng-repeat="ITEM in $root.STEPS" class="{{STEP>=ITEM.STEP?'active':''}}">
-            <span ng-if="ITEM.STEP != 'X'">{{ITEM.STEP}}</span>
+        <li ng-click="ITEM.STEP==1?clickBtnHome():null" step="{{ITEM.STEP}}" ng-repeat="ITEM in $root.STEPS" class="{{STEP>=ITEM.STEP?'active':''}}">
+            <span ng-if="ITEM.STEP != 'X'">{{ITEM.STEP_TEXTO}}</span>
             {{ITEM.TEXTO}}
             <h4 ng-if="ITEM.SUB_TEXTO">{{ITEM.SUB_TEXTO}}</h4>
             <div ng-if="STEP==ITEM.STEP&&STEP==3" id="Payment">

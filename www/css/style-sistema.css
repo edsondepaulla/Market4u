@@ -2461,16 +2461,16 @@ padding-left: 10px;
 }
 
 div#qr-code-background{
-width: 200px;
-height: 200px;
-position: absolute;
-left: 50%;
-top: 45%;
-transform: translate(-50%, -50%);
-background: transparent !important;
-border-radius: 0;
-box-shadow: 0px 0px 0px 1000px rgba(0,0,0,0.3);
-z-index: 1;
+  width: 230px;
+  height: 230px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: transparent !important;
+  border-radius: 0;
+  box-shadow: 0px 0px 0px 1000px rgba(0,0,0,0.3);
+  z-index: 1;
 }
 
 div#qr-code-texto{
@@ -4237,6 +4237,10 @@ body[controller="Index"] #btn-home{
 
 body[controller="Index"] .scrollable-content[t="CANCEL"] #btn-home{
   background-color: #043d22;
+}
+
+body[controller="Index"] #btn-home img{
+  width: 24px;
 }
 
 body[controller="Index"] #btn-home i{
