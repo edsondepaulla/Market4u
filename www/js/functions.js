@@ -167,7 +167,7 @@ var Factory = {
                                     $('.loadingLst').hide();
                                 }
                             }, 100);
-                            try {
+                            /*try {
                                 // Notificacoes
                                 if (response.data.NOTIFICACOES) {
                                     $.each(response.data.NOTIFICACOES, function (idx_each, val_each) {
@@ -177,7 +177,7 @@ var Factory = {
                                         }
                                     });
                                 }
-                            }catch (e) { }
+                            }catch (e) { }*/
                             try {
                                 if (Factory.$rootScope)
                                     Factory.$rootScope.loading = false;
