@@ -92,21 +92,13 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     };
     $scope.step($rootScope.STEP);
 
-    $scope.LIBERADO = 0;
-    $scope.geladeira = function (get) {
+    $scope.liberarPortaBebidasAlcoolicos = function () {
         Factory.ajax(
             {
-                action: 'options/geladeira',
-                data: {
-                    GET: get
-                }
-            },
-            function (data) {
-                $scope.LIBERADO = parseInt(data.LIBERADO) | 0;
+                action: 'options/liberarportabebidasalcoolicos'
             }
         );
     }
-    $scope.geladeira(1);
 
     $scope.clickBtnHome = function () {
         switch ($rootScope.BTN_TYPE) {
