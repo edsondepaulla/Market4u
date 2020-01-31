@@ -184,6 +184,20 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                 }
             }
         })
+        .when("/command/:TYPE/:KEY/:SET", {
+            templateUrl: "view/pages/command.html",
+            controller: 'Command',
+            resolve: {
+                ReturnData: function ($route) {
+                    return Factory.ajax(
+                        {
+                            action: 'options/command',
+                            data: $route.current.params
+                        }
+                    );
+                }
+            }
+        })
         .when("/historico-transacoes/:ID", {
             templateUrl: "view/conecte-se/historico-transacoes-detalhes.html",
             controller: 'HistoricoTransacoesGet',
@@ -323,6 +337,14 @@ app.controller('SemInternet', function($rootScope, $scope, $routeParams) {
     $rootScope.border_top = 1;
     $rootScope.Titulo = "Ops...";
     QRScannerConf.destroy();
+});
+
+app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData) {
+    $rootScope.border_top = 1;
+    $rootScope.Titulo = "Command";
+    QRScannerConf.destroy();
+    //$scope.CONTENT = ReturnData.CONTENT;
+    $rootScope.REDIRECT = '';
 });
 
 app.controller('Faq', function($rootScope, $scope, $routeParams, ReturnData) {
@@ -509,12 +531,12 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
             icon: 'mdi-action-home',
             logado: 1
         },
-        {
+        /*{
             titulo: 'Condomínios',
             url: '#!/maquinas',
             icon: 'mdi-social-domain',
             logado: 1
-        },
+        },*/
         {
             titulo: 'Vouchers',
             url: '#!/voucher',
@@ -572,14 +594,15 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     $rootScope.dadosInvalidosCC = function () {
         Factory.alert('Dados de cartão de créditos inválidos!');
     };
-    $rootScope.pagseguro = function (paymentPagSeguro, origem) {
-        var time = 0;
+    $rootScope.pagseguro = function (paymentPagSeguro, origem, time) {
+        time = time ? time : 0;
         if (!$('#api_pagseguro').length) {
             time = 3000;
             $('body').append('<script id="api_pagseguro" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>');
         }
         $(document).ready(function () {
-            setTimeout(function () {
+            clearTimeout(Factory.timeout);
+            Factory.timeout = setTimeout(function () {
                 $rootScope.PAGSEGURO_SESSIONID = null;
                 try {
                     Factory.ajax(

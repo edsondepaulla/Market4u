@@ -1,6 +1,7 @@
 app.controller('QrCode', function($rootScope, $scope) {
     $rootScope.NO_WHATSAPP = false;
     $rootScope.REDIRECT = '';
+    $rootScope.BARRA_SALDO = false;
     if (Page.active) {
         $rootScope.Titulo = 'LER O QRCODE';
 
@@ -118,12 +119,14 @@ var QRScannerConf = {
                         }
                         try {
                             navigator.notification.alert(
-                                'Código inválido!',
-                                'Mensagem',
-                                'Algo de errado'
+                                'QRCode inválido!',
+                                function () {
+
+                                },
+                                'Atenção!'
                             );
                         } catch (err) {
-                            alert('Código inválido!');
+                            alert('QRCode inválido!');
                         }
                     }
                 }

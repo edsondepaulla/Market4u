@@ -92,14 +92,6 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     };
     $scope.step($rootScope.STEP);
 
-    $scope.liberarPortaBebidasAlcoolicos = function () {
-        Factory.ajax(
-            {
-                action: 'options/liberarportabebidasalcoolicos'
-            }
-        );
-    }
-
     $scope.clickBtnHome = function () {
         switch ($rootScope.BTN_TYPE) {
             case 'INICIO':
@@ -211,7 +203,10 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                                                 $rootScope.showPaymentFlag = true;
 
                                             // PagSeguro
-                                            $rootScope.pagseguro();
+                                            $.each(data.FORMAS_PG, function (idx, f_pg) {
+                                                if (f_pg.GATEWAY == 'PAGSEGURO')
+                                                    $rootScope.pagseguro(0, null, 1000);
+                                            });
 
                                             // Verify limit formas pg
                                             $rootScope.verifyLimitFormasPg();

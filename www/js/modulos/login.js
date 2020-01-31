@@ -334,7 +334,7 @@ app.controller('MinhaCarteira', function($rootScope, $scope, $routeParams, Retur
     // PagSeguro
     $.each(ReturnData.FORMAS_PG, function (idx, f_pg) {
         if (f_pg.GATEWAY == 'PAGSEGURO')
-            $rootScope.pagseguro();
+            $rootScope.pagseguro(0, null, 1000);
     });
 
     $rootScope.VALOR_PG = 20;

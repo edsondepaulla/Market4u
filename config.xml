@@ -2,7 +2,7 @@
 <widget id="br.com.mobile.market4u" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Market4u</name>
     <description>
-        Market4u
+        Um mercado para você
     </description>
     <content src="index.html#!/" />
     <access origin="*" />
