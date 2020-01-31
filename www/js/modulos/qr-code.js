@@ -109,25 +109,6 @@ var QRScannerConf = {
                         if (parseInt(data.TRANSACAO_ID))
                             Factory.$rootScope.transacaoId = parseInt(data.TRANSACAO_ID);
                         Factory.$rootScope.location(data.url);
-                    } else {
-                        if (qrcode) {
-                            try {
-                                QRScanner.destroy();
-                                QRScannerConf.show();
-                            } catch (err) {
-                            }
-                        }
-                        try {
-                            navigator.notification.alert(
-                                'QRCode inválido!',
-                                function () {
-
-                                },
-                                'Atenção!'
-                            );
-                        } catch (err) {
-                            alert('QRCode inválido!');
-                        }
                     }
                 }
             );

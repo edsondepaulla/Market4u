@@ -69,7 +69,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             case 1:
                 $rootScope.BTN_HOME = true;
                 $rootScope.transacaoId = 0;
-                $rootScope.TEXTO_BTN = 'Ler o QRCode <img src="img/qrcode.png">';
+                $rootScope.TEXTO_BTN = '<img src="img/qrcode.png"> Ler o QRCode';
                 break;
             case 2:
                 $rootScope.transacaoId = 0;
