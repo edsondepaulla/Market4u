@@ -1,0 +1,14 @@
+<md-content class="scrollable-content" scroll flex md-scroll-y>
+    <ul>
+        <li ng-click="$root.location('#!/add-card')">
+            <i class="mdi mdi-content-add-circle"></i>
+        </li>
+        <li ng-repeat="item in LST">
+            <img src="{{item.IMG}}">
+            <p>{{item.NAME}}</p>
+            <label>Crédito</label>
+            <span>{{item.TEXT}}</span>
+            <i class="mdi mdi-action-highlight-remove" ng-click="remove(item.ID)"></i>
+        </li>
+    </ul>
+</md-content>

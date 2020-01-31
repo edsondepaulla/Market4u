@@ -13,6 +13,7 @@
         <li status="green"><span></span> Disponível</li>
         <li status="yellow"><span></span> Parcialmente disponível</li>
         <li><span></span> Indisponível (falha na comunicação)</li>
+        <li><i style="color: red" class="mdi mdi-action-lock-outline"></i> Acesso privado</li>
     </ul>
 </div>
 
@@ -21,8 +22,8 @@
         <li ng-repeat="MAQUINA in LST" ng-click="click(MAQUINA)">
             <div class="img" status="{{MAQUINA.STATUS}}"><img src="{{MAQUINA.IMAGEM}}" onerror="onErrorMaquina(this)"></div>
             <div class="info">
-                <b>Cód. {{MAQUINA.CODIGO}}</b><h4 ng-if="MAQUINA.NOME">{{MAQUINA.NOME}}</h4>
-                <h4>{{MAQUINA.ENDERECO}}, {{MAQUINA.NUMERO}} - {{MAQUINA.BAIRRO}} - {{MAQUINA.ESTADO}}</h4>
+                <b><i ng-if="MAQUINA.PRIVADO==1" class="mdi mdi-action-lock-outline"></i> Cód. {{MAQUINA.CODIGO}}</b><h4 ng-if="MAQUINA.NOME">{{MAQUINA.NOME}}</h4>
+                <h4 class="endereco">{{MAQUINA.ENDERECO}}, {{MAQUINA.NUMERO}} - {{MAQUINA.BAIRRO}} - {{MAQUINA.ESTADO}}</h4>
                 <span ng-if="MAQUINA.MAPS.DISTANCE"><i class="mdi mdi-maps-directions-bike"></i> {{MAQUINA.MAPS.DISTANCE}} - {{MAQUINA.MAPS.DURATION}}</span>
                 <a class="a-btn" ng-if="MAQUINA.ROUTER" ng-click="AppBrowser(MAQUINA.ROUTER);$event.stopPropagation();"><i class="mdi mdi-maps-place"></i></a>
                 <a class="a-btn" ng-click="$event.stopPropagation();$root.location('#!/payment/'+MAQUINA.ID)"><i class="mdi mdi-action-shopping-cart"></i></a>

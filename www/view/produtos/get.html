@@ -1,8 +1,11 @@
 <div class="blocoTop" id="maquina">
     <div>
+        <b ng-if="REG.MAQUINA.STATUS=='red'" class="comunicacao">Indisponível (falha na comunicação)</b>
+        <b ng-if="REG.MAQUINA.STATUS=='yellow'" class="comunicacao">Parcialmente disponível</b>
+        <b ng-if="REG.MAQUINA.ALERTA" class="alerta" ng-bind-html="REG.MAQUINA.ALERTA"></b>
         <img status="{{REG.MAQUINA.STATUS}}" src="{{REG.MAQUINA.IMAGEM}}" onerror="onErrorMaquina(this)">
         <b id="cod">Cód. {{REG.MAQUINA.CODIGO}}</b><h4 ng-if="REG.MAQUINA.NOME">{{REG.MAQUINA.NOME}}</h4>
-        <b>{{REG.MAQUINA.ENDERECO}}, {{REG.MAQUINA.NUMERO}} - {{REG.MAQUINA.BAIRRO}} - {{REG.MAQUINA.ESTADO}}</b>
+        <b class="endereco">{{REG.MAQUINA.ENDERECO}}, {{REG.MAQUINA.NUMERO}} - {{REG.MAQUINA.BAIRRO}} - {{REG.MAQUINA.ESTADO}}</b>
         <label ng-if="REG.MAQUINA.MAPS.DISTANCE"><i class="mdi mdi-maps-directions-bike"></i> {{REG.MAQUINA.MAPS.DISTANCE}} - {{REG.MAQUINA.MAPS.DURATION}}<br></label>
         <a class="a-btn" ng-if="REG.MAQUINA.ROUTER" ng-click="AppBrowser(REG.MAQUINA.ROUTER)"><i class="mdi mdi-maps-place"></i> Como chegar?</a>
         <div class="clearBoth"></div>
@@ -17,7 +20,7 @@
         <span ng-if="REG.PLANOGRAMA.QTDE != NULL">Em estoque <b>{{REG.PLANOGRAMA.QTDE}}</b></span>
         <span ng-if="REG.PLANOGRAMA.CANALETA != NULL">Canaleta <b>{{REG.PLANOGRAMA.CANALETA}}</b></span>
         <p ng-if="REG.PRODUTO.DESCRICAO != NULL">{{REG.PRODUTO.DESCRICAO}}</p>
-        <div ng-if="REG.PRODUTO.IMGS.length" id="imgs" full="{{imgFull}}">
+        <div ng-if="REG.PRODUTO.IMGS.length" id="imgs" full="{{imgFull}}" style="overflow: auto;-webkit-overflow-scrolling: touch;" scroll flex md-scroll-y>
             <ul>
                 <li class="{{IMG.ACTIVE?'active':''}}" ng-repeat="IMG in REG.PRODUTO.IMGS">
                     <img ng-click="verImg(1)" src="{{IMG.D}}" onerror="onErrorProd(this)">
@@ -33,7 +36,9 @@
         <div>
             <label class="total_de" ng-if="REG.PLANOGRAMA.DE_PRECO_FORMAT"><span>de</span> <span class="v">{{REG.PLANOGRAMA.DE_PRECO_FORMAT}}</span></label>
             <label><span ng-if="REG.PLANOGRAMA.DE_PRECO_FORMAT">por</span> <span class="v">{{REG.PLANOGRAMA.PRECO_FORMAT}}</span></label>
-            <br><a class="a-btn" ng-click="payment()"><i class="mdi mdi-action-shopping-cart"></i> Comprar</a>
+            <br><br>
         </div>
     </div>
 </md-content>
+
+<a id="comprar" class="a-btn" ng-click="payment()"><i class="mdi mdi-action-shopping-cart"></i> Comprar</a>

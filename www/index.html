@@ -20,14 +20,14 @@
   <link href="plugins/angular/css/mobile-angular-ui-base.css" rel="stylesheet" />
   <link href="plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css">
 
-  <script src="plugins/jquery-2.1.1.min.js"></script>
+  <script src="plugins/jquery-3.3.1.min.js"></script>
+  <script src="plugins/jquery-migrate-1.4.1.min.js"></script>
   <script src="plugins/pace/pace.min.js"></script>
   <script src="plugins/angular.min.js"></script>
   <script src="plugins/angular-route.min.js"></script>
   <script src="plugins/angular-animate.min.js"></script>
   <script src="plugins/angular/js/mobile-angular-ui.min.js"></script>
   <script src="plugins/angular/js/mobile-angular-ui.gestures.min.js"></script>
-  <script src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>
 
   <script src="plugins/mn-touch/mn-touch.min.js"></script>
 
@@ -88,6 +88,9 @@
           <i class="mdi mdi-navigation-chevron-left"></i>
         </a>
         <div id="textoTitulo">{{Titulo}}</div>
+        <div id="meu_saldo" ng-click="location('#!/minha-carteira')" ng-if="usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO">
+          MEU SALDO <b>{{usuario.MEUSALDO_FORMAT}}</b> <span ng-if="!usuario.MEUSALDO"><i class="mdi mdi-content-add-circle"></i> Adicionar saldo</span>
+        </div>
       </div>
       <img ng-click="location('#!/')" src="img/logo.png" border="0">
     </div>
@@ -95,7 +98,7 @@
     <i mn-touch swipe-right="swipeRight()" ng-if="controller == 'Index'" class="btn_maps mdi mdi-action-view-headline" ng-click="menuOpen()"></i>
 
     <div id="carregando">
-      <img ng-click="location('#!/')" src="img/logo.png" border="0" width="200" role="button"><br><br>
+      <img src="img/logo.png" border="0" width="100" role="button"><br><br>
       Aguarde por favor, carregando...
     </div>
 
@@ -103,9 +106,9 @@
       <img src="img/whatsapp.png">
     </a>
 
-    <div class="app-body">
+    <div class="app-body" style="{{usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO?'':'top: 45px;'}}">
       <div class="app-content">
-        <div class="scrollable ng-scope" border-top="{{border_top}}" ng-view></div>
+        <div class="scrollable ng-scope" border-top="{{$root.BARRA_SALDO?0:border_top}}" ng-view></div>
       </div>
     </div>
   </div>
@@ -124,6 +127,7 @@
         <div ng-if="usuario.ID" ng-click="location('#!/cadastro')">
           <b>{{usuario.NOME}}</b>
           <label>{{usuario.EMAIL}}</label>
+          <a>Editar dados</a>
         </div>
       </div>
       <ul>

@@ -1448,7 +1448,7 @@ input[type="search"].campoBusca:focus {
   display: block;
   z-index: 2;
   position: fixed;
-  top: 45px;
+  top: 65px;
   left: 0;
   width: 100%;
   background: #FFF;
@@ -1506,7 +1506,7 @@ body.sidebar-left-in .app-body #fundo{
  * Efeito entre paginas
  */
 .scrollable{
-  padding: 0 13px 45px;
+  padding: 0 0 45px;
 }
 .scrollable[border-top="1"]{
   border-top: 1px solid rgba(11, 99, 64, 0.1);
@@ -2444,20 +2444,72 @@ body[menu_left="1"] #topTitulo img {
 }
 body[controller="AtualizarApp"] #toolbar > img,
 body[controller="ConecteSe"] #toolbar > img {
-    position: fixed;
-    top: 65px;
-    right: calc(50% - 95px);
-    height: 48px;
+  position: fixed;
+  top: 65px;
+  right: calc(50% - 77px);
+  height: 38px;
+  animation: imgTop 0s 0.7s forwards;
 }
+
+@keyframes imgTop {
+    to {
+      visibility: hidden;
+    }
+}
+
+img#imgFixo{
+  position: absolute;
+  top: 20px;
+  right: calc(50% - 77px);
+  height: 38px;
+  visibility: hidden;
+  animation: imgFixo 0s 0.7s forwards;
+}
+
+@keyframes imgFixo {
+  to {
+    visibility: visible;
+  }
+}
+
 #topTitulo #textoTitulo{
   display: inline-block;
   font-size: 13px;
   line-height: 3.4;
   text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.7);
+  z-index: 1;
+  position: relative;
+  padding-right: 3px;
+}
+#topTitulo #meu_saldo{
+  background: rgba(11, 99, 64, 0.05);
+  text-align: center;
+  padding: 2px 0;
+  font-size: 12px;
+  color: #043d22;
+}
+#topTitulo #meu_saldo span{
+  border-left: 1px solid #043d22;
+  padding-left: 10px;
+  margin-left: 10px;
+}
+#topTitulo #meu_saldo i{
+ font-size: 10px;
+line-height: 0;
 }
 #topTitulo .open-left{
 text-align: left;
 padding-left: 10px;
+}
+#formCadastroCodigo a{
+  text-decoration: underline;
+  text-align: center;
+  display: block;
+  margin: 25px 0;
+}
+#formCadastroCodigo > label{
+  display: block;
 }
 
 div#qr-code-background{
@@ -2545,7 +2597,7 @@ body[device="ios"] #userLeft{
 #userLeft > div{
 position: absolute;
 left: 70px;
-top: 8px;
+top: 1px;
 }
 #userLeft > div b{
 font-size: 15px;
@@ -2560,6 +2612,11 @@ display: block;
 color: #666;
 font-size: 12px;
 margin-top: 0;
+}
+#userLeft > div > a{
+  color: #666;
+  font-size: 10px;
+  text-decoration: underline;
 }
 #contentLeft > ul{
   padding: 10px 15px;
@@ -2635,16 +2692,13 @@ div.box1{
   bottom: 0;
   font-size: 27px;
   padding: 0 7px;
-  z-index: 2;
+  z-index: 6;
 }
 
 div.box input,
 div.box1 input,
 div.box select,
 div.box1 select{
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   text-align: left;
@@ -2653,7 +2707,9 @@ div.box1 select{
   background: transparent;
   padding-left: 10px;
   border-radius: 0 !important;
-  z-index: 2;
+  z-index: 5;
+  letter-spacing: 1px;
+  position: relative;
 }
 
 input.ng-invalid ~ span.msgValidator,
@@ -2682,10 +2738,9 @@ input.ng-invalid2 ~ span.msgValidator2{
   z-index: 2;
 }
 
-form.form > label{
-  color: #444;
-  font-weight: 400;
-  display: inline-block;
+form.form label[for]{
+  color: #444 !important;
+  display: block !important;
 }
 
 form.form{
@@ -2724,16 +2779,26 @@ form.form > h2{
 }
 
 button.btn-location,
-form.form > button{
-  background: #043d22;
-  color: #FFF;
-  border: 0;
-  border-radius: 5px;
-  width: 50%;
+form.form > button,
+button.btn-location:hover,
+form.form > button:hover,
+button.btn-location:active,
+form.form > button:active,
+button.btn-location:focus,
+form.form > button:focus{
   padding: 10px 30px;
-  font-size: 15px;
+  font-size: 16px;
   margin: 20px auto 0;
   display: block;
+  border-radius: 5px;
+  background: #043d22 !important;
+  border-radius: 3px;
+  font-size: 15px;
+  box-shadow: none;
+  color: #fff !important;;
+  border: 1px solid rgba(11, 99, 64, 0.6);
+  position: relative;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 #formLogin button.btn-salvar{
   display: block !important;
@@ -2768,16 +2833,47 @@ form.form#formCadastro h3 label{
   display: inline-block;
 }
 a.a-btn[type="facebook"]{
-  background: #4267b2;
-  color: #FFF;
+  color: #fff;
+  padding-left: 40px;
+  border-color: #3b5998;
+  text-shadow: none;
+  background-color: #3b5998;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUBAMAAAB%2FpwA%2BAAAAGFBMVEUAAAD%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8jfp1fAAAAB3RSTlMA7D8UYSuqwY7ItgAAAEdJREFUCNdjUCyHAiEGcRizkKEcDiDMQmeGcChTmIGBHcp0YDBVhzIN2OBqgdIYzAIGIDBHMNURTHcktWQzxWHMQgZFGFMIAFerRr2lTcdCAAAAAElFTkSuQmCC);
+  background-position: 10px center;
+  background-repeat: no-repeat;
+  width: 100%;
+  max-width: 278px;
+  padding: 9px 16px;
+  height: auto;
+  border: 1px solid #3b5998;
 }
 a.a-btn[type="google"]{
-  background: #1a73e8;
-  color: #FFF;
+  color: #000;
+  min-width: 260px;
+  background: #FFF;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiICB4PSIwIiB5PSIwIiB2aWV3Qm94PSIwIDAgNjQgNjQiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI%2BLnN0MHtjbGlwLXBhdGg6dXJsKCNTVkdJRF8yXyk7ZmlsbDojRkJCQzA1O30uc3Qxe2NsaXAtcGF0aDp1cmwoI1NWR0lEXzRfKTtmaWxsOiNFQTQzMzU7fS5zdDJ7Y2xpcC1wYXRoOnVybCgjU1ZHSURfNl8pO2ZpbGw6IzM0QTg1Mzt9LnN0M3tjbGlwLXBhdGg6dXJsKCNTVkdJRF84Xyk7ZmlsbDojNDI4NUY0O308L3N0eWxlPjxkZWZzPjxwYXRoIGlkPSJTVkdJRF8xXyIgZD0iTTU5LjMgMjYuN0g1NiA0NS4xIDMyVjM4aDE1LjdjLTEuNSA3LjItNy42IDExLjMtMTUuNyAxMS4zIC05LjYgMC0xNy4zLTcuNy0xNy4zLTE3LjNTMjIuNCAxNC43IDMyIDE0LjdjNC4xIDAgNy45IDEuNSAxMC44IDMuOWw4LjUtOC41QzQ2LjEgNS41IDM5LjUgMi43IDMyIDIuNyAxNS43IDIuNyAyLjcgMTUuNyAyLjcgMzJTMTUuNyA2MS4zIDMyIDYxLjNjMTQuNyAwIDI4LTEwLjcgMjgtMjkuM0M2MCAzMC4zIDU5LjcgMjguNCA1OS4zIDI2Ljd6Ii8%2BPC9kZWZzPjxjbGlwUGF0aCBpZD0iU1ZHSURfMl8iPjx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzFfIi8%2BPC9jbGlwUGF0aD48cG9seWdvbiBjbGFzcz0ic3QwIiBwb2ludHM9IjAgNDkuMyAwIDE0LjcgMjIuNyAzMiAiLz48ZGVmcz48cGF0aCBpZD0iU1ZHSURfM18iIGQ9Ik01OS4zIDI2LjdINTYgNDUuMSAzMlYzOGgxNS43Yy0xLjUgNy4yLTcuNiAxMS4zLTE1LjcgMTEuMyAtOS42IDAtMTcuMy03LjctMTcuMy0xNy4zUzIyLjQgMTQuNyAzMiAxNC43YzQuMSAwIDcuOSAxLjUgMTAuOCAzLjlsOC41LTguNUM0Ni4xIDUuNSAzOS41IDIuNyAzMiAyLjcgMTUuNyAyLjcgMi43IDE1LjcgMi43IDMyUzE1LjcgNjEuMyAzMiA2MS4zYzE0LjcgMCAyOC0xMC43IDI4LTI5LjNDNjAgMzAuMyA1OS43IDI4LjQgNTkuMyAyNi43eiIvPjwvZGVmcz48Y2xpcFBhdGggaWQ9IlNWR0lEXzRfIj48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8zXyIvPjwvY2xpcFBhdGg%2BPHBvbHlnb24gY2xhc3M9InN0MSIgcG9pbnRzPSIwIDE0LjcgMjIuNyAzMiAzMiAyMy45IDY0IDE4LjcgNjQgMCAwIDAgIi8%2BPGRlZnM%2BPHBhdGggaWQ9IlNWR0lEXzVfIiBkPSJNNTkuMyAyNi43SDU2IDQ1LjEgMzJWMzhoMTUuN2MtMS41IDcuMi03LjYgMTEuMy0xNS43IDExLjMgLTkuNiAwLTE3LjMtNy43LTE3LjMtMTcuM1MyMi40IDE0LjcgMzIgMTQuN2M0LjEgMCA3LjkgMS41IDEwLjggMy45bDguNS04LjVDNDYuMSA1LjUgMzkuNSAyLjcgMzIgMi43IDE1LjcgMi43IDIuNyAxNS43IDIuNyAzMlMxNS43IDYxLjMgMzIgNjEuM2MxNC43IDAgMjgtMTAuNyAyOC0yOS4zQzYwIDMwLjMgNTkuNyAyOC40IDU5LjMgMjYuN3oiLz48L2RlZnM%2BPGNsaXBQYXRoIGlkPSJTVkdJRF82XyI%2BPHVzZSB4bGluazpocmVmPSIjU1ZHSURfNV8iLz48L2NsaXBQYXRoPjxwb2x5Z29uIGNsYXNzPSJzdDIiIHBvaW50cz0iMCA0OS4zIDQwIDE4LjcgNTAuNSAyMCA2NCAwIDY0IDY0IDAgNjQgIi8%2BPGRlZnM%2BPHBhdGggaWQ9IlNWR0lEXzdfIiBkPSJNNTkuMyAyNi43SDU2IDQ1LjEgMzJWMzhoMTUuN2MtMS41IDcuMi03LjYgMTEuMy0xNS43IDExLjMgLTkuNiAwLTE3LjMtNy43LTE3LjMtMTcuM1MyMi40IDE0LjcgMzIgMTQuN2M0LjEgMCA3LjkgMS41IDEwLjggMy45bDguNS04LjVDNDYuMSA1LjUgMzkuNSAyLjcgMzIgMi43IDE1LjcgMi43IDIuNyAxNS43IDIuNyAzMlMxNS43IDYxLjMgMzIgNjEuM2MxNC43IDAgMjgtMTAuNyAyOC0yOS4zQzYwIDMwLjMgNTkuNyAyOC40IDU5LjMgMjYuN3oiLz48L2RlZnM%2BPGNsaXBQYXRoIGlkPSJTVkdJRF84XyI%2BPHVzZSB4bGluazpocmVmPSIjU1ZHSURfN18iLz48L2NsaXBQYXRoPjxwb2x5Z29uIGNsYXNzPSJzdDMiIHBvaW50cz0iNjQgNjQgMjIuNyAzMiAxNy4zIDI4IDY0IDE0LjcgIi8%2BPC9zdmc%2BCg%3D%3D);
+  background-position: 10px center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  text-shadow: none;
+  width: 100%;
+  max-width: 278px;
+  padding: 9px 16px;
+  height: auto;
+  border: 1px solid #1A73E8;
 }
 a.a-btn[type="strava"]{
-  background: #fc5200;
-  color: #FFF;
+  background: #FFF;
+  background-image: url(data:image/png;base64,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);
+  color: #444;
+  width: 100%;
+  max-width: 278px;
+  padding: 9px 16px;
+  height: auto;
+  background-position: 10px center;
+  background-repeat: no-repeat;
+  background-size: 25px;
+  border: 1px solid #fc5200;
 }
 form.form#formCadastro #saldo a{
   display: block;
@@ -2819,8 +2915,14 @@ form.form#formCadastro #fotoCadastroImg{
   padding: 3px;
 }
 
+.margin_t_5{
+  margin-top: 5px;
+  display: block;
+}
+
 .margin_t_10{
   margin-top: 10px;
+  display: block;
 }
 
 /*
@@ -2842,7 +2944,7 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li{
 }
 
 body[controller="MinhaCarteira"] #boxPg{
-  margin: 20px -30px;
+  margin: 20px -15px;
 }
 
 body[controller="MinhaCarteira"] #formMinhaCarteira > ul li > label{
@@ -2874,10 +2976,9 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li.active{
 
 #boxPg > ul > li.active i.mdi-action-done{
   display: block;
-  position: absolute;
-  right: 7px;
-  top: 0;
   font-size: 27px;
+  float: right;
+  margin: -12px 0;
 }
 
 #boxPg > ul > li.active{
@@ -2885,7 +2986,7 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li.active{
   color: #FFF;
 }
 
-#boxPg #bandeiras li{
+#bandeiras li{
   float: left;
   padding: 7px 4px 0;
 }
@@ -2894,7 +2995,21 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li.active{
   background: rgba(11, 99, 64, 0.1);
   padding: 10px;
   margin-top: 10px;
-  position: relative;
+}
+
+#formCadastro #boxCC{
+  border: 1px solid #EEE;
+  padding: 0 12px 10px;
+  margin: 10px 0 0;
+  background: #fcfcfc;
+}
+
+#formCadastro #imgBandeira{
+  position: absolute;
+  top: 8px;
+  right: 11px;
+  z-index: 1;
+  display: none;
 }
 
 #boxPg > ul > li #imgBandeira{
@@ -2912,6 +3027,23 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li.active{
   color: #444;
   font-weight: normal;
   margin: 7px -9px -9px;
+}
+
+#boxPg > ul > li #boxCC > div h4{
+  margin: 15px 0px 5px;
+  font-size: 17px;
+}
+
+#boxCard > li[id="MC"]{
+  margin-bottom: 5px;
+}
+
+#boxCard > li[id="MC"] label{
+  font-size: 17px;
+}
+
+#boxCard > li[id="0"]{
+  margin-top: 25px;
 }
 
 #boxPg > ul > li[tipo="SALDO"],
@@ -3122,14 +3254,19 @@ body[controller="ProdutosGet"] div#info > div{
   text-align: center;
   margin-top: 1em;
 }
-body[controller="ProdutosGet"] div#info .a-btn{
+body[controller="ProdutosGet"] .a-btn#comprar{
   box-shadow: 0 -2px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
   display: inline-block;
   font-size: 22px;
   height: auto;
   padding: 5px 12px;
+  position: fixed;
+  bottom: 15px;
+  right: 10px;
+  background: #043d22;
+  color: #FFF;
 }
-body[controller="ProdutosGet"] div#info .a-btn i{
+body[controller="ProdutosGet"] .a-btn#comprar i{
   vertical-align: initial;
   font-size: 22px;
 }
@@ -3195,7 +3332,7 @@ body[controller="ProdutosGet"] div#imgs[full="1"]{
 }
 
 body[controller="ProdutosGet"] div#imgs[full="0"]{
-  margin: 0 -13px 15px;
+  margin: 0 0 15px;
 }
 
 body[controller="ProdutosGet"] div#imgs[full="0"] ul li > img{
@@ -3271,7 +3408,7 @@ body[controller="CentralDeAjuda"] .scrollable-content > ul li{
 .blocoTop{
   background: #fcfcfc;
   padding: 9px 13px;
-  margin: 0 -13px 10px;
+  margin: 0;
 }
 #maquina > p{
   margin: 10px 0 0 0;
@@ -3284,6 +3421,7 @@ body[controller="CentralDeAjuda"] .scrollable-content > ul li{
   color: #CCC;
   font-size: 14px;
   margin-right: 5px;
+  display: inline-block;
 }
 
 #maquina > div label i{
@@ -3312,7 +3450,30 @@ body[controller="MaquinasGet"] .scrollable-content > p{
   font-weight: normal;
   display: block;
 }
-
+#maquina > div b.endereco{
+  font-size: 14px;
+}
+#maquina > div b.comunicacao{
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-style: italic;
+}
+#maquina > div b.alerta{
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+#maquina > div b.alerta .r{
+  color: red !important;
+}
+#maquina > div b.alerta i{
+  font-size: 19px;
+}
+#maquina > div b.alerta b{
+  font-weight: bold;
+  display: inline-block;
+}
 #maquina > div b#cod {
   font-size: 13px;
   font-weight: 600;
@@ -3331,7 +3492,7 @@ body[controller="MaquinasGet"] .scrollable-content > p{
 
 body[controller="MaquinasGet"] .scrollable ul li{
   border-bottom: 1px solid rgba(11, 99, 64, 0.1);
-  padding: 10px 0;
+  padding: 10px;
   position: relative;
   min-height: 112px;
 }
@@ -3400,12 +3561,9 @@ body[controller="MaquinasGet"] .scrollable ul li > div.info label .v{
 /*
  * Maquina -> lst
  */
-body[controller="MaquinasLst"] .scrollable-content{
-  margin-top: 5px;
-}
 body[controller="MaquinasLst"] .scrollable .scrollable-content ul li{
   border-bottom: 1px solid #EEE;
-  padding: 10px 4px;
+  padding: 10px 10px;
   position: relative;
 }
 
@@ -3474,6 +3632,10 @@ body[controller="MaquinasLst"] .scrollable ul li > div.info span i{
   color: #043d22;
   vertical-align: unset;
 }
+body[controller="MaquinasLst"] .scrollable ul li > div.info .mdi-action-lock-outline{
+  display: inline-block;
+  color: red;
+}
 body[controller="MaquinasLst"] .scrollable ul li > div.info b{
   font-size: 13px;
   font-weight: 600;
@@ -3488,7 +3650,9 @@ body[controller="MaquinasLst"] .scrollable ul li > div.info h4{
   line-height: 1.3;
   font-family: unset;
 }
-
+body[controller="MaquinasLst"] .scrollable ul li > div.info h4.endereco{
+  font-size: 14px;
+}
 /*
  * Local atual
  */
@@ -3510,6 +3674,8 @@ body[controller="MaquinasLst"] .scrollable ul li > div.info h4{
   color: #043d22;
   font-weight: 500;
   font-size: 17px;
+  font-family: 'Montserrat',sans-serif;
+  padding: 0 15px;
 }
 
 .mdi-maps-directions-bike:before {
@@ -3539,6 +3705,10 @@ a.a-btn i{
 /*
  * Payment
  */
+body[controller="PaymentStart"] .scrollable{
+  padding: 0 10px;
+}
+
 body[controller="PaymentStart"] .scrollable > #Payment > md-content .btn{
   float: right;
   background: rgba(238, 238, 238, 0.6);
@@ -3594,7 +3764,7 @@ body[controller="PaymentStart"] .scrollable > #Payment > md-content{
   margin-top: 15px;
   background: #FFF;
   margin: 100px 0;
-  padding: 10px;
+  padding: 10px 10px 65px;
   border-radius: 0;
   overflow: auto;
   max-height: 84%;
@@ -4026,67 +4196,74 @@ margin-top: 3em;
 /*
  * Historico / Voucher
  */
-body[controller="VoucherLst"] ul li,
-body[controller="HistoricoTransacoesLst"] ul li{
+body[controller="VoucherLst"] md-content ul li,
+body[controller="HistoricoTransacoesLst"] md-content ul li{
   border-bottom: 1px solid rgba(11, 99, 64, 0.1);
-  padding: 10px 0;
+  padding: 10px;
   position: relative;
 }
 
-body[controller="VoucherLst"] ul li label,
-body[controller="HistoricoTransacoesLst"] ul li label{
+body[controller="VoucherLst"] md-content ul li label,
+body[controller="HistoricoTransacoesLst"] md-content ul li label{
   display: block;
   color: #ccc;
   font-size: 10px;
 }
 
-body[controller="VoucherLst"] ul li i,
-body[controller="HistoricoTransacoesLst"] ul li i{
+body[controller="Faq"] md-content,
+body[controller="HistoricoTransacoesGet"] md-content,
+body[controller="VoucherGet"] md-content{
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+body[controller="VoucherLst"] md-content ul li i,
+body[controller="HistoricoTransacoesLst"] md-content ul li i{
   margin: 0;
   font-size: 13px;
 }
 
-body[controller="VoucherLst"] ul li span,
-body[controller="HistoricoTransacoesLst"] ul li span{
+body[controller="VoucherLst"] md-content ul li span,
+body[controller="HistoricoTransacoesLst"] md-content ul li span{
   display: block;
   font-size: 12px;
   font-weight: 600;
 }
 
-body[controller="VoucherLst"] ul li span i,
-body[controller="HistoricoTransacoesLst"] ul li span i{
+body[controller="VoucherLst"] md-content ul li span i,
+body[controller="HistoricoTransacoesLst"] md-content ul li span i{
   font-weight: normal;
 }
 
-body[controller="VoucherLst"] ul li > b,
-body[controller="HistoricoTransacoesLst"] ul li > b{
+body[controller="VoucherLst"] md-content ul li > b,
+body[controller="HistoricoTransacoesLst"] md-content ul li > b{
   position: absolute;
-  right: -8px;
+  right: 0;
   top: 7px;
   font-weight: 600;
 }
 
-body[controller="VoucherLst"] ul li b i,
-body[controller="HistoricoTransacoesLst"] ul li b i{
+body[controller="VoucherLst"] md-content ul li b i,
+body[controller="HistoricoTransacoesLst"] md-content ul li b i{
   color: #043d22;
   font-size: 26px;
   vertical-align: middle;
   padding-left: 15px;
 }
 
-body[controller="VoucherLst"] ul li b[n="1"],
-body[controller="HistoricoTransacoesLst"] ul li b[n="1"]{
+body[controller="VoucherLst"] md-content ul li b[n="1"],
+body[controller="HistoricoTransacoesLst"] md-content ul li b[n="1"]{
   color: #e94847;
 }
 
-body[controller="VoucherLst"] ul li:last-child,
-body[controller="HistoricoTransacoesLst"] ul li:last-child{
+body[controller="VoucherLst"] md-content ul li:last-child,
+body[controller="HistoricoTransacoesLst"] md-content ul li:last-child{
   border-bottom: 0;
 }
 
 body[controller="VoucherLst"] .scrollable > div#codigo{
   background: #fcfcfc;
-  margin: 0 -13px;
+  margin: 0 0;
   padding: 10px;
 }
 
@@ -4110,20 +4287,20 @@ body[controller="VoucherLst"] .scrollable > div#codigo a{
 /*
  * Suporte
  */
-body[controller="Suporte"] li{
+body[controller="Suporte"] .scrollable li{
   border-bottom: 1px solid #EEE;
   padding: 10px 4px;
   position: relative;
   text-align: center;
 }
-body[controller="Suporte"] li i{
+body[controller="Suporte"] .scrollable li i{
   font-size: 30px;
 }
-body[controller="Suporte"] li img{
+body[controller="Suporte"] .scrollable li img{
   width: 30px;
   margin: 7px 0;
 }
-body[controller="Suporte"] li a{
+body[controller="Suporte"] .scrollable li a{
   color: #043d22;
   font-size: 20px;
   display: block;
@@ -4373,4 +4550,103 @@ body[controller="Index"] .scrollable-content #Produtos ul li > div.info label.to
 body[controller="Index"] .scrollable-content #Produtos ul li > div.info label .v{
   font-size: 20px;
   text-decoration: underline;
+}
+
+/*
+ * Card
+ */
+body[controller="Card"] .scrollable-content > ul li{
+  border: 5px solid #444;
+  height: 130px;
+  width: 220px;
+  margin: 20px auto;
+  border-radius: 15px;
+  text-align: center;
+  padding: 10px;
+  position: relative;
+}
+body[controller="Card"] .scrollable-content > ul li i.mdi-content-add-circle{
+  font-size: 69px;
+}
+body[controller="Card"] .scrollable-content > ul li img{
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+body[controller="Card"] .scrollable-content > ul li label{
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  font-size: 12px;
+}
+body[controller="Card"] .scrollable-content > ul li span{
+  position: absolute;
+  top: 61px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  letter-spacing: 2px;
+  font-size: 15px;
+}
+body[controller="Card"] .scrollable-content > ul li p{
+  position: absolute;
+  width: 100%;
+  font-size: 11px;
+  left: 0;
+  top: 45px;
+  margin: 0;
+}
+body[controller="Card"] .scrollable-content > ul li i.mdi-action-highlight-remove{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 32px;
+  margin: 0px 11px;
+  color: #d93025;
+}
+body[controller="PaymentStart"] #btnConfirme{
+  background: #043d22 !important;
+  color: #FFF;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 10;
+}
+body[controller="MinhaCarteira"] #btnConfirme{
+  padding: 3px 13px;
+  font-size: 19px !important;
+  display: block;
+  background: #043d22 !important;
+  border-radius: 3px;
+  font-size: 15px;
+  color: #fff !important;
+  border: 1px solid rgba(11, 99, 64, 0.6);
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  height: auto;
+  z-index: 10;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+body[controller="MinhaCarteira"] #btnConfirme i{
+  vertical-align: baseline;
+}
+body[controller="VoucherGet"] #btnUtilizarVoucher{
+  padding: 3px 13px;
+  font-size: 19px !important;
+  display: block;
+  background: #043d22 !important;
+  border-radius: 3px;
+  font-size: 15px;
+  color: #fff !important;
+  border: 1px solid rgba(11, 99, 64, 0.6);
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  height: auto;
+  z-index: 10;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+body[controller="VoucherGet"] #btnUtilizarVoucher i{
+  vertical-align: baseline;
 }

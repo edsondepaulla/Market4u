@@ -57,6 +57,23 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             templateUrl: "view/conecte-se/codigo.html",
             controller: 'ConecteSeCodigo'
         })
+        .when("/card", {
+            templateUrl: "view/conecte-se/card.html",
+            controller: 'Card',
+            resolve: {
+                ReturnData: function ($route) {
+                    return Factory.ajax(
+                        {
+                            action: 'cadastro/card'
+                        }
+                    );
+                }
+            }
+        })
+        .when("/add-card", {
+            templateUrl: "view/conecte-se/addcard.html",
+            controller: 'AddCard'
+        })
         .when("/minha-carteira", {
             templateUrl: "view/conecte-se/carteira.html",
             controller: 'MinhaCarteira',
@@ -88,6 +105,12 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             controller: 'AtualizarApp',
             resolve: {
                 ReturnData: function ($route) {
+                    return Factory.ajax(
+                        {
+                            action: 'options/atualizarapp'
+                        }
+                    );
+
                     if (Page.active) {
                         return Factory.ajax(
                             {
@@ -327,7 +350,8 @@ app.controller('Suporte', function($rootScope) {
 });
 
 app.controller('AtualizarApp', function($rootScope, $scope, ReturnData) {
-    $rootScope.border_top = 1;
+    $rootScope.BARRA_SALDO = false;
+    $rootScope.NO_WHATSAPP = false;
     $rootScope.Titulo = "Nova versão";
     QRScannerConf.destroy();
     $rootScope.REDIRECT = '';
@@ -335,6 +359,7 @@ app.controller('AtualizarApp', function($rootScope, $scope, ReturnData) {
 });
 
 app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route, $mdSelect, $animate, $sce, deviceDetector) {
+    $rootScope.usuario = Login.getData();
     navigator.geolocation;
     Factory.prepare();
 
@@ -347,68 +372,6 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
 
     // Get login
     Login.get();
-
-    // User
-    $rootScope.usuario = Login.getData();
-
-    $rootScope.NO_WHATSAPP = true;
-    $rootScope.$on('$routeChangeStart', function () {
-        $rootScope.menuClose();
-    });
-
-    $rootScope.controller = 'Index';
-    $rootScope.$on('$routeChangeSuccess', function () {
-        $rootScope.NO_WHATSAPP = true;
-        $rootScope.border_top = 0;
-        $rootScope.controller = $route.current.controller;
-        $rootScope.toolbar = true;
-        setTimeout(function () {
-            var position = $('.scrollable-content').position();
-            if (position)
-                $('.scrollable-content').css('padding-bottom', position.top + 70);
-            $('body').attr('scroll-top', $('.scrollable-content:visible').scrollTop() || 0);
-        }, 1000);
-        if($rootScope.controller != 'Index' || (parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1) == 1)
-            Payment.clear(1);
-    });
-
-    $rootScope.trustAsHtml = function (string) {
-        return $sce.trustAsHtml(string);
-    };
-
-    $rootScope.AppBrowser = function (open_browser) {
-        if (open_browser.url)
-            Factory.AppBrowser(open_browser.url, open_browser);
-    };
-
-    $rootScope.TEXT_WHATSAPP = '';
-    $rootScope.whatsapp = function () {
-        if ($rootScope.usuario.WHATSAPP.ATIVO) {
-            Factory.AppBrowser(
-                $rootScope.usuario.WHATSAPP.url + $rootScope.TEXT_WHATSAPP,
-                $rootScope.usuario.WHATSAPP
-            );
-        }
-    };
-
-    $rootScope.backpageTop = function () {
-        $('.scrollable:first').attr('backpage', 1);
-        window.history.go(-1);
-    };
-
-    $rootScope.logout = function () {
-        Login.logout();
-        $rootScope.location('#!/');
-    };
-
-    $rootScope.swipeLeft = function () {
-        $rootScope.menuClose();
-    };
-
-    $rootScope.swipeRight = function () {
-        if (!$('[ng-controller="Modal"]').is(':visible'))
-            $rootScope.menuOpen();
-    };
 
     $rootScope.location = function (url, external, active) {
         if (active)
@@ -441,8 +404,101 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                 Page.start();
 
             window.location = url;
-            $route.reload();
+            if (url != '#!/conecte-se')
+                $route.reload();
         }
+    };
+
+    $rootScope.NO_WHATSAPP = true;
+    $rootScope.BARRA_SALDO = true;
+    $rootScope.$on('$routeChangeStart', function () {
+        $rootScope.BARRA_SALDO = true;
+        $rootScope.menuClose();
+    });
+
+    $rootScope.controller = 'Maps';
+    $rootScope.$on('$routeChangeSuccess', function () {
+        switch ($route.current.controller) {
+            case 'ConecteSe':
+            case 'Cadastro':
+            case 'Suporte':
+            case 'SemInternet':
+            case 'AtualizarApp':
+            case 'Faq':
+            case 'Token':
+            case 'ConecteSeCodigo':
+                break;
+            default:
+                clearTimeout(Factory.timeout);
+                Factory.timeout = setTimeout(function () {
+                    if (parseInt(Login.getData().ID)) {
+                        if (!parseInt(Login.getData().DADOS_ATUALIZADO))
+                            $rootScope.location('#!/cadastro');
+                    } else {
+                        Factory.alert("Conecte-se para utilizar o App Market4u :)");
+                        $rootScope.location('#!/conecte-se');
+                    }
+                }, 1000);
+                break;
+        }
+        $rootScope.NO_WHATSAPP = true;
+        $rootScope.border_top = 0;
+        $rootScope.controller = $route.current.controller;
+        $rootScope.toolbar = true;
+        setTimeout(function () {
+            var position = $('.scrollable-content').position();
+            if (position)
+                $('.scrollable-content').css('padding-bottom', position.top + 90);
+            $('body').attr('scroll-top', $('.scrollable-content:visible').scrollTop() || 0);
+        }, 1000);
+        if($rootScope.controller != 'Index' || (parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1) == 1)
+            Payment.clear(1);
+    });
+
+    $rootScope.trustAsHtml = function (string) {
+        return $sce.trustAsHtml(string);
+    };
+
+    $rootScope.AppBrowser = function (open_browser) {
+        if (open_browser.url)
+            Factory.AppBrowser(open_browser.url, open_browser);
+    };
+
+    $rootScope.TEXT_WHATSAPP = '';
+    $rootScope.whatsapp = function () {
+        if ($rootScope.usuario.WHATSAPP.ATIVO) {
+            Factory.AppBrowser(
+                $rootScope.usuario.WHATSAPP.url + $rootScope.TEXT_WHATSAPP,
+                $rootScope.usuario.WHATSAPP
+            );
+        }
+    };
+
+    $rootScope.backpageTop = function () {
+        $('.scrollable:first').attr('backpage', 1);
+        window.history.go(-1);
+    };
+
+    $rootScope.clickPhoto = function () {
+        try {
+            $('#fotoCadastro').trigger('click');
+        } catch (e) {
+            $('#fotoCadastro').click();
+        }
+    };
+
+    $rootScope.logout = function () {
+        Login.logout();
+        $rootScope.location('#!/conecte-se');
+    };
+
+    $rootScope.swipeLeft = function () {
+        $rootScope.menuClose();
+    };
+
+    $rootScope.swipeRight = function () {
+        if (!$('[ng-controller="Modal"]').is(':visible'))
+            $rootScope.menuOpen();
     };
 
     // Menu
@@ -463,6 +519,18 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
             titulo: 'Vouchers',
             url: '#!/voucher',
             icon: 'mdi-action-loyalty',
+            logado: 0
+        },
+        {
+            titulo: 'Minha carteira',
+            url: '#!/minha-carteira',
+            icon: 'mdi-editor-attach-money',
+            logado: 0
+        },
+        {
+            titulo: 'Meus cartões',
+            url: '#!/card',
+            icon: 'mdi-action-credit-card',
             logado: 0
         },
         {
@@ -505,37 +573,46 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
         Factory.alert('Dados de cartão de créditos inválidos!');
     };
     $rootScope.pagseguro = function (paymentPagSeguro, origem) {
-        $rootScope.PAGSEGURO_SESSIONID = null;
-        try {
-            Factory.ajax(
-                {
-                    action: 'payment/pagseguro'
-                },
-                function (data) {
-                    if (data.SESSIONID) {
-                        $rootScope.PAGSEGURO_SESSIONID = data.SESSIONID;
-                        PagSeguroDirectPayment.setSessionId($rootScope.PAGSEGURO_SESSIONID);
-                        if (parseInt(paymentPagSeguro))
-                            $rootScope.paymentPagSeguro(origem);
-
-                        PagSeguroDirectPayment.getPaymentMethods({
-                            success: function (data) {
-                                if (data.paymentMethods) {
-                                    var seq = 0;
-                                    $rootScope.BANDEIRAS = {};
-                                    $.each(data.paymentMethods.CREDIT_CARD.options, function (idx, item) {
-                                        $rootScope.BANDEIRAS[seq] = config.url_api[config.ambiente] + 'skin/default/images/bandeira_cc/' + item.name.toLowerCase() + '.png';
-                                        seq++;
-                                    });
-                                }
-                            }
-                        });
-                    }
-                }
-            );
-        } catch (e) {
-
+        var time = 0;
+        if (!$('#api_pagseguro').length) {
+            time = 3000;
+            $('body').append('<script id="api_pagseguro" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>');
         }
+        $(document).ready(function () {
+            setTimeout(function () {
+                $rootScope.PAGSEGURO_SESSIONID = null;
+                try {
+                    Factory.ajax(
+                        {
+                            action: 'payment/pagseguro'
+                        },
+                        function (data) {
+                            if (data.SESSIONID) {
+                                $rootScope.PAGSEGURO_SESSIONID = data.SESSIONID;
+                                PagSeguroDirectPayment.setSessionId($rootScope.PAGSEGURO_SESSIONID);
+                                if (parseInt(paymentPagSeguro))
+                                    $rootScope.paymentPagSeguro(origem);
+
+                                PagSeguroDirectPayment.getPaymentMethods({
+                                    success: function (data) {
+                                        if (data.paymentMethods) {
+                                            var seq = 0;
+                                            $rootScope.BANDEIRAS = {};
+                                            $.each(data.paymentMethods.CREDIT_CARD.options, function (idx, item) {
+                                                $rootScope.BANDEIRAS[seq] = config.url_api[config.ambiente] + 'skin/default/images/bandeira_cc/' + item.name.toLowerCase() + '.png';
+                                                seq++;
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    );
+                } catch (e) {
+
+                }
+            }, time);
+        });
     };
     var verifyLimitFormasPg = null;
     $rootScope.verifyLimitFormasPg = function () {
@@ -565,12 +642,21 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
             if (!$('#boxCC:hover').length) {
                 PG.ACTIVE = 0;
                 $rootScope.FORMA_PAGAMENTO = null;
+                $rootScope.CARD = null;
             }
         } else {
             if (PG.TIPO != 'SALDO' && PG.TIPO != 'VOUCHER') {
                 $.each($rootScope.FORMAS_PG, function (idx, item_each) {
                     item_each.ACTIVE = 0;
                 });
+                if (PG.TIPO == 'CC') {
+                    if (PG.LST) {
+                        $.each(PG.LST, function (idx_cc, item_each_cc) {
+                            if (item_each_cc.ACTIVE)
+                                $rootScope.CARD = item_each_cc.VALS;
+                        });
+                    }
+                }
                 PG.ACTIVE = 1;
                 $rootScope.FORMA_PAGAMENTO = PG;
                 setTimeout(function () {
@@ -697,12 +783,26 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                     $rootScope.FORMA_PAGAMENTO = item_each;
             });
             if (parseInt($rootScope.FORMA_PAGAMENTO.CC)) {
-                if (!$rootScope.FORMA_PAGAMENTO.cardNumber)
-                    $('[id="cardNumber"]').focus();
-                else if (!$rootScope.FORMA_PAGAMENTO.expirationMonthYear)
-                    $('[id="expirationMonthYear"]').focus();
-                else
+                if ($rootScope.CARD) {
+                    $rootScope.FORMA_PAGAMENTO.cardNumber = $rootScope.CARD[1];
+                    $rootScope.FORMA_PAGAMENTO.expirationMonthYear = $rootScope.CARD[2];
+                    $rootScope.FORMA_PAGAMENTO.cvv = $rootScope.CARD[3];
+                    $rootScope.FORMA_PAGAMENTO.cardName = $rootScope.CARD[5];
                     valido = true;
+                } else {
+                    $rootScope.FORMA_PAGAMENTO.CC_BANDEIRA = $('#cardBandeira').val();
+                    $rootScope.FORMA_PAGAMENTO.cvv = $('#cvv:visible').val();
+                    if (!$rootScope.FORMA_PAGAMENTO.cardName)
+                        $('#cardName:visible').focus();
+                    else if (!$rootScope.FORMA_PAGAMENTO.cardNumber)
+                        $('#cardNumber:visible').focus();
+                    else if (!$rootScope.FORMA_PAGAMENTO.expirationMonthYear)
+                        $('#expirationMonthYear:visible').focus();
+                    else if (!$rootScope.FORMA_PAGAMENTO.cvv)
+                        $('#cvv:visible').focus();
+                    else
+                        valido = true;
+                }
             } else
                 valido = true;
         } else if ($rootScope.VALOR_PG)
@@ -733,6 +833,19 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     };
     $rootScope.STEPS = [];
     $rootScope.transacaoId = 0;
+    $scope.selectCard = function (ITENS, V) {
+        if (!V.ACTIVE) {
+            $rootScope.FORMA_PAGAMENTO.cardNumber = '';
+            $rootScope.FORMA_PAGAMENTO.cardName = '';
+            $rootScope.FORMA_PAGAMENTO.expirationMonthYear = '';
+            $rootScope.FORMA_PAGAMENTO.cvv = '';
+        }
+        $.each(ITENS, function (idx, item_each) {
+            item_each.ACTIVE = 0;
+        });
+        V.ACTIVE = 1;
+        $rootScope.CARD = V.ID ? V.VALS : null;
+    };
 });
 
 app.directive('onErrorSrc', function() {
@@ -771,10 +884,11 @@ app.directive('input', function() {
             if (event.which === 13) {
                 $(this).blur();
                 $(this).closest('form').find('.btn-salvar[type="submit"]').trigger('click');
-            }
+            } else if ($(this).attr('id') == 'postalcode')
+                inputEvents(this, 'key');
         });
         element.bind("blur", function (event) {
-            inputEvents(this);
+            inputEvents(this, 'blur');
         });
     };
 });
@@ -785,7 +899,7 @@ function showPassword() {
 }
 
 var setTimeoutClearKeyPress = null;
-function inputEvents(_this) {
+function inputEvents(_this, _bind) {
     var _this = $(_this);
     clearTimeout(setTimeoutClearKeyPress);
     setTimeoutClearKeyPress = setTimeout(function () {
@@ -799,7 +913,7 @@ function inputEvents(_this) {
                     _invalid = 1;
                 break;
             case 'postalcode':
-                if (_value.length == 9 && _value.length) {
+                if (_value.length == 9 && _value.length && _bind == 'key') {
                     $.ajax({
                         url: 'https://viacep.com.br/ws/' + _value.replace('-', '') + '/json/',
                         type: 'GET',
@@ -811,6 +925,15 @@ function inputEvents(_this) {
                                 $('#city').val(data.localidade);
                                 $('#state').val(data.uf);
                             }
+                        },
+                        beforeSend: function() {
+                            $('#carregando').show();
+                        },
+                        complete: function() {
+                            $('#carregando').hide();
+                        },
+                        error: function () {
+                            $('#carregando').hide();
                         }
                     });
                 }
@@ -845,23 +968,28 @@ function inputEvents(_this) {
             case 'cardNumber':
                 _value = _value.replace(/ /g, '');
                 if (_value.length >= 6) {
-                    PagSeguroDirectPayment.getBrand({
-                        cardBin: _value.substring(0, 6),
-                        success: function (data) {
-                            if (data.brand.name) {
-                                _invalid = 0;
-                                $('#imgBandeira').show().attr('src', config.url_api[config.ambiente] + 'skin/default/images/bandeira_cc/' + data.brand.name + '.png');
-                            } else {
-                                $('#imgBandeira').hide();
-                                _invalid = 1;
+                    if(Factory.$rootScope.PAGSEGURO_SESSIONID) {
+                        PagSeguroDirectPayment.getBrand({
+                            cardBin: _value.substring(0, 6),
+                            success: function (data) {
+                                if (data.brand.name) {
+                                    _invalid = 0;
+                                    $('#cardBandeira').val(data.brand.name);
+                                    $('#imgBandeira').show().attr('src', config.url_api[config.ambiente] + 'skin/default/images/bandeira_cc/' + data.brand.name + '.png');
+                                } else {
+                                    $('#cardBandeira').val('');
+                                    $('#imgBandeira').hide();
+                                    _invalid = 1;
+                                }
+                                verifyMsg(_verify, _invalid, _this);
+                            },
+                            error: function () {
+                                verifyMsg(_verify, 1, _this);
                             }
-                            verifyMsg(_verify, _invalid, _this);
-                        },
-                        error: function () {
-                            verifyMsg(_verify, 1, _this);
-                        }
-                    });
+                        });
+                    }
                 } else {
+                    $('#cardBandeira').val('');
                     $('#imgBandeira').hide();
                     _invalid = 0;
                 }
@@ -1003,17 +1131,22 @@ function validaCpf(cpf) {
     return result;
 }
 
-var mask = function(element, mask, length){
-    function inputHandler(masks, max, event) {
-        var c = event.target;
-        var v = c.value.replace(/\D/g, '');
-        var m = c.value.length > max ? 1 : 0;
-        VMasker(c).unMask();
-        VMasker(c).maskPattern(masks[m]);
-        c.value = VMasker.toPattern(v, masks[m]);
+var mask = function(element, mask, length) {
+    try {
+        function inputHandler(masks, max, event) {
+            var c = event.target;
+            var v = c.value.replace(/\D/g, '');
+            var m = c.value.length > max ? 1 : 0;
+            VMasker(c).unMask();
+            VMasker(c).maskPattern(masks[m]);
+            c.value = VMasker.toPattern(v, masks[m]);
+        }
+
+        var element = document.querySelector(element);
+        VMasker(element).maskPattern(mask[0]);
+        if (mask[1])
+            element.addEventListener('input', inputHandler.bind(undefined, mask, length), false);
+    } catch (e) {
+
     }
-    var element = document.querySelector(element);
-    VMasker(element).maskPattern(mask[0]);
-    if(mask[1])
-        element.addEventListener('input', inputHandler.bind(undefined, mask, length), false);
 };

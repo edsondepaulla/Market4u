@@ -14,7 +14,6 @@
         <div class="clearBoth"></div>
 
         <div id="boxPg" ng-include src="'view/payment/formas_pg.html'"></div>
-
-        <button id="btnConfirme" style="width: auto;display: block !important;" class="btn-salvar" type="button" ng-click="$root.confirmPayment('saldo')">CONFIRME</button>
     </form>
 </md-content>
+<a id="btnConfirme" class="a-btn" ng-click="$root.confirmPayment('saldo')"><i class="mdi mdi-navigation-check"></i> Confirme</a>

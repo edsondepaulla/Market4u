@@ -35,4 +35,6 @@
         <br><b>DATA</b><br>
         {{REG.DATAHORA}}
     </div>
+
+    <a ng-if="REG.TIPO=='S'" id="btnUtilizarVoucher" class="a-btn" ng-click="utilizarVoucher(REG.CODIGO)"><i class="mdi mdi-navigation-check"></i> Utilizar voucher</a>
 </md-content>

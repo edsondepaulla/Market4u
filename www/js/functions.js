@@ -34,7 +34,7 @@ var Factory = {
             }
         }
     },
-    timeoutVersaoNova: null,
+    timeoutCarregando: null,
     updatePage: function () {
 
     },
@@ -53,6 +53,7 @@ var Factory = {
             case 'login/get':
             case 'cadastro/setgeolocation':
             case 'maquinas/getpoints':
+            case 'payment/confirm':
             case 'payment/verify':
             case 'payment/pagseguro':
             case 'payment/cancel':
@@ -67,7 +68,7 @@ var Factory = {
             // Loading
             var diffCarregando = this.diffCarregando(params.action);
             if (diffCarregando) {
-                clearTimeout(Factory.timeout);
+                clearTimeout(Factory.timeoutCarregando);
                 $('#carregando').show();
                 Pace.restart();
             }
@@ -161,13 +162,13 @@ var Factory = {
                             return response;
                             break;
                         default:
-                            Factory.timeout = setTimeout(function () {
+                            Factory.timeoutCarregando = setTimeout(function () {
                                 if (diffCarregando) {
                                     $('#carregando').hide();
                                     $('.loadingLst').hide();
                                 }
                             }, 100);
-                            /*try {
+                            try {
                                 // Notificacoes
                                 if (response.data.NOTIFICACOES) {
                                     $.each(response.data.NOTIFICACOES, function (idx_each, val_each) {
@@ -177,7 +178,8 @@ var Factory = {
                                         }
                                     });
                                 }
-                            }catch (e) { }*/
+                            } catch (e) {
+                            }
                             try {
                                 if (Factory.$rootScope)
                                     Factory.$rootScope.loading = false;
@@ -192,7 +194,7 @@ var Factory = {
                                 }
 
                                 // Versao nova
-                                if(response.data.VERSAO_NOVA && params.action != 'options/atualizarapp') {
+                                if (response.data.VERSAO_NOVA && params.action != 'options/atualizarapp') {
                                     Page.start();
                                     window.location = '#!/atualizar-app';
                                 }
@@ -227,7 +229,7 @@ var Factory = {
                                 // Window open
                                 if (response.data.status == 1) {
                                     if (response.data.redirect)
-                                        Factory.$rootScope.location(response.data.redirect);
+                                        Factory.$rootScope.location(response.data.redirect, 0, response.data.redirect == '#!/cadastro' ? 1 : 0);
 
                                     var open_browser = response.data.open_browser;
                                     if (open_browser) {
@@ -248,12 +250,8 @@ var Factory = {
                             break;
                     }
                 }, function (data) {
-                    setTimeout(function () {
-                        if (diffCarregando) {
-                            $('#carregando').hide();
-                            $('.loadingLst').hide();
-                        }
-                    }, 500);
+                    $('#carregando').hide();
+                    $('.loadingLst').hide();
                     Factory.error(_form, data, functionError);
                 });
         }
@@ -283,8 +281,8 @@ var Factory = {
             }
         }
         if (open_browser.window_open) {
-            window.device = {platform: 'Browser'};
             try {
+                window.device = {platform: 'Browser'};
                 switch (open_browser.type) {
                     case 'load_url':
                         navigator.app.loadUrl(url, {openExternal: true});
@@ -297,7 +295,7 @@ var Factory = {
                         );
                         break;
                 }
-            } catch (e) {
+            }catch (e) {
                 window.open(
                     url,
                     open_browser.target ? open_browser.target : '_system',
@@ -334,6 +332,8 @@ var Factory = {
                 }
             });
         }, false);
+        if(!parseInt(Login.getData().ID))
+            window.location = '#!/conecte-se';
     }
 };
 

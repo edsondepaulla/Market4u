@@ -5,6 +5,7 @@ var Login = {
         MEUSALDO_ATIVADO: 0,
         WHATSAPP: [],
         MEUSALDO: 0,
+        GET_LOCAL: 0,
         MEUSALDO_FORMAT: 'R$ 0,00'
     },
     set: function (data) {
@@ -14,8 +15,11 @@ var Login = {
         // ID
         data.ID = data.ID ? data.ID : 0;
 
+        // Get local
+        data.GET_LOCAL = Login.data.GET_LOCAL ? 1 : 0;
+
         // Disconectado
-        if(parseInt(ID_OLD) && !parseInt(data.ID))
+        if (parseInt(ID_OLD) && !parseInt(data.ID))
             Factory.alert('Você foi disconectado!');
 
         // Saldo
@@ -34,8 +38,16 @@ var Login = {
         // Set data
         Login.data = data;
         Factory.$rootScope.usuario = data;
+        localStorage.setItem("CLIENTE", JSON.stringify(data));
     },
     getData: function () {
+        if(!Login.data.GET_LOCAL) {
+            var data = JSON.parse(localStorage.getItem("CLIENTE"));
+            if (data) {
+                Login.data = data;
+                Login.data.GET_LOCAL = 1;
+            }
+        }
         return Login.data;
     },
     setTimeoutLoginGet: null,
@@ -64,62 +76,68 @@ var Login = {
 
 app.controller('ConecteSe', function($rootScope, $scope, $routeParams, $q) {
     $rootScope.LogoBody = 1;
-    if(parseInt(Login.getData().ID)) {
-        $rootScope.location('#!/');
-    }else {
-        $rootScope.border_top = 1;
-        $rootScope.Titulo = "CONECTE-SE";
-        QRScannerConf.destroy();
+    $rootScope.NO_WHATSAPP = false;
+    $rootScope.BARRA_SALDO = false;
+    $rootScope.Titulo = "CONECTE-SE";
+    QRScannerConf.destroy();
 
-        $scope.entrar = function () {
-            var EMAIL = $rootScope.usuario.EMAIL;
-            var SENHA = $rootScope.usuario.SENHA;
-            var ESQUECEU_SENHA = $rootScope.usuario.ESQUECEU_SENHA;
-            if (!$('#formLogin').find('.ng-invalid').length && EMAIL && (ESQUECEU_SENHA ? true : SENHA)) {
-                Factory.ajax(
-                    {
-                        action: 'cadastro/login',
-                        form: $('#formLogin'),
-                        data: {
-                            EMAIL: $rootScope.usuario.EMAIL,
-                            SENHA: $rootScope.usuario.ESQUECEU_SENHA ? '' : $rootScope.usuario.SENHA,
-                            ESQUECEU_SENHA: $rootScope.usuario.ESQUECEU_SENHA ? 1 : 0
-                        }
-                    },
-                    function (data) {
-                        if (data.status == 1) {
-                            $rootScope.usuario.EMAIL = EMAIL;
-                            $rootScope.usuario.SENHA = SENHA;
-                            $rootScope.usuario.ESQUECEU_SENHA = ESQUECEU_SENHA;
-                            $rootScope.usuario.ENVIADO_PARA = data.ENVIADO_PARA;
-                        }
-                    }
-                );
-            } else if (!EMAIL || $('#formLogin').find('#email.ng-invalid').length)
-                $('#email').focus();
-            else if (!SENHA || $('#formLogin').find('#senha.ng-invalid').length)
-                $('#senha').focus();
-        };
-
-        $scope.login = function (action) {
+    $scope.entrar = function () {
+        var EMAIL = $rootScope.usuario.EMAIL;
+        var SENHA = $rootScope.usuario.SENHA;
+        var ESQUECEU_SENHA = $rootScope.usuario.ESQUECEU_SENHA;
+        if (!$('#formLogin').find('.ng-invalid').length && EMAIL && (ESQUECEU_SENHA ? true : SENHA)) {
             Factory.ajax(
                 {
-                    action: 'cadastro/' + action
+                    action: 'cadastro/login',
+                    form: $('#formLogin'),
+                    data: {
+                        EMAIL: $rootScope.usuario.EMAIL,
+                        SENHA: $rootScope.usuario.ESQUECEU_SENHA ? '' : $rootScope.usuario.SENHA,
+                        ESQUECEU_SENHA: $rootScope.usuario.ESQUECEU_SENHA ? 1 : 0
+                    }
+                },
+                function (data) {
+                    if (data.status == 1) {
+                        $rootScope.usuario.EMAIL = EMAIL;
+                        $rootScope.usuario.SENHA = SENHA;
+                        $rootScope.usuario.ESQUECEU_SENHA = ESQUECEU_SENHA;
+                        $rootScope.usuario.ENVIADO_PARA = data.ENVIADO_PARA;
+                    }
                 }
             );
-        };
-    }
+        } else if (!EMAIL || $('#formLogin').find('#email.ng-invalid').length)
+            $('#email').focus();
+        else if (!SENHA || $('#formLogin').find('#senha.ng-invalid').length)
+            $('#senha').focus();
+    };
+
+    $scope.login = function (action) {
+        Factory.ajax(
+            {
+                action: 'cadastro/' + action
+            }
+        );
+    };
 });
 
 app.controller('Cadastro', function($rootScope, $scope) {
-    $rootScope.border_top = 1;
+    $rootScope.BARRA_SALDO = false;
     $rootScope.LogoBody = 1;
-    $rootScope.Titulo = parseInt($rootScope.usuario.ID) ? "EDITAR SEUS DADOS" : "CADASTRA-SE";
+    $rootScope.Titulo = parseInt($rootScope.usuario.ID) ? "EDITAR SEUS DADOS" : "CADASTRAR-SE";
     QRScannerConf.destroy();
+    $rootScope.NO_WHATSAPP = false;
 
     // Atualizar dados
-    if (parseInt($rootScope.usuario.ID) && parseInt(Login.getData().ID) && !parseInt(Login.getData().DADOS_ATUALIZADO))
-        Factory.alert('Por favor, atualize seus dados!');
+    if (parseInt($rootScope.usuario.ID) && parseInt(Login.getData().ID) && !parseInt(Login.getData().DADOS_ATUALIZADO)) {
+        clearTimeout(Factory.timeout);
+        Factory.timeout = setTimeout(function () {
+            Factory.alert("Para continuar, por favor atualize seus dados :)");
+        }, 500);
+    }
+
+    // PagSeguro
+    if (!parseInt($rootScope.usuario.ID))
+        $rootScope.pagseguro();
 
     $scope.salvar = function () {
         $rootScope.usuario.DDI = 55;
@@ -150,6 +168,11 @@ app.controller('Cadastro', function($rootScope, $scope) {
                 }
             );
         } else {
+            USUARIO.CC_NAME = $('#cardName').val();
+            USUARIO.CC_NUMBER = $('#cardNumber').val();
+            USUARIO.CC_MONTHYEAR = $('#expirationMonthYear').val();
+            USUARIO.CC_CVV = $('#cvv').val();
+            USUARIO.CC_BANDEIRA = $('#cardBandeira').val();
             $rootScope.usuario.NOVO = true;
             Factory.ajax(
                 {
@@ -171,9 +194,37 @@ app.controller('Cadastro', function($rootScope, $scope) {
 
 app.controller('ConecteSeCodigo', function($rootScope, $scope, $routeParams) {
     if (Page.active) {
-        $rootScope.border_top = 1;
-        $rootScope.Titulo = "Insira seu código";
+        $rootScope.BARRA_SALDO = false;
+        $rootScope.Titulo = "Autenticação de dois fatores";
         QRScannerConf.destroy();
+
+        $scope.reenviarCodSms = function (DATA) {
+            var _function = function () {
+                Factory.ajax(
+                    {
+                        action: 'cadastro/sms',
+                        data: DATA
+                    },
+                    function (data) {
+                        Factory.alert("Verifique suas mensagens no seu celular!")
+                    }
+                );
+            };
+            try {
+                navigator.notification.confirm(
+                    'Reenviar código para SMS?',
+                    function (buttonIndex) {
+                        if (buttonIndex == 1)
+                            _function();
+                    },
+                    'Confirmar',
+                    'Sim,Não'
+                );
+            } catch (e) {
+                if (confirm('Reenviar código para SMS?'))
+                    _function();
+            }
+        };
 
         $scope.seguinte = function () {
             Factory.ajax(
@@ -199,13 +250,92 @@ app.controller('ConecteSeCodigo', function($rootScope, $scope, $routeParams) {
         window.history.go(-1);
 });
 
+app.controller('Card', function($rootScope, $scope, $routeParams, ReturnData) {
+    $rootScope.Titulo = "Meus cartões";
+    QRScannerConf.destroy();
+    $scope.LST = ReturnData.LST;
+
+    $scope.remove = function (ID) {
+        var _function = function () {
+            Factory.ajax(
+                {
+                    action: 'cadastro/cardremove',
+                    data: {
+                        ID: ID
+                    }
+                },
+                function (data) {
+                    if (typeof data.LST != 'undefined')
+                        $scope.LST = data.LST;
+                }
+            );
+        };
+        try {
+            navigator.notification.confirm(
+                'Remover cartão de crédito?',
+                function (buttonIndex) {
+                    if (buttonIndex == 1)
+                        _function();
+                },
+                'Confirmar',
+                'Sim,Não'
+            );
+        } catch (e) {
+            if (confirm('Remover cartão de crédito?'))
+                _function();
+        }
+    };
+});
+
+app.controller('AddCard', function($rootScope, $scope) {
+    $rootScope.Titulo = "Adicionar";
+    QRScannerConf.destroy();
+
+    $scope.salvar = function () {
+        if (!$('#cardName').val().length)
+            $('#cardName').focus();
+        else if (!$('#cardNumber').val().length)
+            $('#cardNumber').focus();
+        else if (!$('#expirationMonthYear').val().length)
+            $('#expirationMonthYear').focus();
+        else if (!$('#cvv').val().length)
+            $('#cvv').focus();
+        else if(!parseInt($('#formCadastro').attr('invalid'))) {
+            Factory.ajax(
+                {
+                    action: 'cadastro/addcard',
+                    data: {
+                        CC_NAME: $('#cardName').val(),
+                        CC_NUMBER: $('#cardNumber').val(),
+                        CC_MONTHYEAR: $('#expirationMonthYear').val(),
+                        CC_CVV: $('#cvv').val(),
+                        CC_BANDEIRA: $('#cardBandeira').val()
+                    }
+                },
+                function (data) {
+                    $rootScope.location('#!/card');
+                }
+            );
+        }
+    };
+
+    // PagSeguro
+    $rootScope.pagseguro();
+});
+
 app.controller('MinhaCarteira', function($rootScope, $scope, $routeParams, ReturnData) {
-    $rootScope.border_top = 1;
+    $rootScope.BARRA_SALDO = false;
     $rootScope.Titulo = "Minha Carteira";
     QRScannerConf.destroy();
 
     $rootScope.FORMA_PAGAMENTO = null;
     $rootScope.FORMAS_PG = ReturnData.FORMAS_PG;
+
+    // PagSeguro
+    $.each(ReturnData.FORMAS_PG, function (idx, f_pg) {
+        if (f_pg.GATEWAY == 'PAGSEGURO')
+            $rootScope.pagseguro();
+    });
 
     $rootScope.VALOR_PG = 20;
     $scope.itens = [
@@ -238,9 +368,6 @@ app.controller('MinhaCarteira', function($rootScope, $scope, $routeParams, Retur
         item.active = 1;
         $rootScope.VALOR_PG = item.value;
     };
-
-    // PagSeguro
-    $rootScope.pagseguro();
 });
 
 app.controller('VoucherLst', function($rootScope, $scope, $route, $routeParams, ReturnData) {
@@ -280,6 +407,21 @@ app.controller('VoucherGet', function($rootScope, $scope, $routeParams, ReturnDa
     $rootScope.Titulo = "Voucher - Detalhes";
     QRScannerConf.destroy();
     $scope.REG = ReturnData;
+
+    $scope.utilizarVoucher = function (CODIGO) {
+        Factory.ajax(
+            {
+                action: 'cadastro/addvoucher',
+                data: {
+                    ADD_VOUCHER: CODIGO
+                }
+            },
+            function (data) {
+                if (data.ATUALIZAR)
+                    $rootScope.location('#!/historico-transacoes');
+            }
+        );
+    };
 });
 
 app.controller('HistoricoTransacoesLst', function($rootScope, $scope, $routeParams, ReturnData) {
@@ -295,10 +437,17 @@ app.controller('HistoricoTransacoesLst', function($rootScope, $scope, $routePara
 
 app.controller('HistoricoTransacoesGet', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.border_top = 1;
-    $rootScope.Titulo = "Histórico de transações - Detalhes";
+    $rootScope.Titulo = "Hist. de transações - Detalhes";
     QRScannerConf.destroy();
     $scope.REG = ReturnData;
 });
+
+function box(){
+    $('.box1, .box').click(function () {
+        $(this).find('input').focus();
+        $(this).find('select').focus();
+    });
+}
 
 function fotoCadastro(){
     $('#fotoCadastro').change(function(){

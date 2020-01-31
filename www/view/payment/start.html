@@ -23,10 +23,10 @@
 
         <div id="boxPg" ng-include src="'view/payment/formas_pg.html'"></div>
 
-        <button id="btnConfirme" class="btn" ng-click="$root.confirmPayment('compra')">FINALIZAR COMPRA</button>
         <div class="clearBoth"></div>
     </md-content>
 </div>
+<a ng-if="$root.showPaymentFlag" id="btnConfirme" class="btn" ng-click="$root.confirmPayment('compra')">FINALIZAR COMPRA</a>
 
 <div id="btns">
     <a class="a-btn" ng-if="showBtnVoltar" ng-click="location('#!/')"><i class="mdi mdi-action-home"></i> Voltar ao início</a>

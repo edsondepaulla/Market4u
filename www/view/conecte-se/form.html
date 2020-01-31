@@ -2,10 +2,10 @@
     <form id="formCadastro" class="form" onsubmit="return false;" autocomplete="off" method="post">
         <h2 ng-if="!usuario.ID">Preencha seus dados</h2>
 
-        <div id="boxImg" ng-if="usuario.ID">
+        <div id="boxImg">
             <input style="display: none" type="file" id="fotoCadastro" name="fotoCadastro" ext="png,jpg,jpge" />
-            <img id="fotoCadastroImg" onclick="$('#fotoCadastro').click();" src="{{$root.usuario.url_avatar}}" onerror="onErrorUser(this)" alt="Enviar foto" width="35" height="35" border="0" />
-            <i onclick="$('#fotoCadastro').click();" class="mdi mdi-image-photo-camera"></i>
+            <img id="fotoCadastroImg" ng-click="clickPhoto()" src="{{$root.usuario.url_avatar}}" onerror="onErrorUser(this)" alt="Enviar foto" width="35" height="35" border="0" />
+            <i ng-click="clickPhoto()" class="mdi mdi-image-photo-camera"></i>
         </div>
         <div id="saldo" class="float-right" ng-if="usuario.ID">
             <b ng-if="usuario.MEUSALDO_ATIVADO">{{usuario.MEUSALDO_FORMAT}}</b>
@@ -14,27 +14,27 @@
         </div>
         <div class="clearBoth"></div>
 
-        <label class="margin_t_10">Nome completo</label>
+        <label for="nome_completo" class="margin_t_10">Nome completo</label>
         <div class="box1">
             <input type="text" id="nome_completo" placeholder="Insira seu nome completo" ng-model="$root.usuario.NOME" />
             <span class="msgValidator">Insira seu nome completo</span>
         </div>
 
-        <label class="margin_t_10">E-mail</label>
+        <label for="email" class="margin_t_10">E-mail</label>
         <div class="box1">
             <input placeholder="Insira seu e-mail válido" type="email" id="email" ng-model="$root.usuario.EMAIL" />
             <span class="msgValidator">E-mail inválido</span>
             <span class="msgValidator2">E-mail já utilizado</span>
         </div>
 
-        <label class="margin_t_10">{{usuario.ID?'Nova senha':'Senha'}}</label>
+        <label for="senha" class="margin_t_10">{{usuario.ID?'Nova senha':'Senha'}}</label>
         <div class="box1" id="boxSenha">
             <input type="password" id="senha" placeholder="Insira sua senha" ng-model="$root.usuario.SENHA" />
             <i id="showPassword" onclick="showPassword()" class="mdi mdi-action-visibility"></i>
             <span class="msgValidator">Possuir no mínino 8 caracteres</span>
         </div>
 
-        <label class="margin_t_10">Número de celular</label>
+        <label for="numero_celular" class="margin_t_10">Número de celular</label>
         <div class="box" id="boxTelefone">
             <label>
                 <span>+55</span>
@@ -43,57 +43,94 @@
             <span class="msgValidator">Insira um número de celular válido</span>
         </div>
 
-        <div class="margin_t_10" ng-show="usuario.ID">
-            <label>Data de nascimento</label>
-            <div class="box1">
-                <input type="text" id="data_nascimento" placeholder="99/99/9999" ng-model="$root.usuario.DATA_NASCIMENTO" />
-                <span class="msgValidator">Data de nascimento inválido</span>
-            </div>
+        <label for="data_nascimento" class="margin_t_10">Data de nascimento</label>
+        <div class="box1">
+            <input type="text" id="data_nascimento" placeholder="99/99/9999" ng-model="$root.usuario.DATA_NASCIMENTO" />
+            <span class="msgValidator">Data de nascimento inválido</span>
+        </div>
 
-            <h2 style="margin: 20px 0 5px;">Dados para pagamento</h2>
-            <label class="margin_t_10">CPF</label>
-            <div class="box1">
-                <input type="text" id="cpf" placeholder="999.999.999-99" ng-model="$root.usuario.CPF" />
-                <span class="msgValidator">CPF inválido</span>
-            </div>
+        <h2 style="margin: 20px 0 5px;">Dados para pagamento</h2>
+        <label for="cpf" class="margin_t_10">CPF</label>
+        <div class="box1">
+            <input type="text" id="cpf" placeholder="999.999.999-99" ng-model="$root.usuario.CPF" />
+            <span class="msgValidator">CPF inválido</span>
+        </div>
 
-            <label class="margin_t_10">CEP</label>
+        <div ng-if="!usuario.ID" id="boxCC">
+            <b class="margin_t_5">Cartão de crédido<i style="font-weight: normal"> - Opcional</i></b>
+            <label for="cardName" class="margin_t_5">Nome do dono do cartão</label>
             <div class="box1">
-                <input type="text" id="postalcode" placeholder="99999-999" ng-model="$root.usuario.POSTALCODE" />
-                <span class="msgValidator">CEP inválido</span>
+                <input type="text" id="cardName" ng-model="$root.usuario.CC_NAME" placeholder="Ex: JOÃO DA SILVA" />
             </div>
+            <label for="cardNumber" class="margin_t_10">Número do cartão</label>
+            <div class="box1">
+                <input type="text" id="cardNumber" ng-model="$root.usuario.CC_NUMBER" placeholder="9999 9999 9999 9999" />
+                <span class="msgValidator">Número do cartão inválido</span>
+                <script type="application/javascript">setTimeout(function(){mask('#cardNumber', ['9999 9999 9999 9999', '9999 9999 9999 9999999999999'], 19);}, 1000);</script>
+                <img id="imgBandeira" onerror="$(this).hide()" />
+            </div>
+            <input type="hidden" id="cardBandeira" />
+            <ul id="bandeiras" ng-if="$root.BANDEIRAS">
+                <li ng-repeat="b in $root.BANDEIRAS">
+                    <img src="{{b}}">
+                </li>
+                <div class="clearBoth"></div>
+            </ul>
 
-            <label class="margin_t_10">Endereço</label>
-            <div class="box1">
-                <input type="text" id="street" placeholder="Insira o endereço" ng-model="$root.usuario.STREET" />
+            <div>
+                <div class="float-left">
+                    <label for="expirationMonthYear" class="margin_t_10">Validade</label>
+                    <div>
+                        <div class="box1 float-left" style="width: 102px;">
+                            <input maxlength="5" type="text" id="expirationMonthYear" ng-model="$root.usuario.CC_MONTHYEAR" placeholder="mm/aa" />
+                            <span class="msgValidator" style="width: 130px;">Validade inválido</span>
+                            <script type="application/javascript">setTimeout(function(){mask('#expirationMonthYear', ['99/9999']);}, 1000);</script>
+                        </div>
+                        <div class="clearBoth"></div>
+                    </div>
+                </div>
+                <div class="float-right">
+                    <label for="cvv" class="margin_t_10">Cód. de segurança</label>
+                    <div class="box1" style="width: 140px;">
+                        <input type="number" id="cvv" ng-model="$root.usuario.CC_CVV" placeholder="999" />
+                    </div>
+                </div>
+                <div class="clearBoth"></div>
             </div>
+        </div>
 
-            <label class="margin_t_10">Número</label>
-            <div class="box1">
-                <input type="text" id="number" placeholder="Insira o número" ng-model="$root.usuario.NUMBER" />
-            </div>
+        <h2 style="margin: 20px 0 5px;">Endereço</h2>
+        <label for="postalcode" class="margin_t_10">CEP</label>
+        <div class="box1">
+            <input type="text" id="postalcode" placeholder="99999-999" ng-model="$root.usuario.POSTALCODE" />
+            <span class="msgValidator">CEP inválido</span>
+        </div>
 
-            <label class="margin_t_10">Complemento</label>
-            <div class="box1">
-                <input type="text" id="complement" placeholder="Insira um complemento" ng-model="$root.usuario.COMPLEMENT" />
-            </div>
+        <label for="street" class="margin_t_10">Endereço</label>
+        <div class="box1">
+            <input type="text" id="street" placeholder="Insira o endereço" ng-model="$root.usuario.STREET" />
+        </div>
 
-            <label class="margin_t_10">Bairro</label>
-            <div class="box1">
-                <input type="text" id="district" placeholder="Insira o complemento" ng-model="$root.usuario.DISTRICT" />
-            </div>
+        <label for="number" class="margin_t_10">Número</label>
+        <div class="box1">
+            <input type="text" id="number" placeholder="Insira o número" ng-model="$root.usuario.NUMBER" />
+        </div>
 
-            <label class="margin_t_10">Cidade</label>
-            <div class="box1">
-                <input type="text" id="city" placeholder="Insira a cidade" ng-model="$root.usuario.CITY" />
-            </div>
+        <label for="district" class="margin_t_10">Bairro</label>
+        <div class="box1">
+            <input type="text" id="district" placeholder="Insira o bairro" ng-model="$root.usuario.DISTRICT" />
+        </div>
 
-            <label class="margin_t_10">Estado</label>
-            <div class="box1">
-                <select id="state" ng-model="$root.usuario.STATE">
-                    <option value="{{ESTADO.UF}}" ng-repeat="ESTADO in $root.usuario.ESTADOS">{{ESTADO.NOME}}</option>
-                </select>
-            </div>
+        <label for="city" class="margin_t_10">Cidade</label>
+        <div class="box1">
+            <input type="text" id="city" placeholder="Insira a cidade" ng-model="$root.usuario.CITY" />
+        </div>
+
+        <label for="state" class="margin_t_10">Estado</label>
+        <div class="box1">
+            <select id="state" ng-model="$root.usuario.STATE">
+                <option value="{{ESTADO.UF}}" ng-repeat="ESTADO in $root.usuario.ESTADOS">{{ESTADO.NOME}}</option>
+            </select>
         </div>
 
         <h3 class="{{$root.usuario.CONCORDO_TERMOS_POLITICA?'active_checkbox':''}}">
@@ -105,10 +142,13 @@
         <div class="clearBoth"></div>
     </form>
     <script type="application/javascript">
-        fotoCadastro();
-        mask('#numero_celular', ['(99) 9999-99999', '(99) 99999-9999'], 14);
-        mask('#cpf', ['999.999.999-99']);
-        mask('#data_nascimento', ['99/99/9999']);
-        mask('#postalcode', ['99999-999']);
+        setTimeout(function(){
+            fotoCadastro();
+            box();
+            mask('#numero_celular', ['(99) 9999-99999', '(99) 99999-9999'], 14);
+            mask('#cpf', ['999.999.999-99']);
+            mask('#data_nascimento', ['99/99/9999']);
+            mask('#postalcode', ['99999-999']);
+        }, 1000);
     </script>
 </md-content>
