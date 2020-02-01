@@ -1,11 +1,9 @@
 app.controller('MaquinasFiltros', function($rootScope, $scope, $routeParams) {
     $rootScope.Titulo = "Filtros";
-    QRScannerConf.destroy();
 });
 
 app.controller('MaquinasLst', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.Titulo = "Condomínios";
-    QRScannerConf.destroy();
     $rootScope.REDIRECT = '';
 
     var timeoutGetLst = null;
@@ -41,7 +39,6 @@ app.controller('MaquinasLst', function($rootScope, $scope, $routeParams, ReturnD
 app.controller('MaquinasGet', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.Titulo = "Detalhes";
     $rootScope.REDIRECT = '';
-    QRScannerConf.destroy();
     $scope.REG = ReturnData;
     $scope.produto = function (MAQUINA, PROD) {
         $rootScope.location('#!/produtos/' + MAQUINA + '/' + btoa(JSON.stringify(PROD.PLANOGRAMA)));

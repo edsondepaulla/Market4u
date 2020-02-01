@@ -24,7 +24,6 @@ var Payment = {
 };
 
 app.controller('Index', function($scope, $rootScope, $routeParams) {
-    QRScannerConf.destroy();
     $rootScope.REDIRECT = '';
     $rootScope.NO_WHATSAPP = false;
     $rootScope.BTN_TYPE = 'NEXT';

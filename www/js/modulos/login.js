@@ -79,7 +79,6 @@ app.controller('ConecteSe', function($rootScope, $scope, $routeParams, $q) {
     $rootScope.NO_WHATSAPP = false;
     $rootScope.BARRA_SALDO = false;
     $rootScope.Titulo = "CONECTE-SE";
-    QRScannerConf.destroy();
 
     $scope.entrar = function () {
         var EMAIL = $rootScope.usuario.EMAIL;
@@ -124,7 +123,6 @@ app.controller('Cadastro', function($rootScope, $scope) {
     $rootScope.BARRA_SALDO = false;
     $rootScope.LogoBody = 1;
     $rootScope.Titulo = parseInt($rootScope.usuario.ID) ? "EDITAR SEUS DADOS" : "CADASTRAR-SE";
-    QRScannerConf.destroy();
     $rootScope.NO_WHATSAPP = false;
 
     // Atualizar dados
@@ -196,7 +194,6 @@ app.controller('ConecteSeCodigo', function($rootScope, $scope, $routeParams) {
     if (Page.active) {
         $rootScope.BARRA_SALDO = false;
         $rootScope.Titulo = "Autenticação de dois fatores";
-        QRScannerConf.destroy();
 
         $scope.reenviarCodSms = function (DATA) {
             var _function = function () {
@@ -252,7 +249,6 @@ app.controller('ConecteSeCodigo', function($rootScope, $scope, $routeParams) {
 
 app.controller('Card', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.Titulo = "Meus cartões";
-    QRScannerConf.destroy();
     $scope.LST = ReturnData.LST;
 
     $scope.remove = function (ID) {
@@ -289,7 +285,6 @@ app.controller('Card', function($rootScope, $scope, $routeParams, ReturnData) {
 
 app.controller('AddCard', function($rootScope, $scope) {
     $rootScope.Titulo = "Adicionar";
-    QRScannerConf.destroy();
 
     $scope.salvar = function () {
         if (!$('#cardName').val().length)
@@ -326,8 +321,6 @@ app.controller('AddCard', function($rootScope, $scope) {
 app.controller('MinhaCarteira', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.BARRA_SALDO = false;
     $rootScope.Titulo = "Minha Carteira";
-    QRScannerConf.destroy();
-
     $rootScope.FORMA_PAGAMENTO = null;
     $rootScope.FORMAS_PG = ReturnData.FORMAS_PG;
 
@@ -373,7 +366,6 @@ app.controller('MinhaCarteira', function($rootScope, $scope, $routeParams, Retur
 app.controller('VoucherLst', function($rootScope, $scope, $route, $routeParams, ReturnData) {
     $rootScope.border_top = 1;
     $rootScope.Titulo = "Vouchers";
-    QRScannerConf.destroy();
     $scope.LST = ReturnData.LST;
 
     $scope.click = function(reg) {
@@ -405,7 +397,6 @@ app.controller('VoucherLst', function($rootScope, $scope, $route, $routeParams, 
 app.controller('VoucherGet', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.border_top = 1;
     $rootScope.Titulo = "Voucher - Detalhes";
-    QRScannerConf.destroy();
     $scope.REG = ReturnData;
 
     $scope.utilizarVoucher = function (CODIGO) {
@@ -427,7 +418,6 @@ app.controller('VoucherGet', function($rootScope, $scope, $routeParams, ReturnDa
 app.controller('HistoricoTransacoesLst', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.border_top = 1;
     $rootScope.Titulo = "Histórico de transações";
-    QRScannerConf.destroy();
     $scope.LST = ReturnData.LST;
 
     $scope.click = function(reg) {
@@ -438,7 +428,6 @@ app.controller('HistoricoTransacoesLst', function($rootScope, $scope, $routePara
 app.controller('HistoricoTransacoesGet', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.border_top = 1;
     $rootScope.Titulo = "Hist. de transações - Detalhes";
-    QRScannerConf.destroy();
     $scope.REG = ReturnData;
 });
 

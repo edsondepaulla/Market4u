@@ -22,8 +22,7 @@ var QRScannerConf = {
         }
     },
     show: function () {
-        Factory.$rootScope.Titulo = 'LER O QRCODE';
-        Factory.$rootScope.QRCODE = 1;
+        clearTimeout(Factory.timeout);
         try {
             QRScanner.prepare(function (err, status) {
                 if (err) {
@@ -57,10 +56,13 @@ var QRScannerConf = {
             QRScanner.show();
         } catch (err) {
         }
+
+        Factory.$rootScope.Titulo = 'LER O QRCODE';
+        Factory.$rootScope.QRCODE = 1;
     },
     destroy: function () {
         Factory.$rootScope.QRCODE = 0;
-        setTimeout(function(){
+        Factory.timeout = setTimeout(function(){
             try {
                 QRScanner.destroy();
             } catch (err) {

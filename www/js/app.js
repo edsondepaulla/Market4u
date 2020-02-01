@@ -316,13 +316,11 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
 app.controller('SemInternet', function($rootScope, $scope, $routeParams) {
     $rootScope.border_top = 1;
     $rootScope.Titulo = "Ops...";
-    QRScannerConf.destroy();
 });
 
 app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.border_top = 1;
     $rootScope.Titulo = "Command";
-    QRScannerConf.destroy();
     //$scope.CONTENT = ReturnData.CONTENT;
     $rootScope.REDIRECT = '';
 });
@@ -330,7 +328,6 @@ app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData)
 app.controller('Faq', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.border_top = 1;
     $rootScope.Titulo = "FAQ";
-    QRScannerConf.destroy();
     $scope.CONTENT = ReturnData.CONTENT;
     $scope.LST = ReturnData.LST;
     $rootScope.REDIRECT = '';
@@ -339,14 +336,12 @@ app.controller('Faq', function($rootScope, $scope, $routeParams, ReturnData) {
 app.controller('Token', function($rootScope) {
     $rootScope.border_top = 1;
     $rootScope.Titulo = "Token";
-    QRScannerConf.destroy();
     $rootScope.REDIRECT = '';
 });
 
 app.controller('Suporte', function($rootScope) {
     $rootScope.border_top = 1;
     $rootScope.Titulo = "Suporte";
-    QRScannerConf.destroy();
     $rootScope.REDIRECT = '';
     $rootScope.NO_WHATSAPP = false;
 });
@@ -355,7 +350,6 @@ app.controller('AtualizarApp', function($rootScope, $scope, ReturnData) {
     $rootScope.BARRA_SALDO = false;
     $rootScope.NO_WHATSAPP = false;
     $rootScope.Titulo = "Nova versão";
-    QRScannerConf.destroy();
     $rootScope.REDIRECT = '';
     $scope.REG = ReturnData;
 });
@@ -377,6 +371,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
 
     $rootScope.QRCODE = 0;
     $rootScope.location = function (url, external, active) {
+        $rootScope.QRCODE = 0;
         QRScannerConf.destroy();
         if (active)
             Page.start();

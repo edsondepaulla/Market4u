@@ -1,6 +1,5 @@
 app.controller('ProdutosGet', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.Titulo = "Detalhes do item";
-    QRScannerConf.destroy();
     $scope.REG = ReturnData;
     $scope.imgFull = 0;
     $rootScope.REDIRECT = '';
