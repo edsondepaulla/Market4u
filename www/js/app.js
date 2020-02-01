@@ -371,7 +371,6 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
 
     $rootScope.QRCODE = 0;
     $rootScope.location = function (url, external, active) {
-        $rootScope.QRCODE = 0;
         QRScannerConf.destroy();
         if (active)
             Page.start();
