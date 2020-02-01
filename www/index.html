@@ -78,8 +78,8 @@
   </div>
 
   <div mn-touch swipe-right="swipeRight()" ng-if="toolbar" id="toolbar">
-    <i mn-touch swipe-right="swipeRight()" ng-if="controller == 'Index'" class="btn_maps mdi mdi-action-view-headline" ng-click="menuOpen()"></i>
-    <div id="top" ng-if="controller == 'Index'">
+    <i mn-touch swipe-right="swipeRight()" ng-if="controller == 'Index' && !QRCODE" class="btn_maps mdi mdi-action-view-headline" ng-click="menuOpen()"></i>
+    <div id="top" ng-if="controller == 'Index' && !QRCODE">
       <div ng-if="usuario.MEUSALDO_ATIVADO" ng-click="location('#!/cadastro')" style="display: inline-block;">
         MEU SALDO
         <b>{{usuario.MEUSALDO_FORMAT}}</b>
@@ -88,12 +88,12 @@
         Adicionar saldo <i class="mdi mdi-content-add-circle"></i>
       </div>
     </div>
-    <div id="topTitulo" ng-if="controller != 'Index'">
+    <div id="topTitulo" ng-if="controller != 'Index' || QRCODE">
       <a class="open-left" ng-click="backpageTop()">
         <i class="mdi mdi-navigation-chevron-left"></i>
       </a>
       <div id="textoTitulo">{{Titulo}}</div>
-      <div id="meu_saldo" ng-click="location('#!/minha-carteira')" ng-if="usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO">
+      <div id="meu_saldo" ng-click="location('#!/minha-carteira')" ng-if="usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO && !QRCODE">
         MEU SALDO <b>{{usuario.MEUSALDO_FORMAT}}</b> <span ng-if="!usuario.MEUSALDO"><i class="mdi mdi-content-add-circle"></i> Adicionar saldo</span>
       </div>
     </div>

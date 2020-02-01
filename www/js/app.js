@@ -478,8 +478,12 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     };
 
     $rootScope.backpageTop = function () {
-        $('.scrollable:first').attr('backpage', 1);
-        window.history.go(-1);
+        if($rootScope.QRCODE){
+            $rootScope.location('#!/');
+        }else {
+            $('.scrollable:first').attr('backpage', 1);
+            window.history.go(-1);
+        }
     };
 
     $rootScope.clickPhoto = function () {
