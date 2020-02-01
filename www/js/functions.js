@@ -326,11 +326,26 @@ var Factory = {
             cordova.plugins.notification.local.on("click", function (notification, state) {
                 switch (notification.type) {
                     case 'redirect':
-                        if(notification.url)
+                        if (notification.url)
                             Factory.$rootScope.location(notification.url);
                         break;
                 }
             });
+            try {
+                QRScanner.prepare(function (err, status) {
+                    if (err) {
+
+                    }
+                    if (status.authorized) {
+
+                    } else if (status.denied) {
+
+                    } else {
+
+                    }
+                });
+            } catch (err) {
+            }
         }, false);
         if(!parseInt(Login.getData().ID))
             window.location = '#!/conecte-se';
