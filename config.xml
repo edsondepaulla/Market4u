@@ -19,11 +19,9 @@
     <preference name="ShowSplashScreenSpinner" value="3000" />
     <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="StatusBarStyle" value="lightcontent" />
-    <preference name="StatusBarBackgroundColor" value="#0b6340" />
+    <preference name="StatusBarBackgroundColor" value="#00ab46" />
     <preference name="FadeSplashScreen" value="false" />
     <preference name="FadeSplashScreenDuration" value="0" />
-    <preference name="SplashScreenSpinnerColor" value="#0aa699" />
-    <preference name="SplashScreenBackgroundColor" value="#00bfff" />
     <preference name="DisallowOverscroll" value="false" />
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="SplashShowOnlyFirstTime" value="true" />

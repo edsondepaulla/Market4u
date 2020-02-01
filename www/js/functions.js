@@ -268,8 +268,8 @@ var Factory = {
                                 animated: open_browser.animated ? open_browser.animated : false,
                                 transition: open_browser.transition ? open_browser.transition : 'curl',
                                 enterReaderModeIfAvailable: open_browser.enterReaderModeIfAvailable ? open_browser.enterReaderModeIfAvailable : false,
-                                tintColor: "#00ffff",
-                                barColor: "#0000ff",
+                                tintColor: "#00ab46",
+                                barColor: "#043d22",
                                 controlTintColor: "#ffffff"
                             }
                         );
@@ -331,21 +331,6 @@ var Factory = {
                         break;
                 }
             });
-            try {
-                QRScanner.prepare(function (err, status) {
-                    if (err) {
-
-                    }
-                    if (status.authorized) {
-
-                    } else if (status.denied) {
-
-                    } else {
-
-                    }
-                });
-            } catch (err) {
-            }
         }, false);
         if(!parseInt(Login.getData().ID))
             window.location = '#!/conecte-se';

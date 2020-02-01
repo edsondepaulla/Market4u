@@ -26,6 +26,21 @@ var QRScannerConf = {
         Factory.$rootScope.QRCODE = 1;
         clearTimeout(QRScannerConf.timeout);
         try {
+            QRScanner.prepare(function (err, status) {
+                if (err) {
+
+                }
+                if (status.authorized) {
+
+                } else if (status.denied) {
+
+                } else {
+
+                }
+            });
+        } catch (err) {
+        }
+        try {
             QRScanner.scan(function (err, text) {
                 if (err) {
 
