@@ -73,8 +73,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                 break;
             case 2:
                 $rootScope.transacaoId = 0;
-                $rootScope.BTN_HOME = false;
-                $rootScope.location('#!/qr-code');
+                QRScannerConf.show();
                 break;
             case 3:
                 $rootScope.BTN_HOME = true;

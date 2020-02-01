@@ -1,60 +1,28 @@
-app.controller('QrCode', function($rootScope, $scope) {
-    $rootScope.NO_WHATSAPP = false;
-    $rootScope.REDIRECT = '';
-    $rootScope.BARRA_SALDO = false;
-    if (Page.active) {
-        $rootScope.Titulo = 'LER O QRCODE';
-
-        QRScannerConf.show();
-
-        $scope.digite = function () {
-            try {
-                navigator.notification.prompt(
-                    'Está localizado na máquina',
-                    function (results) {
-                        if (results.buttonIndex == 1) {
-                            if (results.input1.length)
-                                QRScannerConf.scan(results.input1);
-                            else
-                                return false;
-                        }
-                    },
-                    'Escreva o código',
-                    ['Continue', 'Cancelar'],
-                    ''
-                );
-            } catch (err) {
-                var text = prompt("Escreva o código que está localizado na máquina", "");
-                if (text != null)
-                    QRScannerConf.scan(text);
-            }
-        };
-
-        $scope.flashAtivo = 'on';
-        $scope.flashTexto = 'Acenda';
-        $scope.flash = function () {
-            if ($scope.flashAtivo == 'on') {
-                $scope.flashAtivo = 'off';
-                $scope.flashTexto = 'Apague';
-                try {
-                    QRScanner.enableLight();
-                } catch (err) {
-                }
-            } else {
-                $scope.flashAtivo = 'on';
-                $scope.flashTexto = 'Acenda';
-                try {
-                    QRScanner.disableLight();
-                } catch (err) {
-                }
-            }
-        };
-    } else
-        window.history.go(-1);
-});
-
 var QRScannerConf = {
+    digite: function () {
+        try {
+            navigator.notification.prompt(
+                'Está localizado na máquina',
+                function (results) {
+                    if (results.buttonIndex == 1) {
+                        if (results.input1.length)
+                            QRScannerConf.scan(results.input1);
+                        else
+                            return false;
+                    }
+                },
+                'Escreva o código',
+                ['Continue', 'Cancelar'],
+                ''
+            );
+        } catch (err) {
+            var text = prompt("Escreva o código que está localizado na máquina", "");
+            if (text != null)
+                QRScannerConf.scan(text);
+        }
+    },
     show: function () {
+        Factory.$rootScope.QRCODE = 1;
         try {
             QRScanner.prepare(function (err, status) {
                 if (err) {
@@ -90,6 +58,7 @@ var QRScannerConf = {
         }
     },
     destroy: function () {
+        Factory.$rootScope.QRCODE = 0;
         try {
             QRScanner.destroy();
         } catch (err) {

@@ -7,26 +7,6 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
      * Route
      */
     $routeProvider
-        .when("/qr-code", {
-            templateUrl: "view/qr-code/index.html",
-            controller: 'QrCode',
-            resolve: {
-                ReturnData: function ($route, $rootScope) {
-                    if (Page.active) {
-                        if (parseInt(Login.getData().ID)) {
-                            if (!parseInt(Login.getData().DADOS_ATUALIZADO)) {
-                                $rootScope.REDIRECT = btoa('#!/qr-code');
-                                $rootScope.location('#!/cadastro');
-                            }
-                        } else {
-                            $rootScope.REDIRECT = btoa('#!/qr-code');
-                            $rootScope.location('#!/conecte-se');
-                        }
-                    } else
-                        window.history.go(-1);
-                }
-            }
-        })
         .when("/", {
             templateUrl: "view/index/index.html",
             controller: 'Index'
@@ -395,7 +375,9 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     // Get login
     Login.get();
 
+    $rootScope.QRCODE = 0;
     $rootScope.location = function (url, external, active) {
+        QRScannerConf.destroy();
         if (active)
             Page.start();
         if (parseInt(external)) {
@@ -421,8 +403,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
 
             if (url.indexOf('#!/payment') !== -1
                 || url.indexOf('#!/conecte-se') !== -1
-                || url.indexOf('#!/conecte-se-codigo') !== -1
-                || url.indexOf('#!/qr-code') !== -1)
+                || url.indexOf('#!/conecte-se-codigo') !== -1)
                 Page.start();
 
             window.location = url;

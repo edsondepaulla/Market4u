@@ -350,7 +350,7 @@ textarea.materialize-textarea:focus:not([readonly])+label {
 /*------------------------------------------------------------------
 5. Toolbar
 -------------------------------------------------------------------*/
-body[controller="Index"] > .app #toolbar{
+body[controller="Index"] > #toolbar{
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26), 0 2px 10px 0 rgba(0,0,0,0.22);
 }
 
@@ -1134,7 +1134,7 @@ body[device="ios"] .pace .pace-activity {
   top: 35px;
 }
 
-body[controller="Index"] > .app #toolbar #top #sem_saldo{
+body[controller="Index"] > #toolbar #top #sem_saldo{
   background: #FFF;
   border-top: 1px solid rgba(11, 99, 64, 0.1);
   margin-top: 3px;
@@ -1143,7 +1143,7 @@ body[controller="Index"] > .app #toolbar #top #sem_saldo{
   margin-bottom: -4px;
 }
 
-body[controller="Index"] > .app #toolbar #top #sem_saldo i{
+body[controller="Index"] > #toolbar #top #sem_saldo i{
   margin: 0;
   color: #043d22;
   line-height: 1;
@@ -1152,7 +1152,7 @@ body[controller="Index"] > .app #toolbar #top #sem_saldo i{
   margin-left: 5px;
 }
 
-body[controller="Index"] > .app #toolbar #top{
+body[controller="Index"] > #toolbar #top{
   text-align: center;
   font-size: 13px;
   line-height: 1.1;
@@ -1160,7 +1160,7 @@ body[controller="Index"] > .app #toolbar #top{
   min-height: 46px;
 }
 
-body[controller="Index"] > .app #toolbar #top b{
+body[controller="Index"] > #toolbar #top b{
   font-weight: 600;
   display: block;
   font-size: 17px;
@@ -2420,6 +2420,34 @@ body[device="android"][controller="Index"] .app-body{
   background: #FFF !important;
 }
 
+body > .app{
+  -ms-transition: 0.5s ease-in-out;
+  -webkit-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+  right: 0;
+}
+
+body > .qrcode{
+  -ms-transition: 0.5s ease-in-out;
+  -webkit-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+  position: fixed;
+  left: 100%;
+  top: 45px;
+  width: 100%;
+  height: 100%;
+  background: transparent !important;
+  z-index: 1;
+}
+
+body[qrcode="1"] > .app{
+  right: 100%;
+}
+
+body[qrcode="1"] > .qrcode{
+  left: 0;
+}
+
 body[controller="Index"],
 body[controller="Index"] > .app,
 body[controller="Index"] .app-body,
@@ -2649,17 +2677,17 @@ height: 100%;
 }
 
 #carregando{
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: rgba(11, 99, 64, 0.4);
-z-index: 5;
-color: #FFF;
-text-align: center;
-padding-top: 50%;
-display: none;
+  position: fixed;
+  top: 46px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(11, 99, 64, 0.4);
+  z-index: 5;
+  color: #FFF;
+  text-align: center;
+  padding-top: 50%;
+  display: none;
 }
 
 #semInternet{
