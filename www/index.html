@@ -112,16 +112,13 @@
     </div>
   </div>
 
-  <div class="qrcode" mn-touch swipe-right="location('#!/')" >
+  <div class="qrcode">
     <div id="qr-code-texto">
-      <img src="img/qrcode.png"><br>
+      <img src="img/qrcode.png" onclick="QRScannerConf.digite()"><br>
       Leia o QRCode que está no<br> Auto Atendimento ou Comanda.
     </div>
-    <div id="qr-code-background" mn-touch swipe-right="swipeRight()">
-      <div ng-if="1" id="btn-digite-qrcode" ng-click="QRScannerConf.digite()">
-        <i class="mdi mdi-content-text-format"></i><br>
-        Digite o<br>código QR
-      </div>
+    <div id="qr-code-background">
+
     </div>
   </div>
 
