@@ -145,7 +145,7 @@
         setTimeout(function(){
             fotoCadastro();
             box();
-            mask('#numero_celular', ['(99) 9999-99999', '(99) 99999-9999'], 14);
+            mask('#numero_celular', [($('#numero_celular').val().length==15?'(99) 99999-9999':'(99) 9999-99999'), '(99) 99999-9999'], 14);
             mask('#cpf', ['999.999.999-99']);
             mask('#data_nascimento', ['99/99/9999']);
             mask('#postalcode', ['99999-999']);

@@ -390,11 +390,10 @@ body[device="ios"] #toolbar {
   top: 0;
   right: 0;
 }
-#toolbar i {
+#toolbar i.mdi-navigation-chevron-left {
   font-size: 34px;
   line-height: 45px;
-  color: #043d22;
-  position: absolute;
+  color: #00ab46;
 }
 
 #toolbar .title {
@@ -461,7 +460,7 @@ body[device="ios"] #toolbar {
   left: 0;
   width: auto;
   height: auto;
-  background: #043d22;
+  background: #00ab46;
 }
 .snap-drawer {
   position: absolute;
@@ -1132,7 +1131,8 @@ body > .app[open="1"]{
 }
 
 body[device="ios"]{
-  border-top: 23px solid #043d22;
+  border-top: 23px solid #00ab46;
+  background: transparent !important;
 }
 
 body[device="ios"] .pace .pace-activity {
@@ -1150,7 +1150,7 @@ body[controller="Index"] > #toolbar #top #sem_saldo{
 
 body[controller="Index"] > #toolbar #top #sem_saldo i{
   margin: 0;
-  color: #043d22;
+  color: #00ab46;
   line-height: 1;
   vertical-align: middle;
   font-size: 20px;
@@ -2339,7 +2339,7 @@ a#scan_qrcode{
   bottom: 20px;
   left: 50%;
   z-index: 2;
-  background: #043d22;
+  background: #00ab46;
   border: 0;
   color: #FFF;
   transform: translateX(-50%);
@@ -2392,131 +2392,132 @@ i.mdi.btn_maps.mdi-action-view-headline{
   background: transparent;
   box-shadow: none;
   z-index: 9;
+  position: absolute;
 }
 
 span.machine{
-  left: 15px;
-  bottom: 25px;
-  display: block;
-  padding: 0;
-  line-height: 35px;
+left: 15px;
+bottom: 25px;
+display: block;
+padding: 0;
+line-height: 35px;
 }
 
 span.machine img{
-  width: 20px;
+width: 20px;
 }
 
 i.mdi.btn_maps.mdi-navigation-refresh{
-  right: 15px;
-  bottom: 25px;
+right: 15px;
+bottom: 25px;
 }
 
 i.mdi.btn_maps.mdi-maps-my-location{
-  right: 15px;
-  bottom: 25px;
+right: 15px;
+bottom: 25px;
 }
 
 body,
 body > .app,
 body .app-body{
-  background: #FFF !important;
+background: #FFF !important;
 }
 
 body > .app{
-  -ms-transition: 1s ease-in-out;
-  -webkit-transition: 1s ease-in-out;
-  transition: 1s ease-in-out;
-  right: 0;
+-ms-transition: 0.6s ease-in-out;
+-webkit-transition: 0.6s ease-in-out;
+transition: 0.6s ease-in-out;
+right: 0;
 }
 
 body > .qrcode{
-  -ms-transition: 1s ease-in-out;
-  -webkit-transition: 1s ease-in-out;
-  transition: 1s ease-in-out;
-  position: fixed;
-  left: 100%;
-  top: 45px;
-  width: 100%;
-  height: 100%;
-  background: transparent !important;
-  z-index: 1;
+-ms-transition: 0.6s ease-in-out;
+-webkit-transition: 0.6s ease-in-out;
+transition: 0.6s ease-in-out;
+position: fixed;
+left: 100%;
+top: 45px;
+width: 100%;
+height: 100%;
+background: transparent !important;
+z-index: 1;
 }
 
 body[qrcode="1"] > .app{
-  right: 100%;
+right: 100%;
 }
 
 body[qrcode="1"] > .qrcode{
-  left: 0;
+left: 0;
 }
 
 body[menu_left="1"] #topTitulo img {
-  display: none;
+display: none;
 }
 #toolbar > img {
-  height: 25px;
-  opacity: 1;
-  position: absolute;
-  top: 7px;
-  right: 4px;
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-  transition: 0.5s;
+height: 25px;
+opacity: 1;
+position: absolute;
+top: 7px;
+right: 4px;
+-webkit-transform: translate3d(0, 0, 0);
+transform: translate3d(0, 0, 0);
+transition: 0.5s;
 }
 body[controller="AtualizarApp"] #toolbar > img,
 body[controller="ConecteSe"] #toolbar > img {
-  position: fixed;
-  top: 65px;
-  right: calc(50% - 77px);
-  height: 38px;
-  animation: imgTop 0s 0.7s forwards;
+position: fixed;
+top: 65px;
+right: calc(50% - 77px);
+height: 38px;
+animation: imgTop 0s 0.7s forwards;
 }
 
 @keyframes imgTop {
-    to {
-      visibility: hidden;
-    }
+to {
+  visibility: hidden;
+}
 }
 
 img#imgFixo{
-  position: absolute;
-  top: 20px;
-  right: calc(50% - 77px);
-  height: 38px;
-  visibility: hidden;
-  animation: imgFixo 0s 0.7s forwards;
+position: absolute;
+top: 20px;
+right: calc(50% - 77px);
+height: 38px;
+visibility: hidden;
+animation: imgFixo 0s 0.7s forwards;
 }
 
 @keyframes imgFixo {
-  to {
-    visibility: visible;
-  }
+to {
+visibility: visible;
+}
 }
 
 #topTitulo #textoTitulo{
-  display: inline-block;
-  font-size: 13px;
-  line-height: 3.4;
-  text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.7);
-  z-index: 1;
-  position: relative;
-  padding-right: 3px;
+display: inline-block;
+font-size: 13px;
+line-height: 3.4;
+text-transform: uppercase;
+background: rgba(255, 255, 255, 0.7);
+z-index: 1;
+position: relative;
+padding-right: 3px;
 }
 #topTitulo #meu_saldo{
-  background: rgba(11, 99, 64, 0.05);
-  text-align: center;
-  padding: 2px 0;
-  font-size: 12px;
-  color: #043d22;
+background: rgba(11, 99, 64, 0.05);
+text-align: center;
+padding: 2px 0;
+font-size: 12px;
+color: #00ab46;
 }
 #topTitulo #meu_saldo span{
-  border-left: 1px solid #043d22;
-  padding-left: 10px;
-  margin-left: 10px;
+border-left: 1px solid #00ab46;
+padding-left: 10px;
+margin-left: 10px;
 }
 #topTitulo #meu_saldo i{
- font-size: 10px;
+font-size: 10px;
 line-height: 0;
 }
 #topTitulo .open-left{
@@ -2524,26 +2525,26 @@ text-align: left;
 padding-left: 10px;
 }
 #formCadastroCodigo a{
-  text-decoration: underline;
-  text-align: center;
-  display: block;
-  margin: 25px 0;
+text-decoration: underline;
+text-align: center;
+display: block;
+margin: 25px 0;
 }
 #formCadastroCodigo > label{
-  display: block;
+display: block;
 }
 
 div#qr-code-background{
-  width: 230px;
-  height: 230px;
-  position: absolute;
-  left: 50%;
-  top: 55%;
-  transform: translate(-50%, -50%);
-  background: transparent !important;
-  border-radius: 0;
-  box-shadow: 0px 0px 0px 1000px rgba(0,0,0,0.3);
-  z-index: 1;
+width: 230px;
+height: 230px;
+position: absolute;
+left: 50%;
+top: 55%;
+transform: translate(-50%, -50%);
+background: transparent !important;
+border-radius: 0;
+box-shadow: 0px 0px 0px 1000px rgba(0,0,0,0.3);
+z-index: 1;
 }
 
 div#qr-code-texto{
@@ -2573,13 +2574,13 @@ text-align: center;
 }
 
 div#qr-code-background #btn-digite-qrcode{
-  position: absolute;
-  bottom: -91px;
-  left: calc(50% - 35px);
-  z-index: 2;
-  font-size: 13px;
-  color: #FFF;
-  text-align: center;
+position: absolute;
+bottom: -91px;
+left: calc(50% - 35px);
+z-index: 2;
+font-size: 13px;
+color: #FFF;
+text-align: center;
 }
 
 div#qr-code-background i:before{
@@ -2604,16 +2605,16 @@ overflow: visible;
 width: 60px;
 height: 60px;
 border-radius: 100%;
-  border: 1px solid #f7f7f7;
-  padding: 3px;
+border: 1px solid #f7f7f7;
+padding: 3px;
 }
 #userLeft{
-  position: relative;
-  background: #fcfcfc;
-  border: 8px solid #fcfcfc;
+position: relative;
+background: #fcfcfc;
+border: 8px solid #fcfcfc;
 }
 body[device="ios"] #userLeft{
-  border-top: 30px solid #fcfcfc;
+border-top: 30px solid #fcfcfc;
 }
 #userLeft > div{
 position: absolute;
@@ -2635,12 +2636,12 @@ font-size: 12px;
 margin-top: 0;
 }
 #userLeft > div > a{
-  color: #666;
-  font-size: 10px;
-  text-decoration: underline;
+color: #666;
+font-size: 10px;
+text-decoration: underline;
 }
 #contentLeft > ul{
-  padding: 10px 15px;
+padding: 10px 15px;
 }
 #contentLeft > ul li a{
 color: #444;
@@ -2648,13 +2649,13 @@ display: block;
 font-size: 18px;
 }
 #contentLeft > ul li a img[src="img/machine.png"]{
-  width: 20px;
-  margin: -2px 10px 0 2px;
+width: 20px;
+margin: -2px 10px 0 2px;
 }
 #contentLeft > ul li i{
-  font-size: 25px;
-  vertical-align: sub;
-  margin-right: 8px;
+font-size: 25px;
+vertical-align: sub;
+margin-right: 8px;
 }
 #contentLeft > ul li{
 padding: 5px 5px;
@@ -2675,9 +2676,9 @@ height: 100%;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(11, 99, 64, 0.4);
+  background: rgba(11, 99, 64, 0.6);
   z-index: 5;
-  color: #FFF;
+  color: #fff;
   text-align: center;
   padding-top: 50%;
   display: none;
@@ -2692,111 +2693,111 @@ font-size: 18px;
 }
 
 div.box{
-  width: 100%;
-  height: 37px;
-  border: 1px solid #EEE;
-  border-radius: 10px;
-  position: relative;
-  margin-top: 5px;
+width: 100%;
+height: 37px;
+border: 1px solid #EEE;
+border-radius: 10px;
+position: relative;
+margin-top: 5px;
 }
 
 div.box1{
-  width: 100%;
-  height: 37px;
-  border-bottom: 1px solid #EEE;
-  position: relative;
+width: 100%;
+height: 37px;
+border-bottom: 1px solid #EEE;
+position: relative;
 }
 
 #showPassword{
-  position: absolute;
-  right: 0px;
-  bottom: 0;
-  font-size: 27px;
-  padding: 0 7px;
-  z-index: 6;
+position: absolute;
+right: 0px;
+bottom: 0;
+font-size: 27px;
+padding: 0 7px;
+z-index: 6;
 }
 
 div.box input,
 div.box1 input,
 div.box select,
 div.box1 select{
-  width: 100%;
-  height: 100%;
-  text-align: left;
-  font-size: 15px;
-  border: 0 !important;
-  background: transparent;
-  padding-left: 10px;
-  border-radius: 0 !important;
-  z-index: 5;
-  letter-spacing: 1px;
-  position: relative;
+width: 100%;
+height: 100%;
+text-align: left;
+font-size: 15px;
+border: 0 !important;
+background: transparent;
+padding-left: 10px;
+border-radius: 0 !important;
+z-index: 5;
+letter-spacing: 1px;
+position: relative;
 }
 
 input.ng-invalid ~ span.msgValidator,
 input.ng-invalid2 ~ span.msgValidator2{
-  top: -22px;
-  left: -1px;
-  background: #FFF;
-  opacity: 1;
-  color: #ff6c56;
-  height: 24px;
+top: -22px;
+left: -1px;
+background: #FFF;
+opacity: 1;
+color: #ff6c56;
+height: 24px;
 }
 
 .msgValidator,
 .msgValidator2{
-  position: absolute;
-  top: 0;
-  left: 0;
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-  transition: 0.5s;
-  opacity: 0;
-  z-index: 1;
+position: absolute;
+top: 0;
+left: 0;
+-webkit-transform: translate3d(0, 0, 0);
+transform: translate3d(0, 0, 0);
+transition: 0.5s;
+opacity: 0;
+z-index: 1;
 }
 
 .msgValidator2{
-  z-index: 2;
+z-index: 2;
 }
 
 form.form label[for]{
-  color: #444 !important;
-  display: block !important;
+color: #444 !important;
+display: block !important;
 }
 
 form.form{
-  padding: 20px 15px;
+padding: 20px 15px;
 }
 
 #boxCodigo{
-  margin: 0 auto;
-  height: 50px;
+margin: 0 auto;
+height: 50px;
 }
 
 #boxCodigo input{
-  text-align: center;
-  font-size: 25px;
-  letter-spacing: 22px;
-  padding-left: 22px;
+text-align: center;
+font-size: 25px;
+letter-spacing: 22px;
+padding-left: 22px;
 }
 
 form.form > div > h2,
 form.form > h2{
-  font-size: 21px;
-  margin: 0 0 15px;
-  color: #043d22;
+font-size: 21px;
+margin: 0 0 15px;
+color: #043d22;
 }
 
 #boxImg{
-  float: left;
-  position: relative;
+float: left;
+position: relative;
 }
 #boxImg i{
-  position: absolute;
-  bottom: -4px;
-  right: -4px;
-  color: #444;
-  font-size: 30px;
+position: absolute;
+bottom: -4px;
+right: -4px;
+color: #444;
+font-size: 30px;
 }
 
 button.btn-location,
@@ -2807,148 +2808,148 @@ button.btn-location:active,
 form.form > button:active,
 button.btn-location:focus,
 form.form > button:focus{
-  padding: 10px 30px;
-  font-size: 16px;
-  margin: 20px auto 0;
-  display: block;
-  border-radius: 5px;
-  background: #043d22 !important;
-  border-radius: 3px;
-  font-size: 15px;
-  box-shadow: none;
-  color: #fff !important;;
-  border: 1px solid rgba(11, 99, 64, 0.6);
-  position: relative;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+padding: 10px 30px;
+font-size: 16px;
+margin: 20px auto 0;
+display: block;
+border-radius: 5px;
+background: #00ab46 !important;
+border-radius: 3px;
+font-size: 15px;
+box-shadow: none;
+color: #fff !important;;
+border: 1px solid rgba(11, 99, 64, 0.6);
+position: relative;
+box-shadow: 0 -2px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 #formLogin button.btn-salvar{
-  display: block !important;
+display: block !important;
 }
 #boxUrlLink{
-  text-align: center;
+text-align: center;
 }
 #boxUrlLink a{
-  margin-top: 15px;
-  text-decoration: underline;
-  display: block;
+margin-top: 15px;
+text-decoration: underline;
+display: block;
 }
 body[controller="EditarConta"] form.form#formCadastro button{
-  float: right;
-  width: auto;
+float: right;
+width: auto;
 }
 form.form#formCadastro #saldo{
-  text-align: right;
+text-align: right;
 }
 form.form#formCadastro h3{
-  font-size: 14px;
-  margin: 0;
-  line-height: 1.7;
-  font-family: unset;
-  text-align: center;
-  margin-top: 20px;
+font-size: 14px;
+margin: 0;
+line-height: 1.7;
+font-family: unset;
+text-align: center;
+margin-top: 20px;
 }
 form.form#formCadastro h3 a{
-  text-decoration: underline;
+text-decoration: underline;
 }
 form.form#formCadastro h3 label{
-  display: inline-block;
+display: inline-block;
 }
 a.a-btn[type="facebook"]{
-  color: #fff;
-  padding-left: 40px;
-  border-color: #3b5998;
-  text-shadow: none;
-  background-color: #3b5998;
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUBAMAAAB%2FpwA%2BAAAAGFBMVEUAAAD%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8jfp1fAAAAB3RSTlMA7D8UYSuqwY7ItgAAAEdJREFUCNdjUCyHAiEGcRizkKEcDiDMQmeGcChTmIGBHcp0YDBVhzIN2OBqgdIYzAIGIDBHMNURTHcktWQzxWHMQgZFGFMIAFerRr2lTcdCAAAAAElFTkSuQmCC);
-  background-position: 10px center;
-  background-repeat: no-repeat;
-  width: 100%;
-  max-width: 278px;
-  padding: 9px 16px;
-  height: auto;
-  border: 1px solid #3b5998;
+color: #fff;
+padding-left: 40px;
+border-color: #3b5998;
+text-shadow: none;
+background-color: #3b5998;
+background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUBAMAAAB%2FpwA%2BAAAAGFBMVEUAAAD%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8jfp1fAAAAB3RSTlMA7D8UYSuqwY7ItgAAAEdJREFUCNdjUCyHAiEGcRizkKEcDiDMQmeGcChTmIGBHcp0YDBVhzIN2OBqgdIYzAIGIDBHMNURTHcktWQzxWHMQgZFGFMIAFerRr2lTcdCAAAAAElFTkSuQmCC);
+background-position: 10px center;
+background-repeat: no-repeat;
+width: 100%;
+max-width: 278px;
+padding: 9px 16px;
+height: auto;
+border: 1px solid #3b5998;
 }
 a.a-btn[type="google"]{
-  color: #000;
-  min-width: 260px;
-  background: #FFF;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiICB4PSIwIiB5PSIwIiB2aWV3Qm94PSIwIDAgNjQgNjQiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI%2BLnN0MHtjbGlwLXBhdGg6dXJsKCNTVkdJRF8yXyk7ZmlsbDojRkJCQzA1O30uc3Qxe2NsaXAtcGF0aDp1cmwoI1NWR0lEXzRfKTtmaWxsOiNFQTQzMzU7fS5zdDJ7Y2xpcC1wYXRoOnVybCgjU1ZHSURfNl8pO2ZpbGw6IzM0QTg1Mzt9LnN0M3tjbGlwLXBhdGg6dXJsKCNTVkdJRF84Xyk7ZmlsbDojNDI4NUY0O308L3N0eWxlPjxkZWZzPjxwYXRoIGlkPSJTVkdJRF8xXyIgZD0iTTU5LjMgMjYuN0g1NiA0NS4xIDMyVjM4aDE1LjdjLTEuNSA3LjItNy42IDExLjMtMTUuNyAxMS4zIC05LjYgMC0xNy4zLTcuNy0xNy4zLTE3LjNTMjIuNCAxNC43IDMyIDE0LjdjNC4xIDAgNy45IDEuNSAxMC44IDMuOWw4LjUtOC41QzQ2LjEgNS41IDM5LjUgMi43IDMyIDIuNyAxNS43IDIuNyAyLjcgMTUuNyAyLjcgMzJTMTUuNyA2MS4zIDMyIDYxLjNjMTQuNyAwIDI4LTEwLjcgMjgtMjkuM0M2MCAzMC4zIDU5LjcgMjguNCA1OS4zIDI2Ljd6Ii8%2BPC9kZWZzPjxjbGlwUGF0aCBpZD0iU1ZHSURfMl8iPjx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzFfIi8%2BPC9jbGlwUGF0aD48cG9seWdvbiBjbGFzcz0ic3QwIiBwb2ludHM9IjAgNDkuMyAwIDE0LjcgMjIuNyAzMiAiLz48ZGVmcz48cGF0aCBpZD0iU1ZHSURfM18iIGQ9Ik01OS4zIDI2LjdINTYgNDUuMSAzMlYzOGgxNS43Yy0xLjUgNy4yLTcuNiAxMS4zLTE1LjcgMTEuMyAtOS42IDAtMTcuMy03LjctMTcuMy0xNy4zUzIyLjQgMTQuNyAzMiAxNC43YzQuMSAwIDcuOSAxLjUgMTAuOCAzLjlsOC41LTguNUM0Ni4xIDUuNSAzOS41IDIuNyAzMiAyLjcgMTUuNyAyLjcgMi43IDE1LjcgMi43IDMyUzE1LjcgNjEuMyAzMiA2MS4zYzE0LjcgMCAyOC0xMC43IDI4LTI5LjNDNjAgMzAuMyA1OS43IDI4LjQgNTkuMyAyNi43eiIvPjwvZGVmcz48Y2xpcFBhdGggaWQ9IlNWR0lEXzRfIj48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8zXyIvPjwvY2xpcFBhdGg%2BPHBvbHlnb24gY2xhc3M9InN0MSIgcG9pbnRzPSIwIDE0LjcgMjIuNyAzMiAzMiAyMy45IDY0IDE4LjcgNjQgMCAwIDAgIi8%2BPGRlZnM%2BPHBhdGggaWQ9IlNWR0lEXzVfIiBkPSJNNTkuMyAyNi43SDU2IDQ1LjEgMzJWMzhoMTUuN2MtMS41IDcuMi03LjYgMTEuMy0xNS43IDExLjMgLTkuNiAwLTE3LjMtNy43LTE3LjMtMTcuM1MyMi40IDE0LjcgMzIgMTQuN2M0LjEgMCA3LjkgMS41IDEwLjggMy45bDguNS04LjVDNDYuMSA1LjUgMzkuNSAyLjcgMzIgMi43IDE1LjcgMi43IDIuNyAxNS43IDIuNyAzMlMxNS43IDYxLjMgMzIgNjEuM2MxNC43IDAgMjgtMTAuNyAyOC0yOS4zQzYwIDMwLjMgNTkuNyAyOC40IDU5LjMgMjYuN3oiLz48L2RlZnM%2BPGNsaXBQYXRoIGlkPSJTVkdJRF82XyI%2BPHVzZSB4bGluazpocmVmPSIjU1ZHSURfNV8iLz48L2NsaXBQYXRoPjxwb2x5Z29uIGNsYXNzPSJzdDIiIHBvaW50cz0iMCA0OS4zIDQwIDE4LjcgNTAuNSAyMCA2NCAwIDY0IDY0IDAgNjQgIi8%2BPGRlZnM%2BPHBhdGggaWQ9IlNWR0lEXzdfIiBkPSJNNTkuMyAyNi43SDU2IDQ1LjEgMzJWMzhoMTUuN2MtMS41IDcuMi03LjYgMTEuMy0xNS43IDExLjMgLTkuNiAwLTE3LjMtNy43LTE3LjMtMTcuM1MyMi40IDE0LjcgMzIgMTQuN2M0LjEgMCA3LjkgMS41IDEwLjggMy45bDguNS04LjVDNDYuMSA1LjUgMzkuNSAyLjcgMzIgMi43IDE1LjcgMi43IDIuNyAxNS43IDIuNyAzMlMxNS43IDYxLjMgMzIgNjEuM2MxNC43IDAgMjgtMTAuNyAyOC0yOS4zQzYwIDMwLjMgNTkuNyAyOC40IDU5LjMgMjYuN3oiLz48L2RlZnM%2BPGNsaXBQYXRoIGlkPSJTVkdJRF84XyI%2BPHVzZSB4bGluazpocmVmPSIjU1ZHSURfN18iLz48L2NsaXBQYXRoPjxwb2x5Z29uIGNsYXNzPSJzdDMiIHBvaW50cz0iNjQgNjQgMjIuNyAzMiAxNy4zIDI4IDY0IDE0LjcgIi8%2BPC9zdmc%2BCg%3D%3D);
-  background-position: 10px center;
-  background-repeat: no-repeat;
-  background-size: 24px;
-  text-shadow: none;
-  width: 100%;
-  max-width: 278px;
-  padding: 9px 16px;
-  height: auto;
-  border: 1px solid #1A73E8;
+color: #000;
+min-width: 260px;
+background: #FFF;
+background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiICB4PSIwIiB5PSIwIiB2aWV3Qm94PSIwIDAgNjQgNjQiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI%2BLnN0MHtjbGlwLXBhdGg6dXJsKCNTVkdJRF8yXyk7ZmlsbDojRkJCQzA1O30uc3Qxe2NsaXAtcGF0aDp1cmwoI1NWR0lEXzRfKTtmaWxsOiNFQTQzMzU7fS5zdDJ7Y2xpcC1wYXRoOnVybCgjU1ZHSURfNl8pO2ZpbGw6IzM0QTg1Mzt9LnN0M3tjbGlwLXBhdGg6dXJsKCNTVkdJRF84Xyk7ZmlsbDojNDI4NUY0O308L3N0eWxlPjxkZWZzPjxwYXRoIGlkPSJTVkdJRF8xXyIgZD0iTTU5LjMgMjYuN0g1NiA0NS4xIDMyVjM4aDE1LjdjLTEuNSA3LjItNy42IDExLjMtMTUuNyAxMS4zIC05LjYgMC0xNy4zLTcuNy0xNy4zLTE3LjNTMjIuNCAxNC43IDMyIDE0LjdjNC4xIDAgNy45IDEuNSAxMC44IDMuOWw4LjUtOC41QzQ2LjEgNS41IDM5LjUgMi43IDMyIDIuNyAxNS43IDIuNyAyLjcgMTUuNyAyLjcgMzJTMTUuNyA2MS4zIDMyIDYxLjNjMTQuNyAwIDI4LTEwLjcgMjgtMjkuM0M2MCAzMC4zIDU5LjcgMjguNCA1OS4zIDI2Ljd6Ii8%2BPC9kZWZzPjxjbGlwUGF0aCBpZD0iU1ZHSURfMl8iPjx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzFfIi8%2BPC9jbGlwUGF0aD48cG9seWdvbiBjbGFzcz0ic3QwIiBwb2ludHM9IjAgNDkuMyAwIDE0LjcgMjIuNyAzMiAiLz48ZGVmcz48cGF0aCBpZD0iU1ZHSURfM18iIGQ9Ik01OS4zIDI2LjdINTYgNDUuMSAzMlYzOGgxNS43Yy0xLjUgNy4yLTcuNiAxMS4zLTE1LjcgMTEuMyAtOS42IDAtMTcuMy03LjctMTcuMy0xNy4zUzIyLjQgMTQuNyAzMiAxNC43YzQuMSAwIDcuOSAxLjUgMTAuOCAzLjlsOC41LTguNUM0Ni4xIDUuNSAzOS41IDIuNyAzMiAyLjcgMTUuNyAyLjcgMi43IDE1LjcgMi43IDMyUzE1LjcgNjEuMyAzMiA2MS4zYzE0LjcgMCAyOC0xMC43IDI4LTI5LjNDNjAgMzAuMyA1OS43IDI4LjQgNTkuMyAyNi43eiIvPjwvZGVmcz48Y2xpcFBhdGggaWQ9IlNWR0lEXzRfIj48dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8zXyIvPjwvY2xpcFBhdGg%2BPHBvbHlnb24gY2xhc3M9InN0MSIgcG9pbnRzPSIwIDE0LjcgMjIuNyAzMiAzMiAyMy45IDY0IDE4LjcgNjQgMCAwIDAgIi8%2BPGRlZnM%2BPHBhdGggaWQ9IlNWR0lEXzVfIiBkPSJNNTkuMyAyNi43SDU2IDQ1LjEgMzJWMzhoMTUuN2MtMS41IDcuMi03LjYgMTEuMy0xNS43IDExLjMgLTkuNiAwLTE3LjMtNy43LTE3LjMtMTcuM1MyMi40IDE0LjcgMzIgMTQuN2M0LjEgMCA3LjkgMS41IDEwLjggMy45bDguNS04LjVDNDYuMSA1LjUgMzkuNSAyLjcgMzIgMi43IDE1LjcgMi43IDIuNyAxNS43IDIuNyAzMlMxNS43IDYxLjMgMzIgNjEuM2MxNC43IDAgMjgtMTAuNyAyOC0yOS4zQzYwIDMwLjMgNTkuNyAyOC40IDU5LjMgMjYuN3oiLz48L2RlZnM%2BPGNsaXBQYXRoIGlkPSJTVkdJRF82XyI%2BPHVzZSB4bGluazpocmVmPSIjU1ZHSURfNV8iLz48L2NsaXBQYXRoPjxwb2x5Z29uIGNsYXNzPSJzdDIiIHBvaW50cz0iMCA0OS4zIDQwIDE4LjcgNTAuNSAyMCA2NCAwIDY0IDY0IDAgNjQgIi8%2BPGRlZnM%2BPHBhdGggaWQ9IlNWR0lEXzdfIiBkPSJNNTkuMyAyNi43SDU2IDQ1LjEgMzJWMzhoMTUuN2MtMS41IDcuMi03LjYgMTEuMy0xNS43IDExLjMgLTkuNiAwLTE3LjMtNy43LTE3LjMtMTcuM1MyMi40IDE0LjcgMzIgMTQuN2M0LjEgMCA3LjkgMS41IDEwLjggMy45bDguNS04LjVDNDYuMSA1LjUgMzkuNSAyLjcgMzIgMi43IDE1LjcgMi43IDIuNyAxNS43IDIuNyAzMlMxNS43IDYxLjMgMzIgNjEuM2MxNC43IDAgMjgtMTAuNyAyOC0yOS4zQzYwIDMwLjMgNTkuNyAyOC40IDU5LjMgMjYuN3oiLz48L2RlZnM%2BPGNsaXBQYXRoIGlkPSJTVkdJRF84XyI%2BPHVzZSB4bGluazpocmVmPSIjU1ZHSURfN18iLz48L2NsaXBQYXRoPjxwb2x5Z29uIGNsYXNzPSJzdDMiIHBvaW50cz0iNjQgNjQgMjIuNyAzMiAxNy4zIDI4IDY0IDE0LjcgIi8%2BPC9zdmc%2BCg%3D%3D);
+background-position: 10px center;
+background-repeat: no-repeat;
+background-size: 24px;
+text-shadow: none;
+width: 100%;
+max-width: 278px;
+padding: 9px 16px;
+height: auto;
+border: 1px solid #1A73E8;
 }
 a.a-btn[type="strava"]{
-  background: #FFF;
-  background-image: url(data:image/png;base64,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);
-  color: #444;
-  width: 100%;
-  max-width: 278px;
-  padding: 9px 16px;
-  height: auto;
-  background-position: 10px center;
-  background-repeat: no-repeat;
-  background-size: 25px;
-  border: 1px solid #fc5200;
+background: #FFF;
+background-image: url(data:image/png;base64,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);
+color: #444;
+width: 100%;
+max-width: 278px;
+padding: 9px 16px;
+height: auto;
+background-position: 10px center;
+background-repeat: no-repeat;
+background-size: 25px;
+border: 1px solid #fc5200;
 }
 form.form#formCadastro #saldo a{
-  display: block;
-  color: #043d22;
-  text-decoration: underline;
+display: block;
+color: #043d22;
+text-decoration: underline;
 }
 form.form#formCadastro .box#boxTelefone label span{
-  font-size: 15px;
+font-size: 15px;
 }
 form.form#formCadastro .box#boxTelefone label{
-  position: absolute;
-  top: 0;
-  left: 10px;
-  width: 27%;
-  height: 100%;
-  border-right: 1px solid #EEE;
-  z-index: 1;
-  text-align: center;
-  padding-top: 7px;
+position: absolute;
+top: 0;
+left: 10px;
+width: 27%;
+height: 100%;
+border-right: 1px solid #EEE;
+z-index: 1;
+text-align: center;
+padding-top: 7px;
 }
 form.form#formCadastro .box#boxTelefone input{
-  border: 0;
-  position: absolute;
-  top: 0;
-  right: 10px;
-  left: unset;
-  width: 66%;
-  height: 100%;
-  text-align: center;
-  font-size: 15px;
+border: 0;
+position: absolute;
+top: 0;
+right: 10px;
+left: unset;
+width: 66%;
+height: 100%;
+text-align: center;
+font-size: 15px;
 }
 
 form.form#formCadastro #fotoCadastroImg{
-  display: block;
-  width: 100px;
-  height: 100px;
-  border-radius: 100%;
-  border: 1px solid #EEE;
-  padding: 3px;
+display: block;
+width: 100px;
+height: 100px;
+border-radius: 100%;
+border: 1px solid #EEE;
+padding: 3px;
 }
 
 .margin_t_5{
-  margin-top: 5px;
-  display: block;
+margin-top: 5px;
+display: block;
 }
 
 .margin_t_10{
-  margin-top: 10px;
-  display: block;
+margin-top: 10px;
+display: block;
 }
 
 /*
- * Minha carteira
- */
+* Minha carteira
+*/
 body[controller="MinhaCarteira"] #formMinhaCarteira{
   padding: 20px 30px;
 }
@@ -3257,7 +3258,7 @@ body[controller="ProdutosGet"] div#info h4{
 }
 body[controller="ProdutosGet"] div#info label{
   display: inline-block;
-  color: #043d22;
+  color: #00ab46;
   margin-bottom: 15px;
 }
 body[controller="ProdutosGet"] div#info label .v{
@@ -3284,7 +3285,7 @@ body[controller="ProdutosGet"] .a-btn#comprar{
   position: fixed;
   bottom: 15px;
   right: 10px;
-  background: #043d22;
+  background: #00ab46;
   color: #FFF;
 }
 body[controller="ProdutosGet"] .a-btn#comprar i{
@@ -3300,7 +3301,7 @@ body[controller="ProdutosGet"] div#imgs ul > i{
   position: absolute;
   top: calc(50% - 31px);
   font-size: 3.0em;
-  color: #043d22;
+  color: #00ab46;
 }
 
 body[controller="ProdutosGet"] div#imgs ul > i.mdi-navigation-chevron-left{
@@ -3338,7 +3339,7 @@ body[controller="ProdutosGet"] div#imgs ul li > div > label{
 
 body[controller="ProdutosGet"] div#imgs ul li > div > label i{
   font-size: 34px;
-  color: #043d22;
+  color: #00ab46;
 }
 
 body[controller="ProdutosGet"] div#imgs[full="1"]{
@@ -3393,7 +3394,7 @@ body[controller="CentralDeAjuda"] .scrollable-content > ul li{
   left: 9px;
   top: 0px;
   font-size: 30px;
-  color: #043d22;
+  color: #00ab46;
 }
 #pesquisarFiltro .mdi-content-clear{
   position: absolute;
@@ -3447,7 +3448,7 @@ body[controller="CentralDeAjuda"] .scrollable-content > ul li{
 
 #maquina > div label i{
   font-size: 15px;
-  color: #043d22;
+  color: #00ab46;
   vertical-align: unset;
 }
 
@@ -3565,7 +3566,7 @@ body[controller="MaquinasGet"] .scrollable ul li > div.info h4{
 }
 body[controller="MaquinasGet"] .scrollable ul li > div.info label{
   display: inline-block;
-  color: #043d22;
+  color: #00ab46;
 }
 body[controller="MaquinasGet"] .scrollable ul li > div.info label.total_de{
   color: #e94847;
@@ -3630,7 +3631,7 @@ body[controller="MaquinasLst"]  #status li span{
 body[controller="MaquinasLst"]  #status li[status="green"] span,
 body[controller="MaquinasLst"] .scrollable ul li > .img[status="blue"] img,
 body[controller="MaquinasLst"] .scrollable ul li > .img[status="green"] img{
-  border-color: #043d22;
+  border-color: #00ab46;
 }
 
 #maquina > div img[status="yellow"],
@@ -3650,7 +3651,7 @@ body[controller="MaquinasLst"] .scrollable ul li > div.info span{
 }
 body[controller="MaquinasLst"] .scrollable ul li > div.info span i{
   font-size: 14px;
-  color: #043d22;
+  color: #00ab46;
   vertical-align: unset;
 }
 body[controller="MaquinasLst"] .scrollable ul li > div.info .mdi-action-lock-outline{
@@ -3683,7 +3684,7 @@ body[controller="MaquinasLst"] .scrollable ul li > div.info h4.endereco{
 }
 #localAtual i{
   font-size: 12px;
-  color: #043d22;
+  color: #00ab46;
 }
 #localAtual b{
   font-size: 13px;
@@ -3692,7 +3693,7 @@ body[controller="MaquinasLst"] .scrollable ul li > div.info h4.endereco{
 }
 
 #nenhumRegLocalizado{
-  color: #043d22;
+  color: #00ab46;
   font-weight: 500;
   font-size: 17px;
   font-family: 'Montserrat',sans-serif;
@@ -3712,7 +3713,7 @@ a.a-btn{
   padding: 3px 5px;
   font-size: 14px;
   box-shadow: none;
-  color: #043d22;
+  color: #00ab46;
   margin-right: 3px;
   display: inline-block;
   height: 27px;
@@ -3734,7 +3735,7 @@ body[controller="PaymentStart"] .scrollable > #Payment > md-content .btn{
   float: right;
   background: rgba(238, 238, 238, 0.6);
   margin-top: 5%;
-  color: #043d22 !important;
+  color: #00ab46 !important;
 }
 
 body[controller="PaymentStart"] .scrollable > #Payment > md-content #prod img{
@@ -3754,7 +3755,7 @@ body[controller="PaymentStart"] .scrollable > #Payment > md-content #prod > h4{
 }
 body[controller="PaymentStart"] .scrollable > #Payment > md-content #prod > label{
   display: inline-block;
-  color: #043d22;
+  color: #00ab46;
 }
 body[controller="PaymentStart"] .scrollable > #Payment > md-content #prod > label .v{
   text-decoration: underline;
@@ -3801,7 +3802,7 @@ font-size: 3em;
 }
 
 body[controller="PaymentStart"] .scrollable > .progress-circle span i{
-color: #043d22;
+color: #00ab46;
 font-size: 5em;
 }
 
@@ -3879,308 +3880,308 @@ margin-top: 3em;
 }
 
 .progress-circle.progress-0:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(90deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(90deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-1:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(93.6deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(93.6deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-2:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(97.2deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(97.2deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-3:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(100.8deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(100.8deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-4:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(104.4deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(104.4deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-5:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(108deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(108deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-6:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(111.6deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(111.6deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-7:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(115.2deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(115.2deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-8:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(118.8deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(118.8deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-9:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(122.4deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(122.4deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-10:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(126deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(126deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-11:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(129.6deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(129.6deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-12:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(133.2deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(133.2deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-13:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(136.8deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(136.8deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-14:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(140.4deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(140.4deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-15:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(129.6deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(129.6deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-16:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(133.2deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(133.2deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-17:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(136.8deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(136.8deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-18:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(140.4deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(140.4deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-19:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(144deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(144deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-20:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(151.2deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(151.2deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-21:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(158.6deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(158.6deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-22:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(161.2deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(161.2deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-23:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(165.6deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(165.6deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-24:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(169.2deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(169.2deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-25:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(180deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(180deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-26:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(183.6deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(183.6deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-27:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(187.2deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(187.2deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-28:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(190.8deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(190.8deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-29:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(194.4deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(194.4deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-30:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(198deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(198deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-31:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(201.6deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(201.6deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-32:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(205.2deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(205.2deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-33:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(208.8deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(208.8deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-34:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(212.4deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(212.4deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-35:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(216deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(216deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-40:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(234deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(234deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-36:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(219.6deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(219.6deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-37:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(223.2deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(223.2deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-38:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(226.8deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(226.8deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-39:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(230.4deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(230.4deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-41:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(237.6deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(237.6deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-42:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(241.2deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(241.2deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-43:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(244.8deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(244.8deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-44:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(248.4deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(248.4deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-45:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(252deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(252deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-46:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(255.6deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(255.6deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-47:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(259.2deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(259.2deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-48:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(262.8deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(262.8deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-49:after {
-  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(266.4deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #ebebeb 51%, transparent 51%, transparent), linear-gradient(266.4deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-50:after {
-  background-image: linear-gradient(-90deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-90deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-51:after {
-  background-image: linear-gradient(-86.4deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-86.4deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-52:after {
-  background-image: linear-gradient(-82.6deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-82.6deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-53:after {
-  background-image: linear-gradient(-79.2deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-79.2deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-54:after {
-  background-image: linear-gradient(-75.6deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-75.6deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-55:after {
-  background-image: linear-gradient(-72deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-72deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-56:after {
-  background-image: linear-gradient(-68.4deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-68.4deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-57:after {
-  background-image: linear-gradient(-64.8deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-64.8deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-58:after {
-  background-image: linear-gradient(-61.2deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-61.2deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-59:after {
-  background-image: linear-gradient(-57.6deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-57.6deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-60:after {
-  background-image: linear-gradient(-54deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-54deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-61:after {
-  background-image: linear-gradient(-50.4deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-50.4deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-62:after {
-  background-image: linear-gradient(-46.8deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-46.8deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-63:after {
-  background-image: linear-gradient(-43.2deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-43.2deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-64:after {
-  background-image: linear-gradient(-39.6deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-39.6deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-65:after {
-  background-image: linear-gradient(-36deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-36deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-66:after {
-  background-image: linear-gradient(-32.4deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-32.4deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-67:after {
-  background-image: linear-gradient(-28.8deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-28.8deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-68:after {
-  background-image: linear-gradient(-25.2deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-25.2deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-69:after {
-  background-image: linear-gradient(-21.6deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-21.6deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-70:after {
-  background-image: linear-gradient(-18deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-18deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-71:after {
-  background-image: linear-gradient(-14.4deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-14.4deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-72:after {
-  background-image: linear-gradient(-10.8deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-10.8deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-73:after {
-  background-image: linear-gradient(-7.2deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-7.2deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-74:after {
-  background-image: linear-gradient(-3.6deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(-3.6deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-75:after {
-  background-image: linear-gradient(0deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb);
+  background-image: linear-gradient(0deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb);
 }
 
 .progress-circle.progress-76:after {
-  background-image: linear-gradient(3.6deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(3.6deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-77:after {
-  background-image: linear-gradient(7.2deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(7.2deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-78:after {
-  background-image: linear-gradient(10.8deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(10.8deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-79:after {
-  background-image: linear-gradient(14.4deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(14.4deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-80:after {
-  background-image: linear-gradient(18deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(18deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-81:after {
-  background-image: linear-gradient(21.6deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(21.6deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-82:after {
-  background-image: linear-gradient(25.2deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(25.2deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-83:after {
-  background-image: linear-gradient(28.8deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(28.8deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-84:after {
-  background-image: linear-gradient(32.4deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(32.4deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-85:after {
-  background-image: linear-gradient(36deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(36deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-86:after {
-  background-image: linear-gradient(39.2deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(39.2deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-87:after {
-  background-image: linear-gradient(43.2deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(43.2deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-88:after {
-  background-image: linear-gradient(46.8deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(46.8deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-89:after {
-  background-image: linear-gradient(50.4deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(50.4deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-90:after {
-  background-image: linear-gradient(54deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(54deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-91:after {
-  background-image: linear-gradient(57.6deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(57.6deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-92:after {
-  background-image: linear-gradient(61.2deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(61.2deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-93:after {
-  background-image: linear-gradient(64.8deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(64.8deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-94:after {
-  background-image: linear-gradient(68.4deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(68.4deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-95:after {
-  background-image: linear-gradient(72deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(72deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-96:after {
-  background-image: linear-gradient(75.6deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(75.6deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-97:after {
-  background-image: linear-gradient(79.2deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(79.2deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-98:after {
-  background-image: linear-gradient(82.8deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(82.8deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-99:after {
-  background-image: linear-gradient(86.4deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(86.4deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 .progress-circle.progress-100:after {
-  background-image: linear-gradient(90deg, #043d22 51%, transparent 51%, transparent), linear-gradient(270deg, #043d22 51%, #ebebeb 51%, #ebebeb); }
+  background-image: linear-gradient(90deg, #00ab46 51%, transparent 51%, transparent), linear-gradient(270deg, #00ab46 51%, #ebebeb 51%, #ebebeb); }
 
 @-webkit-keyframes colorload {
   0% {
@@ -4266,7 +4267,7 @@ body[controller="HistoricoTransacoesLst"] md-content ul li > b{
 
 body[controller="VoucherLst"] md-content ul li b i,
 body[controller="HistoricoTransacoesLst"] md-content ul li b i{
-  color: #043d22;
+  color: #00ab46;
   font-size: 26px;
   vertical-align: middle;
   padding-left: 15px;
@@ -4297,7 +4298,7 @@ body[controller="VoucherLst"] .scrollable > div#codigo input{
   margin-right: 5px;
   background: transparent;
   border-radius: 0 !important;
-  border-bottom: 1px solid #043d22;
+  border-bottom: 1px solid #00ab46;
 }
 
 body[controller="VoucherLst"] .scrollable > div#codigo a{
@@ -4322,7 +4323,7 @@ body[controller="Suporte"] .scrollable li img{
   margin: 7px 0;
 }
 body[controller="Suporte"] .scrollable li a{
-  color: #043d22;
+  color: #00ab46;
   font-size: 20px;
   display: block;
 }
@@ -4434,7 +4435,7 @@ body[controller="Index"] #btn-home{
 }
 
 body[controller="Index"] .scrollable-content[t="CANCEL"] #btn-home{
-  background-color: #043d22;
+  background-color: #00ab46;
 }
 
 body[controller="Index"] #btn-home img{
@@ -4560,7 +4561,7 @@ body[controller="Index"] .scrollable-content #Produtos ul li > div.info h4{
 }
 body[controller="Index"] .scrollable-content #Produtos ul li > div.info label{
   display: inline-block;
-  color: #043d22;
+  color: #00ab46;
 }
 body[controller="Index"] .scrollable-content #Produtos ul li > div.info label.total_de{
   color: #e94847;
@@ -4627,7 +4628,7 @@ body[controller="Card"] .scrollable-content > ul li i.mdi-action-highlight-remov
   color: #d93025;
 }
 body[controller="PaymentStart"] #btnConfirme{
-  background: #043d22 !important;
+  background: #00ab46 !important;
   color: #FFF;
   position: fixed;
   bottom: 10px;
@@ -4638,7 +4639,7 @@ body[controller="MinhaCarteira"] #btnConfirme{
   padding: 3px 13px;
   font-size: 19px !important;
   display: block;
-  background: #043d22 !important;
+  background: #00ab46 !important;
   border-radius: 3px;
   font-size: 15px;
   color: #fff !important;
@@ -4657,7 +4658,7 @@ body[controller="VoucherGet"] #btnUtilizarVoucher{
   padding: 3px 13px;
   font-size: 19px !important;
   display: block;
-  background: #043d22 !important;
+  background: #00ab46 !important;
   border-radius: 3px;
   font-size: 15px;
   color: #fff !important;

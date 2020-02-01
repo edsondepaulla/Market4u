@@ -27,13 +27,13 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     QRScannerConf.destroy();
     $rootScope.REDIRECT = '';
     $rootScope.NO_WHATSAPP = false;
-    $rootScope.BTN_HOME = false;
     $rootScope.BTN_TYPE = 'NEXT';
     $rootScope.TEXTO_BTN = '';
     $rootScope.PRODUTOS = [];
     $rootScope.FORMAS_PG = [];
     $rootScope.VALOR_PG = 0;
     $rootScope.STEP = parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1;
+    $rootScope.BTN_HOME = $rootScope.STEP == 1 ? true : false;
     $rootScope.STEPS =
         [
             {
