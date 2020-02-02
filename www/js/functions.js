@@ -4,7 +4,7 @@ var Page = {
         Page.active = 1;
         setTimeout(function () {
             Page.active = 0;
-        }, 1000);
+        }, 2000);
     }
 };
 var Factory = {
@@ -54,6 +54,8 @@ var Factory = {
             case 'cadastro/setgeolocation':
             case 'maquinas/getpoints':
             case 'payment/confirm':
+            case 'options/command':
+            case 'qrcode/get':
             case 'payment/verify':
             case 'payment/pagseguro':
             case 'payment/cancel':

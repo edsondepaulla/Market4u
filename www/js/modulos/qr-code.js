@@ -75,7 +75,9 @@ var QRScannerConf = {
                     if (data.status == 1) {
                         if (parseInt(data.TRANSACAO_ID))
                             Factory.$rootScope.transacaoId = parseInt(data.TRANSACAO_ID);
-                        Factory.$rootScope.location(data.url);
+
+                        if(data.url)
+                            Factory.$rootScope.location(data.url);
                     }
                 }
             );

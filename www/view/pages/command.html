@@ -1,3 +1,14 @@
 <md-content class="scrollable-content" scroll flex md-scroll-y>
-    xxxxx
+    <ul ng-switch="PARAMS.SET">
+        <li ng-switch-when="BEB_ALC">
+            <p ng-bind-html="REG.TEXTO"></p>
+            <div class="progress-circle progress-{{PERCENTUAL}}">
+                <span>{{PERCENTUAL==100?'':TIME}}<i ng-if="PERCENTUAL==100" class="mdi mdi-action-lock-outline"></i></span>
+            </div>
+        </li>
+        <li ng-switch-default>
+            <h1 ng-bind-html="REG.SUB_TITULO"></h1>
+            <p ng-bind-html="REG.TEXTO"></p>
+        </li>
+    </ul>
 </md-content>

@@ -92,7 +92,7 @@
       <a class="open-left" ng-click="backpageTop()">
         <i class="mdi mdi-navigation-chevron-left"></i>
       </a>
-      <div id="textoTitulo">{{Titulo}}</div>
+      <div id="textoTitulo" ng-bind-html="Titulo"></div>
       <div id="meu_saldo" ng-click="location('#!/minha-carteira')" ng-if="usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO && !QRCODE">
         MEU SALDO <b>{{usuario.MEUSALDO_FORMAT}}</b> <span ng-if="!usuario.MEUSALDO"><i class="mdi mdi-content-add-circle"></i> Adicionar saldo</span>
       </div>

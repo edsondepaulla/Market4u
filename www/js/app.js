@@ -320,9 +320,31 @@ app.controller('SemInternet', function($rootScope, $scope, $routeParams) {
 
 app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.border_top = 1;
-    $rootScope.Titulo = "Command";
-    //$scope.CONTENT = ReturnData.CONTENT;
+    $rootScope.Titulo = ReturnData.TITULO;
+    $scope.PARAMS = $routeParams;
+    $scope.REG = ReturnData;
     $rootScope.REDIRECT = '';
+
+    var seTime = ReturnData.TIME;
+    $scope.TIME = '00:' + (seTime < 10 ? '0' : '') + seTime;
+    $scope.PERCENTUAL = Math.ceil(100 / seTime);
+    var time = seTime;
+    var percentual = 0;
+    Factory.timeout = setInterval(function () {
+        time--;
+        percentual += Math.ceil(100 / seTime);
+        if (time <= 0)
+            percentual = 100;
+        $scope.$apply(function () {
+            $scope.TIME = '00:' + (time < 10 ? '0' : '') + time;
+            $scope.PERCENTUAL = percentual;
+            if (percentual == 100)
+                $scope.REG.TEXTO = $scope.REG.TEXTO1;
+        });
+        if (time <= 0) {
+            clearInterval(Factory.timeout);
+        }
+    }, seTime ? 1000 : 0);
 });
 
 app.controller('Faq', function($rootScope, $scope, $routeParams, ReturnData) {
