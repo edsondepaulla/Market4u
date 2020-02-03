@@ -55,7 +55,6 @@ var Factory = {
             case 'maquinas/getpoints':
             case 'payment/confirm':
             case 'options/command':
-            case 'qrcode/get':
             case 'payment/verify':
             case 'payment/pagseguro':
             case 'payment/cancel':

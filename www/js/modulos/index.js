@@ -90,7 +90,10 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     };
     $scope.step($rootScope.STEP);
 
-    $scope.clickBtnHome = function () {
+    $scope.clickBtnHome = function (swipe) {
+        if(swipe && $rootScope.STEP != 1)
+            return;
+
         switch ($rootScope.BTN_TYPE) {
             case 'INICIO':
             case 'CANCEL':

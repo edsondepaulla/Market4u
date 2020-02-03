@@ -1136,7 +1136,7 @@ body[device="ios"]{
 }
 
 body[device="ios"] .pace .pace-activity {
-  top: 35px;
+  top: 53px;
 }
 
 body[controller="Index"] > #toolbar #top #sem_saldo{
@@ -2256,8 +2256,8 @@ body .pace .pace-progress{
 }
 
 body .pace .pace-activity{
-  right: 4px;
-  top: 5px;
+  right: 2px;
+  top: 30px;
 }
 
 body md-toolbar{

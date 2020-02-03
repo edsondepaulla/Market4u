@@ -325,26 +325,37 @@ app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData)
     $scope.REG = ReturnData;
     $rootScope.REDIRECT = '';
 
-    var seTime = ReturnData.TIME;
-    $scope.TIME = '00:' + (seTime < 10 ? '0' : '') + seTime;
-    $scope.PERCENTUAL = Math.ceil(100 / seTime);
-    var time = seTime;
-    var percentual = 0;
-    Factory.timeout = setInterval(function () {
-        time--;
-        percentual += Math.ceil(100 / seTime);
-        if (time <= 0)
-            percentual = 100;
-        $scope.$apply(function () {
-            $scope.TIME = '00:' + (time < 10 ? '0' : '') + time;
-            $scope.PERCENTUAL = percentual;
-            if (percentual == 100)
-                $scope.REG.TEXTO = $scope.REG.TEXTO1;
-        });
-        if (time <= 0) {
-            clearInterval(Factory.timeout);
-        }
-    }, seTime ? 1000 : 0);
+    switch ($routeParams.TYPE) {
+        case 'arduino':
+            if($routeParams.SET == 'BEB_ALC') {
+                var seTime = ReturnData.TIME;
+                $scope.TIME = '00:' + (seTime < 10 ? '0' : '') + seTime;
+                $scope.PERCENTUAL = Math.ceil(100 / seTime);
+                var time = seTime;
+                var percentual = 0;
+                Factory.timeout = setInterval(function () {
+                    time--;
+                    percentual += Math.ceil(100 / seTime);
+                    if (time <= 0 || percentual >= 100)
+                        percentual = 100;
+                    $scope.$apply(function () {
+                        $scope.TIME = '00:' + (time < 10 ? '0' : '') + time;
+                        $scope.PERCENTUAL = percentual;
+                        if (percentual == 100)
+                            $scope.REG.TEXTO = $scope.REG.TEXTO1;
+                    });
+                    if (time <= 0) {
+                        $.ajax({
+                            url: 'https://m.market4u.com.br/arduino.php?KEY=' + $routeParams.KEY + '&TYPE=BEB_ALC&V=FECHAR',
+                            type: 'GET',
+                            dataType: 'html'
+                        });
+                        clearInterval(Factory.timeout);
+                    }
+                }, seTime ? 1000 : 0);
+            }
+            break;
+    }
 });
 
 app.controller('Faq', function($rootScope, $scope, $routeParams, ReturnData) {
