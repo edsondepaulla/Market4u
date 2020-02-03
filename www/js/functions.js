@@ -321,7 +321,7 @@ var Factory = {
     },
     prepare: function () {
         document.addEventListener("deviceready", function () {
-            cordova.plugins.notification.local.requestPermission(function (granted) {
+            /*cordova.plugins.notification.local.requestPermission(function (granted) {
 
             });
             cordova.plugins.notification.local.on("click", function (notification, state) {
@@ -331,7 +331,7 @@ var Factory = {
                             Factory.$rootScope.location(notification.url);
                         break;
                 }
-            });
+            });*/
 
             // Android customization
             cordova.plugins.backgroundMode.setDefaults({ text:'Doing heavy tasks.'});
@@ -345,12 +345,7 @@ var Factory = {
                     cordova.plugins.backgroundMode.configure({
                         text:'Running in background for more than 5s now.'
                     });
-                    cordova.plugins.notification.local.schedule({
-                        'id': 15,
-                        'title': 'fdfs',
-                        'text': 'xxfdfdsfs',
-                        'foreground': true
-                    });
+                    alert('ddd');
                 }, 5000);
             }
         }, false);
