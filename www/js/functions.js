@@ -332,6 +332,27 @@ var Factory = {
                         break;
                 }
             });
+
+            // Android customization
+            cordova.plugins.backgroundMode.setDefaults({ text:'Doing heavy tasks.'});
+            // Enable background mode
+            cordova.plugins.backgroundMode.enable();
+
+            // Called when background mode has been activated
+            cordova.plugins.backgroundMode.onactivate = function () {
+                setTimeout(function () {
+                    // Modify the currently displayed notification
+                    cordova.plugins.backgroundMode.configure({
+                        text:'Running in background for more than 5s now.'
+                    });
+                    cordova.plugins.notification.local.schedule({
+                        'id': 15,
+                        'title': 'fdfs',
+                        'text': 'xxfdfdsfs',
+                        'foreground': true
+                    });
+                }, 5000);
+            }
         }, false);
         if(!parseInt(Login.getData().ID))
             window.location = '#!/conecte-se';
