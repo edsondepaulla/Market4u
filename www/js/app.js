@@ -327,7 +327,7 @@ app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData)
 
     switch ($routeParams.TYPE) {
         case 'arduino':
-            if($routeParams.SET == 'BEB_ALC') {
+            if ($routeParams.SET == 'BEB_ALC') {
                 var seTime = ReturnData.TIME;
                 $scope.TIME = '00:' + (seTime < 10 ? '0' : '') + seTime;
                 $scope.PERCENTUAL = Math.ceil(100 / seTime);
@@ -344,12 +344,9 @@ app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData)
                         if (percentual == 100)
                             $scope.REG.TEXTO = $scope.REG.TEXTO1;
                     });
+                    $rootScope.KEY_ARDUINO = $routeParams.KEY;
                     if (time <= 0) {
-                        $.ajax({
-                            url: 'https://m.market4u.com.br/arduino.php?KEY=' + $routeParams.KEY + '&TYPE=BEB_ALC&V=FECHAR',
-                            type: 'GET',
-                            dataType: 'html'
-                        });
+                        $rootScope.fecharPortaBebidasAlcoolicas();
                         clearInterval(Factory.timeout);
                     }
                 }, seTime ? 1000 : 0);
@@ -446,6 +443,22 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
         $rootScope.menuClose();
     });
 
+    $rootScope.KEY_ARDUINO = null;
+    $rootScope.fecharPortaBebidasAlcoolicas = function () {
+        Factory.ajax(
+            {
+                action: 'options/arduino',
+                data: {
+                    KEY: $rootScope.KEY_ARDUINO,
+                    TYPE: 'BEB_ALC',
+                    V: 'FECHAR'
+                }
+            },function(){
+                $rootScope.KEY_ARDUINO = null;
+            }
+        );
+    };
+
     $rootScope.controller = 'Maps';
     $rootScope.$on('$routeChangeSuccess', function () {
         switch ($route.current.controller) {
@@ -481,8 +494,10 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                 $('.scrollable-content').css('padding-bottom', position.top + 90);
             $('body').attr('scroll-top', $('.scrollable-content:visible').scrollTop() || 0);
         }, 1000);
-        if($rootScope.controller != 'Index' || (parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1) == 1)
+        if ($rootScope.controller != 'Index' || (parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1) == 1)
             Payment.clear(1);
+        if ($rootScope.KEY_ARDUINO)
+            $rootScope.fecharPortaBebidasAlcoolicas();
     });
 
     $rootScope.trustAsHtml = function (string) {
@@ -951,6 +966,7 @@ function inputEvents(_this, _bind) {
                 if (_value.length == 9 && _value.length && _bind == 'key') {
                     $.ajax({
                         url: 'https://viacep.com.br/ws/' + _value.replace('-', '') + '/json/',
+                        cache: false,
                         type: 'GET',
                         dataType: 'json',
                         success: function (data) {

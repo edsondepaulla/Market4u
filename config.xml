@@ -15,8 +15,8 @@
     <allow-intent href="market4uapp:" />
     <preference name="HideKeyboardFormAccessoryBar" value="false"/>
     <preference name="SplashScreen" value="screen" />
-    <preference name="SplashScreenDelay" value="0" />
-    <preference name="ShowSplashScreenSpinner" value="1000" />
+    <preference name="SplashScreenDelay" value="1000" />
+    <preference name="ShowSplashScreenSpinner" value="0" />
     <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="StatusBarBackgroundColor" value="#00ab46" />
