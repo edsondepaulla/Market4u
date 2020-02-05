@@ -2,7 +2,6 @@ html,
 body,
 body *{
   font-family: 'Montserrat',sans-serif;
-  -webkit-overflow-scrolling: touch;
 }
 
 .clr {

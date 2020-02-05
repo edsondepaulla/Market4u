@@ -321,7 +321,7 @@ var Factory = {
     },
     prepare: function () {
         document.addEventListener("deviceready", function () {
-            /*cordova.plugins.notification.local.requestPermission(function (granted) {
+            cordova.plugins.notification.local.requestPermission(function (granted) {
 
             });
             cordova.plugins.notification.local.on("click", function (notification, state) {
@@ -331,8 +331,9 @@ var Factory = {
                             Factory.$rootScope.location(notification.url);
                         break;
                 }
-            });*/
+            });
 
+            /*
             // Android customization
             cordova.plugins.backgroundMode.setDefaults({ text:'Doing heavy tasks.'});
             // Enable background mode
@@ -347,7 +348,7 @@ var Factory = {
                     });
                     alert('ddd');
                 }, 5000);
-            }
+            }*/
         }, false);
         if(!parseInt(Login.getData().ID))
             window.location = '#!/conecte-se';
