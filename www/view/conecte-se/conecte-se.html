@@ -11,16 +11,16 @@
         </div>
 
         <label for="email">E-mail</label>
-        <div class="box1">
+        <label class="box1" for="email">
             <input placeholder="Insira seu e-mail" type="email" id="email" ng-model="$root.usuario.EMAIL" />
-        </div>
+        </label>
 
         <label for="senha" ng-if="!$root.usuario.ESQUECEU_SENHA" class="margin_t_10">Senha</label>
-        <div ng-if="!$root.usuario.ESQUECEU_SENHA" class="box1">
+        <label ng-if="!$root.usuario.ESQUECEU_SENHA" class="box1" for="senha">
             <input type="password" id="senha" placeholder="Insira sua senha" ng-model="$root.usuario.SENHA" />
             <i id="showPassword" onclick="showPassword()" class="mdi mdi-action-visibility"></i>
             <span class="msgValidator">Possuir no mínino 8 caracteres</span>
-        </div>
+        </label>
 
         <button class="btn-salvar" type="submit" ng-click="entrar()">{{$root.usuario.ESQUECEU_SENHA?'Recuperar':'Fazer login'}}</button>
 
@@ -32,7 +32,4 @@
 
         <div class="clearBoth"></div>
     </form>
-    <script type="application/javascript">
-        box();
-    </script>
 </md-content>

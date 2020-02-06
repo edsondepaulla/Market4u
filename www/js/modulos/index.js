@@ -46,7 +46,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             {
                 'STEP': 3,
                 'STEP_TEXTO': 2,
-                'TEXTO': 'Pagamento'
+                'TEXTO': 'Modo de pagamento'
             },
             {
                 'STEP': 4,

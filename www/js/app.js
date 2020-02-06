@@ -596,7 +596,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                                             var seq = 0;
                                             $rootScope.BANDEIRAS = {};
                                             $.each(data.paymentMethods.CREDIT_CARD.options, function (idx, item) {
-                                                $rootScope.BANDEIRAS[seq] = config.url_api[config.ambiente] + 'skin/default/images/bandeira_cc/' + item.name.toLowerCase() + '.png';
+                                                $rootScope.BANDEIRAS[seq] = 'img/bandeira_cc/' + item.name.toLowerCase() + '.png';
                                                 seq++;
                                             });
                                         }
@@ -964,7 +964,7 @@ function inputEvents(_this, _bind) {
                                 if (data.brand.name) {
                                     _invalid = 0;
                                     $('#cardBandeira').val(data.brand.name);
-                                    $('#imgBandeira').show().attr('src', config.url_api[config.ambiente] + 'skin/default/images/bandeira_cc/' + data.brand.name + '.png');
+                                    $('#imgBandeira').show().attr('src', 'img/bandeira_cc/' + data.brand.name + '.png');
                                 } else {
                                     $('#cardBandeira').val('');
                                     $('#imgBandeira').hide();

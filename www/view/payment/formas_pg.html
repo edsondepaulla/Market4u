@@ -33,16 +33,16 @@
             </ul>
             <div ng-if="!$root.CARD">
                 <label for="cardName">Nome do dono do cartão</label>
-                <div class="box1">
+                <label class="box1" for="cardName">
                     <input type="text" id="cardName" ng-model="PG.cardName" placeholder="Ex: JOÃO DA SILVA" />
-                </div>
+                </label>
                 <label class="margin_t_10" for="cardNumber">Número do cartão</label>
-                <div class="box1">
+                <label class="box1" for="cardNumber">
                     <input type="text" id="cardNumber" ng-model="PG.cardNumber" placeholder="9999 9999 9999 9999" />
                     <span class="msgValidator">Número do cartão inválido</span>
                     <script type="application/javascript">setTimeout(function(){mask('#cardNumber', ['9999 9999 9999 9999', '9999 9999 9999 9999999999999'], 19);}, 1000);</script>
                     <img id="imgBandeira" style="top: 5px;" onerror="$(this).hide()" />
-                </div>
+                </label>
                 <input type="hidden" id="cardBandeira" />
                 <ul id="bandeiras" ng-if="$root.BANDEIRAS">
                     <li ng-repeat="b in $root.BANDEIRAS">
@@ -55,19 +55,19 @@
                     <div class="float-left">
                         <label class="margin_t_10" for="expirationMonthYear">Validade</label>
                         <div>
-                            <div class="box1 float-left" style="width: 102px;">
+                            <label class="box1 float-left" for="expirationMonthYear" style="width: 102px;">
                                 <input maxlength="5" type="text" id="expirationMonthYear" ng-model="PG.expirationMonthYear" placeholder="mm/aa" />
                                 <span class="msgValidator" style="width: 130px;">Validade inválido</span>
                                 <script type="application/javascript">setTimeout(function(){mask('#expirationMonthYear', ['99/99']);}, 1000);</script>
-                            </div>
+                            </label>
                             <div class="clearBoth"></div>
                         </div>
                     </div>
                     <div class="float-right">
                         <label class="margin_t_10" for="cvv">Cód. de segurança</label>
-                        <div class="box1" style="width: 140px;">
+                        <label class="box1" for="cvv" style="width: 140px;">
                             <input type="number" id="cvv" ng-model="PG.cvv" placeholder="999" />
-                        </div>
+                        </label>
                     </div>
                     <div class="clearBoth"></div>
                 </div>

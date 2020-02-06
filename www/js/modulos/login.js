@@ -431,13 +431,6 @@ app.controller('HistoricoTransacoesGet', function($rootScope, $scope, $routePara
     $scope.REG = ReturnData;
 });
 
-function box(){
-    $('.box1, .box').click(function () {
-        $(this).find('input').focus();
-        $(this).find('select').focus();
-    });
-}
-
 function fotoCadastro(){
     $('#fotoCadastro').change(function(){
         var _campo = $(this);
