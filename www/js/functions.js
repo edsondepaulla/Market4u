@@ -314,7 +314,7 @@ var Factory = {
 
         console.log(data);
 
-        $('#btnConfirme').attr('disabled', false);
+        $('.btnConfirme').attr('disabled', false);
 
         if (data.status == '-1')
             window.location = '#!/sem-internet';

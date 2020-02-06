@@ -106,12 +106,19 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             templateUrl: "view/pages/token.html",
             controller: 'Token',
             resolve: {
-                ReturnData: function ($route) {
+                ReturnData: function ($route, $rootScope) {
                     return Factory.ajax(
                         {
                             action: 'options/token',
                             data: {
                                 TOKEN: $route.current.params.TOKEN
+                            }
+                        }, function (data) {
+                            switch ($route.current.params.TOKEN) {
+                                case 'checkoutteste':
+                                    $rootScope.transacaoId = parseInt(data.TRANSACAO_ID);
+                                    $rootScope.location(data.url);
+                                    break;
                             }
                         }
                     );
@@ -241,65 +248,6 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                             }
                         }
                     );
-                }
-            }
-        })
-        .when("/payment/:MAQUINA", {
-            templateUrl: "view/payment/start.html",
-            controller: 'PaymentStart',
-            resolve: {
-                ReturnData: function ($route, $rootScope) {
-                    if (Page.active) {
-                        if (parseInt(Login.getData().ID)) {
-                            if (parseInt(Login.getData().DADOS_ATUALIZADO)) {
-                                return Factory.ajax(
-                                    {
-                                        action: 'payment/start',
-                                        data: {
-                                            MAQUINA: $route.current.params.MAQUINA
-                                        }
-                                    }
-                                );
-                            } else {
-                                $rootScope.REDIRECT = btoa('#!/payment/' + $route.current.params.MAQUINA);
-                                $rootScope.location('#!/cadastro');
-                            }
-                        } else {
-                            $rootScope.REDIRECT = btoa('#!/payment/' + $route.current.params.MAQUINA);
-                            $rootScope.location('#!/conecte-se');
-                        }
-                    } else
-                        window.history.go(-1);
-                }
-            }
-        })
-        .when("/payment/:MAQUINA/:JSON", {
-            templateUrl: "view/payment/start.html",
-            controller: 'PaymentStart',
-            resolve: {
-                ReturnData: function ($route, $rootScope) {
-                    if (Page.active) {
-                        if (parseInt(Login.getData().ID)) {
-                            if (parseInt(Login.getData().DADOS_ATUALIZADO)) {
-                                return Factory.ajax(
-                                    {
-                                        action: 'payment/start',
-                                        data: {
-                                            MAQUINA: $route.current.params.MAQUINA,
-                                            JSON: $route.current.params.JSON
-                                        }
-                                    }
-                                );
-                            } else {
-                                $rootScope.REDIRECT = btoa('#!/payment/' + $route.current.params.MAQUINA);
-                                $rootScope.location('#!/cadastro');
-                            }
-                        } else {
-                            $rootScope.REDIRECT = btoa('#!/payment/' + $route.current.params.MAQUINA);
-                            $rootScope.location('#!/conecte-se');
-                        }
-                    } else
-                        window.history.go(-1);
                 }
             }
         })
@@ -682,6 +630,9 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                     function (data) {
                         $rootScope.VALOR_PG = parseFloat(data.VALOR_PG || 0);
                         $rootScope.VALOR_PG_FORMAT = data.VALOR_PG_FORMAT;
+                        $rootScope.TOTAL_DE = data.TOTAL_DE;
+                        $rootScope.TOTAL_POR = data.TOTAL_POR;
+                        $rootScope.TOTAL_DESCONTO = data.TOTAL_DESCONTO;
                     }
                 );
             }, 50);
@@ -767,7 +718,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     $rootScope.processPayment = function (origem, extra) {
         clearTimeout(clearTimeoutProcessPayment);
         clearTimeoutProcessPayment = setTimeout(function () {
-            $('#btnConfirme').attr('disabled', true);
+            $('.btnConfirme').attr('disabled', true);
             switch (origem) {
                 case 'saldo':
                     Factory.ajax(
@@ -780,10 +731,10 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                             }
                         },
                         function () {
-                            $('#btnConfirme').attr('disabled', false);
+                            $('.btnConfirme').attr('disabled', false);
                         },
                         function () {
-                            $('#btnConfirme').attr('disabled', false);
+                            $('.btnConfirme').attr('disabled', false);
                         }
                     );
                     break;
@@ -800,16 +751,14 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                             }
                         },
                         function (data) {
-                            $('#btnConfirme').attr('disabled', false);
-                            if (parseInt(data.status) != 2)
-                                $rootScope.showBtnCancel = $rootScope.showPaymentFlag = false;
+                            $('.btnConfirme').attr('disabled', false);
 
                             switch (parseInt(data.status)) {
                                 case 1:
                                     $rootScope.verify();
                                     break;
                                 case 2:
-                                    $rootScope.showBtnCancel = $rootScope.showPaymentFlag = true;
+
                                     break;
                                 default:
                                     Payment.cancel();
@@ -817,7 +766,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                             }
                         },
                         function () {
-                            $('#btnConfirme').attr('disabled', false);
+                            $('.btnConfirme').attr('disabled', false);
                         }
                     );
                     break;

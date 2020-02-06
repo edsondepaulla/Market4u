@@ -28,6 +28,9 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     $rootScope.NO_WHATSAPP = false;
     $rootScope.BTN_TYPE = 'NEXT';
     $rootScope.TEXTO_BTN = '';
+    $rootScope.TOTAL_DE = '';
+    $rootScope.TOTAL_POR = '';
+    $rootScope.TOTAL_DESCONTO = '';
     $rootScope.PRODUTOS = [];
     $rootScope.FORMAS_PG = [];
     $rootScope.VALOR_PG = 0;
@@ -43,7 +46,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             {
                 'STEP': 3,
                 'STEP_TEXTO': 2,
-                'TEXTO': 'Modo de pagamento'
+                'TEXTO': 'Pagamento'
             },
             {
                 'STEP': 4,
@@ -200,8 +203,6 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                                     switch (data.STATUS) {
                                         case 'waiting_authorization':
                                             $scope.activeVoucher();
-                                            if (!$rootScope.actionCancel)
-                                                $rootScope.showPaymentFlag = true;
 
                                             // PagSeguro
                                             $.each(data.FORMAS_PG, function (idx, f_pg) {
@@ -216,15 +217,15 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
 
                                     if (parseInt(data.CLEAR))
                                         Payment.clear();
-                                    else
-                                        $rootScope.verify(1000);
+                                    else if(data.STATUS != 'waiting_authorization')
+                                        $rootScope.verify(2000);
                                 } else
-                                    $rootScope.verify(1000);
+                                    $rootScope.verify(2000);
                             } else {
                                 $rootScope.location('#!/');
                             }
                         }, function () {
-                            $rootScope.verify(1000);
+                            $rootScope.verify(2000);
                         }
                     );
                 }
