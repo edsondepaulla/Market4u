@@ -440,7 +440,6 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
             var position = $('.scrollable-content').position();
             if (position)
                 $('.scrollable-content').css('padding-bottom', position.top + 90);
-            $('body').attr('scroll-top', $('.scrollable-content:visible').scrollTop() || 0);
         }, 1000);
         if ($rootScope.controller != 'Index' || (parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1) == 1)
             Payment.clear(1);
@@ -633,6 +632,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                         $rootScope.TOTAL_DE = data.TOTAL_DE;
                         $rootScope.TOTAL_POR = data.TOTAL_POR;
                         $rootScope.TOTAL_DESCONTO = data.TOTAL_DESCONTO;
+                        $rootScope.PRODUTOS = data.PRODUTOS;
                     }
                 );
             }, 50);
@@ -855,17 +855,6 @@ app.directive('onErrorSrc', function() {
             });
         }
     }
-});
-
-var scrollTimeout = null;
-app.directive('scroll', function($routeParams) {
-    return {
-        link: function(scope, element, attrs) {
-            angular.element(element).bind("scroll", function () {
-                $('body').attr('scroll-top', $('.scrollable-content:visible').scrollTop() || 0);
-            });
-        }
-    };
 });
 
 app.directive('selectSearch', function() {

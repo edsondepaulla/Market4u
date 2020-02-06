@@ -3131,6 +3131,7 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li.active{
 
 #boxPg > ul > li[tipo="VOUCHER"] ul li.active i{
   display: inline-block;
+  vertical-align: top;
 }
 
 #boxPg > ul > li > label.utilizado_saldo{
@@ -4406,7 +4407,7 @@ body[controller="Index"] .scrollable-content[step="3"] > ul > li[step="4"]{
 }
 
 body[controller="Index"] .scrollable-content[step="3"] > ul > li{
-  padding-top: 0;
+  padding-top: 60px;
 }
 
 body[controller="Index"] .scrollable-content[step="3"] #Payment{
@@ -4418,7 +4419,13 @@ body[controller="Index"] .scrollable-content[step="3"] > ul > li > p{
   display: block;
   font-weight: bold;
   color: #00ab46;
-  font-size: 18px;
+  font-size: 21px;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  background: #FFF;
+  width: 100%;
+  padding: 10px 0;
 }
 
 body[controller="Index"] .scrollable-content > ul > li[step="4"]{
@@ -4473,6 +4480,7 @@ body[controller="Index"] #btn-home{
   display: block;
   padding: 10px 0;
   border: 0;
+  z-index: 1;
 }
 
 body[controller="Index"] #btn-home[disabled="disabled"]{
@@ -4525,16 +4533,12 @@ body[controller="Index"] .scrollable-content #Payment > h4{
   font-weight: bold;
 }
 
-body[controller="Index"][device="ios"] .scrollable-content #Produtos{
-  top: 70px;
-}
-
 body[controller="Index"] .scrollable-content #Produtos{
   position: fixed;
-  top: 50px;
+  top: 47px;
   background: rgba(255, 255, 255, 0.95);
   height: 100%;
-  z-index: 1;
+  z-index: 3;
   left: 0;
   width: 100%;
   padding: 15px;
