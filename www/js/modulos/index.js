@@ -213,7 +213,6 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
 
                                     switch (data.STATUS) {
                                         case 'authorized':
-                                        case 'pg_autorizado':
                                             $('#boxPago').show();
                                             var audio = new Audio('audio/song.mp4');
                                             audio.play();
