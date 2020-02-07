@@ -4,11 +4,44 @@
     </h4>
     <ul ng-if="$root.STEPS">
         <li ng-click="ITEM.STEP==1?clickBtnHome():null" step="{{ITEM.STEP}}" ng-repeat="ITEM in $root.STEPS" class="{{STEP>=ITEM.STEP?'active':''}}">
-            <span ng-if="ITEM.STEP != 'X'"><i ng-if="STEP==4" class="mdi mdi-navigation-check"></i>{{STEP==4?'':ITEM.STEP_TEXTO}}</span>
-            <p>{{ITEM.TEXTO}}</p>
+            <p><span ng-if="ITEM.STEP != 'X'"><i ng-if="STEP==4" class="mdi mdi-navigation-check"></i>{{STEP==4?'':ITEM.STEP_TEXTO}}</span>{{ITEM.TEXTO}}</p>
+            <div class="clearBoth"></div>
             <h4 ng-if="ITEM.SUB_TEXTO">{{ITEM.SUB_TEXTO}}</h4>
             <div ng-if="STEP==ITEM.STEP&&STEP==3" id="Payment">
                 <h4 ng-if="$root.STATUS_TEXTO">{{$root.STATUS_TEXTO}}</h4>
+
+                <div id="boxPago">
+                    <i class="mdi mdi-navigation-check"></i>
+                    Pago
+                </div>
+
+                <style>
+                    #boxPago i{
+                        display: block;
+                        font-size: 43px;
+                        background: #FFF;
+                        width: 60px;
+                        height: 60px;
+                        color: #00ab46;
+                        margin: 0 auto;
+                        border-radius: 50%;
+                    }
+
+                    #boxPago{
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        z-index: 3;
+                        background: #00ab46;
+                        text-align: center;
+                        padding-top: 300px;
+                        font-size: 26px;
+                        color: #FFF;
+                        display: none;
+                    }
+                </style>
 
                 <a id="ver-carrinho" ng-if="$root.PRODUTOS.length" onclick="$('#Produtos').show();">Ver carrinho</a>
 
@@ -33,12 +66,39 @@
                     </ul>
                 </div>
 
-                <div ng-if="$root.PRODUTOS.length">
-                    <h3 class="total">Total</h3>
-                    Total de {{TOTAL_DE}}
-                    <br>Desconto {{TOTAL_DESCONTO}}
-                    <br>Total por {{TOTAL_POR}}
+                <div id="boxSubTotal" ng-if="$root.PRODUTOS.length">
+                    <h3 class="total">Sub total</h3>
+
+                    <label class="total_de" ng-if="TOTAL_DE"><span>de</span> <span class="v">{{TOTAL_DE}}</span></label>
+                    <label class="total_desconto" ng-if="TOTAL_DESCONTO">Você economizou <span class="v">{{TOTAL_DESCONTO}}</span></label>
+                    <label class="total_por"><span ng-if="TOTAL_DE">por</span> <span class="v">{{TOTAL_POR}}</span></label>
                 </div>
+
+                <style>
+                    #boxSubTotal{
+                        text-align: right;
+                    }
+                    #boxSubTotal > label{
+                        display: block;
+                        color: #444;
+                    }
+                    #boxSubTotal > label.total_desconto{
+                        color: #00ab46;
+                    }
+                    #boxSubTotal > label.total_de{
+                        color: #e94847;
+                    }
+                    #boxSubTotal > label.total_por .v{
+                        font-weight: bold;
+                    }
+                    #boxSubTotal > label.total_de .v{
+                        text-decoration: line-through;
+                    }
+                    #boxSubTotal > label .v{
+                        font-size: 20px;
+                        text-decoration: underline;
+                    }
+                </style>
 
                 <div id="boxPg" ng-include src="'view/payment/formas_pg.html'"></div>
             </div>
@@ -46,4 +106,4 @@
     </ul>
 </md-content>
 
-<button class="btnConfirme" id="btn-home" ng-click="clickBtnHome()" ng-if="$root.STEPS.length && BTN_HOME" ng-bind-html="TEXTO_BTN"></button>
+<button step="{{STEP}}" class="btnConfirme" id="btn-home" ng-click="clickBtnHome()" ng-if="$root.STEPS.length && BTN_HOME" ng-bind-html="TEXTO_BTN"></button>

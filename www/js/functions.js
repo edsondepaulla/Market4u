@@ -53,7 +53,6 @@ var Factory = {
             case 'login/get':
             case 'cadastro/setgeolocation':
             case 'maquinas/getpoints':
-            case 'payment/confirm':
             case 'options/command':
             case 'payment/verify':
             case 'payment/pagseguro':

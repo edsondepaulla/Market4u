@@ -81,7 +81,7 @@
     <i mn-touch swipe-right="swipeRight()" ng-if="controller == 'Index' && !QRCODE" class="btn_maps mdi mdi-action-view-headline" ng-click="menuOpen()"></i>
     <div id="top" ng-if="controller == 'Index' && !QRCODE">
       <div ng-if="usuario.MEUSALDO_ATIVADO" ng-click="location('#!/cadastro')" style="display: inline-block;">
-        MEU SALDO
+        Meu saldo
         <b>{{usuario.MEUSALDO_FORMAT}}</b>
       </div>
       <div id="sem_saldo" ng-if="!usuario.MEUSALDO && usuario.MEUSALDO_ATIVADO" ng-click="location('#!/minha-carteira')">
@@ -94,7 +94,7 @@
       </a>
       <div id="textoTitulo" ng-bind-html="Titulo"></div>
       <div id="meu_saldo" ng-click="location('#!/minha-carteira')" ng-if="usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO && !QRCODE">
-        MEU SALDO <b>{{usuario.MEUSALDO_FORMAT}}</b> <span ng-if="!usuario.MEUSALDO"><i class="mdi mdi-content-add-circle"></i> Adicionar saldo</span>
+        Meu saldo <b>{{usuario.MEUSALDO_FORMAT}}</b> <span ng-if="!usuario.MEUSALDO"><i class="mdi mdi-content-add-circle"></i> Adicionar saldo</span>
       </div>
     </div>
     <img ng-click="location('#!/')" src="img/logo.png" border="0">
@@ -112,10 +112,28 @@
     </div>
   </div>
 
+  <ul id="menu-bottom" step="{{STEP}}">
+    <li ng-click="location('#!/')">
+      <i class="mdi mdi-action-home"></i> Início
+    </li>
+    <li ng-click="location('#!/minha-carteira')">
+      <i class="mdi mdi-action-credit-card"></i> Carteira
+    </li>
+    <li id="pagar" ng-click="clickQrcode('pagar')">
+      <i class="mdi mdi-editor-attach-money"></i> Pagar
+    </li>
+    <li style="float: right" ng-click="location('#!/cadastro')">
+      <i class="mdi mdi-action-settings"></i> Ajustes
+    </li>
+    <li style="float: right" ng-click="clickQrcode('destravar')">
+      <i class="mdi mdi-action-lock-open"></i> Destravar
+    </li>
+  </ul>
+
   <div class="qrcode" mn-touch swipe-right="location('#!/')">
     <div id="qr-code-texto">
       <img src="img/qrcode.png" onclick="QRScannerConf.digite()"><br>
-      Leia o QRCode que está no<br> Auto Atendimento ou Comanda.
+      Leia o QRCode que está {{TYPE_QRCODE=='pagar'?'no Auto Atendimento':'na Geladeira'}}.
     </div>
     <div id="qr-code-background">
 

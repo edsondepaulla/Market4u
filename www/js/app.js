@@ -845,6 +845,13 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
         V.ACTIVE = 1;
         $rootScope.CARD = V.ID ? V.VALS : null;
     };
+
+    $rootScope.clickQrcode = function (type) {
+        $rootScope.TYPE_QRCODE = type;
+        $rootScope.BTN_HOME = false;
+        $rootScope.transacaoId = 0;
+        QRScannerConf.show();
+    };
 });
 
 app.directive('onErrorSrc', function() {

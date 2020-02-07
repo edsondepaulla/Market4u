@@ -1,9 +1,9 @@
 <md-content class="scrollable-content" scroll flex md-scroll-y>
     <form id="formMinhaCarteira" class="form" onsubmit="return false;" method="post">
-        Meu <b>saldo</b>:
+        Meu saldo:
         <h4>{{usuario.MEUSALDO_FORMAT}}</h4>
 
-        Escolha o <b>valor</b>:
+        Escolha o valor:
 
         <ul>
             <li class="{{item.active?'active':''}}" ng-click="select(item)" ng-repeat="item in itens">
@@ -13,6 +13,7 @@
         </ul>
         <div class="clearBoth"></div>
 
+        <div style="margin: 15px 0 0 -15px">Modo de pagamento:</div>
         <div id="boxPg" ng-include src="'view/payment/formas_pg.html'"></div>
     </form>
 </md-content>

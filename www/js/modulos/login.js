@@ -330,18 +330,15 @@ app.controller('MinhaCarteira', function($rootScope, $scope, $routeParams, Retur
             $rootScope.pagseguro(0, null, 1000);
     });
 
-    $rootScope.VALOR_PG = 20;
+    $rootScope.VALOR_PG = 30;
     $scope.itens = [
         {
-            value: 10,
-        },
-        {
             value: 20,
-            active: 1,
-            popular: 1
         },
         {
             value: 30,
+            active: 1,
+            popular: 1
         },
         {
             value: 50,
@@ -351,6 +348,9 @@ app.controller('MinhaCarteira', function($rootScope, $scope, $routeParams, Retur
         },
         {
             value: 150,
+        },
+        {
+            value: 300,
         }
     ];
 

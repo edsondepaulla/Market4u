@@ -10,7 +10,7 @@
         <div class="clearBoth"></div>
         <ul ng-if="PG.TIPO=='VOUCHER'">
             <li class="{{V.ACTIVE?'active':''}} itens" ng-repeat="V in PG.ITENS" ng-click="selectVoucher(PG.ITENS, V)">
-                <span ng-if="V.CODIGO"><i class="mdi mdi-action-done"></i> {{V.CODIGO}} - </span><i>{{V.NOME}}</i>
+                <span ng-if="V.CODIGO"><i class="mdi mdi-action-done"></i> </span><i>{{V.NOME}}</i>
             </li>
             <li class="c">
                 Código

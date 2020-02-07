@@ -1213,41 +1213,6 @@ input.scrollable-header {
   border-bottom: 3px solid #ccc;
 }
 
-#menu-bottom{
-  background: #E4E4E4;
-  padding: 5px;
-  z-index: 998;
-  height: 53px;
-}
-
-#menu-bottom .row{
-  margin: 0;
-}
-
-#menu-bottom .row p{
-  margin: 0;
-  font-size: 12px;
-}
-
-#menu-bottom .row .col{
-  text-align: center;
-  padding: 0;
-}
-
-#menu-bottom .row .col.active{
-  color: #000;
-}
-
-#menu-bottom .col i{
-  font-size: 25px;
-  position: relative;
-}
-
-#menu-bottom i.fa.fa-share-alt{
-  font-size: 23px;
-  -webkit-text-stroke: 1px #e4e4e4;
-}
-
 body.sidebar-left-in .app{
   opacity: 0.8 !important;
 }
@@ -2962,6 +2927,10 @@ body[controller="MinhaCarteira"] #formMinhaCarteira{
   padding: 20px 30px;
 }
 
+body[controller="MinhaCarteira"] #formMinhaCarteira > h4{
+  font-weight: bold;
+}
+
 body[controller="MinhaCarteira"] #formMinhaCarteira > ul li{
   float: left;
   width: 29%;
@@ -2974,7 +2943,7 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li{
 }
 
 body[controller="MinhaCarteira"] #boxPg{
-  margin: 20px -15px;
+  margin: 0 -15px 20px;
 }
 
 body[controller="MinhaCarteira"] #formMinhaCarteira > ul li > label{
@@ -3088,10 +3057,6 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li.active{
   margin-top: 0;
 }
 
-#boxPg > ul > li[tipo="VOUCHER"] ul{
-  background: rgba(238, 238, 238, 0.47);
-  padding: 10px;
-}
 #boxPg > ul > li[tipo="VOUCHER"] ul li.c input{
   font-size: 18px;
   width: 100%;
@@ -3127,19 +3092,22 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li.active{
   padding: 2px 7px;
   margin-bottom: 4px;
   font-size: 15px;
-  BACKGROUND: #fff;
+  background: #fff;
+}
+#boxPg > ul > li[tipo="VOUCHER"] ul li.itens i{
+  font-style: normal;
 }
 #boxPg > ul > li[tipo="VOUCHER"] ul li.itens:last-child{
   margin-bottom: 15px;
 }
 #boxPg > ul > li[tipo="VOUCHER"] ul li.active{
-  background: rgba(11, 99, 64, 1);
-  color: #EEE;
+  font-weight: bold;
 }
 
 #boxPg > ul > li[tipo="VOUCHER"] ul li.active i{
   display: inline-block;
   vertical-align: top;
+  margin-right: 5px;
 }
 
 #boxPg > ul > li > label.utilizado_saldo{
@@ -4404,11 +4372,11 @@ body[controller="Index"] .scrollable-content[step="3"]{
 }
 
 body[controller="Index"] .scrollable-content > ul > li{
-  padding: 25px 0 30px 0;
+  padding: 40px 0 40px 0;
   font-size: 15px;
 }
 
-body[controller="Index"] .scrollable-content[step="3"] > ul > li.active > span,
+body[controller="Index"] .scrollable-content[step="3"] > ul > li.active > p > span,
 body[controller="Index"] .scrollable-content[step="3"] > ul > li[step="1"],
 body[controller="Index"] .scrollable-content[step="3"] > ul > li[step="4"]{
   display: none;
@@ -4433,22 +4401,19 @@ body[controller="Index"] .scrollable-content[step="3"] > ul > li > p{
   left: 0;
   background: #FFF;
   width: 100%;
-  padding: 10px 0;
+  padding: 30px 0 10px;
 }
 
 body[controller="Index"] .scrollable-content > ul > li[step="4"]{
   padding-bottom: 100px;
 }
 
-body[controller="Index"] .scrollable-content > ul > li.active > span{
-  background: rgba(0, 171, 70, 0.15);
-}
-
 body[controller="Index"] .scrollable-content > ul > li > p{
   display: inline-block;
+  font-size: 17px;
 }
 
-body[controller="Index"] .scrollable-content > ul > li > span{
+body[controller="Index"] .scrollable-content > ul > li > p > span{
   border: 3px solid #043d22;
   border-radius: 50%;
   width: 38px;
@@ -4456,11 +4421,17 @@ body[controller="Index"] .scrollable-content > ul > li > span{
   display: inline-block;
   text-align: center;
   font-size: 17px;
-  margin-right: 10px;
+  margin-right: 15px;
   line-height: 34px;
   margin-left: 30px;
   font-weight: bold;
 }
+
+body[controller="Index"] .scrollable-content > ul > li.active > p > span{
+  background: #00ab46;
+  color: #FFF;
+}
+
 
 body[controller="Index"] .scrollable-content > ul > li[step="X"]{
   font-weight: bold;
@@ -4479,16 +4450,22 @@ body[controller="Index"] .scrollable-content > ul > li > h4{
 body[controller="Index"] #btn-home{
   position: fixed;
   bottom: 0;
-  left: 0;
+  right: 0;
   background: #00ab46;
   width: 100%;
   color: #FFF;
   text-align: center;
-  font-size: 29px;
+  font-size: 25px;
   display: block;
   padding: 10px 0;
   border: 0;
-  z-index: 1;
+  z-index: 2;
+  display: block;
+  font-family: 'Montserrat',sans-serif;
+}
+
+body[controller="Index"] #btn-home[step="1"]{
+  display: none;
 }
 
 body[controller="Index"] #btn-home[disabled="disabled"]{
@@ -4501,14 +4478,59 @@ body[controller="Index"] .scrollable-content[t="CANCEL"] #btn-home{
 
 body[controller="Index"] #btn-home img{
   width: 24px;
-  vertical-align: baseline;
+  vertical-align: sub;
 }
 
 body[controller="Index"] #btn-home i{
   vertical-align: middle;
   margin-left: 15px;
-  font-size: 30px;
-  transition: 1s;
+  font-size: 27px;
+}
+
+ul#menu-bottom{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  border-top: 1px solid rgba(11, 99, 64, 0.1);
+  background: #fcfcfc;
+  display: none;
+}
+
+body[controller="Command"] ul#menu-bottom,
+body[controller="Index"] ul#menu-bottom[step="1"]{
+  display: block;
+}
+
+body[controller="Command"] a#whatsapp{
+  bottom: 70px;
+}
+
+ul#menu-bottom li#pagar{
+  border-radius: 50%;
+  background: #00ab46;
+  width: 60px;
+  height: 60px;
+  color: #FFF;
+  display: block;
+  position: absolute;
+  left: calc(50% - 30px);
+  top: -21px;
+}
+
+ul#menu-bottom li{
+  float: left;
+  width: 20%;
+  text-align: center;
+  font-size: 12px;
+  padding: 0 0 7px;
+}
+
+ul#menu-bottom li i{
+  display: block;
+  font-size: 29px;
+  margin: 0 0 -7px 0;
 }
 
 body[controller="Index"] .scrollable-content > h4{
@@ -4539,6 +4561,7 @@ body[controller="Index"] .scrollable-content #Payment > h4{
   font-family: unset;
   text-align: center;
   font-weight: bold;
+  margin-top: 30px;
 }
 
 body[controller="Index"] .scrollable-content #Produtos{
@@ -4549,7 +4572,7 @@ body[controller="Index"] .scrollable-content #Produtos{
   z-index: 3;
   left: 0;
   width: 100%;
-  padding: 15px;
+  padding: 35px 15px 0;
   display: none;
   padding-bottom: 86px;
 }
@@ -4567,7 +4590,7 @@ body[controller="Index"] .scrollable-content #Produtos > h5{
 
 body[controller="Index"] .scrollable-content #Produtos > i.mdi-navigation-close{
   position: absolute;
-  top: 0;
+  top: 25px;
   right: 15px;
   font-size: 30px;
 }

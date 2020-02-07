@@ -34,6 +34,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     $rootScope.PRODUTOS = [];
     $rootScope.FORMAS_PG = [];
     $rootScope.VALOR_PG = 0;
+    $rootScope.ACTIVE_SALDO = 0;
     $rootScope.STEP = parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1;
     $rootScope.BTN_HOME = $rootScope.STEP == 1 ? true : false;
     $rootScope.STEPS =
@@ -51,7 +52,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             {
                 'STEP': 4,
                 'STEP_TEXTO': 3,
-                'TEXTO': 'Compra realizada com sucesso'
+                'TEXTO': 'Compra realizada'
             }
         ];
 
@@ -62,7 +63,10 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             case 3:
             case 4:
                 if (!parseInt($rootScope.transacaoId)) {
-                    $rootScope.location('#!/');
+                    clearTimeout(Factory.timeout);
+                    Factory.timeout = setTimeout(function(){
+                        $rootScope.location('#!/');
+                    }, 500);
                     return;
                 }
                 break;
@@ -71,9 +75,10 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             case 1:
                 $rootScope.BTN_HOME = true;
                 $rootScope.transacaoId = 0;
-                $rootScope.TEXTO_BTN = '<img src="img/qrcode.png"> Ler o QRCode';
+                $rootScope.TEXTO_BTN = '<img src="img/qrcode.png"> Comprar';
                 break;
             case 2:
+                $rootScope.BTN_HOME = false;
                 $rootScope.transacaoId = 0;
                 QRScannerConf.show();
                 break;
@@ -87,13 +92,16 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                 $rootScope.confirmPayment('compra');
                 break;
             default:
-                $rootScope.location('#!/');
+                clearTimeout(Factory.timeout);
+                Factory.timeout = setTimeout(function(){
+                    $rootScope.location('#!/');
+                }, 500);
                 break;
         }
     };
     $scope.step($rootScope.STEP);
 
-    $scope.clickBtnHome = function (swipe) {
+    $rootScope.clickBtnHome = function (swipe, type) {
         if(swipe && $rootScope.STEP != 1)
             return;
 
@@ -101,7 +109,10 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             case 'INICIO':
             case 'CANCEL':
                 Payment.clear(1);
-                $rootScope.location('#!/');
+                clearTimeout(Factory.timeout);
+                Factory.timeout = setTimeout(function(){
+                    $rootScope.location('#!/');
+                }, 500);
                 break;
             default:
                 $scope.step($rootScope.STEP + 1);
@@ -201,6 +212,15 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                                         $rootScope.STEPS = data.STEPS;
 
                                     switch (data.STATUS) {
+                                        case 'authorized':
+                                        case 'pg_autorizado':
+                                            $('#boxPago').show();
+                                            var audio = new Audio('audio/song.mp4');
+                                            audio.play();
+                                            setTimeout(function () {
+                                                $('#boxPago').hide();
+                                            }, 3000);
+                                            break;
                                         case 'waiting_authorization':
                                             $scope.activeVoucher();
 
@@ -217,15 +237,18 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
 
                                     if (parseInt(data.CLEAR))
                                         Payment.clear();
-                                    else if(data.STATUS != 'waiting_authorization')
-                                        $rootScope.verify(2000);
+                                    else/* if(data.STATUS != 'waiting_authorization')*/
+                                        $rootScope.verify(1000);
                                 } else
-                                    $rootScope.verify(2000);
+                                    $rootScope.verify(1000);
                             } else {
-                                $rootScope.location('#!/');
+                                clearTimeout(Factory.timeout);
+                                Factory.timeout = setTimeout(function(){
+                                    $rootScope.location('#!/');
+                                }, 500);
                             }
                         }, function () {
-                            $rootScope.verify(2000);
+                            $rootScope.verify(1000);
                         }
                     );
                 }
