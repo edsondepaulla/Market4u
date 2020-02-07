@@ -218,7 +218,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                                             audio.play();
                                             setTimeout(function () {
                                                 $('#boxPago').hide();
-                                            }, 3000);
+                                            }, 5000);
                                             break;
                                         case 'waiting_authorization':
                                             $scope.activeVoucher();
