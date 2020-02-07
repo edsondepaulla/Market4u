@@ -4508,6 +4508,30 @@ body[controller="Command"] a#whatsapp{
   bottom: 70px;
 }
 
+body[controller="Index"] #boxSubTotal{
+    text-align: right;
+}
+body[controller="Index"] #boxSubTotal > label{
+    display: block;
+    color: #444;
+}
+body[controller="Index"] #boxSubTotal > label.total_desconto{
+    color: #00ab46;
+}
+body[controller="Index"] #boxSubTotal > label.total_de{
+    color: #e94847;
+}
+body[controller="Index"] #boxSubTotal > label.total_por .v{
+    font-weight: bold;
+}
+body[controller="Index"] #boxSubTotal > label.total_de .v{
+    text-decoration: line-through;
+}
+body[controller="Index"] #boxSubTotal > label .v{
+    font-size: 20px;
+    text-decoration: underline;
+}
+
 ul#menu-bottom li#pagar{
   border-radius: 50%;
   background: #00ab46;
@@ -4564,6 +4588,8 @@ ul#menu-bottom li span{
     font-size: 26px;
     color: #FFF;
     display: none;
+    transition: 1s;
+    opacity: 0;
 }
 
 ul#menu-bottom li i{

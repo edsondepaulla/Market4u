@@ -10,11 +10,6 @@
             <div ng-if="STEP==ITEM.STEP&&STEP==3" id="Payment">
                 <h4 ng-if="$root.STATUS_TEXTO">{{$root.STATUS_TEXTO}}</h4>
 
-                <div id="boxPago">
-                    <i class="mdi mdi-navigation-check"></i>
-                    Compra realizada com sucesso
-                </div>
-
                 <a id="ver-carrinho" ng-if="$root.PRODUTOS.length" onclick="$('#Produtos').show();">Ver carrinho</a>
 
                 <div id="Produtos" class="scrollable-content" scroll flex md-scroll-y>
@@ -45,32 +40,6 @@
                     <label class="total_desconto" ng-if="TOTAL_DESCONTO">Você economizou <span class="v">{{TOTAL_DESCONTO}}</span></label>
                     <label class="total_por"><span ng-if="TOTAL_DE">por</span> <span class="v">{{TOTAL_POR}}</span></label>
                 </div>
-
-                <style>
-                    #boxSubTotal{
-                        text-align: right;
-                    }
-                    #boxSubTotal > label{
-                        display: block;
-                        color: #444;
-                    }
-                    #boxSubTotal > label.total_desconto{
-                        color: #00ab46;
-                    }
-                    #boxSubTotal > label.total_de{
-                        color: #e94847;
-                    }
-                    #boxSubTotal > label.total_por .v{
-                        font-weight: bold;
-                    }
-                    #boxSubTotal > label.total_de .v{
-                        text-decoration: line-through;
-                    }
-                    #boxSubTotal > label .v{
-                        font-size: 20px;
-                        text-decoration: underline;
-                    }
-                </style>
 
                 <div id="boxPg" ng-include src="'view/payment/formas_pg.html'"></div>
             </div>

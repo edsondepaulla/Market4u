@@ -7,6 +7,10 @@ var Payment = {
 
             // Id
             Factory.$rootScope.transacaoId = 0;
+
+            // Redirect
+            if (!parseInt(cancelar))
+                Factory.$rootScope.location('#!/');
         }
     },
     cancel: function () {
@@ -213,11 +217,11 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
 
                                     switch (data.STATUS) {
                                         case 'authorized':
-                                            $('#boxPago').show();
+                                            $('#boxPago').css('opacity', 1).show();
                                             var audio = new Audio('audio/song.mp4');
                                             audio.play();
                                             setTimeout(function () {
-                                                $('#boxPago').hide();
+                                                $('#boxPago').css('opacity', 0).hide();
                                             }, 5000);
                                             break;
                                         case 'waiting_authorization':
@@ -236,7 +240,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
 
                                     if (parseInt(data.CLEAR))
                                         Payment.clear();
-                                    else/* if(data.STATUS != 'waiting_authorization')*/
+                                    else
                                         $rootScope.verify(1000);
                                 } else
                                     $rootScope.verify(1000);
