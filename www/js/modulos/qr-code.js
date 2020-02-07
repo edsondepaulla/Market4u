@@ -31,24 +31,23 @@ var QRScannerConf = {
 
                 }
                 if (status.authorized) {
+                    try {
+                        QRScanner.scan(function (err, text) {
+                            if (err) {
 
+                            } else {
+                                QRScannerConf.scan(text, 1);
+                            }
+                        });
+                        QRScanner.show();
+                    } catch (err) {
+                    }
                 } else if (status.denied) {
 
                 } else {
 
                 }
             });
-        } catch (err) {
-        }
-        try {
-            QRScanner.scan(function (err, text) {
-                if (err) {
-
-                } else {
-                    QRScannerConf.scan(text, 1);
-                }
-            });
-            QRScanner.show();
         } catch (err) {
         }
     },
