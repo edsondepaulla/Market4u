@@ -212,7 +212,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                                         $rootScope.STEPS = data.STEPS;
 
                                     switch (data.STATUS) {
-                                        case 'authorized':
+                                        case 'success':
                                             $('#boxPago').show();
                                             var audio = new Audio('audio/song.mp4');
                                             audio.play();

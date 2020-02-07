@@ -4499,7 +4499,8 @@ ul#menu-bottom{
 }
 
 body[controller="Command"] ul#menu-bottom,
-body[controller="Index"] ul#menu-bottom[step="1"]{
+body[controller="Index"] ul#menu-bottom[step="1"],
+body[controller="Index"] ul#menu-bottom[step="4"]{
   display: block;
 }
 
@@ -4520,11 +4521,49 @@ ul#menu-bottom li#pagar{
 }
 
 ul#menu-bottom li{
-  float: left;
-  width: 20%;
-  text-align: center;
-  font-size: 12px;
-  padding: 0 0 7px;
+    float: left;
+    width: 20%;
+    text-align: center;
+    font-size: 12px;
+    padding: 0 0 7px;
+    position: relative;
+}
+
+ul#menu-bottom li span{
+    position: absolute;
+    background: #043d22;
+    color: #FFF;
+    border-radius: 50%;
+    font-size: 12px;
+    padding: 3px;
+    top: -13px;
+    right: 0;
+}
+
+#boxPago i{
+    display: block;
+    font-size: 43px;
+    background: #FFF;
+    width: 60px;
+    height: 60px;
+    color: #00ab46;
+    margin: 0 auto;
+    border-radius: 50%;
+}
+
+#boxPago{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    background: #00ab46;
+    text-align: center;
+    padding-top: 300px;
+    font-size: 26px;
+    color: #FFF;
+    display: none;
 }
 
 ul#menu-bottom li i{
