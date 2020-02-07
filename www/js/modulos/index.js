@@ -52,7 +52,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             {
                 'STEP': 4,
                 'STEP_TEXTO': 3,
-                'TEXTO': 'Compra realizada'
+                'TEXTO': 'Compra realizada com sucesso'
             }
         ];
 
