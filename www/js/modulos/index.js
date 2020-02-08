@@ -1,5 +1,5 @@
 var Payment = {
-    clear: function (cancelar) {
+    clear: function (cancelar, status) {
         if (parseInt(Factory.$rootScope.transacaoId)) {
             // Cancelar transacao
             if (parseInt(cancelar))
@@ -9,7 +9,7 @@ var Payment = {
             Factory.$rootScope.transacaoId = 0;
 
             // Redirect
-            if (!parseInt(cancelar))
+            if (!parseInt(cancelar) && status == 'success')
                 Factory.$rootScope.location('#!/');
         }
     },
@@ -38,6 +38,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     $rootScope.PRODUTOS = [];
     $rootScope.FORMAS_PG = [];
     $rootScope.VALOR_PG = 0;
+    $rootScope.VALOR_CASHBACK = 0;
     $rootScope.PAGO = 0;
     $rootScope.ACTIVE_SALDO = 0;
     $rootScope.STEP = parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1;
@@ -168,8 +169,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                     }
                 },
                 function (data) {
-                    if (data.ITENS || parseInt(data.status))
-                        $rootScope.ADD_VOUCHER = '';
+                    $rootScope.ADD_VOUCHER = '';
                     if (data.ITENS) {
                         $rootScope.FORMAS_PG['VOUCHER']['ITENS'] = data.ITENS;
                         $scope.activeVoucher();
@@ -229,7 +229,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                                                 audio.play();
                                                 setTimeout(function () {
                                                     $('#boxPago').css('opacity', 0).hide();
-                                                }, 5000);
+                                                }, 3000);
                                             }
                                             break;
                                         case 'waiting_authorization':
@@ -247,7 +247,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                                     }
 
                                     if (parseInt(data.CLEAR))
-                                        Payment.clear();
+                                        Payment.clear(0, data.STATUS);
                                     else
                                         $rootScope.verify(1000);
                                 } else

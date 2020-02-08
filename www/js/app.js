@@ -622,6 +622,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                     function (data) {
                         $rootScope.VALOR_PG = parseFloat(data.VALOR_PG || 0);
                         $rootScope.VALOR_PG_FORMAT = data.VALOR_PG_FORMAT;
+                        $rootScope.VALOR_CASHBACK = data.VALOR_CASHBACK;
                         $rootScope.TOTAL_DE = data.TOTAL_DE;
                         $rootScope.TOTAL_POR = data.TOTAL_POR;
                         $rootScope.TOTAL_DESCONTO = data.TOTAL_DESCONTO;
@@ -880,8 +881,10 @@ app.directive('input', function() {
             inputEvents(this, 'blur');
         });
         element.bind("focus", function (event) {
-            var position = $('.scrollable-content').position();
-            if (position) $('.scrollable-content').css('padding-bottom', position.top + 320);
+            if(Factory.$rootScope.device == 'ios') {
+                var position = $('.scrollable-content').position();
+                if (position) $('.scrollable-content').css('padding-bottom', position.top + 320);
+            }
         });
     };
 });
@@ -892,8 +895,10 @@ app.directive('select', function() {
             $('.scrollable-content').css('padding-bottom', 0);
         });
         element.bind("focus", function (event) {
-            var position = $('.scrollable-content').position();
-            if (position) $('.scrollable-content').css('padding-bottom', position.top + 320);
+            if(Factory.$rootScope.device == 'ios') {
+                var position = $('.scrollable-content').position();
+                if (position) $('.scrollable-content').css('padding-bottom', position.top + 320);
+            }
         });
     };
 });
