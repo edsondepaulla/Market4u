@@ -2412,7 +2412,9 @@ right: 100%;
 body[qrcode="1"] > .qrcode{
 left: 0;
 }
-
+#topTitulo{
+  min-height: 46px;
+}
 body[menu_left="1"] #topTitulo img {
 display: none;
 }
@@ -4656,7 +4658,7 @@ body[controller="Index"] .scrollable-content #Produtos{
   top: 12px;
   background: rgba(255, 255, 255, 0.95);
   height: 100%;
-  z-index: 3;
+  z-index: 5;
   left: 0;
   width: 100%;
   padding: 60px 15px 0;
