@@ -2714,7 +2714,6 @@ label.box1 select{
   border-radius: 0 !important;
   z-index: 5;
   letter-spacing: 1px;
-  position: relative;
 }
 
 input.ng-invalid ~ span.msgValidator,

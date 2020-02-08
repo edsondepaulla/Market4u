@@ -425,10 +425,8 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                     if (parseInt(Login.getData().ID)) {
                         if (!parseInt(Login.getData().DADOS_ATUALIZADO))
                             $rootScope.location('#!/cadastro');
-                    } else {
-                        Factory.alert("Conecte-se para utilizar o App Market4u :)");
+                    } else
                         $rootScope.location('#!/conecte-se');
-                    }
                 }, 1000);
                 break;
         }
@@ -436,11 +434,6 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
         $rootScope.border_top = 0;
         $rootScope.controller = $route.current.controller;
         $rootScope.toolbar = true;
-        /*setTimeout(function () {
-            var position = $('.scrollable-content').position();
-            if (position)
-                $('.scrollable-content').css('padding-bottom', position.top + 90);
-        }, 1000);*/
         if ($rootScope.controller != 'Index' || (parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1) == 1)
             Payment.clear(1);
         if ($rootScope.KEY_ARDUINO)
@@ -888,7 +881,7 @@ app.directive('input', function() {
         });
         element.bind("focus", function (event) {
             var position = $('.scrollable-content').position();
-            if (position) $('.scrollable-content').css('padding-bottom', position.top + 250);
+            if (position) $('.scrollable-content').css('padding-bottom', position.top + 320);
         });
     };
 });
@@ -900,7 +893,7 @@ app.directive('select', function() {
         });
         element.bind("focus", function (event) {
             var position = $('.scrollable-content').position();
-            if (position) $('.scrollable-content').css('padding-bottom', position.top + 250);
+            if (position) $('.scrollable-content').css('padding-bottom', position.top + 320);
         });
     };
 });
