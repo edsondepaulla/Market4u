@@ -436,11 +436,11 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
         $rootScope.border_top = 0;
         $rootScope.controller = $route.current.controller;
         $rootScope.toolbar = true;
-        setTimeout(function () {
+        /*setTimeout(function () {
             var position = $('.scrollable-content').position();
             if (position)
                 $('.scrollable-content').css('padding-bottom', position.top + 90);
-        }, 1000);
+        }, 1000);*/
         if ($rootScope.controller != 'Index' || (parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1) == 1)
             Payment.clear(1);
         if ($rootScope.KEY_ARDUINO)
@@ -883,7 +883,24 @@ app.directive('input', function() {
                 inputEvents(this, 'key');
         });
         element.bind("blur", function (event) {
+            $('.scrollable-content').css('padding-bottom', 0);
             inputEvents(this, 'blur');
+        });
+        element.bind("focus", function (event) {
+            var position = $('.scrollable-content').position();
+            if (position) $('.scrollable-content').css('padding-bottom', position.top + 150);
+        });
+    };
+});
+
+app.directive('select', function() {
+    return function (scope, element, attrs) {
+        element.bind("blur", function (event) {
+            $('.scrollable-content').css('padding-bottom', 0);
+        });
+        element.bind("focus", function (event) {
+            var position = $('.scrollable-content').position();
+            if (position) $('.scrollable-content').css('padding-bottom', position.top + 150);
         });
     };
 });

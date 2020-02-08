@@ -4,7 +4,7 @@
     </h4>
     <ul ng-if="$root.STEPS">
         <li ng-click="ITEM.STEP==1?clickBtnHome():null" step="{{ITEM.STEP}}" ng-repeat="ITEM in $root.STEPS" class="{{STEP>=ITEM.STEP?'active':''}}">
-            <p><span ng-if="ITEM.STEP != 'X'"><i ng-if="STEP==4" class="mdi mdi-navigation-check"></i>{{STEP==4?'':ITEM.STEP_TEXTO}}</span>{{ITEM.TEXTO}}</p>
+            <p><span ng-if="ITEM.STEP != 'X' && ITEM.STEP != 'PP'"><i ng-if="STEP==4" class="mdi mdi-navigation-check"></i>{{STEP==4?'':ITEM.STEP_TEXTO}}</span>{{ITEM.TEXTO}}</p>
             <div class="clearBoth"></div>
             <h4 ng-if="ITEM.SUB_TEXTO">{{ITEM.SUB_TEXTO}}</h4>
             <div ng-if="STEP==ITEM.STEP&&STEP==3" id="Payment">

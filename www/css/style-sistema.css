@@ -37,7 +37,6 @@ html{
 }
 
 body {
-  color: #6f7b8a;
   background: transparent !important;
   overflow-x: hidden;
   -moz-user-select: none;
@@ -2399,7 +2398,7 @@ body > .qrcode{
 transition: 0.6s ease-in-out;
 position: fixed;
 left: 100%;
-top: 45px;
+top: 0;
 width: 100%;
 height: 100%;
 background: transparent !important;
@@ -2429,26 +2428,30 @@ transition: 0.5s;
 }
 body[controller="AtualizarApp"] #toolbar > img,
 body[controller="ConecteSe"] #toolbar > img {
-position: fixed;
-top: 65px;
-right: calc(50% - 77px);
-height: 38px;
-animation: imgTop 0s 0.7s forwards;
+    position: fixed;
+    top: 45px;
+    right: calc(50% - 95px);
+    height: 50px;
+    animation: imgTop 0s 0.7s forwards;
+}
+body[device="ios"][controller="AtualizarApp"] #toolbar > img,
+body[device="ios"][controller="ConecteSe"] #toolbar > img {
+  top: 68px;
+}
+
+img#imgFixo{
+    position: absolute;
+    top: 0;
+    right: calc(50% - 95px);
+    height: 50px;
+    visibility: hidden;
+    animation: imgFixo 0s 0.7s forwards;
 }
 
 @keyframes imgTop {
 to {
   visibility: hidden;
 }
-}
-
-img#imgFixo{
-position: absolute;
-top: 20px;
-right: calc(50% - 77px);
-height: 38px;
-visibility: hidden;
-animation: imgFixo 0s 0.7s forwards;
 }
 
 @keyframes imgFixo {
@@ -2498,15 +2501,15 @@ display: block;
 }
 
 div#qr-code-background{
-  width: 230px;
-  height: 230px;
+  width: 245px;
+  height: 245px;
   position: absolute;
   left: 50%;
   top: 55%;
   transform: translate(-50%, -50%);
   background: transparent !important;
   border-radius: 0;
-  box-shadow: 0px 0px 0px 1000px rgba(0,0,0,0.4);
+  box-shadow: 0px 0px 0px 1000px rgba(0,0,0,0.3);
   z-index: 1;
 }
 
@@ -2633,20 +2636,27 @@ overflow: auto;
 height: 100%;
 }
 
+#carregando img{
+  width: 80px;
+  display: block;
+  margin: 0 auto 15px;
+}
+
 #carregando{
   position: fixed;
-  top: 46px;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.65);
-  z-index: 5;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 7;
   color: #444;
   text-align: center;
-  padding-top: 50%;
+  padding-top: 65%;
+  font-size: 16px;
+  opacity: 0;
+  transition: 0.5s;
   display: none;
-  font-weight: bold;
-  font-size: 17px;
 }
 
 #semInternet{
@@ -2781,19 +2791,18 @@ button.btn-location:active,
 form.form > button:active,
 button.btn-location:focus,
 form.form > button:focus{
-padding: 10px 30px;
-font-size: 16px;
-margin: 20px auto 0;
-display: block;
-border-radius: 5px;
-background: #00ab46 !important;
-border-radius: 3px;
-font-size: 15px;
-box-shadow: none;
-color: #fff !important;;
-border: 1px solid rgba(11, 99, 64, 0.6);
-position: relative;
-box-shadow: 0 -2px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  padding: 10px 30px;
+  margin: 20px auto 0;
+  display: block;
+  border-radius: 0;
+  background: #00ab46 !important;
+  font-size: 18px;
+  box-shadow: none;
+  color: #fff !important;
+  border: 0;
+  position: relative;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  letter-spacing: 3px;
 }
 #formLogin button.btn-salvar{
 display: block !important;
@@ -2924,7 +2933,7 @@ display: block;
 * Minha carteira
 */
 body[controller="MinhaCarteira"] #formMinhaCarteira{
-  padding: 20px 30px;
+  padding: 10px 30px 65px;
 }
 
 body[controller="MinhaCarteira"] #formMinhaCarteira > h4{
@@ -4226,7 +4235,7 @@ body[controller="VoucherGet"] md-content{
 body[controller="VoucherLst"] md-content ul li i,
 body[controller="HistoricoTransacoesLst"] md-content ul li i{
   margin: 0;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 body[controller="VoucherLst"] md-content ul li span,
@@ -4372,7 +4381,7 @@ body[controller="Index"] .scrollable-content[step="3"]{
 }
 
 body[controller="Index"] .scrollable-content > ul > li{
-  padding: 40px 0 40px 0;
+  padding: 35px 0 35px 0;
   font-size: 15px;
 }
 
@@ -4384,10 +4393,15 @@ body[controller="Index"] .scrollable-content[step="3"] > ul > li[step="4"]{
 
 body[controller="Index"] .scrollable-content[step="3"] > ul > li{
   padding-top: 60px;
+  padding-bottom: 50px;
 }
 
 body[controller="Index"] .scrollable-content[step="3"] #Payment{
   padding: 0 15px 50px;
+}
+
+body[controller="Index"][addsaldo="1"] .scrollable-content[step="3"] > ul > li > p{
+  top: 60px;
 }
 
 body[controller="Index"] .scrollable-content[step="3"] > ul > li > p{
@@ -4397,11 +4411,12 @@ body[controller="Index"] .scrollable-content[step="3"] > ul > li > p{
   color: #00ab46;
   font-size: 21px;
   position: fixed;
-  top: 60px;
+  top: 40px;
   left: 0;
   background: #FFF;
   width: 100%;
   padding: 30px 0 10px;
+  z-index: 1;
 }
 
 body[controller="Index"] .scrollable-content > ul > li[step="4"]{
@@ -4436,6 +4451,12 @@ body[controller="Index"] .scrollable-content > ul > li.active > p > span{
 body[controller="Index"] .scrollable-content > ul > li[step="X"]{
   font-weight: bold;
   text-align: center;
+}
+
+body[controller="Index"] .scrollable-content > ul > li[step="PP"]{
+    font-weight: bold;
+    text-align: center;
+    padding: 0;
 }
 
 body[controller="Index"] .scrollable-content > ul > li > h4{
@@ -4494,7 +4515,7 @@ ul#menu-bottom{
   width: 100%;
   z-index: 2;
   border-top: 1px solid rgba(11, 99, 64, 0.1);
-  background: #fcfcfc;
+  background: #f6f6f6;
   display: none;
 }
 
@@ -4504,6 +4525,7 @@ body[controller="Index"] ul#menu-bottom[step="4"]{
   display: block;
 }
 
+body[controller="Index"] a#whatsapp,
 body[controller="Command"] a#whatsapp{
   bottom: 70px;
 }
@@ -4565,31 +4587,31 @@ ul#menu-bottom li span{
 }
 
 #boxPago i{
-    display: block;
-    font-size: 43px;
-    background: #FFF;
-    width: 60px;
-    height: 60px;
-    color: #00ab46;
-    margin: 0 auto;
-    border-radius: 50%;
+  display: block;
+  font-size: 43px;
+  background: #FFF;
+  width: 60px;
+  height: 60px;
+  color: #00ab46;
+  margin: 0 auto 20px;
+  border-radius: 50%;
 }
 
 #boxPago{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 3;
-    background: #00ab46;
-    text-align: center;
-    padding-top: 300px;
-    font-size: 26px;
-    color: #FFF;
-    display: none;
-    transition: 1s;
-    opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 6;
+  background: #00ab46;
+  text-align: center;
+  padding: 250px 30px 0;
+  font-size: 26px;
+  color: #FFF;
+  display: none;
+  transition: 1s;
+  opacity: 0;
 }
 
 ul#menu-bottom li i{
@@ -4631,15 +4653,19 @@ body[controller="Index"] .scrollable-content #Payment > h4{
 
 body[controller="Index"] .scrollable-content #Produtos{
   position: fixed;
-  top: 47px;
+  top: 12px;
   background: rgba(255, 255, 255, 0.95);
   height: 100%;
   z-index: 3;
   left: 0;
   width: 100%;
-  padding: 35px 15px 0;
+  padding: 60px 15px 0;
   display: none;
   padding-bottom: 86px;
+}
+
+body[controller="Index"][addsaldo="1"] .scrollable-content #Produtos{
+  padding-top: 80px;
 }
 
 body[controller="Index"] .scrollable-content #Produtos > h5{
@@ -4655,9 +4681,13 @@ body[controller="Index"] .scrollable-content #Produtos > h5{
 
 body[controller="Index"] .scrollable-content #Produtos > i.mdi-navigation-close{
   position: absolute;
-  top: 25px;
+  top: 51px;
   right: 15px;
   font-size: 30px;
+}
+
+body[controller="Index"][addsaldo="1"] .scrollable-content #Produtos > i.mdi-navigation-close{
+  top: 71px;
 }
 
 body[controller="Index"] .scrollable-content #Produtos ul li{
@@ -4789,42 +4819,49 @@ body[controller="PaymentStart"] .btnConfirme{
   z-index: 10;
 }
 body[controller="MinhaCarteira"] .btnConfirme{
-  padding: 3px 13px;
-  font-size: 19px !important;
-  display: block;
-  background: #00ab46 !important;
-  border-radius: 3px;
-  font-size: 15px;
-  color: #fff !important;
-  border: 1px solid rgba(11, 99, 64, 0.6);
   position: fixed;
-  bottom: 10px;
-  right: 10px;
-  height: auto;
-  z-index: 10;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  bottom: 0;
+  right: 0;
+  background: #00ab46;
+  width: 100%;
+  color: #FFF;
+  text-align: center;
+  font-size: 25px;
+  display: block;
+  padding: 10px 0;
+  border: 0;
+  z-index: 2;
+  display: block;
+  font-family: 'Montserrat',sans-serif;
 }
 body[controller="MinhaCarteira"] .btnConfirme i{
-  vertical-align: baseline;
+  vertical-align: middle;
+  margin-left: 15px;
+  font-size: 27px;
 }
 body[controller="VoucherGet"] #btnUtilizarVoucher{
-  padding: 3px 13px;
-  font-size: 19px !important;
-  display: block;
-  background: #00ab46 !important;
-  border-radius: 3px;
-  font-size: 15px;
-  color: #fff !important;
-  border: 1px solid rgba(11, 99, 64, 0.6);
   position: fixed;
-  bottom: 10px;
-  right: 10px;
+  bottom: 0;
+  right: 0;
+  background: #00ab46;
+  width: 100%;
+  color: #FFF;
+  text-align: center;
+  font-size: 25px;
+  display: block;
+  padding: 10px 0;
+  border: 0;
+  z-index: 2;
+  display: block;
+  font-family: 'Montserrat',sans-serif;
+  border-radius: 0;
+  margin: 0;
   height: auto;
-  z-index: 10;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 body[controller="VoucherGet"] #btnUtilizarVoucher i{
-  vertical-align: baseline;
+  vertical-align: middle;
+  margin-left: 15px;
+  font-size: 27px;
 }
 
 body[controller="Command"] .scrollable-content ul li{

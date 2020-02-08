@@ -29,8 +29,8 @@ var Payment = {
 
 app.controller('Index', function($scope, $rootScope, $routeParams) {
     $rootScope.REDIRECT = '';
-    $rootScope.NO_WHATSAPP = false;
     $rootScope.BTN_TYPE = 'NEXT';
+    $rootScope.NO_WHATSAPP = false;
     $rootScope.TEXTO_BTN = '';
     $rootScope.TOTAL_DE = '';
     $rootScope.TOTAL_POR = '';
@@ -38,11 +38,16 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     $rootScope.PRODUTOS = [];
     $rootScope.FORMAS_PG = [];
     $rootScope.VALOR_PG = 0;
+    $rootScope.PAGO = 0;
     $rootScope.ACTIVE_SALDO = 0;
     $rootScope.STEP = parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1;
     $rootScope.BTN_HOME = $rootScope.STEP == 1 ? true : false;
     $rootScope.STEPS =
         [
+            {
+                'STEP': 'PP',
+                'TEXTO': 'Passo a passo'
+            },
             {
                 'STEP': 1,
                 'STEP_TEXTO': 1,
@@ -217,12 +222,15 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
 
                                     switch (data.STATUS) {
                                         case 'authorized':
-                                            $('#boxPago').css('opacity', 1).show();
-                                            var audio = new Audio('audio/song.mp4');
-                                            audio.play();
-                                            setTimeout(function () {
-                                                $('#boxPago').css('opacity', 0).hide();
-                                            }, 5000);
+                                            if(!$rootScope.PAGO) {
+                                                $rootScope.PAGO = 1;
+                                                $('#boxPago').css('opacity', 1).show();
+                                                var audio = new Audio('audio/song.mp4');
+                                                audio.play();
+                                                setTimeout(function () {
+                                                    $('#boxPago').css('opacity', 0).hide();
+                                                }, 5000);
+                                            }
                                             break;
                                         case 'waiting_authorization':
                                             $scope.activeVoucher();

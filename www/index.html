@@ -71,10 +71,10 @@
 
   <script src="plugins/elastic.js"></script>
 </head>
-<body device="{{device}}" controller="{{controller}}" ng-app="App" qrcode="{{QRCODE}}">
+<body addsaldo="{{!usuario.MEUSALDO && usuario.MEUSALDO_ATIVADO?1:0}}" device="{{device}}" controller="{{controller}}" ng-app="App" qrcode="{{QRCODE}}">
   <div id="carregando">
-    <img src="img/logo.png" border="0" width="70%"><br><br>
-    Aguarde por favor, carregando...
+    <img src="img/loader.gif" border="0">
+    Carregando...
   </div>
 
   <div mn-touch swipe-right="swipeRight()" ng-if="toolbar" id="toolbar">
@@ -89,11 +89,11 @@
       </div>
     </div>
     <div id="topTitulo" ng-if="controller != 'Index' || QRCODE">
-      <a class="open-left" ng-click="backpageTop()">
+      <a class="open-left" ng-if="Titulo" ng-click="backpageTop()">
         <i class="mdi mdi-navigation-chevron-left"></i>
       </a>
       <div id="textoTitulo" ng-bind-html="Titulo"></div>
-      <div id="meu_saldo" ng-click="location('#!/minha-carteira')" ng-if="usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO && !QRCODE">
+      <div id="meu_saldo" ng-click="location('#!/minha-carteira')" ng-if="usuario.ID && usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO && !QRCODE">
         Meu saldo <b>{{usuario.MEUSALDO_FORMAT}}</b> <span ng-if="!usuario.MEUSALDO"><i class="mdi mdi-content-add-circle"></i> Adicionar saldo</span>
       </div>
     </div>
@@ -105,7 +105,7 @@
       <img src="img/whatsapp.png">
     </a>
 
-    <div class="app-body" style="{{usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO?'':'top: 45px;'}}">
+    <div class="app-body" style="{{usuario.ID && usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO && !QRCODE?'':'top: 45px;'}}">
       <div class="app-content">
         <div class="scrollable ng-scope" border-top="{{$root.BARRA_SALDO?0:border_top}}" ng-view></div>
       </div>

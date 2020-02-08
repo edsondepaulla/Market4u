@@ -78,7 +78,7 @@ app.controller('ConecteSe', function($rootScope, $scope, $routeParams, $q) {
     $rootScope.LogoBody = 1;
     $rootScope.NO_WHATSAPP = false;
     $rootScope.BARRA_SALDO = false;
-    $rootScope.Titulo = "CONECTE-SE";
+    $rootScope.Titulo = "";
 
     $scope.entrar = function () {
         var EMAIL = $rootScope.usuario.EMAIL;
@@ -321,6 +321,7 @@ app.controller('AddCard', function($rootScope, $scope) {
 app.controller('MinhaCarteira', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.BARRA_SALDO = false;
     $rootScope.Titulo = "Minha Carteira";
+    $rootScope.NO_WHATSAPP = false;
     $rootScope.FORMA_PAGAMENTO = null;
     $rootScope.FORMAS_PG = ReturnData.FORMAS_PG;
 
@@ -397,6 +398,7 @@ app.controller('VoucherLst', function($rootScope, $scope, $route, $routeParams, 
 app.controller('VoucherGet', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.border_top = 1;
     $rootScope.Titulo = "Voucher - Detalhes";
+    $rootScope.NO_WHATSAPP = false;
     $scope.REG = ReturnData;
 
     $scope.utilizarVoucher = function (CODIGO) {

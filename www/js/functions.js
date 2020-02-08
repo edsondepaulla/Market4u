@@ -69,7 +69,7 @@ var Factory = {
             var diffCarregando = this.diffCarregando(params.action);
             if (diffCarregando) {
                 clearTimeout(Factory.timeoutCarregando);
-                $('#carregando').show();
+                $('#carregando').show().css('opacity', 1);
                 Pace.restart();
             }
 
@@ -164,7 +164,7 @@ var Factory = {
                         default:
                             Factory.timeoutCarregando = setTimeout(function () {
                                 if (diffCarregando) {
-                                    $('#carregando').hide();
+                                    $('#carregando').hide().css('opacity', 0);
                                     $('.loadingLst').hide();
                                 }
                             }, 100);
@@ -250,9 +250,10 @@ var Factory = {
                             break;
                     }
                 }, function (data) {
-                    $('#carregando').hide();
+                    $('#carregando').hide().css('opacity', 0);
                     $('.loadingLst').hide();
-                    Factory.error(_form, data, functionError);
+                    if (params.action != 'payment/verify')
+                        Factory.error(_form, data, functionError);
                 });
         }
     },
