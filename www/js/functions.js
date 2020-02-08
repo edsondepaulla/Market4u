@@ -70,7 +70,6 @@ var Factory = {
             if (diffCarregando) {
                 clearTimeout(Factory.timeoutCarregando);
                 $('#carregando').show().css('opacity', 1);
-                Pace.restart();
             }
 
             // Form
@@ -269,8 +268,8 @@ var Factory = {
                                 animated: open_browser.animated ? open_browser.animated : false,
                                 transition: open_browser.transition ? open_browser.transition : 'curl',
                                 enterReaderModeIfAvailable: open_browser.enterReaderModeIfAvailable ? open_browser.enterReaderModeIfAvailable : false,
-                                tintColor: "#00ab46",
-                                barColor: "#043d22",
+                                tintColor: "#043d22",
+                                barColor: "#00ab46",
                                 controlTintColor: "#ffffff"
                             }
                         );

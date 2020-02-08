@@ -888,7 +888,7 @@ app.directive('input', function() {
         });
         element.bind("focus", function (event) {
             var position = $('.scrollable-content').position();
-            if (position) $('.scrollable-content').css('padding-bottom', position.top + 150);
+            if (position) $('.scrollable-content').css('padding-bottom', position.top + 250);
         });
     };
 });
@@ -900,7 +900,7 @@ app.directive('select', function() {
         });
         element.bind("focus", function (event) {
             var position = $('.scrollable-content').position();
-            if (position) $('.scrollable-content').css('padding-bottom', position.top + 150);
+            if (position) $('.scrollable-content').css('padding-bottom', position.top + 250);
         });
     };
 });

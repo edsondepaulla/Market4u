@@ -4521,6 +4521,7 @@ ul#menu-bottom{
 
 body[controller="Command"] ul#menu-bottom,
 body[controller="Index"] ul#menu-bottom[step="1"],
+body[controller="Index"] ul#menu-bottom[step="2"],
 body[controller="Index"] ul#menu-bottom[step="4"]{
   display: block;
 }
@@ -4583,7 +4584,7 @@ ul#menu-bottom li span{
     font-size: 12px;
     padding: 3px;
     top: -13px;
-    right: 0;
+    right: 7px;
 }
 
 #boxPago i{
