@@ -78,7 +78,7 @@
   <div mn-touch swipe-right="swipeRight()" ng-if="toolbar" id="toolbar">
     <i mn-touch swipe-right="swipeRight()" ng-if="controller == 'Index' && !QRCODE" class="btn_maps mdi mdi-action-view-headline" ng-click="menuOpen()"></i>
     <div id="top" ng-if="controller == 'Index' && !QRCODE">
-      <div ng-if="usuario.MEUSALDO_ATIVADO" ng-click="location('#!/minha-carteira')" style="display: inline-block;">
+      <div ng-if="usuario.MEUSALDO_ATIVADO" ng-click="location('#!/cadastro')" style="display: inline-block;">
         Meu saldo
         <b>{{usuario.MEUSALDO_FORMAT}}</b>
       </div>
