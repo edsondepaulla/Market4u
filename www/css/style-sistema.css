@@ -2468,7 +2468,7 @@ display: inline-block;
 font-size: 13px;
 line-height: 3.4;
 text-transform: uppercase;
-background: rgba(255, 255, 255, 0.7);
+background: rgba(255, 255, 255, 0.9);
 z-index: 1;
 position: relative;
 padding-right: 3px;
@@ -2982,13 +2982,18 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li.active{
  */
 #boxPg > ul > li i.mdi-action-done{
   display: none;
+  color: #FFF;
+  background: #00ab46;
+  padding: 0 3px;
+  text-decoration: unset !important;
+  font-weight: bold;
 }
 
 #boxPg > ul > li.active i.mdi-action-done{
   display: block;
   font-size: 27px;
   float: right;
-  margin: -12px 0;
+  margin: -10px 0;
 }
 
 #boxPg > ul > li.active{
@@ -3107,6 +3112,11 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li.active{
 }
 #boxPg > ul > li[tipo="VOUCHER"] ul li.itens i{
   font-style: normal;
+  display: inline-block;
+  margin-right: 5px;
+}
+#boxPg > ul > li[tipo="VOUCHER"] ul li.itens i.mdi-action-done{
+  color: #00ab46;
 }
 #boxPg > ul > li[tipo="VOUCHER"] ul li.itens:last-child{
   margin-bottom: 15px;
@@ -3119,6 +3129,9 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li.active{
   display: inline-block;
   vertical-align: top;
   margin-right: 5px;
+}
+#boxPg > ul > li[tipo="VOUCHER"] ul li.active i.mdi-action-done{
+  color: #FFF;
 }
 
 #boxPg > ul > li > label.utilizado_saldo{
@@ -3237,6 +3250,10 @@ body[controller="Index"] .scrollable-content h3.total,
   color: #043d22;
   font-size: 18px;
   margin: 1.5em 0 0.5em;
+}
+#boxPg h4.valor_cashback p{
+  margin-top:10px;
+  font-size: 15px;
 }
 
 #boxPg h4.valor_restante b{
@@ -4411,6 +4428,7 @@ body[controller="Index"] .scrollable-content > ul > li{
 }
 
 body[controller="Index"] .scrollable-content[step="3"] > ul > li.active > p > span,
+body[controller="Index"] .scrollable-content[step="3"] > ul > li[step="PP"],
 body[controller="Index"] .scrollable-content[step="3"] > ul > li[step="1"],
 body[controller="Index"] .scrollable-content[step="3"] > ul > li[step="4"]{
   display: none;
@@ -4442,6 +4460,15 @@ body[controller="Index"] .scrollable-content[step="3"] > ul > li > p{
   width: 100%;
   padding: 30px 0 10px;
   z-index: 1;
+}
+
+body[device="ios"][controller="Index"] .scrollable-content[step="3"] > ul > li{
+  padding-top: 0;
+}
+
+body[device="ios"][controller="Index"] .scrollable-content[step="3"] > ul > li > p {
+  position: unset;
+  padding: 0;
 }
 
 body[controller="Index"] .scrollable-content > ul > li[step="4"]{
@@ -4687,7 +4714,7 @@ body[controller="Index"] .scrollable-content #Produtos{
   z-index: 5;
   left: 0;
   width: 100%;
-  padding: 60px 15px 15px;
+  padding: 60px 15px 30px;
   display: none;
 }
 
@@ -4770,7 +4797,7 @@ body[controller="Index"] .scrollable-content #Produtos ul li > div.info h4{
   font-family: unset;
 }
 body[controller="Index"] .scrollable-content #Produtos ul li > div.info label{
-  display: inline-block;
+  display: block;
   color: #00ab46;
 }
 body[controller="Index"] .scrollable-content #Produtos ul li > div.info label.total_de{
@@ -4912,4 +4939,24 @@ body[controller="Command"] .scrollable-content ul li[ng-switch-when="BEB_ALC"] p
 body[controller="Command"] .scrollable-content ul li[ng-switch-when="BEB_ALC"] .progress-circle i{
   font-size: 50px;
   color: #d93025;
+}
+
+
+
+@media only screen and (max-width: 335px) {
+  body[controller="Index"] .scrollable-content > ul > li > p > span{
+    margin-left: 10px;
+  }
+
+  body[controller="Index"] .scrollable-content{
+    padding-top: 40px;
+  }
+
+  body[controller="Index"] .scrollable-content > ul > li > p{
+    font-size: 15px;
+  }
+
+  body[controller="Index"] .scrollable-content > ul > li{
+    padding: 25px 0 25px 0;
+  }
 }

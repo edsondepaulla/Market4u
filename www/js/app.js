@@ -623,6 +623,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                         $rootScope.VALOR_PG = parseFloat(data.VALOR_PG || 0);
                         $rootScope.VALOR_PG_FORMAT = data.VALOR_PG_FORMAT;
                         $rootScope.VALOR_CASHBACK = data.VALOR_CASHBACK;
+                        $rootScope.CASHBACK_TEXTO = data.CASHBACK_TEXTO;
                         $rootScope.TOTAL_DE = data.TOTAL_DE;
                         $rootScope.TOTAL_POR = data.TOTAL_POR;
                         $rootScope.TOTAL_DESCONTO = data.TOTAL_DESCONTO;
@@ -659,7 +660,8 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                 }, 100);
             }
         }
-        if (PG.TIPO == 'SALDO') {
+        if (PG.TIPO == 'SALDO' && $('label:hover').length) {
+            $rootScope.VALOR_PG_FORMAT = '--';
             $rootScope.ACTIVE_SALDO = PG.ACTIVE_SALDO ? 0 : 1;
             PG.ACTIVE_SALDO = $rootScope.ACTIVE_SALDO;
             $rootScope.verifyLimitFormasPg();

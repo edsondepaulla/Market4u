@@ -4,9 +4,6 @@
             <label>{{item.DATAHORA}}</label>
             <span ng-bind-html="item.TIPO_DESCRICAO"></span>
             <b n="{{item.NEGATIVO}}">{{item.VALOR_LST}} <i class="mdi mdi-navigation-chevron-right"></i></b>
-            <i ng-repeat="fp in item.FP">
-                {{fp.NOME}} ({{fp.VALOR}}{{fp.DESCRICAO}})<br>
-            </i>
         </li>
     </ul>
 

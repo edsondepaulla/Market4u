@@ -39,6 +39,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     $rootScope.FORMAS_PG = [];
     $rootScope.VALOR_PG = 0;
     $rootScope.VALOR_CASHBACK = 0;
+    $rootScope.CASHBACK_TEXTO = '';
     $rootScope.PAGO = 0;
     $rootScope.ACTIVE_SALDO = 0;
     $rootScope.STEP = parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1;

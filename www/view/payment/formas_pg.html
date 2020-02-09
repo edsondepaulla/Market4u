@@ -27,6 +27,7 @@
             <span>Cashback</span>
             <b>R$ {{VALOR_CASHBACK}}</b>
             <div class="clearBoth"></div>
+            <p ng-bind-html="CASHBACK_TEXTO"></p>
         </h4>
         <div id="boxDescricao" ng-if="PG.DESCRICAO&&PG.ACTIVE" ng-bind-html="PG.DESCRICAO"></div>
         <div id="boxCC" ng-if="PG.CC==1&&PG.ACTIVE">

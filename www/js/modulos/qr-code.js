@@ -2,7 +2,7 @@ var QRScannerConf = {
     digite: function () {
         try {
             navigator.notification.prompt(
-                'Está localizado na máquina',
+                'Digite o código',
                 function (results) {
                     if (results.buttonIndex == 1) {
                         if (results.input1.length)
@@ -11,12 +11,12 @@ var QRScannerConf = {
                             return false;
                     }
                 },
-                'Escreva o código',
+                'Atenção',
                 ['Continue', 'Cancelar'],
                 ''
             );
         } catch (err) {
-            var text = prompt("Escreva o código que está localizado na máquina", "");
+            var text = prompt("Digite o código", "");
             if (text != null)
                 QRScannerConf.scan(text);
         }

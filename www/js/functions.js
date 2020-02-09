@@ -226,17 +226,15 @@ var Factory = {
                                     Factory.$rootScope.TEXT_WHATSAPP = response.data.TEXT_WHATSAPP ? response.data.TEXT_WHATSAPP : '';
 
                                 // Window open
-                                if (response.data.status == 1) {
-                                    if (response.data.redirect)
-                                        Factory.$rootScope.location(response.data.redirect, 0, response.data.redirect == '#!/cadastro' ? 1 : 0);
+                                if (response.data.redirect)
+                                    Factory.$rootScope.location(response.data.redirect, 0, response.data.redirect == '#!/cadastro' ? 1 : 0);
 
-                                    var open_browser = response.data.open_browser;
-                                    if (open_browser) {
-                                        Factory.AppBrowser(
-                                            open_browser.url,
-                                            open_browser
-                                        );
-                                    }
+                                var open_browser = response.data.open_browser;
+                                if (open_browser) {
+                                    Factory.AppBrowser(
+                                        open_browser.url,
+                                        open_browser
+                                    );
                                 }
 
                                 if (_form)
