@@ -94,20 +94,8 @@
     <plugin name="cordova-plugin-geolocation" />
     <plugin name="cordova-plugin-dialogs" spec="^2.0.1" />
     <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.2" />
-    <!--<plugin name="cordova-plugin-background-mode" />-->
     <plugin name="cordova-plugin-qrscanner" spec="2.6.0" />
     <plugin name="cordova-plugin-customurlscheme" spec="5.0.0">
         <param name="URL_SCHEME" value="market4uapp" />
     </plugin>
-    <plugin name="cordova-plugin-health" source="npm">
-        <variable name="HEALTH_READ_PERMISSION" value="O aplicativo precisa de acesso de leitura"/>
-        <variable name="HEALTH_WRITE_PERMISSION" value="O aplicativo precisa de acesso de gravação"/>
-        <variable name="GMS_VERSION" value="16.0.1"/>
-    </plugin>
-    <config-file platform="ios" parent="NSHealthShareUsageDescription">
-        <string>O aplicativo precisa de acesso de leitura</string>
-    </config-file>
-    <config-file platform="ios" parent="NSHealthUpdateUsageDescription">
-        <string>O aplicativo precisa de acesso de gravação</string>
-    </config-file>
 </widget>
