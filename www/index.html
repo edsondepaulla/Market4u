@@ -103,7 +103,7 @@
       <img src="img/whatsapp.png">
     </a>
 
-    <div class="app-body" style="{{usuario.ID && usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO && !QRCODE?'':'top: 45px;'}}">
+    <div class="app-body" style="{{usuario.ID && usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO?'':'top: 45px;'}}">
       <div class="app-content">
         <div class="scrollable ng-scope" border-top="{{$root.BARRA_SALDO?0:border_top}}" ng-view></div>
       </div>

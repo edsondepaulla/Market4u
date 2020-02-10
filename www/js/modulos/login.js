@@ -15,6 +15,9 @@ var Login = {
         // ID
         data.ID = data.ID ? data.ID : 0;
 
+        // Genero
+        data.GENERO = data.ID ? data.GENERO : 'M';
+
         // Get local
         data.GET_LOCAL = Login.data.GET_LOCAL ? 1 : 0;
 
@@ -116,6 +119,146 @@ app.controller('ConecteSe', function($rootScope, $scope, $routeParams, $q) {
                 action: 'cadastro/' + action
             }
         );
+    };
+});
+
+app.controller('CadastroNovo', function($rootScope, $scope) {
+    $rootScope.BARRA_SALDO = false;
+    $rootScope.LogoBody = 1;
+    $rootScope.Titulo = parseInt($rootScope.usuario.ID) ? "EDITAR SEUS DADOS" : "CADASTRAR-SE";
+    $rootScope.NO_WHATSAPP = false;
+
+    $rootScope.ITENS =
+        [
+            {
+                'ACTIVE': 1,
+                'SRC': 'view/conecte-se/level-dados-pessoais.html'
+            },
+            {
+                'ACTIVE': 0,
+                'SRC': 'view/conecte-se/level-dados-acesso.html'
+            },
+            {
+                'ACTIVE': 0,
+                'SRC': 'view/conecte-se/level-endereco.html'
+            },
+            {
+                'ACTIVE': 0,
+                'SRC': 'view/conecte-se/level-preferencias.html'
+            },
+            {
+                'ACTIVE': 0,
+                'SRC': 'view/conecte-se/level-cc.html'
+            },
+            {
+                'ACTIVE': 0,
+                'SRC': 'view/conecte-se/level-confirmar.html'
+            }
+        ];
+
+    $scope.btnLevel = function (LEVEL, TYPE) {
+        if($rootScope.ITENS.length == LEVEL){
+
+        }else {
+            var focus = false;
+            if(TYPE == 'NEXT' && false) {
+                $('input.ng-invalid:visible').each(function () {
+                    if (!focus) {
+                        focus = true;
+                        $(this).focus();
+                    }
+                });
+                $('input.ng-invalid2:visible').each(function () {
+                    if (!focus) {
+                        focus = true;
+                        $(this).focus();
+                    }
+                });
+                $('input[obg="1"]:visible').each(function () {
+                    if (!$(this).val() && !focus) {
+                        focus = true;
+                        $(this).focus();
+                    }
+                });
+                $('select[obg="1"]:visible').each(function () {
+                    if (!$(this).val() && !focus) {
+                        focus = true;
+                        $(this).focus();
+                    }
+                });
+            }
+            if(!focus) {
+                $.each($rootScope.ITENS, function (idx, ITEM_IDX) {
+                    ITEM_IDX.ACTIVE = 0;
+                    if (LEVEL == idx)
+                        ITEM_IDX.ACTIVE = 1;
+                });
+            }
+        }
+    };
+
+    // Atualizar dados
+    if (parseInt($rootScope.usuario.ID) && parseInt(Login.getData().ID) && !parseInt(Login.getData().DADOS_ATUALIZADO)) {
+        clearTimeout(Factory.timeout);
+        Factory.timeout = setTimeout(function () {
+            Factory.alert("Para continuar, por favor atualize seus dados :)");
+        }, 500);
+    }
+
+    // PagSeguro
+    if (!parseInt($rootScope.usuario.ID))
+        $rootScope.pagseguro();
+
+    $scope.salvar = function () {
+        $rootScope.usuario.DDI = 55;
+        var USUARIO = $.extend({}, $rootScope.usuario);
+        USUARIO.ESTADOS = null;
+        USUARIO.STREET = $('#street').val();
+        USUARIO.DISTRICT = $('#district').val();
+        USUARIO.CITY = $('#city').val();
+        USUARIO.STATE = $('#state').val();
+        if (parseInt($rootScope.usuario.ID)) {
+            var EMAIL = $rootScope.usuario.EMAIL;
+            var SENHA = $rootScope.usuario.SENHA;
+            Factory.ajax(
+                {
+                    action: 'cadastro/editar',
+                    data: {
+                        REDIRECT: $rootScope.REDIRECT || '',
+                        usuario: USUARIO
+                    }
+                },
+                function (data) {
+                    if (data.status == 1) {
+                        $rootScope.usuario.CONFIRME_DADOS = 1;
+                        $rootScope.usuario.SENHA = SENHA;
+                        $rootScope.usuario.EMAIL = EMAIL;
+                        $rootScope.usuario.ENVIADO_PARA = data.ENVIADO_PARA;
+                    }
+                }
+            );
+        } else {
+            USUARIO.CC_NAME = $('#cardName').val();
+            USUARIO.CC_NUMBER = $('#cardNumber').val();
+            USUARIO.CC_MONTHYEAR = $('#expirationMonthYear').val();
+            USUARIO.CC_CVV = $('#cvv').val();
+            USUARIO.CC_BANDEIRA = $('#cardBandeira').val();
+            $rootScope.usuario.NOVO = true;
+            Factory.ajax(
+                {
+                    action: 'cadastro/novo',
+                    data: {
+                        usuario: USUARIO
+                    }
+                }, function (data) {
+                    if (data.status == 1) {
+                        $rootScope.usuario.ENVIADO_PARA = data.ENVIADO_PARA;
+                        if(data.redirect_system)
+                            $rootScope.REDIRECT = '';
+                    }
+                }
+            );
+        }
     };
 });
 

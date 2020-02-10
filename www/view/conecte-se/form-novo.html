@@ -1,0 +1,39 @@
+<md-content class="scrollable-content" scroll flex md-scroll-y>
+    <form id="formCadastro" class="form" onsubmit="return false;" autocomplete="off" method="post">
+        <ul id="passo-a-passo">
+            <li class="{{item.ACTIVE?'active':''}}" ng-repeat="item in ITENS">
+                <div ng-include="item.SRC"></div>
+                <div class="boxBtns">
+                    <button ng-if="$index > 0" ng-click="btnLevel($index-1)" class="btn-proximo" type="button">Voltar</button>
+                    <button class="btn-proximo" ng-click="btnLevel($index+1, 'NEXT')" level="{{$index+1}}" type="button">{{ITENS.length==$index+1?'Começar':'Próximo'}}</button>
+                </div>
+            </li>
+        </ul>
+    </form>
+</md-content>
+<style>
+    #formCadastro.form #passo-a-passo > li{
+        display: none;
+    }
+    #formCadastro.form #passo-a-passo > li.active{
+        display: block;
+    }
+    #formCadastro.form .boxBtns{
+        text-align: center;
+    }
+    #formCadastro.form button{
+        padding: 6px 12px;
+        margin: 20px 5px 0 0;
+        display: inline-block;
+    }
+    #formCadastro.form .boxBtns button[level="6"]{
+        background: #043d22 !important;
+    }
+    #formCadastro.form #passo-a-passo > li div h2{
+        margin: 0 0 20px;
+    }
+    #formCadastro.form #passo-a-passo > li #boxDadosPessoaisCompleto,
+    #formCadastro.form #passo-a-passo > li #boxEnderecoCompleto{
+        display: none;
+    }
+</style>

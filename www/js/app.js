@@ -24,6 +24,15 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                 }
             }
         })
+        .when("/cadastro-novo", {
+            templateUrl: "view/conecte-se/form-novo.html",
+            controller: 'CadastroNovo',
+            resolve: {
+                ReturnData: function ($route, $rootScope) {
+                    return parseInt($rootScope.usuario.ID) || !$rootScope.usuario.NOVO ? Login.get() : null;
+                }
+            }
+        })
         .when("/cadastro", {
             templateUrl: "view/conecte-se/form.html",
             controller: 'Cadastro',
@@ -875,7 +884,7 @@ app.directive('input', function() {
             if (event.which === 13) {
                 $(this).blur();
                 $(this).closest('form').find('.btn-salvar[type="submit"]').trigger('click');
-            } else if ($(this).attr('id') == 'postalcode')
+            } else if ($(this).attr('id') == 'postalcode' || $(this).attr('id') == 'cpf')
                 inputEvents(this, 'key');
         });
         element.bind("blur", function (event) {
@@ -925,7 +934,7 @@ function inputEvents(_this, _bind) {
                     _invalid = 1;
                 break;
             case 'postalcode':
-                if (_value.length == 9 && _value.length && _bind == 'key') {
+                if (_value.length == 9 && _value.length) {
                     $.ajax({
                         url: 'https://viacep.com.br/ws/' + _value.replace('-', '') + '/json/',
                         cache: false,
@@ -938,6 +947,7 @@ function inputEvents(_this, _bind) {
                                 $('#city').val(data.localidade);
                                 $('#state').val(data.uf);
                             }
+                            $('#boxEnderecoCompleto').show();
                         },
                         beforeSend: function() {
                             $('#carregando').show();
@@ -947,6 +957,7 @@ function inputEvents(_this, _bind) {
                         },
                         error: function () {
                             $('#carregando').hide();
+                            $('#boxEnderecoCompleto').show();
                         }
                     });
                 }
@@ -960,8 +971,30 @@ function inputEvents(_this, _bind) {
                 }
                 break;
             case 'cpf':
-                if (!validaCpf(_value.substring(0, 14)) && _value.length)
+                if (!validaCpf(_value.substring(0, 14)) && _value.length) {
                     _invalid = 1;
+                    $('#boxDadosPessoaisCompleto').hide();
+                }else if(_value.length == 14) {
+                    Factory.ajax(
+                        {
+                            action: 'cadastro/cpf',
+                            data: {
+                                VALUE: _value
+                            }
+                        },
+                        function (data) {
+                            if (data.NOME)
+                                $('#nome_completo').val(data.NOME);
+                            if (data.MAE)
+                                $('#nome_mae').val(data.MAE);
+                            if (data.GENERO)
+                                $('#genero_' + data.GENERO).attr('checked', true);
+                            if (data.DATA_NASCIMENTO)
+                                $('#data_nascimento').attr('disabled', true).val(data.DATA_NASCIMENTO);
+                            $('#boxDadosPessoaisCompleto').show();
+                        }
+                    );
+                }
                 break;
             case 'expirationMonthYear':
                 var length = _value.length;
