@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="br.com.mobile.market4u" version="1.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="br.com.mobile.market4u" version="1.0.5" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Market4u</name>
     <description>
         Um mercado para você
@@ -97,6 +97,11 @@
     <plugin name="cordova-plugin-qrscanner" spec="2.6.0" />
     <plugin name="cordova-plugin-customurlscheme" spec="5.0.0">
         <param name="URL_SCHEME" value="market4uapp" />
+    </plugin>
+    <plugin name="cordova-plugin-health" source="npm">
+        <variable name="HEALTH_READ_PERMISSION" value="O aplicativo precisa de acesso de leitura"/>
+        <variable name="HEALTH_WRITE_PERMISSION" value="O aplicativo precisa de acesso de gravação"/>
+        <variable name="GMS_VERSION" value="16.0.1"/>
     </plugin>
     <config-file platform="ios" parent="NSHealthShareUsageDescription">
         <string>O aplicativo precisa de acesso de leitura</string>
