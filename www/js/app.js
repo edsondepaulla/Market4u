@@ -475,14 +475,6 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
         }
     };
 
-    $rootScope.clickPhoto = function () {
-        try {
-            $('#fotoCadastro').trigger('click');
-        } catch (e) {
-            $('#fotoCadastro').click();
-        }
-    };
-
     $rootScope.logout = function () {
         Login.logout();
         $rootScope.location('#!/conecte-se');
@@ -885,21 +877,25 @@ app.directive('label', function() {
     };
 });
 
+var timeoutBlurInput = null;
 app.directive('input', function() {
     return function (scope, element, attrs) {
         element.bind("keydown keypress", function (event) {
             if (event.which === 13) {
                 $(this).blur();
                 $(this).closest('form').find('.btn-salvar[type="submit"]').trigger('click');
-            } else if ($(this).attr('id') == 'postalcode' || $(this).attr('id') == 'cpf')
+            } else if ($(this).attr('id') == 'postalcode' || $(this).attr('id') == 'cpf' || $(this).attr('id') == 'senha')
                 inputEvents(this, 'key');
         });
         element.bind("blur", function (event) {
-            $('.scrollable-content').css('padding-bottom', 0);
+            timeoutBlurInput = setTimeout(function(){
+                $('.scrollable-content').css('padding-bottom', 0);
+            }, 2000);
             inputEvents(this, 'blur');
         });
         element.bind("focus", function (event) {
             if(Factory.$rootScope.device == 'ios') {
+                clearTimeout(timeoutBlurInput);
                 var position = $('.scrollable-content').position();
                 if (position) $('.scrollable-content').css('padding-bottom', position.top + 320);
             }
@@ -914,6 +910,7 @@ app.directive('select', function() {
         });
         element.bind("focus", function (event) {
             if(Factory.$rootScope.device == 'ios') {
+                clearTimeout(timeoutBlurInput);
                 var position = $('.scrollable-content').position();
                 if (position) $('.scrollable-content').css('padding-bottom', position.top + 320);
             }
@@ -960,10 +957,10 @@ function inputEvents(_this, _bind) {
                             }
                             $('#boxEnderecoCompleto').show();
                         },
-                        beforeSend: function() {
+                        beforeSend: function () {
                             $('#carregando').show();
                         },
-                        complete: function() {
+                        complete: function () {
                             $('#carregando').hide();
                         },
                         error: function () {
@@ -974,7 +971,7 @@ function inputEvents(_this, _bind) {
                 }
                 break;
             case 'data_nascimento':
-                if(_value.length) {
+                if (_value.length) {
                     if (!isValidDate(_value))
                         _invalid = 1;
                     else if (_value.length < 10)
@@ -985,7 +982,7 @@ function inputEvents(_this, _bind) {
                 if (!validaCpf(_value.substring(0, 14)) && _value.length) {
                     _invalid = 1;
                     $('#boxDadosPessoaisCompleto').hide();
-                }else if(_value.length == 14) {
+                } else if (_value.length == 14) {
                     Factory.ajax(
                         {
                             action: 'cadastro/cpf',
@@ -1033,7 +1030,7 @@ function inputEvents(_this, _bind) {
             case 'cardNumber':
                 _value = _value.replace(/ /g, '');
                 if (_value.length >= 6) {
-                    if(Factory.$rootScope.PAGSEGURO_SESSIONID) {
+                    if (Factory.$rootScope.PAGSEGURO_SESSIONID) {
                         PagSeguroDirectPayment.getBrand({
                             cardBin: _value.substring(0, 6),
                             success: function (data) {
@@ -1108,7 +1105,7 @@ function inputEvents(_this, _bind) {
                 break;
         }
         verifyMsg(_verify, _invalid, _this, _type);
-    }, 500);
+    }, _bind == 'blur' ? 0 : 500);
 }
 
 function verifyMsg(_verify, _invalid, _this, type) {

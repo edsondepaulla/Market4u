@@ -1,8 +1,10 @@
-<h2>Suas preferências</h2>
+<h2 ng-click="open($index)">Suas preferências</h2>
 
-<ul id="preferencias">
-    <li ng-click="pref(item_prev.ID)" class="{{$root.usuario.PREFERENCIAS[item_prev.ID]?'active':''}}" ng-repeat="item_prev in item.ITENS">
-        <i class="mdi mdi-maps-local-pizza"></i> {{item_prev.NOME}}
-    </li>
-    <div class="clearBoth"></div>
-</ul>
+<div class="boxDados">
+    <ul id="preferencias">
+        <li ng-click="pref(item_prev.ID)" class="{{$root.usuario.PREFERENCIAS[item_prev.ID]?'active':''}}" ng-repeat="item_prev in item.ITENS">
+            <i class="mdi mdi-maps-local-pizza"></i> {{item_prev.NOME}}
+        </li>
+        <div class="clearBoth"></div>
+    </ul>
+</div>

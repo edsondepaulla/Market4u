@@ -78,7 +78,7 @@
   <div mn-touch swipe-right="swipeRight()" ng-if="toolbar" id="toolbar">
     <i mn-touch swipe-right="swipeRight()" ng-if="controller == 'Index' && !QRCODE" class="btn_maps mdi mdi-action-view-headline" ng-click="menuOpen()"></i>
     <div id="top" ng-if="controller == 'Index' && !QRCODE">
-      <div ng-if="usuario.MEUSALDO_ATIVADO" ng-click="location('#!/cadastro')" style="display: inline-block;">
+      <div ng-if="usuario.MEUSALDO_ATIVADO" ng-click="location('#!/minha-carteira')" style="display: inline-block;">
         Meu saldo
         <b>{{usuario.MEUSALDO_FORMAT}}</b>
       </div>
@@ -138,9 +138,7 @@
       <img src="img/qrcode.png" onclick="QRScannerConf.digite()"><br>
       Leia o QRCode que está {{TYPE_QRCODE=='pagar'?'no Auto Atendimento':'na Geladeira'}}.
     </div>
-    <div id="qr-code-background">
-
-    </div>
+    <div id="qr-code-background"></div>
   </div>
 
   <div id="fundo_transparente" ng-click="menuClose()" mn-touch swipe-left="swipeLeft()" swipe-right="swipeRight()" ui-prevent-touchmove-defaults></div>
@@ -157,7 +155,7 @@
         <div ng-if="usuario.ID" ng-click="location('#!/cadastro')">
           <b>{{usuario.NOME}}</b>
           <label>{{usuario.EMAIL}}</label>
-          <a>Editar dados</a>
+          <a>Ajustes</a>
         </div>
       </div>
       <ul>

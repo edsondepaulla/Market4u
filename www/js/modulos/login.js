@@ -125,8 +125,9 @@ app.controller('ConecteSe', function($rootScope, $scope, $routeParams, $q) {
 app.controller('Cadastro', function($rootScope, $scope) {
     $rootScope.BARRA_SALDO = false;
     $rootScope.LogoBody = 1;
-    $rootScope.Titulo = parseInt($rootScope.usuario.ID) ? "EDITAR SEUS DADOS" : "CADASTRAR-SE";
+    $rootScope.Titulo = parseInt($rootScope.usuario.ID) ? "AJUSTES" : "CADASTRAR-SE";
     $rootScope.NO_WHATSAPP = false;
+    $scope.AJUSTES = ($rootScope.usuario.ID?$rootScope.usuario.DADOS_ATUALIZADO:false);
 
     // Atualizar dados
     if (parseInt($rootScope.usuario.ID) && parseInt(Login.getData().ID) && !parseInt(Login.getData().DADOS_ATUALIZADO)) {
@@ -137,52 +138,73 @@ app.controller('Cadastro', function($rootScope, $scope) {
         }, 500);
     }
 
-    // PagSeguro
-    if (!parseInt($rootScope.usuario.ID))
-        $rootScope.pagseguro();
+    // Disable
+    setTimeout(function () {
+        if (parseInt($rootScope.usuario.ID))
+            $('#cpf, #data_nascimento').attr('disabled', true);
+    }, 500);
 
-    $rootScope.ITENS =
-        [
-            {
-                'ACTIVE': 1,
-                'SRC': 'view/conecte-se/level-dados-pessoais.html'
-            },
-            {
-                'ACTIVE': 0,
-                'SRC': 'view/conecte-se/level-dados-acesso.html'
-            },
-            {
-                'ACTIVE': 0,
-                'SRC': 'view/conecte-se/level-endereco.html'
-            },
-            {
-                'ACTIVE': 0,
-                'SRC': 'view/conecte-se/level-preferencias.html',
-                'ITENS': $rootScope.usuario.ITENS_PREFERENCIAS
-            },
-            {
-                'ACTIVE': 0,
-                'SRC': 'view/conecte-se/level-cc.html'
-            },
-            {
-                'ACTIVE': 0,
-                'SRC': 'view/conecte-se/level-confirmar.html'
-            }
-        ];
+    $rootScope.ITENS = [];
+    $rootScope.ITENS.push({'ACTIVE': 1, 'SRC': 'view/conecte-se/level-dados-pessoais.html'});
+    $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': 'view/conecte-se/level-dados-acesso.html'});
+    $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': 'view/conecte-se/level-endereco.html'});
+    $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': 'view/conecte-se/level-preferencias.html', 'ITENS': $rootScope.usuario.ITENS_PREFERENCIAS});
+    if (!parseInt($rootScope.usuario.ID)) {
+        $rootScope.pagseguro();
+        $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': 'view/conecte-se/level-cc.html'});
+    }
+    if(!$scope.AJUSTES)
+        $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': 'view/conecte-se/level-confirmar.html'});
 
     $scope.pref = function (ID) {
         $rootScope.usuario.PREFERENCIAS[ID] = $rootScope.usuario.PREFERENCIAS[ID] ? 0 : ID;
     };
 
-    $rootScope.btnLevel = function (LEVEL, TYPE) {
-        if ($rootScope.ITENS.length == LEVEL) {
-            $rootScope.usuario.DDI = 55;
-            var USUARIO = $.extend({}, $rootScope.usuario);
-            USUARIO.ESTADOS = null;
-            USUARIO.ITENS_PREFERENCIAS = null;
-            USUARIO.WHATSAPP = null;
-            USUARIO.TERMOS_DE_USO = null;
-            USUARIO.POLITICA_DE_PRIVACIDADE = null;
+    $scope.salvar = function () {
+        $rootScope.usuario.DDI = 55;
+        var USUARIO = $.extend({}, $rootScope.usuario);
+        USUARIO.ESTADOS = null;
+        USUARIO.STREET = $('#street').val();
+        USUARIO.DISTRICT = $('#district').val();
+        USUARIO.CITY = $('#city').val();
+        USUARIO.STATE = $('#state').val();
+        USUARIO.ITENS_PREFERENCIAS = null;
+        USUARIO.WHATSAPP = null;
+        USUARIO.SET_PREFERENCIAS = [];
+        $.each(USUARIO.PREFERENCIAS, function (idx, ID) {
+            if(parseInt(ID))
+                USUARIO.SET_PREFERENCIAS.push(parseInt(ID));
+        });
+        USUARIO.PREFERENCIAS = null;
+        USUARIO.TERMOS_DE_USO = null;
+        USUARIO.POLITICA_DE_PRIVACIDADE = null
+        if (parseInt($rootScope.usuario.ID)) {
+            var EMAIL = $rootScope.usuario.EMAIL;
+            var SENHA = $rootScope.usuario.SENHA;
+            Factory.ajax(
+                {
+                    action: 'cadastro/editar',
+                    data: {
+                        REDIRECT: $rootScope.REDIRECT || '',
+                        usuario: USUARIO,
+                        AJUSTES: $scope.AJUSTES ? 1 : 0
+                    }
+                },
+                function (data) {
+                    if (data.status == 1) {
+                        $rootScope.usuario.CONFIRME_DADOS = 1;
+                        $rootScope.usuario.SENHA = SENHA;
+                        $rootScope.usuario.EMAIL = EMAIL;
+                        $rootScope.usuario.ENVIADO_PARA = data.ENVIADO_PARA;
+                        if ($scope.AJUSTES) {
+                            $.each($rootScope.ITENS, function (idx, ITEM_IDX) {
+                                ITEM_IDX.ACTIVE_AJUSTES = 0;
+                            });
+                        }
+                    }
+                }
+            );
+        } else {
             $rootScope.usuario.NOVO = true;
             Factory.ajax(
                 {
@@ -198,7 +220,28 @@ app.controller('Cadastro', function($rootScope, $scope) {
                     }
                 }
             );
-        } else {
+        }
+    };
+
+    $scope.open = function (LEVEL) {
+        var active_ajustes = 0;
+        $.each($rootScope.ITENS, function (idx, ITEM_IDX) {
+            if (ITEM_IDX.ACTIVE_AJUSTES)
+                active_ajustes = 1;
+            if (LEVEL == idx) {
+                ITEM_IDX.ACTIVE_AJUSTES = ITEM_IDX.ACTIVE_AJUSTES ? 0 : 1;
+            } else {
+                ITEM_IDX.ACTIVE_AJUSTES = 0;
+            }
+        });
+        if (active_ajustes)
+            Login.get();
+    };
+
+    $rootScope.btnLevel = function (LEVEL, TYPE) {
+        if ($rootScope.ITENS.length == LEVEL)
+            $scope.salvar();
+        else {
             var focus = false;
             if (TYPE == 'NEXT') {
                 $('body[controller="Cadastro"] #formCadastro.form #passo-a-passo > li.active input.ng-invalid').each(function () {
@@ -241,77 +284,6 @@ app.controller('Cadastro', function($rootScope, $scope) {
                     }
                 });
             }
-        }
-    };
-});
-
-app.controller('CadastroOld', function($rootScope, $scope) {
-    $rootScope.BARRA_SALDO = false;
-    $rootScope.LogoBody = 1;
-    $rootScope.Titulo = parseInt($rootScope.usuario.ID) ? "EDITAR SEUS DADOS" : "CADASTRAR-SE";
-    $rootScope.NO_WHATSAPP = false;
-
-    // Atualizar dados
-    if (parseInt($rootScope.usuario.ID) && parseInt(Login.getData().ID) && !parseInt(Login.getData().DADOS_ATUALIZADO)) {
-        clearTimeout(Factory.timeout);
-        Factory.timeout = setTimeout(function () {
-            Factory.alert("Para continuar, por favor atualize seus dados :)");
-        }, 500);
-    }
-
-    // PagSeguro
-    if (!parseInt($rootScope.usuario.ID))
-        $rootScope.pagseguro();
-
-    $scope.salvar = function () {
-        $rootScope.usuario.DDI = 55;
-        var USUARIO = $.extend({}, $rootScope.usuario);
-        USUARIO.ESTADOS = null;
-        USUARIO.STREET = $('#street').val();
-        USUARIO.DISTRICT = $('#district').val();
-        USUARIO.CITY = $('#city').val();
-        USUARIO.STATE = $('#state').val();
-        if (parseInt($rootScope.usuario.ID)) {
-            var EMAIL = $rootScope.usuario.EMAIL;
-            var SENHA = $rootScope.usuario.SENHA;
-            Factory.ajax(
-                {
-                    action: 'cadastro/editar',
-                    data: {
-                        REDIRECT: $rootScope.REDIRECT || '',
-                        usuario: USUARIO
-                    }
-                },
-                function (data) {
-                    if (data.status == 1) {
-                        $rootScope.usuario.CONFIRME_DADOS = 1;
-                        $rootScope.usuario.SENHA = SENHA;
-                        $rootScope.usuario.EMAIL = EMAIL;
-                        $rootScope.usuario.ENVIADO_PARA = data.ENVIADO_PARA;
-                    }
-                }
-            );
-        } else {
-            USUARIO.CC_NAME = $('#cardName').val();
-            USUARIO.CC_NUMBER = $('#cardNumber').val();
-            USUARIO.CC_MONTHYEAR = $('#expirationMonthYear').val();
-            USUARIO.CC_CVV = $('#cvv').val();
-            USUARIO.CC_BANDEIRA = $('#cardBandeira').val();
-            $rootScope.usuario.NOVO = true;
-            Factory.ajax(
-                {
-                    action: 'cadastro/novo',
-                    data: {
-                        usuario: USUARIO
-                    }
-                }, function (data) {
-                    if (data.status == 1) {
-                        $rootScope.usuario.ENVIADO_PARA = data.ENVIADO_PARA;
-                        if(data.redirect_system)
-                            $rootScope.REDIRECT = '';
-                    }
-                }
-            );
         }
     };
 });
@@ -597,15 +569,23 @@ function fotoCadastro(){
             }
 
             if(_ok) {
-                Factory.$rootScope.usuario.IMAGEM = file;
-
-                // Preview
-                var oFReader = new FileReader();
-                oFReader.readAsDataURL(file);
-                oFReader.onload = function (oFREvent) {
-                    document.getElementById('fotoCadastroImg').src = oFREvent.target.result;
-                    $('#fotoCadastroImg').show();
-                };
+                clearTimeout(Factory.timeout);
+                Factory.timeout = setTimeout(function(){
+                    Factory.ajax(
+                        {
+                            action: 'cadastro/imagem',
+                            data: {
+                                IMAGEM: file
+                            }
+                        }
+                    );
+                    var oFReader = new FileReader();
+                    oFReader.readAsDataURL(file);
+                    oFReader.onload = function (oFREvent) {
+                        document.getElementById('fotoCadastroImg').src = oFREvent.target.result;
+                        $('#fotoCadastroImg').show();
+                    };
+                }, 1000);
             }
         }
     });
