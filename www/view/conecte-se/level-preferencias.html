@@ -1,38 +1,8 @@
 <h2>Suas preferências</h2>
 
 <ul id="preferencias">
-    <li><i class="mdi mdi-maps-local-pizza"></i> Carnes</li>
-    <li><i class="mdi mdi-maps-local-pizza"></i> Bebidas 18+</li>
-    <li><i class="mdi mdi-maps-local-pizza"></i> Bebidas</li>
-    <li><i class="mdi mdi-maps-local-pizza"></i> Carnes</li>
-    <li><i class="mdi mdi-maps-local-pizza"></i> Bebidas 18+</li>
-    <li><i class="mdi mdi-maps-local-pizza"></i> Bebidas</li>
-    <li><i class="mdi mdi-maps-local-pizza"></i> Carnes</li>
-    <li><i class="mdi mdi-maps-local-pizza"></i> Bebidas 18+</li>
-    <li><i class="mdi mdi-maps-local-pizza"></i> Bebidas</li>
-    <li><i class="mdi mdi-maps-local-pizza"></i> Carnes</li>
-    <li><i class="mdi mdi-maps-local-pizza"></i> Bebidas 18+</li>
-    <li><i class="mdi mdi-maps-local-pizza"></i> Bebidas</li>
+    <li ng-click="pref(item_prev.ID)" class="{{$root.usuario.PREFERENCIAS[item_prev.ID]?'active':''}}" ng-repeat="item_prev in item.ITENS">
+        <i class="mdi mdi-maps-local-pizza"></i> {{item_prev.NOME}}
+    </li>
     <div class="clearBoth"></div>
 </ul>
-
-<style>
-    ul#preferencias{
-        margin-left: -3.5%;
-    }
-    ul#preferencias li{
-        border: 1px solid #EEE;
-        font-size: 15px;
-        width: 29.5%;
-        text-align: center;
-        margin: 0 0 3.5% 3.5%;
-        display: block;
-        padding: 5px;
-        float: left;
-        background: #f6f6f6;
-    }
-    ul#preferencias li i{
-        font-size: 36px;
-        display: block;
-    }
-</style>

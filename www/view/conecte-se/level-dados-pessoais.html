@@ -25,7 +25,7 @@
 
     <label for="data_nascimento" class="margin_t_10">Data de nascimento</label>
     <label class="box1" for="data_nascimento">
-        <input type="text" obg="1" id="data_nascimento" placeholder="99/99/9999" ng-model="$root.usuario.DATA_NASCIMENTO_FORMAT" />
+        <input type="text" obg="1" id="data_nascimento" placeholder="99/99/9999" disabled="{{$root.usuario.ID?'disabled':'false'}}" ng-model="$root.usuario.DATA_NASCIMENTO_FORMAT" />
         <span class="msgValidator">Data de nascimento inválido</span>
     </label>
 

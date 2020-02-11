@@ -1,13 +1,13 @@
 <h2>Dados de acesso</h2>
 
-<label for="email" class="margin_t_10">E-mail</label>
+<label for="email" class="margin_t_10">E-mail<span class="campo_obg">*</span></label>
 <label class="box1" for="email">
     <input placeholder="Insira seu e-mail válido" type="email" obg="1" id="email" ng-model="$root.usuario.EMAIL" />
     <span class="msgValidator">E-mail inválido</span>
     <span class="msgValidator2">E-mail já utilizado</span>
 </label>
 
-<label for="numero_celular" class="margin_t_10">Número de celular</label>
+<label for="numero_celular" class="margin_t_10">Número de celular<span class="campo_obg">*</span></label>
 <label class="box" for="numero_celular" id="boxTelefone">
     <label>
         <span>+55</span>
@@ -16,11 +16,15 @@
     <span class="msgValidator">Insira um número de celular válido</span>
 </label>
 
-<label for="senha" class="margin_t_10">{{usuario.ID?'Nova senha':'Senha'}}</label>
+<label for="senha" class="margin_t_10">{{usuario.ID?'Nova senha':'Senha'}}<span ng-if="!usuario.ID" class="campo_obg">*</span></label>
 <label class="box1" for="senha" id="boxSenha">
     <input type="password" id="senha" obg="{{usuario.ID?'0':'1'}}" placeholder="Insira sua senha" ng-model="$root.usuario.SENHA" />
     <i id="showPassword" onclick="showPassword()" class="mdi mdi-action-visibility"></i>
     <span class="msgValidator">Possuir no mínino 8 caracteres</span>
+</label>
+
+<label class="campo_obg">
+    <span class="campo_obg">*</span> Campos obrigatórios
 </label>
 
 <script type="application/javascript">

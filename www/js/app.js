@@ -24,15 +24,6 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                 }
             }
         })
-        .when("/cadastro-novo", {
-            templateUrl: "view/conecte-se/form-novo.html",
-            controller: 'CadastroNovo',
-            resolve: {
-                ReturnData: function ($route, $rootScope) {
-                    return parseInt($rootScope.usuario.ID) || !$rootScope.usuario.NOVO ? Login.get() : null;
-                }
-            }
-        })
         .when("/cadastro", {
             templateUrl: "view/conecte-se/form.html",
             controller: 'Cadastro',
@@ -469,9 +460,16 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     };
 
     $rootScope.backpageTop = function () {
-        if($rootScope.QRCODE){
+        if ($rootScope.controller == 'Cadastro') {
+            var level = parseInt($('#formCadastro.form #passo-a-passo > li.active').attr('level'));
+            if(level) {
+                $rootScope.btnLevel(level - 1);
+                return;
+            }
+        }
+        if ($rootScope.QRCODE)
             $rootScope.location('#!/');
-        }else {
+        else {
             $('.scrollable:first').attr('backpage', 1);
             window.history.go(-1);
         }
@@ -878,6 +876,15 @@ app.directive('selectSearch', function() {
     };
 });
 
+app.directive('label', function() {
+    return function (scope, element, attrs) {
+        element.bind("click", function (event) {
+            if ($(this).attr('for'))
+                $(this).find('input').focus();
+        });
+    };
+});
+
 app.directive('input', function() {
     return function (scope, element, attrs) {
         element.bind("keydown keypress", function (event) {
@@ -943,9 +950,13 @@ function inputEvents(_this, _bind) {
                         success: function (data) {
                             if (!data.erro) {
                                 $('#street').val(data.logradouro);
+                                Factory.$rootScope.usuario.STREET = data.logradouro;
                                 $('#district').val(data.bairro);
+                                Factory.$rootScope.usuario.DISTRICT = data.bairro;
                                 $('#city').val(data.localidade);
+                                Factory.$rootScope.usuario.CITY = data.localidade;
                                 $('#state').val(data.uf);
+                                Factory.$rootScope.usuario.STATE = data.uf;
                             }
                             $('#boxEnderecoCompleto').show();
                         },
@@ -983,14 +994,22 @@ function inputEvents(_this, _bind) {
                             }
                         },
                         function (data) {
-                            if (data.NOME)
+                            if (data.NOME) {
                                 $('#nome_completo').val(data.NOME);
-                            if (data.MAE)
+                                Factory.$rootScope.usuario.NOME = data.NOME;
+                            }
+                            if (data.MAE) {
                                 $('#nome_mae').val(data.MAE);
-                            if (data.GENERO)
+                                Factory.$rootScope.usuario.MAE = data.MAE;
+                            }
+                            if (data.GENERO) {
                                 $('#genero_' + data.GENERO).attr('checked', true);
-                            if (data.DATA_NASCIMENTO)
+                                Factory.$rootScope.usuario.GENERO = data.GENERO;
+                            }
+                            if (data.DATA_NASCIMENTO) {
                                 $('#data_nascimento').attr('disabled', true).val(data.DATA_NASCIMENTO);
+                                Factory.$rootScope.usuario.DATA_NASCIMENTO_FORMAT = data.DATA_NASCIMENTO;
+                            }
                             $('#boxDadosPessoaisCompleto').show();
                         }
                     );

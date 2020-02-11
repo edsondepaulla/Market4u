@@ -2933,6 +2933,11 @@ margin-top: 10px;
 display: block;
 }
 
+.margin_t_25{
+  margin-top: 25px;
+  display: block;
+}
+
 /*
 * Minha carteira
 */
@@ -4969,4 +4974,63 @@ body[controller="Command"] .scrollable-content ul li[ng-switch-when="BEB_ALC"] .
   ul#preferencias li{
     height: 107px;
   }
+}
+
+/*
+ * Cadastro
+ */
+body[controller="Cadastro"] #formCadastro.form #passo-a-passo > li{
+  display: none;
+}
+body[controller="Cadastro"] #formCadastro.form #passo-a-passo > li.active{
+  display: block;
+}
+body[controller="Cadastro"] #formCadastro.form .boxBtns{
+  text-align: center;
+}
+body[controller="Cadastro"] #formCadastro.form button{
+  padding: 6px 12px;
+  margin: 20px 5px 0 0;
+  display: inline-block;
+}
+body[controller="Cadastro"] #formCadastro.form .boxBtns button[level="6"]{
+  background: #043d22 !important;
+}
+body[controller="Cadastro"] #formCadastro.form #passo-a-passo > li div h2{
+  margin: 0 0 20px;
+}
+body[controller="Cadastro"] #formCadastro.form #passo-a-passo > li #boxDadosPessoaisCompleto,
+body[controller="Cadastro"] #formCadastro.form #passo-a-passo > li #boxEnderecoCompleto{
+  display: none;
+}
+body[controller="Cadastro"] #confirmarDados li{
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+body[controller="Cadastro"] #confirmarDados li span{
+  font-size: 16px;
+  font-weight: bold;
+  vertical-align: middle;
+}
+body[controller="Cadastro"] ul#preferencias{
+  margin-left: -3.5%;
+}
+body[controller="Cadastro"] ul#preferencias li{
+  border: 1px solid #EEE;
+  font-size: 15px;
+  width: 29.5%;
+  text-align: center;
+  margin: 0 0 3.5% 3.5%;
+  display: block;
+  padding: 5px;
+  float: left;
+  background: #f6f6f6;
+}
+body[controller="Cadastro"] ul#preferencias li.active{
+  border: 1px solid #CCC;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+body[controller="Cadastro"] ul#preferencias li i{
+  font-size: 36px;
+  display: block;
 }
