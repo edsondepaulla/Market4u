@@ -938,13 +938,14 @@ function inputEvents(_this, _bind) {
                     _invalid = 1;
                 break;
             case 'postalcode':
-                if (_value.length == 9 && _value.length) {
+                if (_value.length == 9 && _value.length && _this.attr('value-old') != _value) {
                     $.ajax({
                         url: 'https://viacep.com.br/ws/' + _value.replace('-', '') + '/json/',
                         cache: false,
                         type: 'GET',
                         dataType: 'json',
                         success: function (data) {
+                            _this.attr('value-old', _value);
                             if (!data.erro) {
                                 $('#street').val(data.logradouro);
                                 Factory.$rootScope.usuario.STREET = data.logradouro;
@@ -982,7 +983,8 @@ function inputEvents(_this, _bind) {
                 if (!validaCpf(_value.substring(0, 14)) && _value.length) {
                     _invalid = 1;
                     $('#boxDadosPessoaisCompleto').hide();
-                } else if (_value.length == 14) {
+                    _this.attr('value-old', _value);
+                } else if (_value.length == 14 && _this.attr('value-old') != _value) {
                     Factory.ajax(
                         {
                             action: 'cadastro/cpf',
@@ -991,6 +993,7 @@ function inputEvents(_this, _bind) {
                             }
                         },
                         function (data) {
+                            _this.attr('value-old', _value);
                             if (data.NOME) {
                                 $('#nome_completo').val(data.NOME);
                                 Factory.$rootScope.usuario.NOME = data.NOME;

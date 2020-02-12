@@ -5035,7 +5035,7 @@ body[controller="Cadastro"] #formCadastro.form button{
 }
 body[controller="Cadastro"] #formCadastro.form #passo-a-passo > li div h2{
   margin: 0 0 20px;
-  transition: 1s;
+  transition: 0.5s;
   color: #043d22;
 }
 body[controller="Cadastro"] #formCadastro.form #passo-a-passo > li #boxDadosPessoaisCompleto,
@@ -5066,7 +5066,7 @@ body[controller="Cadastro"] ul#preferencias li{
 body[controller="Cadastro"] ul#preferencias li.active{
   border: 1px solid transparent;
   box-shadow: 0 -2px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-  background: rgba(0, 249, 97, 0.07);
+  background: rgba(0, 249, 97, 0.05);
 }
 body[controller="Cadastro"] ul#preferencias li i{
   font-size: 36px;

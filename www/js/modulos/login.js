@@ -44,7 +44,7 @@ var Login = {
         localStorage.setItem("CLIENTE", JSON.stringify(data));
     },
     getData: function () {
-        if(!Login.data.GET_LOCAL) {
+        if (!Login.data.GET_LOCAL) {
             var data = JSON.parse(localStorage.getItem("CLIENTE"));
             if (data) {
                 Login.data = data;
@@ -54,7 +54,14 @@ var Login = {
         return Login.data;
     },
     setTimeoutLoginGet: null,
-    get: function (redirect) {
+    logout: function () {
+        Factory.ajax(
+            {
+                action: 'login/logout'
+            }
+        );
+    },
+    get: function (redirect, off) {
         clearTimeout(this.setTimeoutLoginGet);
         this.setTimeoutLoginGet = setTimeout(function () {
             return Factory.ajax(
@@ -62,18 +69,11 @@ var Login = {
                     action: 'login/get'
                 },
                 function (data) {
-                    if (data.Login.ID && redirect)
+                    if ((off ? !data.Login.ID : data.Login.ID) && redirect)
                         Factory.$rootScope.location(redirect, 0, 1);
                 }
             );
         }, 500);
-    },
-    logout: function () {
-        Factory.ajax(
-            {
-                action: 'login/logout'
-            }
-        );
     }
 };
 
@@ -235,7 +235,7 @@ app.controller('Cadastro', function($rootScope, $scope) {
             }
         });
         if (active_ajustes)
-            Login.get();
+            Login.get('#!/conecte-se', 1);
     };
 
     $rootScope.btnLevel = function (LEVEL, TYPE) {
