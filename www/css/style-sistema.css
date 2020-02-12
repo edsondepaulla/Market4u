@@ -2629,7 +2629,7 @@ vertical-align: sub;
 margin-right: 8px;
 }
 #contentLeft > ul li{
-padding: 5px 5px;
+padding: 10px 5px;
 position: relative;
 }
 #contentLeft > ul li:last-child{
@@ -4474,7 +4474,7 @@ body[controller="Index"] .scrollable-content[step="3"] > ul > li > p{
 }
 
 body[device="ios"][controller="Index"] .scrollable-content[step="3"] > ul > li{
-  padding-top: 0;
+  padding-top: 15px;
 }
 
 body[device="ios"][controller="Index"] .scrollable-content[step="3"] > ul > li > p {

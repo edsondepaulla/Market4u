@@ -1,7 +1,7 @@
 var config = {
-    versao_app_mobile: "1.0.5",
-    ambiente: "local",
+    versao_app_mobile: "1.0.6",
+    ambiente: "producao",
     url_api: {
-        local: "https://m.market4u.com.br/"
+        producao: "https://m.market4u.com.br/"
     }
 };

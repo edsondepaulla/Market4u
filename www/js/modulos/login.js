@@ -122,6 +122,12 @@ app.controller('ConecteSe', function($rootScope, $scope, $routeParams, $q) {
     };
 });
 
+app.controller('BoasVindas', function($rootScope, $scope) {
+    $rootScope.BARRA_SALDO = false;
+    $rootScope.Titulo = "BOAS-VINDAS";
+    $rootScope.NO_WHATSAPP = false;
+});
+
 app.controller('Cadastro', function($rootScope, $scope) {
     $rootScope.BARRA_SALDO = false;
     $rootScope.LogoBody = 1;
@@ -140,8 +146,12 @@ app.controller('Cadastro', function($rootScope, $scope) {
 
     // Disable
     setTimeout(function () {
-        if (parseInt($rootScope.usuario.ID))
-            $('#cpf, #data_nascimento').attr('disabled', true);
+        if (parseInt($rootScope.usuario.ID)) {
+            if ($rootScope.usuario.CPF)
+                $('#cpf').attr('disabled', true);
+            if ($rootScope.usuario.DATA_NASCIMENTO_FORMAT)
+                $('#data_nascimento').attr('disabled', true);
+        }
     }, 500);
 
     $rootScope.ITENS = [];
@@ -224,18 +234,20 @@ app.controller('Cadastro', function($rootScope, $scope) {
     };
 
     $scope.open = function (LEVEL) {
-        var active_ajustes = 0;
-        $.each($rootScope.ITENS, function (idx, ITEM_IDX) {
-            if (ITEM_IDX.ACTIVE_AJUSTES)
-                active_ajustes = 1;
-            if (LEVEL == idx) {
-                ITEM_IDX.ACTIVE_AJUSTES = ITEM_IDX.ACTIVE_AJUSTES ? 0 : 1;
-            } else {
-                ITEM_IDX.ACTIVE_AJUSTES = 0;
-            }
-        });
-        if (active_ajustes)
-            Login.get('#!/conecte-se', 1);
+        if($scope.AJUSTES) {
+            var active_ajustes = 0;
+            $.each($rootScope.ITENS, function (idx, ITEM_IDX) {
+                if (ITEM_IDX.ACTIVE_AJUSTES)
+                    active_ajustes = 1;
+                if (LEVEL == idx) {
+                    ITEM_IDX.ACTIVE_AJUSTES = ITEM_IDX.ACTIVE_AJUSTES ? 0 : 1;
+                } else {
+                    ITEM_IDX.ACTIVE_AJUSTES = 0;
+                }
+            });
+            if (active_ajustes)
+                Login.get('#!/conecte-se', 1);
+        }
     };
 
     $rootScope.btnLevel = function (LEVEL, TYPE) {
@@ -577,6 +589,8 @@ function fotoCadastro(){
                             data: {
                                 IMAGEM: file
                             }
+                        },function(){
+                            Login.get();
                         }
                     );
                     var oFReader = new FileReader();

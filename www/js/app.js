@@ -33,6 +33,22 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                 }
             }
         })
+        .when("/boas-vindas", {
+            templateUrl: "view/conecte-se/boas-vindas.html",
+            controller: 'BoasVindas',
+            resolve: {
+                ReturnData: function ($route) {
+                    return Factory.ajax(
+                        {
+                            action: 'cadastro/boasvindas'
+                        },
+                        function(){
+                            Login.get();
+                        }
+                    );
+                }
+            }
+        })
         .when("/conecte-se-codigo", {
             templateUrl: "view/conecte-se/codigo.html",
             controller: 'ConecteSeCodigo'
@@ -379,7 +395,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                 Page.start();
 
             window.location = url;
-            if (url != '#!/conecte-se')
+            if (url != '#!/conecte-se' && url != '#!/boas-vindas')
                 $route.reload();
         }
     };
@@ -407,35 +423,41 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
         );
     };
 
-    $rootScope.controller = 'Maps';
+    $rootScope.controller = 'Index';
     $rootScope.$on('$routeChangeSuccess', function () {
-        switch ($route.current.controller) {
-            case 'ConecteSe':
-            case 'Cadastro':
-            case 'Suporte':
-            case 'SemInternet':
-            case 'AtualizarApp':
-            case 'Faq':
-            case 'Token':
-            case 'ConecteSeCodigo':
-                break;
-            default:
-                clearTimeout(Factory.timeout);
-                Factory.timeout = setTimeout(function () {
-                    if (parseInt(Login.getData().ID)) {
-                        if (!parseInt(Login.getData().DADOS_ATUALIZADO))
-                            $rootScope.location('#!/cadastro');
-                    } else
-                        $rootScope.location('#!/conecte-se');
-                }, 1000);
-                break;
-        }
         $rootScope.NO_WHATSAPP = true;
         $rootScope.border_top = 0;
-        $rootScope.controller = $route.current.controller;
         $rootScope.toolbar = true;
-        if ($rootScope.controller != 'Index' || (parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1) == 1)
-            Payment.clear(1);
+        if($route.current) {
+            switch ($route.current.controller) {
+                case 'ConecteSe':
+                case 'Cadastro':
+                case 'Suporte':
+                case 'SemInternet':
+                case 'AtualizarApp':
+                case 'Faq':
+                case 'Token':
+                case 'BoasVindas':
+                case 'ConecteSeCodigo':
+                    break;
+                default:
+                    clearTimeout(Factory.timeout);
+                    Factory.timeout = setTimeout(function () {
+                        if (parseInt(Login.getData().ID)) {
+                            if (parseInt(Login.getData().DADOS_ATUALIZADO)) {
+                                if (!parseInt(Login.getData().BOAS_VINDAS))
+                                    $rootScope.location('#!/boas-vindas');
+                            } else
+                                $rootScope.location('#!/cadastro');
+                        } else
+                            $rootScope.location('#!/conecte-se');
+                    }, 1000);
+                    break;
+            }
+            $rootScope.controller = $route.current.controller;
+            if ($rootScope.controller != 'Index' || (parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1) == 1)
+                Payment.clear(1);
+        }
         if ($rootScope.KEY_ARDUINO)
             $rootScope.fecharPortaBebidasAlcoolicas();
     });
@@ -497,12 +519,6 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
             icon: 'mdi-action-home',
             logado: 1
         },
-        /*{
-            titulo: 'Condomínios',
-            url: '#!/maquinas',
-            icon: 'mdi-social-domain',
-            logado: 1
-        },*/
         {
             titulo: 'Vouchers',
             url: '#!/voucher',
@@ -525,6 +541,12 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
             titulo: 'Histórico de transações',
             url: '#!/historico-transacoes',
             icon: 'mdi-action-history',
+            logado: 0
+        },
+        {
+            titulo: 'Notificações',
+            url: '#!/notificacoes',
+            icon: 'mdi-action-loyalty',
             logado: 0
         },
         {
