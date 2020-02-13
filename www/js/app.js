@@ -170,6 +170,51 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                 }
             }
         })
+        .when("/historico-transacoes/:ID", {
+            templateUrl: "view/conecte-se/historico-transacoes-detalhes.html",
+            controller: 'HistoricoTransacoesGet',
+            resolve: {
+                ReturnData: function ($route) {
+                    return Factory.ajax(
+                        {
+                            action: 'cadastro/historicotransacoes',
+                            data: {
+                                ID: $route.current.params.ID
+                            }
+                        }
+                    );
+                }
+            }
+        })
+        .when("/notificacoes", {
+            templateUrl: "view/conecte-se/notificacoes.html",
+            controller: 'NotificacoesLst',
+            resolve: {
+                ReturnData: function ($route) {
+                    return Factory.ajax(
+                        {
+                            action: 'cadastro/notificacoes'
+                        }
+                    );
+                }
+            }
+        })
+        .when("/notificacoes/:ID", {
+            templateUrl: "view/conecte-se/notificacoes-detalhes.html",
+            controller: 'NotificacoesGet',
+            resolve: {
+                ReturnData: function ($route) {
+                    return Factory.ajax(
+                        {
+                            action: 'cadastro/notificacoes',
+                            data: {
+                                ID: $route.current.params.ID
+                            }
+                        }
+                    );
+                }
+            }
+        })
         .when("/suporte", {
             templateUrl: "view/pages/suporte.html",
             controller: 'Suporte'
@@ -196,22 +241,6 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                         {
                             action: 'options/command',
                             data: $route.current.params
-                        }
-                    );
-                }
-            }
-        })
-        .when("/historico-transacoes/:ID", {
-            templateUrl: "view/conecte-se/historico-transacoes-detalhes.html",
-            controller: 'HistoricoTransacoesGet',
-            resolve: {
-                ReturnData: function ($route) {
-                    return Factory.ajax(
-                        {
-                            action: 'cadastro/historicotransacoes',
-                            data: {
-                                ID: $route.current.params.ID
-                            }
                         }
                     );
                 }
@@ -542,13 +571,13 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
             url: '#!/historico-transacoes',
             icon: 'mdi-action-history',
             logado: 0
-        },
+        }/*,
         {
             titulo: 'Notificações',
             url: '#!/notificacoes',
-            icon: 'mdi-action-loyalty',
+            icon: 'mdi-social-notifications-none',
             logado: 0
-        },
+        }*/,
         {
             titulo: 'Suporte',
             url: '#!/suporte',

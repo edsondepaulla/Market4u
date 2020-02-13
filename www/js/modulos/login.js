@@ -122,10 +122,11 @@ app.controller('ConecteSe', function($rootScope, $scope, $routeParams, $q) {
     };
 });
 
-app.controller('BoasVindas', function($rootScope, $scope) {
+app.controller('BoasVindas', function($rootScope, $scope, ReturnData) {
     $rootScope.BARRA_SALDO = false;
     $rootScope.Titulo = "BOAS-VINDAS";
     $rootScope.NO_WHATSAPP = false;
+    $scope.CONTENT = ReturnData.CONTENT;
 });
 
 app.controller('Cadastro', function($rootScope, $scope) {
@@ -540,6 +541,22 @@ app.controller('HistoricoTransacoesLst', function($rootScope, $scope, $routePara
 app.controller('HistoricoTransacoesGet', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.border_top = 1;
     $rootScope.Titulo = "Hist. de transações - Detalhes";
+    $scope.REG = ReturnData;
+});
+
+app.controller('NotificacoesLst', function($rootScope, $scope, $routeParams, ReturnData) {
+    $rootScope.border_top = 1;
+    $rootScope.Titulo = "Notificações";
+    $scope.LST = ReturnData.LST;
+
+    $scope.click = function(reg) {
+        $rootScope.location('#!/notificacoes/' + reg.ID);
+    };
+});
+
+app.controller('NotificacoesGet', function($rootScope, $scope, $routeParams, ReturnData) {
+    $rootScope.border_top = 1;
+    $rootScope.Titulo = "Notificação - Detalhes";
     $scope.REG = ReturnData;
 });
 

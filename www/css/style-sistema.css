@@ -4264,6 +4264,7 @@ margin-top: 3em;
 /*
  * Historico / Voucher
  */
+body[controller="NotificacoesLst"] md-content ul li,
 body[controller="VoucherLst"] md-content ul li,
 body[controller="HistoricoTransacoesLst"] md-content ul li{
   border-bottom: 1px solid rgba(11, 99, 64, 0.1);
@@ -4271,6 +4272,7 @@ body[controller="HistoricoTransacoesLst"] md-content ul li{
   position: relative;
 }
 
+body[controller="NotificacoesLst"] md-content ul li label,
 body[controller="VoucherLst"] md-content ul li label,
 body[controller="HistoricoTransacoesLst"] md-content ul li label{
   display: block;
@@ -4280,17 +4282,20 @@ body[controller="HistoricoTransacoesLst"] md-content ul li label{
 
 body[controller="Faq"] md-content,
 body[controller="HistoricoTransacoesGet"] md-content,
+body[controller="NotificacoesGet"] md-content,
 body[controller="VoucherGet"] md-content{
   padding-left: 10px !important;
   padding-right: 10px !important;
 }
 
+body[controller="NotificacoesLst"] md-content ul li i,
 body[controller="VoucherLst"] md-content ul li i,
 body[controller="HistoricoTransacoesLst"] md-content ul li i{
   margin: 0;
   font-size: 15px;
 }
 
+body[controller="NotificacoesLst"] md-content ul li span,
 body[controller="VoucherLst"] md-content ul li span,
 body[controller="HistoricoTransacoesLst"] md-content ul li span{
   display: block;
@@ -4298,11 +4303,13 @@ body[controller="HistoricoTransacoesLst"] md-content ul li span{
   font-weight: 600;
 }
 
+body[controller="NotificacoesLst"] md-content ul li span i,
 body[controller="VoucherLst"] md-content ul li span i,
 body[controller="HistoricoTransacoesLst"] md-content ul li span i{
   font-weight: normal;
 }
 
+body[controller="NotificacoesLst"] md-content ul li > b,
 body[controller="VoucherLst"] md-content ul li > b,
 body[controller="HistoricoTransacoesLst"] md-content ul li > b{
   position: absolute;
@@ -4311,6 +4318,7 @@ body[controller="HistoricoTransacoesLst"] md-content ul li > b{
   font-weight: 600;
 }
 
+body[controller="NotificacoesLst"] md-content ul li b i,
 body[controller="VoucherLst"] md-content ul li b i,
 body[controller="HistoricoTransacoesLst"] md-content ul li b i{
   color: #00ab46;
@@ -4319,11 +4327,13 @@ body[controller="HistoricoTransacoesLst"] md-content ul li b i{
   padding-left: 15px;
 }
 
+body[controller="NotificacoesLst"] md-content ul li b[n="1"],
 body[controller="VoucherLst"] md-content ul li b[n="1"],
 body[controller="HistoricoTransacoesLst"] md-content ul li b[n="1"]{
   color: #e94847;
 }
 
+body[controller="NotificacoesLst"] md-content ul li:last-child,
 body[controller="VoucherLst"] md-content ul li:last-child,
 body[controller="HistoricoTransacoesLst"] md-content ul li:last-child{
   border-bottom: 0;
@@ -4585,6 +4595,8 @@ ul#menu-bottom{
 }
 
 body[controller="Command"] ul#menu-bottom,
+body[controller="BoasVindas"] ul#menu-bottom,
+body[controller="BoasVindas"] ul#menu-bottom,
 body[controller="Index"] ul#menu-bottom[step="1"],
 body[controller="Index"] ul#menu-bottom[step="2"],
 body[controller="Index"] ul#menu-bottom[step="4"]{
