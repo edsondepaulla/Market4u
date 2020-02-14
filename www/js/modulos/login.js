@@ -154,9 +154,9 @@ app.controller('Cadastro', function($rootScope, $scope) {
                 $('#data_nascimento').attr('disabled', true);
         }
     }, 500);
-    setTimeout(function () {
+    /*setTimeout(function () {
         $('#cpf').focus();
-    }, 1000);
+    }, 1000);*/
 
     $rootScope.ITENS = [];
     $rootScope.ITENS.push({'ACTIVE': 1, 'SRC': 'view/conecte-se/level-dados-pessoais.html'});
@@ -297,7 +297,7 @@ app.controller('Cadastro', function($rootScope, $scope) {
                             $rootScope.usuario.CC_CVV = $('#cvv').val();
                             $rootScope.usuario.CC_BANDEIRA = $('#cardBandeira').val();
                         }
-                        if (TYPE == 'NEXT') {
+                        /*if (TYPE == 'NEXT') {
                             setTimeout(function () {
                                 if ($('#email:visible').length ? !$('#email:visible').val().length : false)
                                     $('#email:visible').focus();
@@ -308,7 +308,7 @@ app.controller('Cadastro', function($rootScope, $scope) {
                                 else if ($('#cardName:visible').length ? !$('#cardName:visible').val().length : false)
                                     $('#cardName:visible').focus();
                             }, 1000);
-                        }
+                        }*/
                     }
                 });
             }
