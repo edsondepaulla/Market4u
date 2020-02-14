@@ -153,6 +153,13 @@ app.controller('Cadastro', function($rootScope, $scope) {
             if ($rootScope.usuario.DATA_NASCIMENTO_FORMAT)
                 $('#data_nascimento').attr('disabled', true);
         }
+        var focus = 0;
+        $('input:visible').each(function () {
+            if (!$(this).val().length && !focus) {
+                focus = 1;
+                $(this).focus();
+            }
+        });
     }, 500);
 
     $rootScope.ITENS = [];
@@ -293,6 +300,15 @@ app.controller('Cadastro', function($rootScope, $scope) {
                             $rootScope.usuario.CC_MONTHYEAR = $('#expirationMonthYear').val();
                             $rootScope.usuario.CC_CVV = $('#cvv').val();
                             $rootScope.usuario.CC_BANDEIRA = $('#cardBandeira').val();
+                        }
+                        if (TYPE == 'NEXT') {
+                            var focus = 0;
+                            $('input:visible').each(function () {
+                                if (!$(this).val().length && !focus) {
+                                    focus = 1;
+                                    $(this).focus();
+                                }
+                            });
                         }
                     }
                 });

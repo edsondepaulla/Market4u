@@ -406,6 +406,10 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
             }
         } else {
             switch (url) {
+                case '#!/':
+                    if (!parseInt(Login.getData().ID))
+                        url = '#!/conecte-se';
+                    break;
                 case '#!/minha-carteira':
                 case '#!/cadastro':
                     if ((!parseInt(Login.getData().ID) && !Page.active)) {
@@ -466,6 +470,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                 case 'ConecteSe':
                 case 'Cadastro':
                 case 'Suporte':
+                case 'Command':
                 case 'SemInternet':
                 case 'AtualizarApp':
                 case 'Faq':
