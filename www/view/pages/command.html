@@ -7,8 +7,8 @@
             </div>
         </li>
         <li ng-switch-default>
-            <h1 ng-bind-html="REG.SUB_TITULO"></h1>
-            <p ng-bind-html="REG.TEXTO"></p>
+            <h1 ng-bind-html="to_trusted(REG.SUB_TITULO)"></h1>
+            <p ng-bind-html="to_trusted(REG.TEXTO)"></p>
         </li>
     </ul>
 </md-content>

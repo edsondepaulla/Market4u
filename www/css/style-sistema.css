@@ -4282,7 +4282,6 @@ body[controller="HistoricoTransacoesLst"] md-content ul li label{
 
 body[controller="Faq"] md-content,
 body[controller="HistoricoTransacoesGet"] md-content,
-body[controller="NotificacoesGet"] md-content,
 body[controller="VoucherGet"] md-content{
   padding-left: 10px !important;
   padding-right: 10px !important;
@@ -5086,4 +5085,5 @@ body[controller="Cadastro"] ul#preferencias li.active{
 }
 body[controller="Cadastro"] ul#preferencias li img{
   display: block;
+   margin: 0 auto;
 }

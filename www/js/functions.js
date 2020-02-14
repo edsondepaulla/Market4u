@@ -327,6 +327,9 @@ var Factory = {
                         if (notification.url)
                             Factory.$rootScope.location(notification.url);
                         break;
+                    default:
+                        Factory.$rootScope.location('#!/notificacoes/' + notification.id);
+                        break;
                 }
             });
 

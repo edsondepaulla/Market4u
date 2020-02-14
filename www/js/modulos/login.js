@@ -550,7 +550,14 @@ app.controller('NotificacoesLst', function($rootScope, $scope, $routeParams, Ret
     $scope.LST = ReturnData.LST;
 
     $scope.click = function(reg) {
-        $rootScope.location('#!/notificacoes/' + reg.ID);
+        switch (reg.TYPE) {
+            case 'redirect':
+                $rootScope.location(reg.URL);
+                break;
+            default:
+                $rootScope.location('#!/notificacoes/' + reg.ID);
+                break;
+        }
     };
 });
 

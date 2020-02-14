@@ -575,13 +575,13 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
             url: '#!/historico-transacoes',
             icon: 'mdi-action-history',
             logado: 0
-        }/*,
+        },
         {
             titulo: 'Notificações',
             url: '#!/notificacoes',
             icon: 'mdi-social-notifications-none',
             logado: 0
-        }*/,
+        },
         {
             titulo: 'Suporte',
             url: '#!/suporte',
