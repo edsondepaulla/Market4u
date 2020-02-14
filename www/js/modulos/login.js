@@ -153,14 +153,10 @@ app.controller('Cadastro', function($rootScope, $scope) {
             if ($rootScope.usuario.DATA_NASCIMENTO_FORMAT)
                 $('#data_nascimento').attr('disabled', true);
         }
-        var focus = 0;
-        $('input:visible').each(function () {
-            if (!$(this).val().length && !focus) {
-                focus = 1;
-                $(this).focus();
-            }
-        });
     }, 500);
+    setTimeout(function () {
+        $('#cpf').focus();
+    }, 1000);
 
     $rootScope.ITENS = [];
     $rootScope.ITENS.push({'ACTIVE': 1, 'SRC': 'view/conecte-se/level-dados-pessoais.html'});
@@ -302,13 +298,16 @@ app.controller('Cadastro', function($rootScope, $scope) {
                             $rootScope.usuario.CC_BANDEIRA = $('#cardBandeira').val();
                         }
                         if (TYPE == 'NEXT') {
-                            var focus = 0;
-                            $('input:visible').each(function () {
-                                if (!$(this).val().length && !focus) {
-                                    focus = 1;
-                                    $(this).focus();
-                                }
-                            });
+                            setTimeout(function () {
+                                if ($('#email:visible').length ? !$('#email:visible').val().length : false)
+                                    $('#email:visible').focus();
+                                else if ($('#numero_celular:visible').length ? !$('#numero_celular:visible').val().length : false)
+                                    $('#numero_celular:visible').focus();
+                                else if ($('#postalcode:visible').length ? !$('#postalcode:visible').val().length : false)
+                                    $('#postalcode:visible').focus();
+                                else if ($('#cardName:visible').length ? !$('#cardName:visible').val().length : false)
+                                    $('#cardName:visible').focus();
+                            }, 1000);
                         }
                     }
                 });

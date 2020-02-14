@@ -1005,6 +1005,7 @@ function inputEvents(_this, _bind) {
                         type: 'GET',
                         dataType: 'json',
                         success: function (data) {
+                            _this.blur();
                             _this.attr('value-old', _value);
                             if (!data.erro) {
                                 $('#street').val(data.logradouro);
@@ -1053,6 +1054,7 @@ function inputEvents(_this, _bind) {
                             }
                         },
                         function (data) {
+                            _this.blur();
                             _this.attr('value-old', _value);
                             if (data.NOME) {
                                 $('#nome_completo').val(data.NOME);
