@@ -5084,7 +5084,6 @@ body[controller="Cadastro"] ul#preferencias li.active{
   box-shadow: 0 -2px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
   background: rgba(0, 249, 97, 0.07);
 }
-body[controller="Cadastro"] ul#preferencias li i{
-  font-size: 36px;
+body[controller="Cadastro"] ul#preferencias li img{
   display: block;
 }

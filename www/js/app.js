@@ -1014,13 +1014,13 @@ function inputEvents(_this, _bind) {
                             $('#boxEnderecoCompleto').show();
                         },
                         beforeSend: function () {
-                            $('#carregando').show();
+                            $('#carregando').show().css('opacity', 1);
                         },
                         complete: function () {
-                            $('#carregando').hide();
+                            $('#carregando').hide().css('opacity', 0);
                         },
                         error: function () {
-                            $('#carregando').hide();
+                            $('#carregando').hide().css('opacity', 0);
                             $('#boxEnderecoCompleto').show();
                         }
                     });

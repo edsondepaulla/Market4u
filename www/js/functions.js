@@ -58,7 +58,6 @@ var Factory = {
             case 'payment/pagseguro':
             case 'payment/cancel':
             case 'cadastro/verify':
-            case 'cadastro/cpf':
                 return false;
                 break;
         }

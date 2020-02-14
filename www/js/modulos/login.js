@@ -329,7 +329,7 @@ app.controller('ConecteSeCodigo', function($rootScope, $scope, $routeParams) {
                     'Sim,Não'
                 );
             } catch (e) {
-                if (confirm('Reenviar código para SMS?'))
+                if (confirm('Enviar código para SMS?'))
                     _function();
             }
         };
