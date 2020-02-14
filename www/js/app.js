@@ -429,6 +429,10 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
         }
     };
 
+    $scope.to_trusted = function(html_code) {
+        return $sce.trustAsHtml(html_code);
+    };
+
     $rootScope.NO_WHATSAPP = true;
     $rootScope.BARRA_SALDO = true;
     $rootScope.$on('$routeChangeStart', function () {
