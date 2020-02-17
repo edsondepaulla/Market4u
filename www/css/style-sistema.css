@@ -4661,11 +4661,12 @@ ul#menu-bottom li span{
   top: -13px;
   right: -3px;
   color: #000;
-  border: 4px solid #d93025;
+  border: 3px solid #d93025;
   font-weight: bold;
   height: 31px;
   width: 31px;
-  line-height: 1.7;
+  line-height: 1.8;
+  text-align: center;
 }
 
 #boxPago i{

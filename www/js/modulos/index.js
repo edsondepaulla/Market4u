@@ -41,7 +41,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     $rootScope.VALOR_CASHBACK = 0;
     $rootScope.CASHBACK_TEXTO = '';
     $rootScope.PAGO = 0;
-    $rootScope.ACTIVE_SALDO = 0;
+    $rootScope.ACTIVE_SALDO = 1;
     $rootScope.STEP = parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1;
     $rootScope.BTN_HOME = $rootScope.STEP == 1 ? true : false;
     $rootScope.STEPS =
