@@ -38,7 +38,7 @@ var BarCodeScanner = {
                     torchOn: false,
                     saveHistory: false,
                     prompt: "",
-                    resultDisplayDuration: 1500,
+                    resultDisplayDuration: 0,
                     orientation: "portrait",
                     disableAnimations: true,
                     disableSuccessBeep: true
