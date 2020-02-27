@@ -11,6 +11,10 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             templateUrl: "view/index/index.html",
             controller: 'Index'
         })
+        .when("/scanner", {
+            templateUrl: "view/pages/scanner.html",
+            controller: 'Scanner'
+        })
         .when("/index/:STEP", {
             templateUrl: "view/index/index.html",
             controller: 'Index'
@@ -346,6 +350,11 @@ app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData)
             }
             break;
     }
+});
+
+app.controller('Scanner', function($rootScope, $scope, $routeParams) {
+    $rootScope.border_top = 1;
+    $rootScope.Titulo = "Scanner";
 });
 
 app.controller('Faq', function($rootScope, $scope, $routeParams, ReturnData) {
