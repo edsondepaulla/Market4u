@@ -166,6 +166,12 @@
             {{menu.titulo}}
           </a>
         </li>
+        <li ng-if="usuario.ID && (!usuario.ATIVO||!usuario.DADOS_ATUALIZADO)">
+          <a style="color: #e94847" ng-click="logout()">
+            <i class="mdi mdi-content-clear"></i>
+            Sair da conta
+          </a>
+        </li>
       </ul>
       <div id="bottom">
         v.{{versao_app_mobile}}

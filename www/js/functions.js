@@ -362,14 +362,22 @@ window.handleOpenURL = function(url) {
         } catch (e) {
 
         }
-        Factory.ajax(
-            {
-                action: 'callback/url',
-                data: {
-                    URL: url
+        if (url.indexOf(config.idApp + '://?close') !== -1) {
+
+        } else if (url.indexOf(config.idApp + '://?redirect=') !== -1) {
+            url = url.split(config.idApp + '://?redirect=');
+            if (url[1])
+                Factory.$rootScope.location(url[1]);
+        } else {
+            Factory.ajax(
+                {
+                    action: 'callback/url',
+                    data: {
+                        URL: url
+                    }
                 }
-            }
-        );
+            );
+        }
     }, 0);
 }
 
