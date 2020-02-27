@@ -44,6 +44,11 @@
         <splash density="port-ldpi" src="res/screen/android/200.png" />
         <splash density="port-mdpi" src="res/screen/android/320.png" />
         <splash density="port-xhdpi" src="res/screen/android/720.png" />
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.CAMERA"/>
+            <uses-permission android:name="android.permission.FLASHLIGHT"/>
+            <uses-feature android:name="android.hardware.camera" android:required="true"/>
+        </config-file>
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
