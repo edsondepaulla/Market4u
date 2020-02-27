@@ -44,10 +44,20 @@
         <splash density="port-ldpi" src="res/screen/android/200.png" />
         <splash density="port-mdpi" src="res/screen/android/320.png" />
         <splash density="port-xhdpi" src="res/screen/android/720.png" />
-        <config-file target="AndroidManifest.xml" parent="/*" mode="merge">
-            <uses-permission android:name="android.permission.CAMERA" />
-            <uses-feature android:name="android.hardware.camera" />
-            <uses-feature android:name="android.hardware.camera.autofocus" />
+        <source-file src="src/android/com/phonegap/plugins/barcodescanner/BarcodeScanner.java" target-dir="src/com/phonegap/plugins/barcodescanner"/>
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="BarcodeScanner">
+                <param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner"/>
+            </feature>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity android:name="com.google.zxing.client.android.CaptureActivity" android:clearTaskOnLaunch="true" android:configChanges="orientation|keyboardHidden|screenSize" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:windowSoftInputMode="stateAlwaysHidden" android:exported="false"/>
+            <activity android:name="com.google.zxing.client.android.encode.EncodeActivity" android:label="Share"/>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.CAMERA"/>
+            <uses-permission android:name="android.permission.FLASHLIGHT"/>
+            <uses-feature android:name="android.hardware.camera" android:required="true"/>
         </config-file>
     </platform>
     <platform name="ios">
@@ -100,7 +110,7 @@
     <plugin name="cordova-plugin-dialogs" spec="^2.0.1" />
     <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.2" />
     <plugin name="cordova-plugin-qrscanner" spec="2.6.0" />
-    <plugin name="cordova-plugin-barcodescanner" />
+    <plugin name="phonegap-plugin-barcodescanner" />
     <plugin name="cordova-plugin-customurlscheme" spec="5.0.0">
         <param name="URL_SCHEME" value="market4uapp" />
     </plugin>
