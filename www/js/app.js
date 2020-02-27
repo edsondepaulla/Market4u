@@ -529,16 +529,28 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
 
     $rootScope.AcessoRestrito = function (url, params) {
         if (url && $rootScope.usuario.RESTRITO) {
-            params = params ? params : {};
-            params['HASH'] = btoa(
-                JSON.stringify(
-                    {
-                        'ID': $rootScope.usuario.RESTRITO,
-                        'HASH': $rootScope.usuario.RESTRITO_HASH
+            Factory.ajax(
+                {
+                    action: 'arearestrito/hash'
+                },
+                function (data) {
+                    if (data.HASH) {
+                        params = params ? params : {};
+                        params['HASH'] = btoa(
+                            JSON.stringify(
+                                {
+                                    'ID': $rootScope.usuario.RESTRITO,
+                                    'HASH': data.HASH
+                                }
+                            )
+                        );
+                        Factory.AppBrowser(
+                            data.BROWSER.url + url + '?' + $.param(params),
+                            data.BROWSER
+                        );
                     }
-                )
+                }
             );
-            Factory.AppBrowser($rootScope.usuario.RESTRITO_URL.url + url + '?' + $.param(params), $rootScope.usuario.RESTRITO_URL);
         }
     };
 
