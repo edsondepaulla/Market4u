@@ -1,8 +1,8 @@
 var BarCodeScanner = {
-    getQrcode(text) {
+    getScan(text, type) {
         Factory.ajax(
             {
-                action: 'qrcode/get',
+                action: type == 'qrcode' ? 'qrcode/get' : 'barcode/get',
                 data: {
                     TEXT: text
                 }
@@ -18,7 +18,7 @@ var BarCodeScanner = {
             }
         );
     },
-    qrcode: function () {
+    scan: function (type) {
         try {
             if (Factory.$rootScope.device == 'android')
                 Factory.$rootScope.location('#!/scanner');
@@ -26,10 +26,12 @@ var BarCodeScanner = {
             cordova.plugins.barcodeScanner.scan(
                 function (result) {
                     if (result.text)
-                        BarCodeScanner.getQrcode(result.text);
+                        BarCodeScanner.getScan(result.text, type);
+                    else
+                        Factory.$rootScope.location('#!/');
                 },
                 function (error) {
-
+                    Factory.$rootScope.location('#!/');
                 },
                 {
                     preferFrontCamera: false,
@@ -51,7 +53,7 @@ var BarCodeScanner = {
                     function (results) {
                         if (results.buttonIndex == 1) {
                             if (results.input1.length)
-                                BarCodeScanner.getQrcode(results.input1);
+                                BarCodeScanner.getScan(results.input1, type);
                             else
                                 return false;
                         }
@@ -63,7 +65,9 @@ var BarCodeScanner = {
             } catch (err) {
                 var text = prompt("Digite o código", "");
                 if (text != null)
-                    BarCodeScanner.getQrcode(text);
+                    BarCodeScanner.getScan(text, type);
+                else
+                    Factory.$rootScope.location('#!/');
             }
         }
     }

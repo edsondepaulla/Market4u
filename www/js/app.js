@@ -15,6 +15,10 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             templateUrl: "view/pages/scanner.html",
             controller: 'Scanner'
         })
+        .when("/area-restrita", {
+            templateUrl: "view/pages/area-restrita.html",
+            controller: 'AreaRestrita'
+        })
         .when("/index/:STEP", {
             templateUrl: "view/index/index.html",
             controller: 'Index'
@@ -352,6 +356,13 @@ app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData)
     }
 });
 
+app.controller('AreaRestrita', function($rootScope, $scope, $routeParams) {
+    $rootScope.BARRA_SALDO = false;
+    $rootScope.border_top = 1;
+    $rootScope.NO_WHATSAPP = false;
+    $rootScope.Titulo = "Área restrita";
+});
+
 app.controller('Scanner', function($rootScope, $scope, $routeParams) {
     $rootScope.border_top = 1;
     $rootScope.Titulo = "Scanner";
@@ -514,6 +525,21 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     $rootScope.AppBrowser = function (open_browser) {
         if (open_browser.url)
             Factory.AppBrowser(open_browser.url, open_browser);
+    };
+
+    $rootScope.AcessoRestrito = function (url, params) {
+        if (url && $rootScope.usuario.RESTRITO) {
+            params = params ? params : {};
+            params['HASH'] = btoa(
+                JSON.stringify(
+                    {
+                        'ID': $rootScope.usuario.RESTRITO,
+                        'HASH': $rootScope.usuario.RESTRITO_HASH
+                    }
+                )
+            );
+            Factory.AppBrowser($rootScope.usuario.RESTRITO_URL.url + url + '?' + $.param(params), $rootScope.usuario.RESTRITO_URL);
+        }
     };
 
     $rootScope.TEXT_WHATSAPP = '';
@@ -908,7 +934,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
         $rootScope.TYPE_QRCODE = type;
         $rootScope.BTN_HOME = false;
         $rootScope.transacaoId = 0;
-        BarCodeScanner.qrcode();
+        BarCodeScanner.scan('qrcode');
     };
 });
 

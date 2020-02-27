@@ -103,7 +103,7 @@
       <img src="img/whatsapp.png">
     </a>
 
-    <div class="app-body" style="{{usuario.ID && usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO?'':'top: 45px;'}}">
+    <div class="app-body" style="{{usuario.ID && usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO?'':'top: 46px;'}}">
       <div class="app-content">
         <div class="scrollable ng-scope" border-top="{{$root.BARRA_SALDO?0:border_top}}" ng-view></div>
       </div>
@@ -156,6 +156,12 @@
             <i ng-if="menu.icon" class="mdi {{menu.icon}}"></i>
             <img ng-if="menu.img" src="img/{{menu.img}}" border="0">
             {{menu.titulo}}
+          </a>
+        </li>
+        <li ng-if="usuario.RESTRITO">
+          <a style="color: #00ab46" ng-click="location('#!/area-restrita')">
+            <i class="mdi mdi-action-lock"></i>
+            Área restrita
           </a>
         </li>
         <li ng-if="usuario.ID && (!usuario.ATIVO||!usuario.DADOS_ATUALIZADO)">

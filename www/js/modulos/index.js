@@ -91,7 +91,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             case 2:
                 $rootScope.BTN_HOME = false;
                 $rootScope.transacaoId = 0;
-                BarCodeScanner.qrcode();
+                BarCodeScanner.scan('qrcode');
                 break;
             case 3:
                 $rootScope.BTN_HOME = true;

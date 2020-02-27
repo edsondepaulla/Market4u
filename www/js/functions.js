@@ -362,7 +362,11 @@ window.handleOpenURL = function(url) {
         } catch (e) {
 
         }
-        if (url.indexOf(config.idApp + '://?close') !== -1) {
+        if (url.indexOf(config.idApp + '://?qrcode') !== -1) {
+            BarCodeScanner.scan('qrcode');
+        } else if (url.indexOf(config.idApp + '://?barcode') !== -1) {
+            BarCodeScanner.scan('barcode');
+        } else if (url.indexOf(config.idApp + '://?close') !== -1) {
 
         } else if (url.indexOf(config.idApp + '://?redirect=') !== -1) {
             url = url.split(config.idApp + '://?redirect=');
