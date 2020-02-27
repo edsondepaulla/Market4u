@@ -34,7 +34,7 @@ var QRScannerConf = {
                         "Cancelled: " + result.cancelled);
                 },
                 function (error) {
-                    alert("Scanning failed: " + error);
+                    
                 },
                 {
                     preferFrontCamera : false, // iOS and Android
