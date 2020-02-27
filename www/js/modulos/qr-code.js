@@ -34,12 +34,12 @@ var QRScannerConf = {
                         "Cancelled: " + result.cancelled);
                 },
                 function (error) {
-                    
+
                 },
                 {
                     preferFrontCamera : false, // iOS and Android
-                    showFlipCameraButton : true, // iOS and Android
-                    showTorchButton : true, // iOS and Android
+                    showFlipCameraButton : false, // iOS and Android
+                    showTorchButton : false, // iOS and Android
                     torchOn: false, // Android, launch with the torch switched on (if available)
                     saveHistory: false, // Android, save scan history (default false)
                     prompt : "", // Android
