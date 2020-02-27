@@ -392,9 +392,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     // Get login
     Login.get();
 
-    $rootScope.QRCODE = 0;
     $rootScope.location = function (url, external, active) {
-        QRScannerConf.destroy();
         if (active)
             Page.start();
         if (parseInt(external)) {
@@ -527,12 +525,8 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                 return;
             }
         }
-        if ($rootScope.QRCODE)
-            $rootScope.location('#!/');
-        else {
-            $('.scrollable:first').attr('backpage', 1);
-            window.history.go(-1);
-        }
+        $('.scrollable:first').attr('backpage', 1);
+        window.history.go(-1);
     };
 
     $rootScope.logout = function () {
@@ -905,7 +899,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
         $rootScope.TYPE_QRCODE = type;
         $rootScope.BTN_HOME = false;
         $rootScope.transacaoId = 0;
-        QRScannerConf.show();
+        BarCodeScanner.qrcode();
     };
 });
 

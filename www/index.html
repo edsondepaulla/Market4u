@@ -54,7 +54,7 @@
   </script>
 
   <script src="js/modulos/login.js"></script>
-  <script src="js/modulos/qr-code.js"></script>
+  <script src="js/modulos/bar-code-scanner.js"></script>
   <script src="js/modulos/index.js"></script>
   <script src="js/modulos/maquinas.js"></script>
   <script src="js/modulos/produtos.js"></script>
@@ -69,15 +69,15 @@
 
   <script src="plugins/elastic.js"></script>
 </head>
-<body addsaldo="{{!usuario.MEUSALDO && usuario.MEUSALDO_ATIVADO?1:0}}" device="{{device}}" controller="{{controller}}" ng-app="App" qrcode="{{QRCODE}}">
+<body addsaldo="{{!usuario.MEUSALDO && usuario.MEUSALDO_ATIVADO?1:0}}" device="{{device}}" controller="{{controller}}" ng-app="App">
   <div id="carregando">
     <img src="img/loader.gif" border="0">
     Carregando...
   </div>
 
   <div mn-touch swipe-right="swipeRight()" ng-if="toolbar" id="toolbar">
-    <i mn-touch swipe-right="swipeRight()" ng-if="controller == 'Index' && !QRCODE" class="btn_maps mdi mdi-action-view-headline" ng-click="menuOpen()"></i>
-    <div id="top" ng-if="controller == 'Index' && !QRCODE">
+    <i mn-touch swipe-right="swipeRight()" ng-if="controller == 'Index'" class="btn_maps mdi mdi-action-view-headline" ng-click="menuOpen()"></i>
+    <div id="top" ng-if="controller == 'Index'">
       <div ng-if="usuario.MEUSALDO_ATIVADO" ng-click="location('#!/minha-carteira')" style="display: inline-block;">
         Meu saldo
         <b>{{usuario.MEUSALDO_FORMAT}}</b>
@@ -86,12 +86,12 @@
         Adicionar saldo <i class="mdi mdi-content-add-circle"></i>
       </div>
     </div>
-    <div id="topTitulo" ng-if="controller != 'Index' || QRCODE">
+    <div id="topTitulo" ng-if="controller != 'Index'">
       <a class="open-left" ng-if="Titulo" ng-click="backpageTop()">
         <i class="mdi mdi-navigation-chevron-left"></i>
       </a>
       <div id="textoTitulo" ng-bind-html="Titulo"></div>
-      <div id="meu_saldo" ng-click="location('#!/minha-carteira')" ng-if="usuario.ID && usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO && !QRCODE">
+      <div id="meu_saldo" ng-click="location('#!/minha-carteira')" ng-if="usuario.ID && usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO">
         Meu saldo <b>{{usuario.MEUSALDO_FORMAT}}</b> <span ng-if="!usuario.MEUSALDO"><i class="mdi mdi-content-add-circle"></i> Adicionar saldo</span>
       </div>
     </div>
@@ -131,14 +131,6 @@
   <div id="boxPago">
     <i class="mdi mdi-navigation-check"></i>
     Compra realizada com sucesso
-  </div>
-
-  <div class="qrcode" mn-touch swipe-right="location('#!/')">
-    <div id="qr-code-texto">
-      <img src="img/qrcode.png" onclick="QRScannerConf.digite()"><br>
-      Leia o QRCode que está {{TYPE_QRCODE=='pagar'?'no Auto Atendimento':'na Geladeira'}}.
-    </div>
-    <div id="qr-code-background"></div>
   </div>
 
   <div id="fundo_transparente" ng-click="menuClose()" mn-touch swipe-left="swipeLeft()" swipe-right="swipeRight()" ui-prevent-touchmove-defaults></div>

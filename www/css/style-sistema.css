@@ -2395,26 +2395,6 @@ transition: 0.6s ease-in-out;
 right: 0;
 }
 
-body > .qrcode{
--ms-transition: 0.6s ease-in-out;
--webkit-transition: 0.6s ease-in-out;
-transition: 0.6s ease-in-out;
-position: fixed;
-left: 100%;
-top: 0;
-width: 100%;
-height: 100%;
-background: transparent !important;
-z-index: 1;
-}
-
-body[qrcode="1"] > .app{
-right: 100%;
-}
-
-body[qrcode="1"] > .qrcode{
-left: 0;
-}
 #topTitulo{
   min-height: 46px;
 }
@@ -2538,16 +2518,6 @@ div#qr-code-background #btn-flash{
 position: absolute;
 bottom: -151px;
 right: -53px;
-z-index: 2;
-font-size: 13px;
-color: #FFF;
-text-align: center;
-}
-
-div#qr-code-background #btn-digite-qrcode{
-position: absolute;
-bottom: -91px;
-left: calc(50% - 35px);
 z-index: 2;
 font-size: 13px;
 color: #FFF;
