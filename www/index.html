@@ -110,20 +110,209 @@
     </div>
   </div>
 
-  <ul id="menu-bottom" step="{{STEP}}">
-    <li ng-click="location('#!/')">
+  <ul tour="{{TOUR}}" id="boxTour" ng-if="TOUR && controller == 'Index'">
+    <li step="1" class="{{TOUR==1?'active':''}}">
+      <div>
+        <img src="img/tour/1.png">
+        <a ng-click="TOUR=2">sim</a>
+        <a ng-click="location('#!/')">não</a>
+      </div>
+    </li>
+    <li step="2" ng-click="TOUR=3" class="{{TOUR==2?'active':''}}">
+      <i class="mdi mdi-action-credit-card"></i>
+      <span>Carteira</span>
+      <div class="traco"></div>
+      <p>
+        Não quer usar cartão de crédito?
+        <br>Não precisa. Você pode colocar
+        <br>crédito em sua carteira digital do
+        <br>Market4u. Clique em carteira e
+        <br>conheça as opções.
+      </p>
+      <i class="mdi mdi-hardware-keyboard-backspace"></i>
+    </li>
+    <li step="3" ng-click="TOUR=4" class="{{TOUR==3?'active':''}}">
+      <i class="mdi mdi-editor-attach-money"></i>
+      <span>Pagar</span>
+      <div class="traco"></div>
+      <p>
+        Para fazer o pagamento, clique
+        <br>em <b>pagar</b> e escaneia o <b>QR Code</b>
+        <br>do totem de autoatendimento.
+        <br>Assim você irá conseguir efetuar o
+        <br>pagamento tranquilamente.
+      </p>
+      <i class="mdi mdi-hardware-keyboard-backspace"></i>
+    </li>
+    <li step="4" ng-click="TOUR=5" class="{{TOUR==4?'active':''}}">
+      <i class="mdi mdi-action-lock-open"></i>
+      <span>Destravar</span>
+      <div class="traco"></div>
+      <p>
+        <b>Opção disponível apenas para
+          <br>maiores de 18 anos.</b>
+        <br>É só escanearo <b>QR Cod</b> em nossa
+        <br>geladeira e ela será aberta!
+      </p>
+      <i class="mdi mdi-hardware-keyboard-backspace"></i>
+    </li>
+    <li step="5" ng-click="TOUR=6;menuOpen();" class="{{TOUR==5?'active':''}}">
+      <i class="mdi mdi-action-settings"></i>
+      <span>Ajustes</span>
+      <div class="traco"></div>
+      <p>
+        Em <b>ajustes</b>, você acessa
+        <br>seu perfil, onde estão:
+        <br><div class="bolinha"></div>Dados pessoais;
+        <br><div class="bolinha"></div>Dados de acesso;
+        <br><div class="bolinha"></div>Preferências.
+      </p>
+      <i class="mdi mdi-hardware-keyboard-backspace"></i>
+    </li>
+    <li step="6" ng-click="location('#!/')" class="{{TOUR==6?'active':''}}">
+      <div>
+        <div class="traco"></div>
+        <p>
+          Em <b>Menu</b>, você tem acesso a tudo o
+          <br>que precisa para ter mais
+          <br>praticidade em sua experiência com
+          <br>o <b>app Market4u</b>.
+        </p>
+        <div class="traco"></div>
+      </div>
+    </li>
+  </ul>
+
+  <style>
+    ul#boxTour[tour="6"]{
+      z-index: 100;
+    }
+    ul#boxTour[tour="1"]{
+      z-index: 7;
+    }
+    ul#boxTour{
+      background: transparent;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 6;
+      text-align: center;
+      color: #FFF;
+    }
+    ul#boxTour li i.mdi.mdi-hardware-keyboard-backspace{
+      transform: rotate(270deg);
+      position: absolute;
+      bottom: 60px;
+      color: #FFF;
+    }
+    ul#boxTour li[step="6"] > div{
+      position: absolute;
+      bottom: 15px;
+      left: 0;
+      width: 100%;
+    }
+    ul#boxTour li[step="2"] i.mdi.mdi-hardware-keyboard-backspace{
+      left: calc(30% - 22px);
+    }
+    ul#boxTour li[step="5"] i.mdi.mdi-hardware-keyboard-backspace{
+      left: calc(90% - 22px);
+    }
+    ul#boxTour li[step="4"] i.mdi.mdi-hardware-keyboard-backspace{
+      left: calc(70% - 22px);
+    }
+    ul#boxTour li[step="3"] i.mdi.mdi-hardware-keyboard-backspace{
+      left: calc(50% - 22px);
+      bottom: 80px;
+    }
+    ul#boxTour li .bolinha{
+      background: #4ca935;
+      border-radius: 5px;
+      height: 6px;
+      width: 6px;
+      display: inline-block;
+      margin-right: 5px;
+      vertical-align: middle;
+    }
+    ul#boxTour li .traco{
+      height: 5px;
+      width: 52px;
+      background: #4ca935;
+      margin: 20px auto 15px;
+      border-radius: 5px;
+    }
+    ul#boxTour li p{
+      letter-spacing: 1px;
+      line-height: 36px;
+      font-size: 15px;
+    }
+    ul#boxTour li span{
+      margin-top: -10px;
+      font-size: 13px;
+      display: block;
+      font-weight: bold;
+    }
+    ul#boxTour li i.mdi{
+      display: block;
+      font-size: 44px;
+    }
+    ul#boxTour li{
+      display: none;
+      width: 100%;
+      height: 100%;
+      background: -webkit-linear-gradient(#000, rgba(0, 0, 0, 0.5));
+      background: -o-linear-gradient(#000, rgba(0, 0, 0, 0.5));
+      background: -moz-linear-gradient(#000, rgba(0, 0, 0, 0.5));
+      background: linear-gradient(#000, rgba(0, 0, 0, 0.5));
+      padding-top: 80px;
+      position: relative;
+    }
+    ul#boxTour[tour="6"] li{
+      background: -webkit-linear-gradient(transparent, #000);
+      background: -o-linear-gradient(transparent, #000);
+      background: -moz-linear-gradient(transparent, #000);
+      background: linear-gradient(transparent, #000);
+    }
+    ul#boxTour li.active{
+      display: block;
+    }
+    ul#boxTour li[step="1"]{
+      background: #FFF;
+    }
+    ul#boxTour li[step="1"] a{
+      display: inline-block;
+      background: #4ca935;
+      color: #FFF;
+      padding: 2px 20px;
+      border-radius: 5px;
+      margin: 13px 2px;
+    }
+    ul#boxTour li[step="1"] img {
+      width: 250px;
+      display: block;
+      margin: 0 auto;
+    }
+    ul#boxTour li[step="1"] div{
+      top: calc(50% - 156px);
+      position: relative;
+    }
+  </style>
+
+  <ul tour="{{TOUR}}" id="menu-bottom" step="{{STEP}}">
+    <li ng-click="TOUR?null:location('#!/')">
       <i class="mdi mdi-action-home"></i> Início
     </li>
-    <li ng-click="location('#!/minha-carteira')">
+    <li ng-click="TOUR?null:location('#!/minha-carteira')">
       <i class="mdi mdi-action-credit-card"></i> Carteira
     </li>
-    <li id="pagar" ng-click="clickQrcode('pagar')">
+    <li id="pagar" ng-click="TOUR?null:clickQrcode('pagar')">
       <i class="mdi mdi-editor-attach-money"></i> Pagar
     </li>
-    <li style="float: right" ng-click="location('#!/cadastro')">
+    <li style="float: right" ng-click="TOUR?null:location('#!/cadastro')">
       <i class="mdi mdi-action-settings"></i> Ajustes
     </li>
-    <li style="float: right" ng-click="clickQrcode('destravar')">
+    <li style="float: right" ng-click="TOUR?null:clickQrcode('destravar')">
       <i class="mdi mdi-action-lock-open"></i> Destravar <span>18+</span>
     </li>
   </ul>
@@ -172,6 +361,8 @@
         </li>
       </ul>
       <div id="bottom">
+        <img ng-if="usuario.FACEBOOK.ATIVO" ng-click="AppBrowser(usuario.FACEBOOK)" id="icon_facebook" width="25" src="img/icon-facebook.png" border="0">
+        <img ng-if="usuario.INSTAGRAM.ATIVO" ng-click="AppBrowser(usuario.INSTAGRAM)" id="icon_instagram" style="float: left" width="37" src="img/icon-instagram.png" border="0">
         v.{{versao_app_mobile}}
       </div>
     </div>

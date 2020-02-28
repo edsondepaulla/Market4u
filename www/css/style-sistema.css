@@ -2582,7 +2582,7 @@ font-size: 10px;
 text-decoration: underline;
 }
 #contentLeft > ul{
-padding: 10px 15px;
+padding: 10px 15px 45px;
 }
 #contentLeft > ul li a{
 color: #444;
@@ -4563,9 +4563,11 @@ ul#menu-bottom{
   display: none;
 }
 
+ul#menu-bottom[tour="1"]{
+  z-index: 6;
+}
+
 body[controller="Command"] ul#menu-bottom,
-body[controller="BoasVindas"] ul#menu-bottom,
-body[controller="BoasVindas"] ul#menu-bottom,
 body[controller="Index"] ul#menu-bottom[step="1"],
 body[controller="Index"] ul#menu-bottom[step="2"],
 body[controller="Index"] ul#menu-bottom[step="4"]{
@@ -5057,4 +5059,15 @@ body[controller="Cadastro"] ul#preferencias li.active{
 body[controller="Cadastro"] ul#preferencias li img{
   display: block;
    margin: 0 auto;
+}
+
+#icon_facebook{
+  float: left;
+  margin-left: 13px;
+}
+
+#icon_instagram{
+  float: left;
+  margin-top: -5px;
+  margin-left: 6px;
 }

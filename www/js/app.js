@@ -479,8 +479,10 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     };
 
     $rootScope.controller = 'Index';
+    $rootScope.TOUR = 0;
     $rootScope.$on('$routeChangeSuccess', function () {
         $rootScope.NO_WHATSAPP = true;
+        $rootScope.TOUR = 0;
         $rootScope.border_top = 0;
         $rootScope.toolbar = true;
         if($route.current) {
@@ -626,6 +628,12 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
             titulo: 'Notificações',
             url: '#!/notificacoes',
             icon: 'mdi-social-notifications-none',
+            logado: 0
+        },
+        {
+            titulo: 'Tour pelo app',
+            url: '#!/index/TOUR',
+            icon: 'mdi-image-remove-red-eye',
             logado: 0
         },
         {

@@ -28,6 +28,8 @@ var Payment = {
 };
 
 app.controller('Index', function($scope, $rootScope, $routeParams) {
+    $rootScope.TOUR = $routeParams.STEP == 'TOUR' ? 1 : 0;
+    $rootScope.STEP = parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1;
     $rootScope.REDIRECT = '';
     $rootScope.BTN_TYPE = 'NEXT';
     $rootScope.NO_WHATSAPP = false;
@@ -42,7 +44,6 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     $rootScope.CASHBACK_TEXTO = '';
     $rootScope.PAGO = 0;
     $rootScope.ACTIVE_SALDO = 1;
-    $rootScope.STEP = parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1;
     $rootScope.BTN_HOME = $rootScope.STEP == 1 ? true : false;
     $rootScope.STEPS =
         [
@@ -75,7 +76,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             case 4:
                 if (!parseInt($rootScope.transacaoId)) {
                     clearTimeout(Factory.timeout);
-                    Factory.timeout = setTimeout(function(){
+                    Factory.timeout = setTimeout(function () {
                         $rootScope.location('#!/');
                     }, 500);
                     return;
@@ -104,7 +105,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                 break;
             default:
                 clearTimeout(Factory.timeout);
-                Factory.timeout = setTimeout(function(){
+                Factory.timeout = setTimeout(function () {
                     $rootScope.location('#!/');
                 }, 500);
                 break;
@@ -113,7 +114,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     $scope.step($rootScope.STEP);
 
     $rootScope.clickBtnHome = function (swipe, type) {
-        if(swipe && $rootScope.STEP != 1)
+        if (swipe && $rootScope.STEP != 1)
             return;
 
         switch ($rootScope.BTN_TYPE) {
@@ -121,7 +122,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             case 'CANCEL':
                 Payment.clear(1);
                 clearTimeout(Factory.timeout);
-                Factory.timeout = setTimeout(function(){
+                Factory.timeout = setTimeout(function () {
                     $rootScope.location('#!/');
                 }, 500);
                 break;
@@ -223,7 +224,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
 
                                     switch (data.STATUS) {
                                         case 'authorized':
-                                            if(!$rootScope.PAGO) {
+                                            if (!$rootScope.PAGO) {
                                                 $rootScope.PAGO = 1;
                                                 $('#boxPago').css('opacity', 1).show();
                                                 var audio = new Audio('audio/song.mp4');
@@ -255,7 +256,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                                     $rootScope.verify(1000);
                             } else {
                                 clearTimeout(Factory.timeout);
-                                Factory.timeout = setTimeout(function(){
+                                Factory.timeout = setTimeout(function () {
                                     $rootScope.location('#!/');
                                 }, 500);
                             }
