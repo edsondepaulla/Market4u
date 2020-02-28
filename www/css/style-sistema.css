@@ -2032,6 +2032,9 @@ md-slider .md-sign:after {
   transform: translate3d(0, 0, 0);
   transition: 0.5s;
 }
+body[menu_left="1"] #menuLeft{
+  left: 0;
+}
 #menuLeft #bottom{
   position: fixed;
   bottom: 0;
@@ -2046,6 +2049,11 @@ md-slider .md-sign:after {
   top: 0;
   z-index: 1;
   padding: 25px 0;
+}
+
+body[menu_left="1"] #fundo_transparente{
+  display: block !important;
+  opacity: 0.5;
 }
 
 #fundo_transparente{

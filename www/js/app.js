@@ -687,16 +687,10 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     var menuClose_time = null;
     $rootScope.menuOpen = function () {
         clearTimeout(menuClose_time);
-        $('#fundo_transparente').css('display', 'block');
-        setTimeout(function () {
-            $('#fundo_transparente').css('opacity', '0.5').css('display', 'block');
-        }, 1);
-        $('.Menuleft').css('left', '0%');
+        $('#fundo_transparente').show();
         $('body').attr('menu_left', 1);
     };
     $rootScope.menuClose = function () {
-        $('.Menuleft').css('left', '-70%');
-        $('#fundo_transparente').css('opacity', '0');
         menuClose_time = setTimeout(function () {
             $('#fundo_transparente').hide();
         }, 1000);
