@@ -29,6 +29,16 @@ var Payment = {
 
 app.controller('Index', function($scope, $rootScope, $routeParams) {
     $rootScope.TOUR = $routeParams.STEP == 'TOUR' ? 1 : 0;
+    if($rootScope.TOUR && !parseInt($rootScope.usuario.TOUR)) {
+        clearTimeout(Factory.timeout);
+        Factory.timeout = setTimeout(function () {
+            Factory.ajax(
+                {
+                    action: 'cadastro/tour'
+                }
+            );
+        }, 1000);
+    }
     $rootScope.STEP = parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1;
     $rootScope.REDIRECT = '';
     $rootScope.BTN_TYPE = 'NEXT';

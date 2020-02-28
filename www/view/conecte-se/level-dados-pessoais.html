@@ -5,6 +5,7 @@
     <label class="box1" for="cpf">
         <input type="text" obg="1" id="cpf" placeholder="999.999.999-99" ng-model="$root.usuario.CPF" autocomplete="cpf" />
         <span class="msgValidator">CPF inválido</span>
+        <span class="msgValidator2">CPF já utilizado</span>
     </label>
 
     <div id="boxDadosPessoaisCompleto" style="display: {{$root.usuario.ID?'block':'none'}}">

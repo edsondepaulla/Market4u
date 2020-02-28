@@ -4563,6 +4563,14 @@ ul#menu-bottom{
   display: none;
 }
 
+ul#menu-bottom[tour="2"],
+ul#menu-bottom[tour="3"],
+ul#menu-bottom[tour="4"],
+ul#menu-bottom[tour="5"],
+ul#menu-bottom[tour="6"]{
+  z-index: 7;
+}
+
 ul#menu-bottom[tour="1"]{
   z-index: 6;
 }
@@ -5070,4 +5078,126 @@ body[controller="Cadastro"] ul#preferencias li img{
   float: left;
   margin-top: -5px;
   margin-left: 6px;
+}
+
+/*
+ * Tour
+ */
+ul#boxTour[tour="6"]{
+  z-index: 100;
+}
+ul#boxTour[tour="1"]{
+  z-index: 7;
+}
+ul#boxTour{
+  background: transparent;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 6;
+  text-align: center;
+  color: #FFF;
+}
+ul#boxTour li i.mdi.mdi-hardware-keyboard-backspace{
+  transform: rotate(270deg);
+  position: absolute;
+  bottom: 60px;
+  color: #FFF;
+}
+ul#boxTour li[idx="6"] > div{
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  width: 100%;
+}
+ul#boxTour li[idx="2"] i.mdi.mdi-hardware-keyboard-backspace{
+  left: calc(30% - 22px);
+}
+ul#boxTour li[idx="5"] i.mdi.mdi-hardware-keyboard-backspace{
+  left: calc(90% - 22px);
+}
+ul#boxTour li[idx="4"] i.mdi.mdi-hardware-keyboard-backspace{
+  left: calc(70% - 22px);
+}
+ul#boxTour li[idx="3"] i.mdi.mdi-hardware-keyboard-backspace{
+  left: calc(50% - 22px);
+  bottom: 80px;
+}
+ul#boxTour li .bolinha{
+  background: #4ca935;
+  border-radius: 5px;
+  height: 6px;
+  width: 6px;
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+ul#boxTour li .traco{
+  height: 5px;
+  width: 52px;
+  background: #4ca935;
+  margin: 20px auto 15px;
+  border-radius: 5px;
+}
+ul#boxTour li p{
+  letter-spacing: 1px;
+  line-height: 36px;
+  font-size: 15px;
+}
+ul#boxTour li span{
+  margin-top: -10px;
+  font-size: 13px;
+  display: block;
+  font-weight: bold;
+}
+ul#boxTour li i.mdi{
+  display: block;
+  font-size: 44px;
+}
+ul#boxTour li{
+  display: none;
+  width: 100%;
+  height: 100%;
+  background: -webkit-linear-gradient(#000, rgba(0, 0, 0, 0.5));
+  background: -o-linear-gradient(#000, rgba(0, 0, 0, 0.5));
+  background: -moz-linear-gradient(#000, rgba(0, 0, 0, 0.5));
+  background: linear-gradient(#000, rgba(0, 0, 0, 0.5));
+  padding-top: 80px;
+  position: relative;
+}
+ul#boxTour[tour="6"] li{
+  background: -webkit-linear-gradient(transparent, #000);
+  background: -o-linear-gradient(transparent, #000);
+  background: -moz-linear-gradient(transparent, #000);
+  background: linear-gradient(transparent, #000);
+}
+ul#boxTour[tour="1"] li[idx="1"],
+ul#boxTour[tour="2"] li[idx="2"],
+ul#boxTour[tour="3"] li[idx="3"],
+ul#boxTour[tour="4"] li[idx="4"],
+ul#boxTour[tour="5"] li[idx="5"],
+ul#boxTour[tour="6"] li[idx="6"]{
+  display: block;
+}
+ul#boxTour li[idx="1"]{
+  background: #FFF;
+}
+ul#boxTour li[idx="1"] a{
+  display: inline-block;
+  background: #4ca935;
+  color: #FFF;
+  padding: 2px 20px;
+  border-radius: 5px;
+  margin: 13px 2px;
+}
+ul#boxTour li[idx="1"] img {
+  width: 250px;
+  display: block;
+  margin: 0 auto;
+}
+ul#boxTour li[idx="1"] div{
+  top: calc(50% - 156px);
+  position: relative;
 }

@@ -25,6 +25,7 @@
                 <div class="boxBtns">
                     <button ng-if="$index > 0 && !AJUSTES" t="PREV" ng-click="btnLevel($index-1)" type="button">Voltar</button>
                     <button ng-if="!AJUSTES" ng-click="btnLevel($index+1, 'NEXT')" t="NEXT" level="{{$index+1}}" type="button">{{ITENS.length==$index+1?(usuario.ID?'Salvar':'Começar'):'Próximo'}}</button>
+                    <button style="background: #CCC !important;" ng-if="!AJUSTES" ng-click="logout()" type="button">Cancelar</button>
                     <button ng-if="AJUSTES" ng-click="salvar()" type="button">Salvar</button>
                 </div>
             </li>

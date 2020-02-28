@@ -485,7 +485,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
         $rootScope.TOUR = 0;
         $rootScope.border_top = 0;
         $rootScope.toolbar = true;
-        if($route.current) {
+        if ($route.current) {
             switch ($route.current.controller) {
                 case 'ConecteSe':
                 case 'Cadastro':
@@ -505,6 +505,8 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                             if (parseInt(Login.getData().DADOS_ATUALIZADO)) {
                                 if (!parseInt(Login.getData().BOAS_VINDAS))
                                     $rootScope.location('#!/boas-vindas');
+                                else if (!parseInt(Login.getData().TOUR))
+                                    $rootScope.location('#!/index/TOUR');
                             } else
                                 $rootScope.location('#!/cadastro');
                         } else
@@ -566,11 +568,19 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
         }
     };
 
+    $rootScope.logout = function () {
+        Login.logout();
+        $rootScope.location('#!/conecte-se');
+    };
+
     $rootScope.backpageTop = function () {
         if ($rootScope.controller == 'Cadastro') {
             var level = parseInt($('#formCadastro.form #passo-a-passo > li.active').attr('level'));
             if(level) {
                 $rootScope.btnLevel(level - 1);
+                return;
+            }else if($rootScope.usuario.ID && !$rootScope.usuario.DADOS_ATUALIZADO) {
+                $rootScope.logout();
                 return;
             }
         }
@@ -578,9 +588,39 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
         window.history.go(-1);
     };
 
-    $rootScope.logout = function () {
-        Login.logout();
-        $rootScope.location('#!/conecte-se');
+    $rootScope.clickMenu = function (type) {
+        switch (type) {
+            case 'inicio':
+                if ($rootScope.TOUR)
+                    return;
+                else
+                    $rootScope.location('#!/');
+                break;
+            case 'carteira':
+                if ($rootScope.TOUR)
+                    $rootScope.TOUR = 2;
+                else
+                    $rootScope.location('#!/minha-carteira');
+                break;
+            case 'pagar':
+                if ($rootScope.TOUR)
+                    $rootScope.TOUR = 3;
+                else
+                    $rootScope.clickQrcode('pagar');
+                break;
+            case 'destravar':
+                if ($rootScope.TOUR)
+                    $rootScope.TOUR = 4;
+                else
+                    $rootScope.clickQrcode('destravar');
+                break;
+            case 'ajustes':
+                if ($rootScope.TOUR)
+                    $rootScope.TOUR = 5;
+                else
+                    $rootScope.location('#!/cadastro');
+                break;
+        }
     };
 
     $rootScope.swipeLeft = function () {
@@ -1091,6 +1131,7 @@ function inputEvents(_this, _bind) {
                 break;
             case 'cpf':
                 if (!validaCpf(_value.substring(0, 14)) && _value.length) {
+                    verifyMsg(_verify, 0, _this, 2);
                     _invalid = 1;
                     $('#boxDadosPessoaisCompleto').hide();
                     _this.attr('value-old', _value);
@@ -1105,23 +1146,28 @@ function inputEvents(_this, _bind) {
                         function (data) {
                             _this.blur();
                             _this.attr('value-old', _value);
-                            if (data.NOME) {
-                                $('#nome_completo').val(data.NOME);
-                                Factory.$rootScope.usuario.NOME = data.NOME;
+                            verifyMsg(_verify, data.ja_utilizado ? 1 : 0, _this, 2);
+                            if (!data.ja_utilizado) {
+                                $('#cpf').val(_value);
+                                Factory.$rootScope.usuario.CPF = _value;
+                                if (data.NOME) {
+                                    $('#nome_completo').val(data.NOME);
+                                    Factory.$rootScope.usuario.NOME = data.NOME;
+                                }
+                                if (data.MAE) {
+                                    $('#nome_mae').val(data.MAE);
+                                    Factory.$rootScope.usuario.MAE = data.MAE;
+                                }
+                                if (data.GENERO) {
+                                    $('#genero_' + data.GENERO).attr('checked', true);
+                                    Factory.$rootScope.usuario.GENERO = data.GENERO;
+                                }
+                                if (data.DATA_NASCIMENTO) {
+                                    $('#data_nascimento').attr('disabled', true).val(data.DATA_NASCIMENTO);
+                                    Factory.$rootScope.usuario.DATA_NASCIMENTO_FORMAT = data.DATA_NASCIMENTO;
+                                }
+                                $('#boxDadosPessoaisCompleto').show();
                             }
-                            if (data.MAE) {
-                                $('#nome_mae').val(data.MAE);
-                                Factory.$rootScope.usuario.MAE = data.MAE;
-                            }
-                            if (data.GENERO) {
-                                $('#genero_' + data.GENERO).attr('checked', true);
-                                Factory.$rootScope.usuario.GENERO = data.GENERO;
-                            }
-                            if (data.DATA_NASCIMENTO) {
-                                $('#data_nascimento').attr('disabled', true).val(data.DATA_NASCIMENTO);
-                                Factory.$rootScope.usuario.DATA_NASCIMENTO_FORMAT = data.DATA_NASCIMENTO;
-                            }
-                            $('#boxDadosPessoaisCompleto').show();
                         }
                     );
                 }
@@ -1229,7 +1275,7 @@ function verifyMsg(_verify, _invalid, _this, type) {
         else
             _this.removeClass('ng-invalid' + (type == 2 ? '2' : ''));
 
-        _this.closest('form').attr('invalid', _this.closest('form').find('input.ng-invalid').length ? 1 : 0);
+        _this.closest('form').attr('invalid', _this.closest('form').find('input.ng-invalid').length || _this.closest('form').find('input.ng-invalid2').length ? 1 : 0);
     }
 }
 
