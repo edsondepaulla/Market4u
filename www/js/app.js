@@ -480,9 +480,11 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
 
     $rootScope.controller = 'Index';
     $rootScope.TOUR = 0;
+    $rootScope.CARRINHO = 0;
     $rootScope.$on('$routeChangeSuccess', function () {
         $rootScope.NO_WHATSAPP = true;
         $rootScope.TOUR = 0;
+        $rootScope.CARRINHO = 0;
         $rootScope.border_top = 0;
         $rootScope.toolbar = true;
         if ($route.current) {
@@ -606,17 +608,17 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                     if ($rootScope.TOUR)
                         $rootScope.TOUR = 3;
                     else {
-                        if ($rootScope.TIPO_PG == 'COMPRAR')
-                            $rootScope.clickQrcode('pagar');
+                        if ($rootScope.TIPO_PG == 'PAGAMENTO')
+                            $rootScope.clickEscanear('qrcode');
                         else
-                            $rootScope.clickQrcode('pagar');
+                            $rootScope.clickEscanear('comprar');
                     }
                 break;
             case 'destravar':
                 if ($rootScope.TOUR)
                     $rootScope.TOUR = 4;
                 else
-                    $rootScope.clickQrcode('destravar');
+                    $rootScope.clickEscanear('destravar');
                 break;
             case 'ajustes':
                 if ($rootScope.TOUR)
@@ -988,11 +990,10 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
         $rootScope.CARD = V.ID ? V.VALS : null;
     };
 
-    $rootScope.clickQrcode = function (type) {
-        $rootScope.TYPE_QRCODE = type;
+    $rootScope.clickEscanear = function (type) {
         $rootScope.BTN_HOME = false;
         $rootScope.transacaoId = 0;
-        BarCodeScanner.scan('qrcode');
+        BarCodeScanner.scan(type);
     };
 });
 

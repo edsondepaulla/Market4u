@@ -4418,6 +4418,10 @@ body[controller="Faq"] .scrollable-content ul li p{
 /*
  * Index
  */
+body[controller="Index"] .scrollable-content#boxOpcoes{
+  text-align: center;
+}
+
 body[controller="Index"] .scrollable-content#boxPagamento{
   padding-top: 60px;
 }

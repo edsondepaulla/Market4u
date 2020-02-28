@@ -2,7 +2,7 @@ var BarCodeScanner = {
     getScan(text, type) {
         Factory.ajax(
             {
-                action: type == 'qrcode' ? 'qrcode/get' : 'barcode/get',
+                action: type == 'qrcode' || type == 'destravar' ? 'qrcode/get' : 'barcode/get',
                 data: {
                     TEXT: text
                 }

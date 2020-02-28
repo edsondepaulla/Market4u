@@ -1,15 +1,16 @@
+<md-content id="boxIndisponivel" ng-if="!$root.TIPO_PG" class="scrollable-content" scroll flex md-scroll-y>
+    Compras indisponível no momento!
+</md-content>
+
 <md-content id="boxOpcoes" ng-if="$root.TIPO_PG == 'INICIO' && $root.usuario.COMPRAR && $root.usuario.AUTOATENDIMENTO" class="scrollable-content" scroll flex md-scroll-y>
-    <a ng-click="$root.TIPO_PG='COMPRAR'">Comprar</a>
-
-    <br><br>
-
-    <a ng-click="$root.TIPO_PG='PAGAMENTO'">Autoatendimento</a>
+    <br><br><br><br><a ng-click="$root.TIPO_PG='COMPRAR'">Comprar</a>
+    <br><br><br><br><a ng-click="$root.TIPO_PG='PAGAMENTO'">Autoatendimento</a>
 </md-content>
 
 <md-content id="boxCarrinho" ng-if="$root.TIPO_PG == 'COMPRAR' && $root.usuario.COMPRAR" class="scrollable-content" scroll flex md-scroll-y>
     Carrinho
 
-    <a ng-if="$root.usuario.COMPRAR && $root.usuario.AUTOATENDIMENTO" ng-click="$root.TIPO_PG='INICIO'">Cancelar</a>
+    <a ng-if="$root.usuario.COMPRAR && $root.usuario.AUTOATENDIMENTO" ng-click="location('#!/')">Cancelar</a>
 </md-content>
 
 <md-content id="boxPagamento" ng-if="$root.TIPO_PG == 'PAGAMENTO'" t="{{$root.BTN_TYPE}}" step="{{STEP}}" class="scrollable-content" mn-touch swipe-left="clickBtnHome(1)" scroll flex md-scroll-y>
