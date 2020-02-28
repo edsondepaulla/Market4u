@@ -1,5 +1,9 @@
 var BarCodeScanner = {
     getScan(text, type) {
+        if(type == 'comprar') {
+            var audio = new Audio('audio/beep.mp3');
+            audio.play();
+        }
         Factory.ajax(
             {
                 action: type == 'qrcode' || type == 'destravar' ? 'qrcode/get' : 'barcode/get',
