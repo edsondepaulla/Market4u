@@ -190,8 +190,8 @@
     <li ng-click="clickMenu('carteira')">
       <i class="mdi mdi-action-credit-card"></i> Carteira
     </li>
-    <li id="pagar" ng-click="clickMenu('pagar')">
-      <i class="mdi mdi-editor-attach-money"></i> Pagar
+    <li id="pagar_escanear" ng-click="clickMenu('pagar_escanear')">
+      <i class="mdi {{$root.TIPO_PG=='COMPRAR' || $root.TIPO_PG=='INICIO'?'mdi-editor-format-align-justify':'mdi-editor-attach-money'}}"></i> {{$root.TIPO_PG=='COMPRAR' || $root.TIPO_PG=='INICIO'?'Escanear':'Pagar'}}
     </li>
     <li style="float: right" ng-click="clickMenu('ajustes')">
       <i class="mdi mdi-action-settings"></i> Ajustes

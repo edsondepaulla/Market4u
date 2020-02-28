@@ -39,11 +39,9 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             );
         }, 1000);
     }
-    $rootScope.TIPO_PG = 'INICIO';
+    $rootScope.TIPO_PG = 'COMPRAR';
     if($rootScope.usuario.COMPRAR && $rootScope.usuario.AUTOATENDIMENTO)
         $rootScope.TIPO_PG = 'INICIO';
-    else if($rootScope.usuario.COMPRAR)
-        $rootScope.TIPO_PG = 'COMPRAR';
     else if($rootScope.usuario.AUTOATENDIMENTO)
         $rootScope.TIPO_PG = 'PAGAMENTO';
     $rootScope.STEP = parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1;

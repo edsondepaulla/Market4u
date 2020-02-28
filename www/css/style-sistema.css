@@ -3196,12 +3196,11 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li.active{
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-body[controller="Index"] .scrollable-content#boxPagamento > .mdi-navigation-close{
+body[controller="Index"] .scrollable-content#boxPagamento > .mdi-navigation-cancel{
   position: fixed;
   top: 73px;
   right: 10px;
   font-size: 35px;
-  font-weight: bold;
   color: #d93025;
 }
 body[controller="Index"] .scrollable-content#boxPagamento h3.total,
@@ -4626,7 +4625,7 @@ body[controller="Index"] .boxSubTotal > label .v{
     text-decoration: underline;
 }
 
-ul#menu-bottom li#pagar{
+ul#menu-bottom li#pagar_escanear{
   border-radius: 50%;
   background: #00ab46;
   width: 66px;
@@ -4645,6 +4644,10 @@ ul#menu-bottom li{
   font-size: 13px;
   padding: 1px 0 8px;
   position: relative;
+}
+
+ul#menu-bottom li#pagar_escanear{
+  font-size: 12px;
 }
 
 ul#menu-bottom li span{
@@ -4690,6 +4693,10 @@ ul#menu-bottom li span{
   display: none;
   transition: 1s;
   opacity: 0;
+}
+
+ul#menu-bottom li i.mdi-editor-format-align-justify{
+  transform: rotate(90deg);
 }
 
 ul#menu-bottom li i{

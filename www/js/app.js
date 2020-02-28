@@ -602,11 +602,15 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                 else
                     $rootScope.location('#!/minha-carteira');
                 break;
-            case 'pagar':
-                if ($rootScope.TOUR)
-                    $rootScope.TOUR = 3;
-                else
-                    $rootScope.clickQrcode('pagar');
+            case 'pagar_escanear':
+                    if ($rootScope.TOUR)
+                        $rootScope.TOUR = 3;
+                    else {
+                        if ($rootScope.TIPO_PG == 'COMPRAR')
+                            $rootScope.clickQrcode('pagar');
+                        else
+                            $rootScope.clickQrcode('pagar');
+                    }
                 break;
             case 'destravar':
                 if ($rootScope.TOUR)

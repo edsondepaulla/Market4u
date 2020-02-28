@@ -1,7 +1,3 @@
-<md-content id="boxIndisponivel" ng-if="$root.TIPO_PG == 'INICIO' && !($root.usuario.COMPRAR && $root.usuario.AUTOATENDIMENTO)" class="scrollable-content" scroll flex md-scroll-y>
-    xx
-</md-content>
-
 <md-content id="boxOpcoes" ng-if="$root.TIPO_PG == 'INICIO' && $root.usuario.COMPRAR && $root.usuario.AUTOATENDIMENTO" class="scrollable-content" scroll flex md-scroll-y>
     <a ng-click="$root.TIPO_PG='COMPRAR'">Comprar</a>
 
@@ -17,7 +13,7 @@
 </md-content>
 
 <md-content id="boxPagamento" ng-if="$root.TIPO_PG == 'PAGAMENTO'" t="{{$root.BTN_TYPE}}" step="{{STEP}}" class="scrollable-content" mn-touch swipe-left="clickBtnHome(1)" scroll flex md-scroll-y>
-    <i ng-if="STEP == 1 && $root.usuario.COMPRAR && $root.usuario.AUTOATENDIMENTO" ng-click="$root.TIPO_PG='INICIO'" class="mdi mdi-navigation-close"></i>
+    <i ng-if="STEP == 1 && $root.usuario.COMPRAR && $root.usuario.AUTOATENDIMENTO" ng-click="$root.TIPO_PG='INICIO'" class="mdi mdi-navigation-cancel"></i>
 
     <h4 ng-if="!$root.STEPS.length">
         Aguarde por favor, carregando...
