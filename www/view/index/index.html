@@ -1,10 +1,30 @@
-<md-content t="{{$root.BTN_TYPE}}" step="{{STEP}}" class="scrollable-content" mn-touch swipe-left="clickBtnHome(1)" scroll flex md-scroll-y>
+<md-content id="boxIndisponivel" ng-if="$root.TIPO_PG == 'INICIO' && !($root.usuario.COMPRAR && $root.usuario.AUTOATENDIMENTO)" class="scrollable-content" scroll flex md-scroll-y>
+    xx
+</md-content>
+
+<md-content id="boxOpcoes" ng-if="$root.TIPO_PG == 'INICIO' && $root.usuario.COMPRAR && $root.usuario.AUTOATENDIMENTO" class="scrollable-content" scroll flex md-scroll-y>
+    <a ng-click="$root.TIPO_PG='COMPRAR'">Comprar</a>
+
+    <br><br>
+
+    <a ng-click="$root.TIPO_PG='PAGAMENTO'">Autoatendimento</a>
+</md-content>
+
+<md-content id="boxCarrinho" ng-if="$root.TIPO_PG == 'COMPRAR' && $root.usuario.COMPRAR" class="scrollable-content" scroll flex md-scroll-y>
+    Carrinho
+
+    <a ng-if="$root.usuario.COMPRAR && $root.usuario.AUTOATENDIMENTO" ng-click="$root.TIPO_PG='INICIO'">Cancelar</a>
+</md-content>
+
+<md-content id="boxPagamento" ng-if="$root.TIPO_PG == 'PAGAMENTO'" t="{{$root.BTN_TYPE}}" step="{{STEP}}" class="scrollable-content" mn-touch swipe-left="clickBtnHome(1)" scroll flex md-scroll-y>
+    <i ng-if="STEP == 1 && $root.usuario.COMPRAR && $root.usuario.AUTOATENDIMENTO" ng-click="$root.TIPO_PG='INICIO'" class="mdi mdi-navigation-close"></i>
+
     <h4 ng-if="!$root.STEPS.length">
         Aguarde por favor, carregando...
     </h4>
     <ul ng-if="$root.STEPS">
         <li ng-click="ITEM.STEP==1?clickBtnHome():null" step="{{ITEM.STEP}}" ng-repeat="ITEM in $root.STEPS" class="{{STEP>=ITEM.STEP?'active':''}}">
-            <p><span ng-if="ITEM.STEP != 'X' && ITEM.STEP != 'PP'"><i ng-if="STEP==4" class="mdi mdi-navigation-check"></i>{{STEP==4?'':ITEM.STEP_TEXTO}}</span>{{ITEM.TEXTO}}</p>
+            <p><span ng-if="ITEM.STEP != 'X' && ITEM.STEP != 'AA'"><i ng-if="STEP==4" class="mdi mdi-navigation-check"></i>{{STEP==4?'':ITEM.STEP_TEXTO}}</span>{{ITEM.TEXTO}}</p>
             <div class="clearBoth"></div>
             <h4 ng-if="ITEM.SUB_TEXTO">{{ITEM.SUB_TEXTO}}</h4>
             <div ng-if="STEP==ITEM.STEP&&STEP==3" id="Payment">

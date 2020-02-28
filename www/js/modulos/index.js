@@ -39,7 +39,16 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             );
         }, 1000);
     }
+    $rootScope.TIPO_PG = 'INICIO';
+    if($rootScope.usuario.COMPRAR && $rootScope.usuario.AUTOATENDIMENTO)
+        $rootScope.TIPO_PG = 'INICIO';
+    else if($rootScope.usuario.COMPRAR)
+        $rootScope.TIPO_PG = 'COMPRAR';
+    else if($rootScope.usuario.AUTOATENDIMENTO)
+        $rootScope.TIPO_PG = 'PAGAMENTO';
     $rootScope.STEP = parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1;
+    if($rootScope.STEP > 1)
+        $rootScope.TIPO_PG = 'PAGAMENTO';
     $rootScope.REDIRECT = '';
     $rootScope.BTN_TYPE = 'NEXT';
     $rootScope.NO_WHATSAPP = false;
@@ -58,8 +67,8 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     $rootScope.STEPS =
         [
             {
-                'STEP': 'PP',
-                'TEXTO': 'Passo a passo'
+                'STEP': 'AA',
+                'TEXTO': 'Autoatendimento'
             },
             {
                 'STEP': 1,
