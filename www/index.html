@@ -86,11 +86,11 @@
         Adicionar saldo <i class="mdi mdi-content-add-circle"></i>
       </div>
     </div>
-    <div id="topTitulo" ng-if="controller != 'Index'">
+    <div class="topTitulo" ng-if="controller != 'Index'">
       <a class="open-left" ng-if="Titulo" ng-click="backpageTop()">
         <i class="mdi mdi-navigation-chevron-left"></i>
       </a>
-      <div id="textoTitulo" ng-bind-html="Titulo"></div>
+      <div class="textoTitulo" ng-bind-html="Titulo"></div>
       <div id="meu_saldo" ng-click="location('#!/minha-carteira')" ng-if="usuario.ID && usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO">
         Meu saldo <b>{{usuario.MEUSALDO_FORMAT}}</b> <span ng-if="!usuario.MEUSALDO"><i class="mdi mdi-content-add-circle"></i> Adicionar saldo</span>
       </div>
@@ -103,7 +103,7 @@
       <img src="img/whatsapp.png">
     </a>
 
-    <div class="app-body" style="{{usuario.ID && usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO?'':'top: 46px;'}}">
+    <div class="app-body" top_46="{{(controller == 'Index'?(!usuario.MEUSALDO && usuario.MEUSALDO_ATIVADO?0:1):(usuario.ID && usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO?0:1))}}">
       <div class="app-content">
         <div class="scrollable ng-scope" border-top="{{$root.BARRA_SALDO?0:border_top}}" ng-view></div>
       </div>
@@ -183,7 +183,7 @@
     </li>
   </ul>
 
-  <ul id="menu-bottom" step="{{STEP}}" tour="{{$root.TOUR}}">
+  <ul ng-if="$root.MenuBottom" id="menu-bottom" step="{{STEP}}" tour="{{$root.TOUR}}">
     <li ng-click="clickMenu('inicio')">
       <i class="mdi mdi-action-home"></i> Início
     </li>
@@ -191,7 +191,7 @@
       <i class="mdi mdi-action-credit-card"></i> Carteira
     </li>
     <li id="pagar_escanear" ng-click="clickMenu('pagar_escanear')">
-      <i class="mdi {{$root.TIPO_PG=='COMPRAR' || $root.TIPO_PG=='INICIO'?'mdi-editor-format-align-justify':'mdi-editor-attach-money'}}"></i> {{$root.TIPO_PG=='COMPRAR' || $root.TIPO_PG=='INICIO'?'Escanear':'Pagar'}}
+      <i class="mdi {{$root.TIPO_PG=='COMPRAR' || $root.TIPO_PG=='INICIO'?'mdi-editor-format-align-justify':'mdi-editor-attach-money'}}"></i> {{$root.TIPO_PG=='COMPRAR' || $root.TIPO_PG=='INICIO'?'Comprar':'Pagar'}}
     </li>
     <li style="float: right" ng-click="clickMenu('ajustes')">
       <i class="mdi mdi-action-settings"></i> Ajustes

@@ -325,6 +325,7 @@ app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData)
     $scope.PARAMS = $routeParams;
     $scope.REG = ReturnData;
     $rootScope.REDIRECT = '';
+    $rootScope.MenuBottom = 1;
 
     switch ($routeParams.TYPE) {
         case 'arduino':
@@ -457,8 +458,14 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
 
     $rootScope.NO_WHATSAPP = true;
     $rootScope.BARRA_SALDO = true;
+    $rootScope.MenuBottom = 0;
+    $rootScope.TOUR = 0;
+    $rootScope.CARRINHO = 0;
     $rootScope.$on('$routeChangeStart', function () {
         $rootScope.BARRA_SALDO = true;
+        $rootScope.MenuBottom = 0;
+        $rootScope.TOUR = 0;
+        $rootScope.CARRINHO = 0;
         $rootScope.menuClose();
     });
 
@@ -479,12 +486,8 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     };
 
     $rootScope.controller = 'Index';
-    $rootScope.TOUR = 0;
-    $rootScope.CARRINHO = 0;
     $rootScope.$on('$routeChangeSuccess', function () {
         $rootScope.NO_WHATSAPP = true;
-        $rootScope.TOUR = 0;
-        $rootScope.CARRINHO = 0;
         $rootScope.border_top = 0;
         $rootScope.toolbar = true;
         if ($route.current) {
@@ -708,6 +711,8 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
      */
     $rootScope.dadosInvalidosCC = function () {
         Factory.alert('Dados de cartão de créditos inválidos!');
+        $('#carregando').hide().css('opacity', 0);
+        $('.btnConfirme').attr('disabled', false);
     };
     $rootScope.pagseguro = function (paymentPagSeguro, origem, time) {
         time = time ? time : 0;
@@ -862,7 +867,6 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     $rootScope.processPayment = function (origem, extra) {
         clearTimeout(clearTimeoutProcessPayment);
         clearTimeoutProcessPayment = setTimeout(function () {
-            $('.btnConfirme').attr('disabled', true);
             switch (origem) {
                 case 'saldo':
                     Factory.ajax(
@@ -919,6 +923,8 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
         }, 100);
     };
     $rootScope.confirmPayment = function (origem) {
+        $('#carregando').show().css('opacity', 1);
+        $('.btnConfirme').attr('disabled', true);
         var valido = false;
         if ($rootScope.FORMA_PAGAMENTO && $('#boxPg > ul > li.active').length) {
             $.each($rootScope.FORMAS_PG, function (idx, item_each) {
@@ -972,6 +978,9 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                 }
             } else
                 $rootScope.processPayment(origem);
+        }else{
+            $('#carregando').hide().css('opacity', 0);
+            $('.btnConfirme').attr('disabled', false);
         }
     };
     $rootScope.STEPS = [];

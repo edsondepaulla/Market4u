@@ -1411,6 +1411,10 @@ input[type="search"].campoBusca:focus {
   display: none;
 }
 
+.app-body[top_46="1"]{
+  top: 46px;
+}
+
 .app-body{
   height: 100%;
   padding: 0;
@@ -2403,10 +2407,10 @@ transition: 0.6s ease-in-out;
 right: 0;
 }
 
-#topTitulo{
+.topTitulo{
   min-height: 46px;
 }
-body[menu_left="1"] #topTitulo img {
+body[menu_left="1"] .topTitulo img {
 display: none;
 }
 #toolbar > img {
@@ -2453,7 +2457,7 @@ visibility: visible;
 }
 }
 
-#topTitulo #textoTitulo{
+.topTitulo .textoTitulo{
 display: inline-block;
 font-size: 13px;
 line-height: 3.4;
@@ -2463,25 +2467,30 @@ z-index: 1;
 position: relative;
 padding-right: 3px;
 }
-#topTitulo #meu_saldo{
+.topTitulo #meu_saldo{
 background: rgba(11, 99, 64, 0.05);
 text-align: center;
 padding: 2px 0;
 font-size: 12px;
 color: #00ab46;
 }
-#topTitulo #meu_saldo span{
+.topTitulo #meu_saldo span{
 border-left: 1px solid #00ab46;
 padding-left: 10px;
 margin-left: 10px;
 }
-#topTitulo #meu_saldo i{
+.topTitulo #meu_saldo i{
 font-size: 10px;
 line-height: 0;
 }
-#topTitulo .open-left{
+.topTitulo .open-left{
 text-align: left;
 padding-left: 10px;
+}
+.topTitulo .open-left i.mdi-navigation-chevron-left {
+  font-size: 34px;
+  line-height: 45px;
+  color: #00ab46;
 }
 #formCadastroCodigo a{
 text-decoration: underline;
@@ -3196,12 +3205,24 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li.active{
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-body[controller="Index"] .scrollable-content#boxPagamento > .mdi-navigation-cancel{
+body[controller="Index"] .scrollable-content#boxPagamento .mdi-navigation-close{
+  font-size: 32px;
+  color: #00ab46;
+  vertical-align: middle;
+}
+body[controller="Index"] #boxCarrinhoFloat .mdi-action-shopping-cart{
+  font-size: 24px;
+  vertical-align: middle;
+}
+body[controller="Index"] #boxCarrinhoFloat{
+  background: #444;
   position: fixed;
-  top: 73px;
+  bottom: 80px;
   right: 10px;
-  font-size: 35px;
-  color: #d93025;
+  color: #FFF;
+  border-radius: 5px;
+  padding: 0px 10px;
+  font-size: 14px;
 }
 body[controller="Index"] .scrollable-content#boxPagamento h3.total,
 #boxPg h4.pague_com{
@@ -4514,9 +4535,10 @@ body[controller="Index"] .scrollable-content#boxPagamento > ul > li[step="X"]{
 }
 
 body[controller="Index"] .scrollable-content#boxPagamento > ul > li[step="AA"]{
-    font-weight: bold;
-    text-align: center;
-    padding: 0;
+  font-weight: bold;
+  text-align: center;
+  padding: 0;
+  position: relative;
 }
 
 body[controller="Index"] .scrollable-content#boxPagamento > ul > li > h4{
@@ -4578,7 +4600,6 @@ ul#menu-bottom{
   z-index: 2;
   border-top: 1px solid rgba(11, 99, 64, 0.1);
   background: #f6f6f6;
-  display: none;
 }
 
 ul#menu-bottom[tour="2"],
@@ -4591,13 +4612,6 @@ ul#menu-bottom[tour="6"]{
 
 ul#menu-bottom[tour="1"]{
   z-index: 6;
-}
-
-body[controller="Command"] ul#menu-bottom,
-body[controller="Index"] ul#menu-bottom[step="1"],
-body[controller="Index"] ul#menu-bottom[step="2"],
-body[controller="Index"] ul#menu-bottom[step="4"]{
-  display: block;
 }
 
 body[controller="Index"] a#whatsapp,
@@ -4663,7 +4677,7 @@ ul#menu-bottom li span{
   top: -13px;
   right: -3px;
   color: #000;
-  border: 3px solid #d93025;
+  border: 3px solid #e94847;
   font-weight: bold;
   height: 31px;
   width: 31px;
@@ -4896,7 +4910,7 @@ body[controller="Card"] .scrollable-content > ul li i.mdi-action-highlight-remov
   right: 0;
   font-size: 32px;
   margin: 0px 11px;
-  color: #d93025;
+  color: #e94847;
 }
 body[controller="PaymentStart"] .btnConfirme{
   background: #00ab46 !important;
@@ -4972,7 +4986,7 @@ body[controller="Command"] .scrollable-content ul li[ng-switch-when="BEB_ALC"] p
 
 body[controller="Command"] .scrollable-content ul li[ng-switch-when="BEB_ALC"] .progress-circle i{
   font-size: 50px;
-  color: #d93025;
+  color: #e94847;
 }
 
 
@@ -5226,4 +5240,99 @@ ul#boxTour li[idx="1"] img {
 ul#boxTour li[idx="1"] div{
   top: calc(50% - 156px);
   position: relative;
+}
+
+.boxPopup[box="carrinho"] ul li h4{
+  font-size: 16px;
+  margin: 0;
+  line-height: 1.3;
+  font-weight: bold;
+  width: calc(100% - 46px);
+}
+
+.boxPopup[box="carrinho"] ul li > div.b{
+  height: 82px;
+}
+
+.boxPopup[box="carrinho"] ul li:first-child{
+  margin-top: 0;
+}
+
+.boxPopup[box="carrinho"] ul li{
+  position: relative;
+  margin: 10px 15px;
+  border-top: 1px solid rgba(11, 99, 64, 0.1);
+  padding: 10px 0;
+  height: 91px;
+}
+.addRemoveQtdeProduto[unidade_medida="KG"]{
+  background: transparent;
+}
+.addRemoveQtdeProduto[unidade_medida="KG"] span,
+.addRemoveQtdeProduto[unidade_medida="KG"] .mdi.mdi-content-add-circle{
+  display: none;
+}
+.addRemoveQtdeProduto .mdi.mdi-content-remove-circle{
+  color: #e94847;
+  bottom: -21px;
+  left: -3px;
+}
+.addRemoveQtdeProduto .mdi.mdi-content-add-circle{
+  color: #00ab46;
+  top: -21px;
+  left: -3px;
+}
+.addRemoveQtdeProduto .mdi{
+  font-size: 37px;
+  position: absolute;
+  z-index: 1;
+}
+.addRemoveQtdeProduto span{
+  position: absolute;
+  top: 21px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: #444;
+  font-weight: bold;
+  font-size: 15px;
+}
+.addRemoveQtdeProduto{
+  width: 31px;
+  height: 62px;
+  background: rgba(0, 171, 70, 0.1);
+  color: #FFF;
+  position: absolute;
+  border-radius: 12px;
+  right: 0;
+  top: 18px;
+  z-index: 1;
+}
+.boxPopup[box="produto"] .addRemoveQtdeProduto{
+  width: 62px;
+  height: 31px;
+  right: 18px;
+  top: 7px;
+}
+.boxPopup[box="produto"] .addRemoveQtdeProduto .mdi.mdi-content-remove-circle{
+  bottom: -10px;
+  right: -14px;
+  left: unset;
+}
+.boxPopup[box="produto"] .addRemoveQtdeProduto .mdi.mdi-content-add-circle {
+  color: #00ab46;
+  top: -10px;
+  left: -14px;
+}
+.boxPopup[box="produto"] .addRemoveQtdeProduto span{
+  top: 5px;
+}
+.boxPopup{
+  background: #FFF;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }

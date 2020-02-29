@@ -1,4 +1,5 @@
 var Payment = {
+    CARRINHO_COMPRAS: [],
     clear: function (cancelar, status) {
         if (parseInt(Factory.$rootScope.transacaoId)) {
             // Cancelar transacao
@@ -40,6 +41,18 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             );
         }, 1000);
     }
+    $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS;
+    $rootScope.STEP = parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1;
+    if ($rootScope.usuario.COMPRAR) {
+        Factory.ajax(
+            {
+                action: 'payment/carrinho'
+            },
+            function (data) {
+                $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS = data;
+            }
+        );
+    }
     if ($rootScope.CARRINHO)
         $rootScope.TIPO_PG = 'COMPRAR';
     else {
@@ -50,10 +63,74 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             $rootScope.TIPO_PG = 'COMPRAR';
         else if ($rootScope.usuario.AUTOATENDIMENTO)
             $rootScope.TIPO_PG = 'PAGAMENTO';
+        switch ($rootScope.STEP) {
+            case 1:
+            case 2:
+            case 4:
+                $rootScope.MenuBottom = 1;
+                break;
+        }
     }
-    $rootScope.STEP = parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1;
     if ($rootScope.STEP > 1)
         $rootScope.TIPO_PG = 'PAGAMENTO';
+    if ($rootScope.TIPO_PG == 'COMPRAR')
+        $rootScope.toolbar = false;
+
+    $rootScope.SetAddRemoveQtdeProd = function (ID, QTDE) {
+        clearTimeout(Factory.timeout);
+        Factory.timeout = setTimeout(function () {
+            Factory.ajax(
+                {
+                    action: 'payment/addremoveqtde',
+                    data: {
+                        ID: ID,
+                        QTDE: QTDE
+                    }
+                },
+                function (data) {
+                    if (!parseInt(QTDE))
+                        $rootScope.PROD_DETALHES = false;
+                    $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS = data;
+                }
+            );
+        }, 500);
+    };
+
+    $rootScope.addRemoveQtdeProd = function (PROD, type) {
+        if (!PROD.QTDE_ORIGINAL)
+            PROD.QTDE_ORIGINAL = PROD.QTDE;
+
+        switch (type) {
+            case '+':
+                PROD.QTDE = parseInt(PROD.QTDE) + 1;
+                $rootScope.SetAddRemoveQtdeProd(PROD.PROD_ID, PROD.QTDE);
+                break;
+            case '-':
+                if (parseInt(PROD.QTDE) == 1 || PROD.UNIDADE_MEDIDA == 'KG') {
+                    try {
+                        navigator.notification.confirm(
+                            'Tem certeza que deseja remover este item da sua lista de compra?',
+                            function (buttonIndex) {
+                                if (buttonIndex == 1)
+                                    $rootScope.SetAddRemoveQtdeProd(PROD.PROD_ID, 0);
+                                else
+                                    PROD.QTDE = PROD.QTDE_ORIGINAL;
+                            },
+                            'Confirmar',
+                            'Sim,Não'
+                        );
+                    } catch (e) {
+                        if (confirm('Tem certeza que deseja remover este item da sua lista de compra?'))
+                            $rootScope.SetAddRemoveQtdeProd(PROD.PROD_ID, 0);
+                    }
+                } else {
+                    PROD.QTDE = parseInt(PROD.QTDE) - 1;
+                    $rootScope.SetAddRemoveQtdeProd(PROD.PROD_ID, PROD.QTDE);
+                }
+                break;
+        }
+    };
+
     $rootScope.REDIRECT = '';
     $rootScope.BTN_TYPE = 'NEXT';
     $rootScope.NO_WHATSAPP = false;

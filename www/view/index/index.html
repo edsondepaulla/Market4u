@@ -7,21 +7,69 @@
     <br><br><br><br><a ng-click="$root.TIPO_PG='PAGAMENTO'">Autoatendimento</a>
 </md-content>
 
-<md-content id="boxCarrinho" ng-if="$root.TIPO_PG == 'COMPRAR' && $root.usuario.COMPRAR" class="scrollable-content" scroll flex md-scroll-y>
-    Carrinho
+<md-content id="boxCompras" ng-if="$root.TIPO_PG == 'COMPRAR' && $root.usuario.COMPRAR" class="scrollable-content" scroll flex md-scroll-y>
+    <h2>Compras</h2>
+
+    <div class="boxPopup" box="carrinho" ng-if="$root.CARRINHO">
+        <div class="topTitulo">
+            <a class="open-left" ng-click="$root.CARRINHO=0;$root.MenuBottom = 1;$root.toolbar = 1;">
+                <i class="mdi mdi-navigation-chevron-left"></i>
+            </a>
+            <div class="textoTitulo">Carrinho</div>
+        </div>
+        <ul ng-if="$root.CARRINHO_COMPRAS.PRODUTOS">
+            <li ng-repeat="PROD in $root.CARRINHO_COMPRAS.PRODUTOS">
+                <div class="b" ng-click="$root.PROD_DETALHES = PROD;">
+                    <h4>{{PROD.NOME}} <i ng-if="PROD.CONTEUDO != NULL">({{PROD.CONTEUDO}})</i></h4>
+                    <label class="total_de" ng-if="PROD.DE_PRECO_FORMAT"><span>de</span> <span class="v">{{PROD.DE_PRECO_FORMAT}}</span></label>
+                    <label><span ng-if="PROD.DE_PRECO_FORMAT">por</span> <span class="v">{{PROD.PRECO_FORMAT}}</span></label>
+                </div>
+                <div class="addRemoveQtdeProduto" unidade_medida="{{PROD.UNIDADE_MEDIDA}}">
+                    <i ng-click="addRemoveQtdeProd(PROD, '+')" class="mdi mdi-content-add-circle"></i>
+                    <span>{{PROD.QTDE}}</span>
+                    <i ng-click="addRemoveQtdeProd(PROD, '-')" class="mdi mdi-content-remove-circle"></i>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="boxPopup" box="produto" ng-if="$root.PROD_DETALHES">
+        <div class="topTitulo">
+            <a class="open-left" ng-click="$root.PROD_DETALHES = false;">
+                <i class="mdi mdi-navigation-chevron-left"></i>
+            </a>
+            <div class="textoTitulo">{{$root.PROD_DETALHES.NOME}}</div>
+        </div>
+        xxx
+
+        <div class="addRemoveQtdeProduto" unidade_medida="{{$root.PROD_DETALHES.UNIDADE_MEDIDA}}">
+            <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '+')" class="mdi mdi-content-add-circle"></i>
+            <span>{{$root.PROD_DETALHES.QTDE}}</span>
+            <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '-')" class="mdi mdi-content-remove-circle"></i>
+        </div>
+    </div>
 
     <a ng-if="$root.usuario.COMPRAR && $root.usuario.AUTOATENDIMENTO" ng-click="location('#!/')">Cancelar</a>
 </md-content>
 
-<md-content id="boxPagamento" ng-if="$root.TIPO_PG == 'PAGAMENTO'" t="{{$root.BTN_TYPE}}" step="{{STEP}}" class="scrollable-content" mn-touch swipe-left="clickBtnHome(1)" scroll flex md-scroll-y>
-    <i ng-if="STEP == 1 && $root.usuario.COMPRAR && $root.usuario.AUTOATENDIMENTO" ng-click="$root.TIPO_PG='INICIO'" class="mdi mdi-navigation-cancel"></i>
+<a ng-if="$root.usuario.CARRINHO && $root.TIPO_PG != 'PAGAMENTO'" id="boxCarrinhoFloat" ng-click="location('#!/index/CARRINHO')">
+    <i class="mdi mdi-action-shopping-cart"></i> R$ {{$root.CARRINHO_COMPRAS.TOTAL_POR}}
+</a>
 
+<md-content id="boxPagamento" ng-if="$root.TIPO_PG == 'PAGAMENTO'" t="{{$root.BTN_TYPE}}" step="{{STEP}}" class="scrollable-content" mn-touch swipe-left="clickBtnHome(1)" scroll flex md-scroll-y>
     <h4 ng-if="!$root.STEPS.length">
         Aguarde por favor, carregando...
     </h4>
     <ul ng-if="$root.STEPS">
         <li ng-click="ITEM.STEP==1?clickBtnHome():null" step="{{ITEM.STEP}}" ng-repeat="ITEM in $root.STEPS" class="{{STEP>=ITEM.STEP?'active':''}}">
-            <p><span ng-if="ITEM.STEP != 'X' && ITEM.STEP != 'AA'"><i ng-if="STEP==4" class="mdi mdi-navigation-check"></i>{{STEP==4?'':ITEM.STEP_TEXTO}}</span>{{ITEM.TEXTO}}</p>
+            <p>
+                <span ng-if="ITEM.STEP != 'X' && ITEM.STEP != 'AA'">
+                    <i ng-if="STEP==4" class="mdi mdi-navigation-check"></i>
+                    {{STEP==4?'':ITEM.STEP_TEXTO}}
+                </span>
+                {{ITEM.TEXTO}}
+                <i ng-if="ITEM.STEP == 'AA' && $root.usuario.COMPRAR && $root.usuario.AUTOATENDIMENTO" ng-click="$root.TIPO_PG='INICIO'" class="mdi mdi-navigation-close"></i>
+            </p>
             <div class="clearBoth"></div>
             <h4 ng-if="ITEM.SUB_TEXTO">{{ITEM.SUB_TEXTO}}</h4>
             <div ng-if="STEP==ITEM.STEP&&STEP==3" id="Payment">
