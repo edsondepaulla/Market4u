@@ -51,11 +51,11 @@
             <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '-')" class="mdi mdi-content-remove-circle"></i>
         </div>
     </div>
-</md-content>
 
-<a ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR && $root.TIPO_PG != 'PAGAMENTO'" id="boxCarrinhoFloat" ng-click="location('#!/index/CARRINHO')">
-    <i class="mdi mdi-action-shopping-cart"></i> R$ {{$root.CARRINHO_COMPRAS.TOTAL_POR}}
-</a>
+    <a ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR && $root.TIPO_PG != 'PAGAMENTO'" id="boxCarrinhoFloat" ng-click="location('#!/index/CARRINHO')">
+        <i class="mdi mdi-action-shopping-cart"></i> R$ {{$root.CARRINHO_COMPRAS.TOTAL_POR}}
+    </a>
+</md-content>
 
 <md-content id="boxPagamento" ng-if="$root.TIPO_PG == 'PAGAMENTO'" t="{{$root.BTN_TYPE}}" step="{{STEP}}" class="scrollable-content" mn-touch swipe-left="clickBtnHome(1)" scroll flex md-scroll-y>
     <h4 ng-if="!$root.STEPS.length">

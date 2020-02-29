@@ -2415,6 +2415,8 @@ right: 0;
   border-bottom: 1px solid rgba(11, 99, 64, 0.1);
   text-overflow: ellipsis;
   white-space: nowrap;
+  position: relative;
+  z-index: 1;
 }
 body[menu_left="1"] .topTitulo img {
 display: none;
@@ -3221,7 +3223,7 @@ body[controller="Index"] #boxCarrinhoFloat .mdi-action-shopping-cart{
   vertical-align: middle;
 }
 body[controller="Index"] #boxCarrinhoFloat{
-  background: rgba(68, 68, 68, 0.5);
+  background: rgba(68, 68, 68, 0.7);
   position: fixed;
   bottom: 80px;
   right: 10px;
@@ -5319,14 +5321,12 @@ ul#boxTour li[idx="1"] div{
 }
 
 .boxPopup[box="carrinho"] #addMaisItens{
-  background: rgba(68, 68, 68, 0.5);
-  color: #FFF;
   width: 100%;
   display: block;
-  padding: 10px 15px;
   text-align: center;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 16px;
+  text-decoration: underline;
 }
 .boxPopup[box="carrinho"] ul li{
   position: relative;
@@ -5405,4 +5405,8 @@ ul#boxTour li[idx="1"] div{
   width: 100%;
   height: 100%;
   z-index: 2;
+}
+
+#boxCompras{
+
 }
