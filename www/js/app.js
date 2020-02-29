@@ -13,7 +13,13 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
         })
         .when("/scanner", {
             templateUrl: "view/pages/scanner.html",
-            controller: 'Scanner'
+            controller: 'Scanner',
+            resolve: {
+                ReturnData: function ($route) {
+                    if (!Page.active)
+                        window.history.go(-1);
+                }
+            }
         })
         .when("/area-restrita", {
             templateUrl: "view/pages/area-restrita.html",
@@ -109,12 +115,6 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             controller: 'AtualizarApp',
             resolve: {
                 ReturnData: function ($route) {
-                    return Factory.ajax(
-                        {
-                            action: 'options/atualizarapp'
-                        }
-                    );
-
                     if (Page.active) {
                         return Factory.ajax(
                             {

@@ -58,6 +58,7 @@ var Factory = {
             case 'payment/pagseguro':
             case 'payment/cancel':
             case 'cadastro/verify':
+            case 'payment/carrinho':
                 return false;
                 break;
         }

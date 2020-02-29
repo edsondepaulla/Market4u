@@ -84,31 +84,32 @@ app.controller('ConecteSe', function($rootScope, $scope, $routeParams, $q) {
     $rootScope.Titulo = "";
 
     $scope.entrar = function () {
-        var EMAIL = $rootScope.usuario.EMAIL;
+        var EMAIL_CPF = $rootScope.usuario.EMAIL_CPF;
         var SENHA = $rootScope.usuario.SENHA;
         var ESQUECEU_SENHA = $rootScope.usuario.ESQUECEU_SENHA;
-        if (!$('#formLogin').find('.ng-invalid').length && EMAIL && (ESQUECEU_SENHA ? true : SENHA)) {
+        if (!$('#formLogin').find('.ng-invalid').length && EMAIL_CPF && (ESQUECEU_SENHA ? true : SENHA)) {
             Factory.ajax(
                 {
                     action: 'cadastro/login',
                     form: $('#formLogin'),
                     data: {
-                        EMAIL: $rootScope.usuario.EMAIL,
+                        EMAIL_CPF: $rootScope.usuario.EMAIL_CPF,
                         SENHA: $rootScope.usuario.ESQUECEU_SENHA ? '' : $rootScope.usuario.SENHA,
                         ESQUECEU_SENHA: $rootScope.usuario.ESQUECEU_SENHA ? 1 : 0
                     }
                 },
                 function (data) {
                     if (data.status == 1) {
-                        $rootScope.usuario.EMAIL = EMAIL;
+                        if(EMAIL_CPF.indexOf('@') !== -1)
+                            $rootScope.usuario.EMAIL = EMAIL_CPF;
                         $rootScope.usuario.SENHA = SENHA;
                         $rootScope.usuario.ESQUECEU_SENHA = ESQUECEU_SENHA;
                         $rootScope.usuario.ENVIADO_PARA = data.ENVIADO_PARA;
                     }
                 }
             );
-        } else if (!EMAIL || $('#formLogin').find('#email.ng-invalid').length)
-            $('#email').focus();
+        } else if (!EMAIL_CPF || $('#formLogin').find('#email_cpf.ng-invalid').length)
+            $('#email_cpf').focus();
         else if (!SENHA || $('#formLogin').find('#senha.ng-invalid').length)
             $('#senha').focus();
     };

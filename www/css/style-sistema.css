@@ -2410,6 +2410,12 @@ right: 0;
 .topTitulo{
   min-height: 46px;
 }
+.boxPopup[box="produto"] .topTitulo,
+.boxPopup[box="carrinho"] .topTitulo{
+  border-bottom: 1px solid rgba(11, 99, 64, 0.1);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 body[menu_left="1"] .topTitulo img {
 display: none;
 }
@@ -3215,7 +3221,7 @@ body[controller="Index"] #boxCarrinhoFloat .mdi-action-shopping-cart{
   vertical-align: middle;
 }
 body[controller="Index"] #boxCarrinhoFloat{
-  background: #444;
+  background: rgba(68, 68, 68, 0.5);
   position: fixed;
   bottom: 80px;
   right: 10px;
@@ -3223,6 +3229,7 @@ body[controller="Index"] #boxCarrinhoFloat{
   border-radius: 5px;
   padding: 0px 10px;
   font-size: 14px;
+  z-index: 1;
 }
 body[controller="Index"] .scrollable-content#boxPagamento h3.total,
 #boxPg h4.pague_com{
@@ -4599,7 +4606,7 @@ ul#menu-bottom{
   width: 100%;
   z-index: 2;
   border-top: 1px solid rgba(11, 99, 64, 0.1);
-  background: #f6f6f6;
+  background: #eeeeee;
 }
 
 ul#menu-bottom[tour="2"],
@@ -4715,6 +4722,19 @@ ul#menu-bottom li span{
 
 ul#menu-bottom li i.mdi-editor-format-align-justify{
   transform: rotate(90deg);
+  margin-top: 5px;
+}
+
+ul#menu-bottom li label[type="COMPRAR"]{
+  background: #00ab46;
+  display: block;
+  z-index: 1;
+  position: absolute;
+  width: 92%;
+  top: 27px;
+  border-radius: 15px;
+  left: 4%;
+  padding-top: 0px;
 }
 
 ul#menu-bottom li i{
@@ -5241,13 +5261,52 @@ ul#boxTour li[idx="1"] div{
   top: calc(50% - 156px);
   position: relative;
 }
-
+.boxPopup[box="carrinho"] .scrollable-content{
+  padding-bottom: 174px;
+}
+.boxPopup[box="carrinho"] #fechar_compra{
+  background: #444;
+  color: #FFF;
+  float: right;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin: 9px 15px 0 0;
+  font-size: 13px;
+}
+.boxPopup[box="carrinho"] #subTotalCarrinho{
+  position: absolute;
+  bottom: 60px;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.9);
+  width: calc(100% - 30px);
+  left: 15px;
+  border-top: 2px solid rgba(11, 99, 64, 0.1);
+  padding: 10px 0 35px;
+  text-align: center;
+  color: #00ab46;
+  font-size: 17px;
+}
 .boxPopup[box="carrinho"] ul li h4{
-  font-size: 16px;
+  font-size: 14px;
   margin: 0;
-  line-height: 1.3;
-  font-weight: bold;
+  line-height: 1;
   width: calc(100% - 46px);
+}
+
+.boxPopup[box="carrinho"] ul li > div.b label{
+  color: #00ab46;
+}
+.boxPopup[box="carrinho"] ul li > div.b label.total_de{
+  color: #e94847;
+  margin-right: 5px;
+}
+.boxPopup[box="carrinho"] ul li > div.b label.total_de .v{
+  text-decoration: line-through;
+  font-size: 14px;
+}
+.boxPopup[box="carrinho"] ul li > div.b label .v{
+  font-size: 20px;
+  text-decoration: underline;
 }
 
 .boxPopup[box="carrinho"] ul li > div.b{
@@ -5256,8 +5315,19 @@ ul#boxTour li[idx="1"] div{
 
 .boxPopup[box="carrinho"] ul li:first-child{
   margin-top: 0;
+  border-top: 0;
 }
 
+.boxPopup[box="carrinho"] #addMaisItens{
+  background: rgba(68, 68, 68, 0.5);
+  color: #FFF;
+  width: 100%;
+  display: block;
+  padding: 10px 15px;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 14px;
+}
 .boxPopup[box="carrinho"] ul li{
   position: relative;
   margin: 10px 15px;
@@ -5312,7 +5382,7 @@ ul#boxTour li[idx="1"] div{
   width: 62px;
   height: 31px;
   right: 18px;
-  top: 7px;
+  top: 56px;
 }
 .boxPopup[box="produto"] .addRemoveQtdeProduto .mdi.mdi-content-remove-circle{
   bottom: -10px;
@@ -5334,5 +5404,5 @@ ul#boxTour li[idx="1"] div{
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 2;
 }

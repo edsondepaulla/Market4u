@@ -1,36 +1,39 @@
-<md-content id="boxIndisponivel" ng-if="!$root.TIPO_PG" class="scrollable-content" scroll flex md-scroll-y>
-    Compras indisponível no momento!
-</md-content>
-
-<md-content id="boxOpcoes" ng-if="$root.TIPO_PG == 'INICIO' && $root.usuario.COMPRAR && $root.usuario.AUTOATENDIMENTO" class="scrollable-content" scroll flex md-scroll-y>
-    <br><br><br><br><a ng-click="$root.TIPO_PG='COMPRAR'">Comprar</a>
-    <br><br><br><br><a ng-click="$root.TIPO_PG='PAGAMENTO'">Autoatendimento</a>
-</md-content>
-
 <md-content id="boxCompras" ng-if="$root.TIPO_PG == 'COMPRAR' && $root.usuario.COMPRAR" class="scrollable-content" scroll flex md-scroll-y>
     <h2>Compras</h2>
 
+    <br>
+    <a ng-if="$root.usuario.AUTOATENDIMENTO" ng-click="$root.TIPO_PG = 'PAGAMENTO'">Autoatendimento</a>
+
     <div class="boxPopup" box="carrinho" ng-if="$root.CARRINHO">
         <div class="topTitulo">
-            <a class="open-left" ng-click="$root.CARRINHO=0;$root.MenuBottom = 1;$root.toolbar = 1;">
+            <a class="open-left" ng-click="$root.CARRINHO=false;$root.toolbar = true;">
                 <i class="mdi mdi-navigation-chevron-left"></i>
             </a>
             <div class="textoTitulo">Carrinho</div>
+            <a id="fechar_compra">FECHAR COMPRA</a>
         </div>
-        <ul ng-if="$root.CARRINHO_COMPRAS.PRODUTOS">
-            <li ng-repeat="PROD in $root.CARRINHO_COMPRAS.PRODUTOS">
-                <div class="b" ng-click="$root.PROD_DETALHES = PROD;">
-                    <h4>{{PROD.NOME}} <i ng-if="PROD.CONTEUDO != NULL">({{PROD.CONTEUDO}})</i></h4>
-                    <label class="total_de" ng-if="PROD.DE_PRECO_FORMAT"><span>de</span> <span class="v">{{PROD.DE_PRECO_FORMAT}}</span></label>
-                    <label><span ng-if="PROD.DE_PRECO_FORMAT">por</span> <span class="v">{{PROD.PRECO_FORMAT}}</span></label>
-                </div>
-                <div class="addRemoveQtdeProduto" unidade_medida="{{PROD.UNIDADE_MEDIDA}}">
-                    <i ng-click="addRemoveQtdeProd(PROD, '+')" class="mdi mdi-content-add-circle"></i>
-                    <span>{{PROD.QTDE}}</span>
-                    <i ng-click="addRemoveQtdeProd(PROD, '-')" class="mdi mdi-content-remove-circle"></i>
-                </div>
-            </li>
-        </ul>
+        <div class="scrollable-content" scroll flex md-scroll-y>
+            <ul ng-if="$root.CARRINHO_COMPRAS.PRODUTOS">
+                <li ng-repeat="PROD in $root.CARRINHO_COMPRAS.PRODUTOS">
+                    <div class="b" ng-click="$root.PROD_DETALHES = PROD;">
+                        <h4>{{PROD.NOME}} <i ng-if="PROD.CONTEUDO != NULL">({{PROD.CONTEUDO}})</i></h4>
+                        <label class="total_de" ng-if="PROD.DE_PRECO_FORMAT"><span class="v">{{PROD.DE_PRECO_FORMAT}}</span></label>
+                        <label><span class="v">{{PROD.PRECO_FORMAT}}</span></label>
+                    </div>
+                    <div class="addRemoveQtdeProduto" unidade_medida="{{PROD.UNIDADE_MEDIDA}}">
+                        <i ng-click="addRemoveQtdeProd(PROD, '+')" class="mdi mdi-content-add-circle"></i>
+                        <span>{{PROD.QTDE}}</span>
+                        <i ng-click="addRemoveQtdeProd(PROD, '-')" class="mdi mdi-content-remove-circle"></i>
+                    </div>
+                </li>
+                <li style="height: auto;">
+                    <a id="addMaisItens" ng-click="$root.CARRINHO=false;$root.toolbar = true;">ADICIONAR MAIS ITENS</a>
+                </li>
+            </ul>
+        </div>
+        <div id="subTotalCarrinho">
+            Subtotal estimado: <b>R$ {{$root.CARRINHO_COMPRAS.TOTAL_POR}}</b>
+        </div>
     </div>
 
     <div class="boxPopup" box="produto" ng-if="$root.PROD_DETALHES">
@@ -48,11 +51,9 @@
             <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '-')" class="mdi mdi-content-remove-circle"></i>
         </div>
     </div>
-
-    <a ng-if="$root.usuario.COMPRAR && $root.usuario.AUTOATENDIMENTO" ng-click="location('#!/')">Cancelar</a>
 </md-content>
 
-<a ng-if="$root.usuario.CARRINHO && $root.TIPO_PG != 'PAGAMENTO'" id="boxCarrinhoFloat" ng-click="location('#!/index/CARRINHO')">
+<a ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR && $root.TIPO_PG != 'PAGAMENTO'" id="boxCarrinhoFloat" ng-click="location('#!/index/CARRINHO')">
     <i class="mdi mdi-action-shopping-cart"></i> R$ {{$root.CARRINHO_COMPRAS.TOTAL_POR}}
 </a>
 
@@ -68,7 +69,7 @@
                     {{STEP==4?'':ITEM.STEP_TEXTO}}
                 </span>
                 {{ITEM.TEXTO}}
-                <i ng-if="ITEM.STEP == 'AA' && $root.usuario.COMPRAR && $root.usuario.AUTOATENDIMENTO" ng-click="$root.TIPO_PG='INICIO'" class="mdi mdi-navigation-close"></i>
+                <i ng-if="ITEM.STEP == 'AA' && $root.usuario.COMPRAR && $root.usuario.AUTOATENDIMENTO" ng-click="$root.TIPO_PG='COMPRAR'" class="mdi mdi-navigation-close"></i>
             </p>
             <div class="clearBoth"></div>
             <h4 ng-if="ITEM.SUB_TEXTO">{{ITEM.SUB_TEXTO}}</h4>

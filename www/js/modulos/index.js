@@ -53,27 +53,21 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             }
         );
     }
-    if ($rootScope.CARRINHO)
+    if (($rootScope.usuario.COMPRAR && $rootScope.usuario.AUTOATENDIMENTO) || $rootScope.usuario.COMPRAR || $rootScope.CARRINHO) {
         $rootScope.TIPO_PG = 'COMPRAR';
-    else {
-        $rootScope.TIPO_PG = false;
-        if ($rootScope.usuario.COMPRAR && $rootScope.usuario.AUTOATENDIMENTO)
-            $rootScope.TIPO_PG = 'INICIO';
-        else if ($rootScope.usuario.COMPRAR)
-            $rootScope.TIPO_PG = 'COMPRAR';
-        else if ($rootScope.usuario.AUTOATENDIMENTO)
-            $rootScope.TIPO_PG = 'PAGAMENTO';
-        switch ($rootScope.STEP) {
-            case 1:
-            case 2:
-            case 4:
-                $rootScope.MenuBottom = 1;
-                break;
-        }
+        $rootScope.MenuBottom = 1;
+    }else if ($rootScope.usuario.AUTOATENDIMENTO)
+        $rootScope.TIPO_PG = 'PAGAMENTO';
+    switch ($rootScope.STEP) {
+        case 1:
+        case 2:
+        case 4:
+            $rootScope.MenuBottom = 1;
+            break;
     }
     if ($rootScope.STEP > 1)
         $rootScope.TIPO_PG = 'PAGAMENTO';
-    if ($rootScope.TIPO_PG == 'COMPRAR')
+    if ($rootScope.CARRINHO)
         $rootScope.toolbar = false;
 
     $rootScope.SetAddRemoveQtdeProd = function (ID, QTDE) {

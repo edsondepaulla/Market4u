@@ -24,8 +24,10 @@ var BarCodeScanner = {
     },
     scan: function (type) {
         try {
-            if (Factory.$rootScope.device == 'android')
+            if (Factory.$rootScope.device == 'android') {
+                Page.start();
                 Factory.$rootScope.location('#!/scanner');
+            }
 
             cordova.plugins.barcodeScanner.scan(
                 function (result) {

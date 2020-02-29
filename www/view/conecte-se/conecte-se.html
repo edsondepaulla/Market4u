@@ -7,12 +7,12 @@
 
             <br><a class="a-btn" type="facebook" ng-click="login('facebook')">Login usando Facebook</a>
 
-            <br><br>Ou faça login com um e-mail<br><br>
+            <br><br>Login<br><br>
         </div>
 
-        <label for="email1">E-mail</label>
-        <label class="box1" for="email1">
-            <input placeholder="Insira seu e-mail" type="email" id="email1" ng-model="$root.usuario.EMAIL" autocomplete="email" />
+        <label for="email_cpf">E-mail ou CPF</label>
+        <label class="box1" for="email_cpf">
+            <input placeholder="Insira seu e-mail ou CPF" type="text" id="email_cpf" ng-model="$root.usuario.EMAIL_CPF" autocomplete="email" />
         </label>
 
         <label for="senha" ng-if="!$root.usuario.ESQUECEU_SENHA" class="margin_t_10">Senha</label>
