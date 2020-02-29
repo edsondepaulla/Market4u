@@ -390,10 +390,6 @@ function onErrorUser(_this){
     _this.src = 'img/login_default.png';
 }
 
-function onErrorMaquina(_this){
-    _this.src = 'img/maquina.png';
-}
-
 function onErrorProd(_this){
     _this.src = 'img/produto.png';
 }

@@ -10,10 +10,9 @@
                 <i class="mdi mdi-navigation-chevron-left"></i>
             </a>
             <div class="textoTitulo">Carrinho</div>
-            <a id="fechar_compra">FECHAR COMPRA</a>
         </div>
         <div class="scrollable-content" scroll flex md-scroll-y>
-            <ul ng-if="$root.CARRINHO_COMPRAS.PRODUTOS">
+            <ul>
                 <li ng-repeat="PROD in $root.CARRINHO_COMPRAS.PRODUTOS">
                     <div class="b" ng-click="$root.PROD_DETALHES = PROD;">
                         <h4>{{PROD.NOME}} <i ng-if="PROD.CONTEUDO != NULL">({{PROD.CONTEUDO}})</i></h4>
@@ -27,12 +26,13 @@
                     </div>
                 </li>
                 <li style="height: auto;">
-                    <a id="addMaisItens" ng-click="$root.CARRINHO=false;$root.toolbar = true;">ADICIONAR MAIS ITENS</a>
+                    <a id="addMaisItens" ng-click="$root.CARRINHO=false;$root.toolbar = true;"><i class="mdi mdi-content-add-circle"></i>Adicionar{{$root.CARRINHO_COMPRAS.PRODUTOS?' mais itens':''}}</a>
                 </li>
             </ul>
         </div>
         <div id="subTotalCarrinho">
             Subtotal estimado: <b>R$ {{$root.CARRINHO_COMPRAS.TOTAL_POR}}</b>
+            <a ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR" id="fechar_compra" ng-click="location('#!/token/fecharcompra')">FECHAR COMPRA</a>
         </div>
     </div>
 
@@ -43,12 +43,13 @@
             </a>
             <div class="textoTitulo">{{$root.PROD_DETALHES.NOME}}</div>
         </div>
-        xxx
-
-        <div class="addRemoveQtdeProduto" unidade_medida="{{$root.PROD_DETALHES.UNIDADE_MEDIDA}}">
-            <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '+')" class="mdi mdi-content-add-circle"></i>
-            <span>{{$root.PROD_DETALHES.QTDE}}</span>
-            <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '-')" class="mdi mdi-content-remove-circle"></i>
+        <div class="scrollable-content" scroll flex md-scroll-y>
+            fds
+            <div class="addRemoveQtdeProduto" unidade_medida="{{$root.PROD_DETALHES.UNIDADE_MEDIDA}}">
+                <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '+')" class="mdi mdi-content-add-circle"></i>
+                <span>{{$root.PROD_DETALHES.QTDE}}</span>
+                <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '-')" class="mdi mdi-content-remove-circle"></i>
+            </div>
         </div>
     </div>
 
@@ -76,18 +77,17 @@
             <div ng-if="STEP==ITEM.STEP&&STEP==3" id="Payment">
                 <h4 ng-if="$root.STATUS_TEXTO">{{$root.STATUS_TEXTO}}</h4>
 
-                <a id="ver-carrinho" ng-if="$root.PRODUTOS.length" onclick="$('#Produtos').show();">Ver carrinho</a>
+                <a id="ver-carrinho" ng-if="$root.PRODUTOS.length" ng-click="$root.transacaoIdCarrinho?location('#!/index/CARRINHO'):null" onclick="$('#Produtos').show();">Carrinho</a>
 
-                <div id="Produtos" class="scrollable-content" scroll flex md-scroll-y>
+                <div ng-if="!$root.transacaoIdCarrinho" id="Produtos" class="scrollable-content" scroll flex md-scroll-y>
                     <h5>Carrinho</h5>
 
                     <i class="mdi-navigation-close" onclick="$('#Produtos').hide();"></i>
 
-                    <ul ng-if="$root.PRODUTOS">
+                    <ul ng-if="$root.PRODUTOS && !$root.transacaoIdCarrinho">
                         <li ng-repeat="PROD in $root.PRODUTOS">
                             <div class="info">
                                 <h4>{{PROD.NOME}} <i ng-if="PROD.CONTEUDO != NULL">({{PROD.CONTEUDO}})</i></h4>
-                                <span>{{PROD.CAT_DESCRICAO}} - {{PROD.FAB_DESCRICAO}}</span>
                                 <span ng-if="PROD.QTDE != NULL">Quantidade <b>{{PROD.QTDE}}</b></span>
                                 <label class="total_de" ng-if="PROD.DE_PRECO_FORMAT"><span>de</span> <span class="v">{{PROD.DE_PRECO_FORMAT}}</span></label>
                                 <label><span ng-if="PROD.DE_PRECO_FORMAT">por</span> <span class="v">{{PROD.PRECO_FORMAT}}</span></label>

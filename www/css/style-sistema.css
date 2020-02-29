@@ -2415,7 +2415,10 @@ right: 0;
   border-bottom: 1px solid rgba(11, 99, 64, 0.1);
   text-overflow: ellipsis;
   white-space: nowrap;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   z-index: 1;
 }
 body[menu_left="1"] .topTitulo img {
@@ -2446,7 +2449,7 @@ body[device="ios"][controller="ConecteSe"] #toolbar > img {
 
 img#imgFixo{
     position: absolute;
-    top: 0;
+    top: -1px;
     right: calc(50% - 95px);
     height: 50px;
     visibility: hidden;
@@ -3071,7 +3074,7 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li.active{
 }
 
 #boxPg > ul > li[tipo="SALDO"]{
-  margin-bottom: 1.5em;
+  margin-bottom: 10px;
   margin-top: 0;
 }
 
@@ -3142,7 +3145,7 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li.active{
 
 #boxPg > ul > li > label.utilizado_voucher{
   display: block;
-  margin-top: 1.5em;
+  margin-top: 10px;
   text-align: left;
   font-weight: bold;
   color: #043d22;
@@ -3239,7 +3242,7 @@ body[controller="Index"] .scrollable-content#boxPagamento h3.total,
   font-weight: bold;
   color: #043d22;
   font-size: 18px;
-  margin: 1.5em 0 0.5em;
+  margin: 10px 0 0.5em;
 }
 
 #boxPg > ul > li h4.valor_restante{
@@ -3257,7 +3260,7 @@ body[controller="Index"] .scrollable-content#boxPagamento h3.total,
 }
 
 #boxPg h4.valor_cashback{
-  margin: 1.5em 0 0.5em;
+  margin: 10px 0 0.5em;
 }
 
 #boxPg h4.valor_cashback b{
@@ -3270,7 +3273,7 @@ body[controller="Index"] .scrollable-content#boxPagamento h3.total,
   font-weight: bold;
   color: #043d22;
   font-size: 18px;
-  margin: 1.5em 0 0.5em;
+  margin: 10px 0 0.5em;
 }
 #boxPg h4.valor_cashback p{
   margin-top:10px;
@@ -3484,257 +3487,6 @@ body[controller="CentralDeAjuda"] .scrollable-content > ul li{
   margin-top: 10px;
 }
 
-/*
- * Maquinas -> Get
- */
-.blocoTop{
-  background: #fcfcfc;
-  padding: 9px 13px;
-  margin: 0;
-}
-#maquina > p{
-  margin: 10px 0 0 0;
-}
-#maquina > div{
-  margin: 0;
-}
-#maquina > div label{
-  margin-top: 5px;
-  color: #CCC;
-  font-size: 14px;
-  margin-right: 5px;
-  display: inline-block;
-}
-
-#maquina > div label i{
-  font-size: 15px;
-  color: #00ab46;
-  vertical-align: unset;
-}
-
-body[controller="MaquinasGet"] .scrollable-content > p{
-  margin-top: 5px;
-}
-
-#maquina > div img{
-  float: left;
-  width: 87px;
-  height: 87px;
-  margin-right: 10px;
-  border-radius: 100%;
-  padding: 3px;
-  margin-bottom: 20px;
-}
-
-#maquina > div b{
-  font-size: 19px;
-  color: #000;
-  font-weight: normal;
-  display: block;
-}
-#maquina > div b.endereco{
-  font-size: 14px;
-}
-#maquina > div b.comunicacao{
-  text-align: center;
-  margin-bottom: 10px;
-  font-size: 16px;
-  font-style: italic;
-}
-#maquina > div b.alerta{
-  text-align: center;
-  margin-bottom: 10px;
-  font-size: 18px;
-}
-#maquina > div b.alerta .r{
-  color: red !important;
-}
-#maquina > div b.alerta i{
-  font-size: 19px;
-}
-#maquina > div b.alerta b{
-  font-weight: bold;
-  display: inline-block;
-}
-#maquina > div b#cod {
-  font-size: 13px;
-  font-weight: 600;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  display: block;
-  overflow: hidden;
-}
-
-#maquina > div h4{
-  font-size: 20px;
-  margin: 0;
-  line-height: 1.3;
-  font-family: unset;
-}
-
-body[controller="MaquinasGet"] .scrollable ul li{
-  border-bottom: 1px solid rgba(11, 99, 64, 0.1);
-  padding: 10px;
-  position: relative;
-  min-height: 112px;
-}
-
-body[controller="MaquinasGet"] .scrollable ul li:first-child{
-  padding-top: 0;
-}
-
-body[controller="MaquinasGet"] .scrollable ul li:last-child{
-  border-bottom: 0;
-}
-body[controller="MaquinasGet"] .scrollable ul li > div.img{
-  float: right;
-  width: 20%;
-  position: relative;
-  min-width: 90px;
-  display: block;
-}
-body[controller="MaquinasGet"] .scrollable ul li > div.img img{
-  width: 90px;
-  height: 90px;
-  border-radius: 100%;
-  border: 1px solid #EEE;
-  padding: 3px;
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-body[controller="MaquinasGet"] .scrollable ul li > div.info{
-  float: left;
-  width: 67%;
-}
-body[controller="MaquinasGet"] .scrollable ul li > div.info > span{
-  color: #CCC;
-  font-weight: 500;
-  font-size: 12px;
-  display: block;
-}
-
-body[controller="MaquinasGet"] .scrollable ul li > div.info p{
-  margin: 1em 0 0;
-  font-size: 14px;
-}
-body[controller="MaquinasGet"] .scrollable ul li > div.info h4{
-  font-size: 20px;
-  margin: 0;
-  line-height: 1.3;
-  font-family: unset;
-}
-body[controller="MaquinasGet"] .scrollable ul li > div.info label{
-  display: inline-block;
-  color: #00ab46;
-}
-body[controller="MaquinasGet"] .scrollable ul li > div.info label.total_de{
-  color: #e94847;
-  margin-right: 15px;
-}
-body[controller="MaquinasGet"] .scrollable ul li > div.info label.total_de .v{
-  text-decoration: line-through;
-}
-body[controller="MaquinasGet"] .scrollable ul li > div.info label .v{
-  font-size: 20px;
-  text-decoration: underline;
-}
-
-/*
- * Maquina -> lst
- */
-body[controller="MaquinasLst"] .scrollable .scrollable-content ul li{
-  border-bottom: 1px solid #EEE;
-  padding: 10px 10px;
-  position: relative;
-}
-
-body[controller="MaquinasLst"] .scrollable ul li:last-child{
-  border-bottom: 0;
-}
-body[controller="MaquinasLst"] .scrollable ul li > .img{
-  float: left;
-  width: 20%;
-  min-width: 75px;
-}
-body[controller="MaquinasLst"] .scrollable ul li > .img img{
-  width: 75px;
-  height: 75px;
-  border-radius: 100%;
-  padding: 3px;
-}
-
-#maquina > div img[src="img/maquina.png"],
-body[controller="MaquinasLst"] .scrollable ul li > .img img[src="img/maquina.png"]{
-  padding: 0;
-}
-
-body[controller="MaquinasLst"]  #status{
-  margin-top: 10px;
-}
-
-#maquina > div img,
-body[controller="MaquinasLst"]  #status li span,
-body[controller="MaquinasLst"] .scrollable ul li > .img img{
-  border: 2px solid #ff185e;
-}
-
-body[controller="MaquinasLst"]  #status li span{
-  border-radius: 100%;
-  width: 12px;
-  height: 12px;
-  display: inline-block;
-}
-
-#maquina > div img[status="blue"],
-#maquina > div img[status="green"],
-body[controller="MaquinasLst"]  #status li[status="green"] span,
-body[controller="MaquinasLst"] .scrollable ul li > .img[status="blue"] img,
-body[controller="MaquinasLst"] .scrollable ul li > .img[status="green"] img{
-  border-color: #00ab46;
-}
-
-#maquina > div img[status="yellow"],
-body[controller="MaquinasLst"]  #status li[status="yellow"] span,
-body[controller="MaquinasLst"] .scrollable ul li > .img[status="yellow"] img{
-  border-color: #ffd61d;
-}
-
-body[controller="MaquinasLst"] .scrollable ul li > div.info{
-  float: left;
-  width: 70%;
-  margin-left: 3%;
-}
-body[controller="MaquinasLst"] .scrollable ul li > div.info span{
-  color: #CCC;
-  font-size: 13px;
-}
-body[controller="MaquinasLst"] .scrollable ul li > div.info span i{
-  font-size: 14px;
-  color: #00ab46;
-  vertical-align: unset;
-}
-body[controller="MaquinasLst"] .scrollable ul li > div.info .mdi-action-lock-outline{
-  display: inline-block;
-  color: red;
-}
-body[controller="MaquinasLst"] .scrollable ul li > div.info b{
-  font-size: 13px;
-  font-weight: 600;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  display: block;
-  overflow: hidden;
-}
-body[controller="MaquinasLst"] .scrollable ul li > div.info h4{
-  font-size: 20px;
-  margin: 0;
-  line-height: 1.3;
-  font-family: unset;
-}
-body[controller="MaquinasLst"] .scrollable ul li > div.info h4.endereco{
-  font-size: 14px;
-}
 /*
  * Local atual
  */
@@ -4850,7 +4602,7 @@ body[controller="Index"][addsaldo="1"] .scrollable-content #Produtos > i.mdi-nav
   width: 67%;
 }
 #Produtos ul li > div.info > span{
-  color: #CCC;
+  color: #444;
   font-weight: 500;
   font-size: 12px;
   display: block;
@@ -5264,16 +5016,21 @@ ul#boxTour li[idx="1"] div{
   position: relative;
 }
 .boxPopup[box="carrinho"] .scrollable-content{
-  padding-bottom: 174px;
+  padding-bottom: 202px;
+  margin-top: 46px;
+}
+.boxPopup[box="produto"] .scrollable-content {
+  padding-bottom: 100px;
+  margin-top: 46px;
 }
 .boxPopup[box="carrinho"] #fechar_compra{
   background: #444;
   color: #FFF;
-  float: right;
   padding: 5px 10px;
   border-radius: 5px;
-  margin: 9px 15px 0 0;
+  margin: 5px 15px 0px 0;
   font-size: 13px;
+  display: inline-block;
 }
 .boxPopup[box="carrinho"] #subTotalCarrinho{
   position: absolute;
@@ -5282,7 +5039,7 @@ ul#boxTour li[idx="1"] div{
   background: rgba(255, 255, 255, 0.9);
   width: calc(100% - 30px);
   left: 15px;
-  border-top: 2px solid rgba(11, 99, 64, 0.1);
+  border-top: 1px solid rgba(11, 99, 64, 0.1);
   padding: 10px 0 35px;
   text-align: center;
   color: #00ab46;
@@ -5325,8 +5082,12 @@ ul#boxTour li[idx="1"] div{
   display: block;
   text-align: center;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 13px;
   text-decoration: underline;
+  color: #00ab46;
+}
+.boxPopup[box="carrinho"] #addMaisItens i{
+  margin-right: 5px;
 }
 .boxPopup[box="carrinho"] ul li{
   position: relative;
@@ -5405,8 +5166,4 @@ ul#boxTour li[idx="1"] div{
   width: 100%;
   height: 100%;
   z-index: 2;
-}
-
-#boxCompras{
-
 }

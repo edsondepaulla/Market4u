@@ -8,6 +8,7 @@ var Payment = {
 
             // Id
             Factory.$rootScope.transacaoId = 0;
+            Factory.$rootScope.transacaoIdCarrinho = false;
 
             // Redirect
             if (!parseInt(cancelar) && status == 'success')
@@ -15,7 +16,7 @@ var Payment = {
         }
     },
     cancel: function () {
-        if (Factory.$rootScope.transacaoId) {
+        if (Factory.$rootScope.transacaoId && !Factory.$rootScope.transacaoIdCarrinho) {
             Factory.ajax(
                 {
                     action: 'payment/cancel',
@@ -31,6 +32,7 @@ var Payment = {
 app.controller('Index', function($scope, $rootScope, $routeParams) {
     $rootScope.TOUR = $routeParams.STEP == 'TOUR' ? 1 : 0;
     $rootScope.CARRINHO = $routeParams.STEP == 'CARRINHO' ? 1 : 0;
+    $rootScope.PROD_DETALHES = false;
     if ($rootScope.TOUR && !parseInt($rootScope.usuario.TOUR)) {
         clearTimeout(Factory.timeout);
         Factory.timeout = setTimeout(function () {
@@ -63,6 +65,9 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         case 2:
         case 4:
             $rootScope.MenuBottom = 1;
+            break;
+        case 3:
+            $rootScope.MenuBottom = 0;
             break;
     }
     if ($rootScope.STEP > 1)
@@ -182,11 +187,13 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             case 1:
                 $rootScope.BTN_HOME = true;
                 $rootScope.transacaoId = 0;
+                $rootScope.transacaoIdCarrinho = false;
                 $rootScope.TEXTO_BTN = '<img src="img/qrcode.png"> Comprar';
                 break;
             case 2:
                 $rootScope.BTN_HOME = false;
                 $rootScope.transacaoId = 0;
+                $rootScope.transacaoIdCarrinho = false;
                 BarCodeScanner.scan('qrcode');
                 break;
             case 3:
@@ -349,11 +356,6 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                                         $rootScope.verify(1000);
                                 } else
                                     $rootScope.verify(1000);
-                            } else {
-                                clearTimeout(Factory.timeout);
-                                Factory.timeout = setTimeout(function () {
-                                    $rootScope.location('#!/');
-                                }, 500);
                             }
                         }, function () {
                             $rootScope.verify(1000);

@@ -139,6 +139,11 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                             }
                         }, function (data) {
                             switch ($route.current.params.TOKEN) {
+                                case 'fecharcompra':
+                                    $rootScope.transacaoIdCarrinho = true;
+                                    $rootScope.transacaoId = parseInt(data.TRANSACAO_ID);
+                                    $rootScope.location(data.url);
+                                    break;
                                 case 'checkoutteste':
                                     $rootScope.transacaoId = parseInt(data.TRANSACAO_ID);
                                     $rootScope.location(data.url);
@@ -249,56 +254,6 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                         {
                             action: 'options/command',
                             data: $route.current.params
-                        }
-                    );
-                }
-            }
-        })
-        .when("/maquinas", {
-            templateUrl: "view/maquinas/lst.html",
-            controller: 'MaquinasLst',
-            resolve: {
-                ReturnData: function ($route) {
-                    return Factory.ajax(
-                        {
-                            action: 'maquinas/lst'
-                        }
-                    );
-                }
-            }
-        })
-        .when("/maquinas-filtros", {
-            templateUrl: "view/maquinas/filtros.html",
-            controller: 'MaquinasFiltros'
-        })
-        .when("/maquinas/:ID", {
-            templateUrl: "view/maquinas/get.html",
-            controller: 'MaquinasGet',
-                resolve: {
-                ReturnData: function ($route) {
-                    return Factory.ajax(
-                        {
-                            action: 'maquinas/get',
-                            data: {
-                                ID: $route.current.params.ID
-                            }
-                        }
-                    );
-                }
-            }
-        })
-        .when("/produtos/:MAQUINA/:JSON", {
-            templateUrl: "view/produtos/get.html",
-            controller: 'ProdutosGet',
-            resolve: {
-                ReturnData: function ($route) {
-                    return Factory.ajax(
-                        {
-                            action: 'produtos/get',
-                            data: {
-                                MAQUINA: $route.current.params.MAQUINA,
-                                JSON: $route.current.params.JSON
-                            }
                         }
                     );
                 }
@@ -441,8 +396,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                     break;
             }
 
-            if (url.indexOf('#!/payment') !== -1
-                || url.indexOf('#!/conecte-se') !== -1
+            if (url.indexOf('#!/conecte-se') !== -1
                 || url.indexOf('#!/conecte-se-codigo') !== -1)
                 Page.start();
 
@@ -984,6 +938,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
         }
     };
     $rootScope.STEPS = [];
+    $rootScope.transacaoIdCarrinho = false;
     $rootScope.transacaoId = 0;
     $scope.selectCard = function (ITENS, V) {
         if (!V.ACTIVE) {
@@ -1002,6 +957,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     $rootScope.clickEscanear = function (type) {
         $rootScope.BTN_HOME = false;
         $rootScope.transacaoId = 0;
+        $rootScope.transacaoIdCarrinho = false;
         BarCodeScanner.scan(type);
     };
 });
