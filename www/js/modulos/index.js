@@ -45,7 +45,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     }
     $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS;
     $rootScope.STEP = parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1;
-    if ($rootScope.usuario.COMPRAR) {
+    if (parseInt($rootScope.usuario.CARRINHO) || $rootScope.CARRINHO) {
         Factory.ajax(
             {
                 action: 'payment/carrinho'
@@ -188,7 +188,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                 $rootScope.BTN_HOME = true;
                 $rootScope.transacaoId = 0;
                 $rootScope.transacaoIdCarrinho = false;
-                $rootScope.TEXTO_BTN = '<img src="img/qrcode.png"> Comprar';
+                $rootScope.TEXTO_BTN = 'Comprar';
                 break;
             case 2:
                 $rootScope.BTN_HOME = false;

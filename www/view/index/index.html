@@ -1,8 +1,7 @@
 <md-content id="boxCompras" ng-if="$root.TIPO_PG == 'COMPRAR' && $root.usuario.COMPRAR" class="scrollable-content" scroll flex md-scroll-y>
-    <h2>Compras</h2>
+    <i ng-if="$root.usuario.AUTOATENDIMENTO" ng-click="$root.TIPO_PG='PAGAMENTO'" class="mdi mdi-editor-attach-money"></i>
 
-    <br>
-    <a ng-if="$root.usuario.AUTOATENDIMENTO" ng-click="$root.TIPO_PG = 'PAGAMENTO'">Autoatendimento</a>
+    <h2>Compras</h2>
 
     <div class="boxPopup" box="carrinho" ng-if="$root.CARRINHO">
         <div class="topTitulo">
@@ -62,6 +61,7 @@
     <h4 ng-if="!$root.STEPS.length">
         Aguarde por favor, carregando...
     </h4>
+    <i ng-if="STEP == 1 && $root.usuario.COMPRAR" ng-click="$root.TIPO_PG='COMPRAR'" class="mdi mdi-action-shopping-cart"></i>
     <ul ng-if="$root.STEPS">
         <li ng-click="ITEM.STEP==1?clickBtnHome():null" step="{{ITEM.STEP}}" ng-repeat="ITEM in $root.STEPS" class="{{STEP>=ITEM.STEP?'active':''}}">
             <p>
@@ -70,7 +70,6 @@
                     {{STEP==4?'':ITEM.STEP_TEXTO}}
                 </span>
                 {{ITEM.TEXTO}}
-                <i ng-if="ITEM.STEP == 'AA' && $root.usuario.COMPRAR && $root.usuario.AUTOATENDIMENTO" ng-click="$root.TIPO_PG='COMPRAR'" class="mdi mdi-navigation-close"></i>
             </p>
             <div class="clearBoth"></div>
             <h4 ng-if="ITEM.SUB_TEXTO">{{ITEM.SUB_TEXTO}}</h4>
