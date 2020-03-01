@@ -5,7 +5,7 @@
         <label class="utilizado_saldo checkbox_custom" ng-if="PG.TIPO=='SALDO'">Usar meu saldo
             <span class="checkmark"></span>
         </label>
-        <label class="utilizado_voucher" ng-if="PG.TIPO=='VOUCHER'">Vouchers</label>
+        <label class="utilizado_voucher" ng-if="PG.TIPO=='VOUCHER'">Cupons de desconto</label>
         {{PG.TIPO=='SALDO'||PG.TIPO=='VOUCHER'?'':PG.NOME}} <i class="mdi mdi-action-done"></i>
         <label class="valor" ng-if="PG.TIPO=='SALDO'">{{usuario.MEUSALDO_FORMAT}}</label>
         <div class="clearBoth"></div>
@@ -14,7 +14,7 @@
                 <span ng-if="V.CODIGO"><i class="mdi mdi-action-done"></i> </span><i>{{V.NOME}}</i>
             </li>
             <li class="c">
-                <input id="ADD_VOUCHER" placeholder="Insira um código promocional" maxlength="50" ng-model="$root.ADD_VOUCHER">
+                <input id="ADD_VOUCHER" placeholder="Insira um cód. promocional" maxlength="50" ng-model="$root.ADD_VOUCHER">
                 <a class="a-btn" ng-click="addVoucher()"><i class="mdi mdi-action-loyalty"></i> Adicionar</a>
                 <div class="clearBoth"></div>
             </li>

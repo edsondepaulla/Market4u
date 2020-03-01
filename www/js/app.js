@@ -604,7 +604,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
             logado: 1
         },
         {
-            titulo: 'Vouchers',
+            titulo: 'Cupons de desconto',
             url: '#!/voucher',
             icon: 'mdi-action-loyalty',
             logado: 0

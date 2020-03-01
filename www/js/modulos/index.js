@@ -68,6 +68,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             break;
         case 3:
             $rootScope.MenuBottom = 0;
+            $rootScope.toolbar = 0;
             break;
     }
     if ($rootScope.STEP > 1)

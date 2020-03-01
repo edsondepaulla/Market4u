@@ -88,11 +88,10 @@
                             <div class="info">
                                 <h4>{{PROD.NOME}} <i ng-if="PROD.CONTEUDO != NULL">({{PROD.CONTEUDO}})</i></h4>
                                 <span ng-if="PROD.QTDE != NULL">Quantidade <b>{{PROD.QTDE}}</b></span>
-                                <label class="total_de" ng-if="PROD.DE_PRECO_FORMAT"><span>de</span> <span class="v">{{PROD.DE_PRECO_FORMAT}}</span></label>
-                                <label><span ng-if="PROD.DE_PRECO_FORMAT">por</span> <span class="v">{{PROD.PRECO_FORMAT}}</span></label>
+                                <label class="total_de" ng-if="PROD.DE_PRECO_FORMAT"><span class="v">{{PROD.DE_PRECO_FORMAT}}</span></label>
+                                <label><span class="v">{{PROD.PRECO_FORMAT}}</span></label>
                                 <p ng-if="PROD.DESCRICAO != NULL">{{PROD.DESCRICAO}}</p>
                             </div>
-                            <div class="img"><img src="{{PROD.IMAGEM}}"></div>
                             <div class="clearBoth"></div>
                         </li>
                     </ul>

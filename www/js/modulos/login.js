@@ -155,9 +155,6 @@ app.controller('Cadastro', function($rootScope, $scope) {
                 $('#data_nascimento').attr('disabled', true);
         }
     }, 500);
-    /*setTimeout(function () {
-        $('#cpf').focus();
-    }, 1000);*/
 
     $rootScope.ITENS = [];
     $rootScope.ITENS.push({'ACTIVE': 1, 'SRC': 'view/conecte-se/level-dados-pessoais.html'});
@@ -170,6 +167,8 @@ app.controller('Cadastro', function($rootScope, $scope) {
     }
     if(!$scope.AJUSTES)
         $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': 'view/conecte-se/level-confirmar.html'});
+    else
+        $rootScope.MenuBottom = true;
 
     $scope.pref = function (ID) {
         $rootScope.usuario.PREFERENCIAS[ID] = $rootScope.usuario.PREFERENCIAS[ID] ? 0 : ID;
@@ -298,18 +297,6 @@ app.controller('Cadastro', function($rootScope, $scope) {
                             $rootScope.usuario.CC_CVV = $('#cvv').val();
                             $rootScope.usuario.CC_BANDEIRA = $('#cardBandeira').val();
                         }
-                        /*if (TYPE == 'NEXT') {
-                            setTimeout(function () {
-                                if ($('#email:visible').length ? !$('#email:visible').val().length : false)
-                                    $('#email:visible').focus();
-                                else if ($('#numero_celular:visible').length ? !$('#numero_celular:visible').val().length : false)
-                                    $('#numero_celular:visible').focus();
-                                else if ($('#postalcode:visible').length ? !$('#postalcode:visible').val().length : false)
-                                    $('#postalcode:visible').focus();
-                                else if ($('#cardName:visible').length ? !$('#cardName:visible').val().length : false)
-                                    $('#cardName:visible').focus();
-                            }, 1000);
-                        }*/
                     }
                 });
             }
@@ -377,6 +364,8 @@ app.controller('ConecteSeCodigo', function($rootScope, $scope, $routeParams) {
 app.controller('Card', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.Titulo = "Meus cartões";
     $scope.LST = ReturnData.LST;
+    $rootScope.MenuBottom = true;
+    $rootScope.NO_WHATSAPP = false;
 
     $scope.remove = function (ID) {
         var _function = function () {
@@ -412,6 +401,8 @@ app.controller('Card', function($rootScope, $scope, $routeParams, ReturnData) {
 
 app.controller('AddCard', function($rootScope, $scope) {
     $rootScope.Titulo = "Adicionar";
+    $rootScope.MenuBottom = true;
+    $rootScope.NO_WHATSAPP = false;
 
     $scope.salvar = function () {
         if (!$('#cardName').val().length)
@@ -493,7 +484,7 @@ app.controller('MinhaCarteira', function($rootScope, $scope, $routeParams, Retur
 
 app.controller('VoucherLst', function($rootScope, $scope, $route, $routeParams, ReturnData) {
     $rootScope.border_top = 1;
-    $rootScope.Titulo = "Vouchers";
+    $rootScope.Titulo = "Cupons de desconto";
     $scope.LST = ReturnData.LST;
 
     $scope.click = function(reg) {
