@@ -1,4 +1,5 @@
 var Payment = {
+    PRODUTOS_COMPRAS: [],
     CARRINHO_COMPRAS: [],
     clear: function (cancelar, status) {
         if (parseInt(Factory.$rootScope.transacaoId)) {
@@ -44,8 +45,27 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         }, 1000);
     }
     $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS;
+    $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS;
     $rootScope.STEP = parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1;
+
+    $scope.getCategoria = function (CAT) {
+        Factory.ajax(
+            {
+                action: 'payment/compras',
+                data: {
+                    ID: parseInt(CAT.ID)
+                }
+            },
+            function (data) {
+                $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS = data;
+            }
+        );
+    };
+
     if ($rootScope.usuario.COMPRAR) {
+        if(!$rootScope.CARRINHO)
+            $scope.getCategoria({ID: 0});
+
         Factory.ajax(
             {
                 action: 'payment/carrinho'
@@ -55,6 +75,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             }
         );
     }
+
     if (($rootScope.usuario.COMPRAR && $rootScope.usuario.AUTOATENDIMENTO) || $rootScope.usuario.COMPRAR || $rootScope.CARRINHO) {
         $rootScope.TIPO_PG = 'COMPRAR';
         $rootScope.MenuBottom = 1;
