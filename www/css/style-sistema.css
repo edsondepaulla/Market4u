@@ -5198,8 +5198,8 @@ body[controller="Index"] .scrollable-content#boxPagamento .mdi-action-shopping-c
   font-size: 32px;
   color: #FFF;
   vertical-align: middle;
-  position: absolute;
-  top: 10px;
+  position: fixed;
+  bottom: 70px;
   right: 10px;
   background: #00ab46;
   padding: 0 8px;
