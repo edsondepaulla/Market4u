@@ -2419,9 +2419,6 @@ right: 0;
   border-bottom: 1px solid rgba(11, 99, 64, 0.1);
   text-overflow: ellipsis;
   white-space: nowrap;
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
   z-index: 1;
 }
@@ -5025,7 +5022,6 @@ ul#boxTour li[idx="1"] div{
 }
 .boxPopup[box="carrinho"] .scrollable-content{
   padding-bottom: 202px;
-  margin-top: 46px;
 }
 .boxPopup[box="produto"] .scrollable-content {
   padding-bottom: 100px;
@@ -5046,7 +5042,7 @@ ul#boxTour li[idx="1"] div{
   position: absolute;
   bottom: 60px;
   z-index: 1;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   width: calc(100% - 30px);
   left: 15px;
   border-top: 1px solid rgba(11, 99, 64, 0.1);

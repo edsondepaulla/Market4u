@@ -1,6 +1,6 @@
 var BarCodeScanner = {
     getScan(text, type) {
-        if(type == 'comprar') {
+        if (type == 'comprar') {
             var audio = new Audio('audio/beep.mp3');
             audio.play();
         }
@@ -23,20 +23,23 @@ var BarCodeScanner = {
         );
     },
     scan: function (type) {
+        $('#carregando').show().css('opacity', 1);
         try {
             if (Factory.$rootScope.device == 'android') {
                 Page.start();
                 Factory.$rootScope.location('#!/scanner');
             }
-
             cordova.plugins.barcodeScanner.scan(
                 function (result) {
                     if (result.text)
                         BarCodeScanner.getScan(result.text, type);
-                    else
+                    else {
+                        $('#carregando').hide().css('opacity', 0);
                         Factory.$rootScope.location('#!/');
+                    }
                 },
                 function (error) {
+                    $('#carregando').hide().css('opacity', 0);
                     Factory.$rootScope.location('#!/');
                 },
                 {
@@ -60,8 +63,10 @@ var BarCodeScanner = {
                         if (results.buttonIndex == 1) {
                             if (results.input1.length)
                                 BarCodeScanner.getScan(results.input1, type);
-                            else
+                            else {
+                                $('#carregando').hide().css('opacity', 0);
                                 return false;
+                            }
                         }
                     },
                     'Atenção',
@@ -72,8 +77,10 @@ var BarCodeScanner = {
                 var text = prompt("Digite o código", "");
                 if (text != null)
                     BarCodeScanner.getScan(text, type);
-                else
+                else {
+                    $('#carregando').hide().css('opacity', 0);
                     Factory.$rootScope.location('#!/');
+                }
             }
         }
     }
