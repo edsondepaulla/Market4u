@@ -94,20 +94,20 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         }
     };
 
-    $rootScope.SetAddRemoveQtdeProd = function (ID, QTDE) {
+    $rootScope.SetAddRemoveQtdeProd = function (PROD, QTDE) {
         clearTimeout(Factory.timeout);
         Factory.timeout = setTimeout(function () {
             Factory.ajax(
                 {
                     action: 'payment/addremoveqtde',
                     data: {
-                        ID: ID,
+                        ID: PROD == -1 ? -1 : PROD.PROD_ID,
                         QTDE: QTDE
                     }
                 },
                 function (data) {
-                    if (!parseInt(QTDE))
-                        $rootScope.PROD_DETALHES = false;
+                    if (!QTDE && parseInt(PROD.PROD_ID))
+                        PROD.QTDE = 0;
                     $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS = data;
                 }
             );
@@ -138,29 +138,31 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         switch (type) {
             case '+':
                 PROD.QTDE = parseInt(PROD.QTDE) + 1;
-                $rootScope.SetAddRemoveQtdeProd(PROD.PROD_ID, PROD.QTDE);
+                $rootScope.SetAddRemoveQtdeProd(PROD, PROD.QTDE);
                 break;
             case '-':
-                if (parseInt(PROD.QTDE) == 1 || PROD.UNIDADE_MEDIDA == 'KG') {
-                    try {
-                        navigator.notification.confirm(
-                            'Tem certeza que deseja remover este item da sua lista de compra?',
-                            function (buttonIndex) {
-                                if (buttonIndex == 1)
-                                    $rootScope.SetAddRemoveQtdeProd(PROD.PROD_ID, 0);
-                                else
-                                    PROD.QTDE = PROD.QTDE_ORIGINAL;
-                            },
-                            'Confirmar',
-                            'Sim,Não'
-                        );
-                    } catch (e) {
-                        if (confirm('Tem certeza que deseja remover este item da sua lista de compra?'))
-                            $rootScope.SetAddRemoveQtdeProd(PROD.PROD_ID, 0);
+                if (parseFloat(PROD.QTDE)) {
+                    if (parseInt(PROD.QTDE) == 1 || PROD.UNIDADE_MEDIDA == 'KG') {
+                        try {
+                            navigator.notification.confirm(
+                                'Tem certeza que deseja remover este item da sua lista de compra?',
+                                function (buttonIndex) {
+                                    if (buttonIndex == 1)
+                                        $rootScope.SetAddRemoveQtdeProd(PROD, 0);
+                                    else
+                                        PROD.QTDE = PROD.QTDE_ORIGINAL;
+                                },
+                                'Confirmar',
+                                'Sim,Não'
+                            );
+                        } catch (e) {
+                            if (confirm('Tem certeza que deseja remover este item da sua lista de compra?'))
+                                $rootScope.SetAddRemoveQtdeProd(PROD, 0);
+                        }
+                    } else {
+                        PROD.QTDE = parseInt(PROD.QTDE) - 1;
+                        $rootScope.SetAddRemoveQtdeProd(PROD, PROD.QTDE);
                     }
-                } else {
-                    PROD.QTDE = parseInt(PROD.QTDE) - 1;
-                    $rootScope.SetAddRemoveQtdeProd(PROD.PROD_ID, PROD.QTDE);
                 }
                 break;
         }

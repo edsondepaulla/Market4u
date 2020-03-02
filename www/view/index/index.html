@@ -4,12 +4,6 @@
     <h2>Compras</h2>
 
     <div class="boxPopup" box="carrinho" ng-if="$root.CARRINHO">
-        <div class="topTitulo">
-            <a class="open-left" ng-click="voltarTop('carrinho')">
-                <i class="mdi mdi-navigation-chevron-left"></i>
-            </a>
-            <div class="textoTitulo">Carrinho</div>
-        </div>
         <div class="scrollable-content" scroll flex md-scroll-y>
             <ul>
                 <li ng-repeat="PROD in $root.CARRINHO_COMPRAS.PRODUTOS">
@@ -33,6 +27,12 @@
                 </li>
             </ul>
         </div>
+        <div class="topTitulo">
+            <a class="open-left" ng-click="voltarTop('carrinho')">
+                <i class="mdi mdi-navigation-chevron-left"></i>
+            </a>
+            <div class="textoTitulo">Carrinho</div>
+        </div>
         <div id="subTotalCarrinho">
             Subtotal estimado: <b>R$ {{$root.CARRINHO_COMPRAS.TOTAL_POR}}</b>
             <br><a ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR" id="fechar_compra" ng-click="location('#!/token/fecharcompra')"><i class="mdi mdi-editor-attach-money"></i> Finalizar compra</a>
@@ -40,19 +40,19 @@
     </div>
 
     <div class="boxPopup" box="produto" ng-if="$root.PROD_DETALHES">
+        <div class="scrollable-content" scroll flex md-scroll-y>
+            fds
+            <div ng-if="$root.PROD_DETALHES.UNIDADE_MEDIDA!='KG'" class="addRemoveQtdeProduto" unidade_medida="{{$root.PROD_DETALHES.UNIDADE_MEDIDA}}">
+                <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '+')" class="mdi mdi-content-add-circle"></i>
+                <span>{{$root.PROD_DETALHES.QTDE}}</span>
+                <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '-')" class="mdi mdi-content-remove-circle"></i>
+            </div>
+        </div>
         <div class="topTitulo">
             <a class="open-left" ng-click="$root.PROD_DETALHES = false;">
                 <i class="mdi mdi-navigation-chevron-left"></i>
             </a>
             <div class="textoTitulo">{{$root.PROD_DETALHES.NOME}}</div>
-        </div>
-        <div class="scrollable-content" scroll flex md-scroll-y>
-            fds
-            <div class="addRemoveQtdeProduto" unidade_medida="{{$root.PROD_DETALHES.UNIDADE_MEDIDA}}">
-                <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '+')" class="mdi mdi-content-add-circle"></i>
-                <span>{{$root.PROD_DETALHES.QTDE}}</span>
-                <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '-')" class="mdi mdi-content-remove-circle"></i>
-            </div>
         </div>
     </div>
 
