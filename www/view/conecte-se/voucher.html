@@ -14,4 +14,13 @@
             <i ng-bind-html="item.DESCRICAO"></i>
         </li>
     </ul>
+    <h4 ng-if="!LST.length" style="text-align: center; padding: 10px">
+        Você ainda não tem nenhum
+        <br><b>Código Promocional</b>.
+        <br>Segue a gente nas <b>redes sociais</b>, sempre compartilhamos Códigos. :)
+        <div style="margin-top: 10px">
+            <img ng-if="usuario.FACEBOOK.ATIVO" ng-click="AppBrowser(usuario.FACEBOOK)" width="32" style="margin-right: 20px;" src="img/icon-facebook.png" border="0">
+            <img ng-if="usuario.INSTAGRAM.ATIVO" ng-click="AppBrowser(usuario.INSTAGRAM)" width="50" src="img/icon-instagram.png" border="0">
+        </div>
+    </h4>
 </md-content>

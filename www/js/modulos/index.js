@@ -45,7 +45,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     }
     $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS;
     $rootScope.STEP = parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1;
-    if (parseInt($rootScope.usuario.CARRINHO) || $rootScope.CARRINHO) {
+    if ($rootScope.usuario.COMPRAR) {
         Factory.ajax(
             {
                 action: 'payment/carrinho'
@@ -362,6 +362,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
 
                                     switch (data.STATUS) {
                                         case 'authorized':
+                                        case 'pg_autorizado':
                                             if (!$rootScope.PAGO) {
                                                 $rootScope.PAGO = 1;
                                                 $('#boxPago').css('opacity', 1).show();
