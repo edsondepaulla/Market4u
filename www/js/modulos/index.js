@@ -60,6 +60,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         $rootScope.MenuBottom = 1;
     }else if ($rootScope.usuario.AUTOATENDIMENTO)
         $rootScope.TIPO_PG = 'PAGAMENTO';
+    $rootScope.top_0 = 0;
     switch ($rootScope.STEP) {
         case 1:
         case 2:
@@ -67,6 +68,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             $rootScope.MenuBottom = 1;
             break;
         case 3:
+            $rootScope.top_0 = 1;
             $rootScope.MenuBottom = 0;
             $rootScope.toolbar = 0;
             break;
@@ -75,6 +77,22 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         $rootScope.TIPO_PG = 'PAGAMENTO';
     if ($rootScope.CARRINHO)
         $rootScope.toolbar = false;
+
+    $scope.verCarrinho = function () {
+        if($rootScope.transacaoIdCarrinho)
+            $rootScope.location('#!/index/CARRINHO');
+        else
+            $('#Produtos').show();
+    };
+
+    $scope.voltarTop = function (ORIGEM) {
+        switch (ORIGEM) {
+            case 'carrinho':
+                $rootScope.CARRINHO = false;
+                $rootScope.toolbar = true;
+                break;
+        }
+    };
 
     $rootScope.SetAddRemoveQtdeProd = function (ID, QTDE) {
         clearTimeout(Factory.timeout);

@@ -5,7 +5,7 @@
 
     <div class="boxPopup" box="carrinho" ng-if="$root.CARRINHO">
         <div class="topTitulo">
-            <a class="open-left" ng-click="$root.CARRINHO=false;$root.toolbar = true;">
+            <a class="open-left" ng-click="voltarTop('carrinho')">
                 <i class="mdi mdi-navigation-chevron-left"></i>
             </a>
             <div class="textoTitulo">Carrinho</div>
@@ -25,13 +25,13 @@
                     </div>
                 </li>
                 <li style="height: auto;">
-                    <a id="addMaisItens" ng-click="$root.CARRINHO=false;$root.toolbar = true;"><i class="mdi mdi-content-add-circle"></i>Adicionar{{$root.CARRINHO_COMPRAS.PRODUTOS?' mais itens':''}}</a>
+                    <a id="addMaisItens" ng-click="location('#!/')"><i class="mdi mdi-content-add-circle"></i>Adicionar{{$root.CARRINHO_COMPRAS.PRODUTOS?' mais itens':''}}</a>
                 </li>
             </ul>
         </div>
         <div id="subTotalCarrinho">
             Subtotal estimado: <b>R$ {{$root.CARRINHO_COMPRAS.TOTAL_POR}}</b>
-            <a ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR" id="fechar_compra" ng-click="location('#!/token/fecharcompra')">FECHAR COMPRA</a>
+            <br><a ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR" id="fechar_compra" ng-click="location('#!/token/fecharcompra')"><i class="mdi mdi-editor-attach-money"></i> Finalizar compra</a>
         </div>
     </div>
 
@@ -70,13 +70,12 @@
                     {{STEP==4?'':ITEM.STEP_TEXTO}}
                 </span>
                 {{ITEM.TEXTO}}
+                <a id="ver-carrinho" ng-if="$root.PRODUTOS.length" ng-click="verCarrinho()">{{$root.transacaoIdCarrinho?'Voltar para o Carrinho':'Carrinho'}}</a>
             </p>
             <div class="clearBoth"></div>
             <h4 ng-if="ITEM.SUB_TEXTO">{{ITEM.SUB_TEXTO}}</h4>
             <div ng-if="STEP==ITEM.STEP&&STEP==3" id="Payment">
                 <h4 ng-if="$root.STATUS_TEXTO">{{$root.STATUS_TEXTO}}</h4>
-
-                <a id="ver-carrinho" ng-if="$root.PRODUTOS.length" ng-click="$root.transacaoIdCarrinho?location('#!/index/CARRINHO'):null" onclick="$('#Produtos').show();">Carrinho</a>
 
                 <div ng-if="!$root.transacaoIdCarrinho" id="Produtos" class="scrollable-content" scroll flex md-scroll-y>
                     <h5>Carrinho</h5>

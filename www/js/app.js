@@ -415,11 +415,13 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     $rootScope.MenuBottom = 0;
     $rootScope.TOUR = 0;
     $rootScope.CARRINHO = 0;
+    $rootScope.top_0 = 0;
     $rootScope.$on('$routeChangeStart', function () {
         $rootScope.BARRA_SALDO = true;
         $rootScope.MenuBottom = 0;
         $rootScope.TOUR = 0;
         $rootScope.CARRINHO = 0;
+        $rootScope.top_0 = 0;
         $rootScope.menuClose();
     });
 

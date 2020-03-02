@@ -1415,6 +1415,10 @@ input[type="search"].campoBusca:focus {
   top: 46px;
 }
 
+.app-body[top_0="1"]{
+  top: 0 !important;
+}
+
 .app-body{
   height: 100%;
   padding: 0;
@@ -3007,6 +3011,10 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li.active{
   padding: 7px 4px 0;
 }
 
+#boxPg > ul > li:first-child{
+  margin-top: 0;
+}
+
 #boxPg > ul > li{
   background: rgba(11, 99, 64, 0.1);
   padding: 10px;
@@ -4237,12 +4245,13 @@ body[controller="Index"] .scrollable-content#boxPagamento[step="3"] > ul > li > 
   color: #00ab46;
   font-size: 21px;
   position: fixed;
-  top: 40px;
+  top: 0;
   left: 0;
   background: #FFF;
   width: 100%;
-  padding: 30px 0 10px;
+  padding: 5px 0;
   z-index: 1;
+  margin: 0;
 }
 
 body[device="ios"][controller="Index"] .scrollable-content[step="3"] > ul > li{
@@ -4408,6 +4417,7 @@ ul#menu-bottom li#pagar_escanear{
   position: absolute;
   left: calc(50% - 33px);
   top: -25px;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26), 0 2px 10px 0 rgba(0,0,0,0.22);
 }
 
 ul#menu-bottom li{
@@ -4503,7 +4513,7 @@ body[controller="Index"] .scrollable-content#boxPagamento #Payment{
   padding: 50px 15px 0;
 }
 
-body[controller="Index"] .scrollable-content#boxPagamento #Payment > #ver-carrinho{
+body[controller="Index"] .scrollable-content#boxPagamento #ver-carrinho{
   text-align: center;
   text-decoration: underline;
   display: block;

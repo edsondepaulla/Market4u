@@ -101,7 +101,7 @@
       <img src="img/whatsapp.png">
     </a>
 
-    <div class="app-body" top_46="{{(controller == 'Index'?(!usuario.MEUSALDO && usuario.MEUSALDO_ATIVADO?0:1):(usuario.ID && usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO?0:1))}}">
+    <div class="app-body" top_0="{{top_0}}" top_46="{{(controller == 'Index'?(!usuario.MEUSALDO && usuario.MEUSALDO_ATIVADO?0:1):(usuario.ID && usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO?0:1))}}">
       <div class="app-content">
         <div class="scrollable ng-scope" border-top="{{$root.BARRA_SALDO?0:border_top}}" ng-view></div>
       </div>

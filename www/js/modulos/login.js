@@ -42,6 +42,26 @@ var Login = {
         Login.data = data;
         Factory.$rootScope.usuario = data;
         localStorage.setItem("CLIENTE", JSON.stringify(data));
+
+        // Redirect conecte-se
+        if (!parseInt(data.ID)) {
+            var hash = window.location.hash.split('/');
+            switch (hash[1]) {
+                case 'conecte-se':
+                case 'cadastro':
+                case 'suporte':
+                case 'faq':
+                case 'conecte-se-codigo':
+                case 'atualizar-app':
+                case 'token':
+                case 'command':
+                case 'sem-internet':
+                    break;
+                default:
+                    Factory.$rootScope.location('#!/conecte-se');
+                    break;
+            }
+        }
     },
     getData: function () {
         if (!Login.data.GET_LOCAL) {
