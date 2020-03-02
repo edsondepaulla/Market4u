@@ -5265,22 +5265,26 @@ md-content#boxCategorias{
   padding: 5px 5px 0;
   display: block;
   width: 100%;
-  height: 48px;
+  height: auto;
   -webkit-overflow-scrolling: touch;
 }
-#boxCategorias ul li.active{
-  background: #00ab46;
-  color: #FFF;
+#boxCategorias ul li a{
+  color: #00ab46;
+  background: #f6f6f6;
+  padding: 2px 13px;
+  border-radius: 5px;
+  margin: 15px 0;
+  display: block;
 }
 #boxCategorias ul li{
   display: inline-block;
-  background: #f6f6f6;
-  color: #00ab46;
   margin-right: 5px;
-  padding: 2px 13px;
-  border-radius: 5px;
   font-size: 14px;
   letter-spacing: 1px;
-  margin: 10px 5px;
-  height: 24px;
+  margin: 0 5px 10px;
+  height: 40px;
+}
+#boxCategorias ul li.active a{
+color: #FFF;
+background: #00ab46;
 }

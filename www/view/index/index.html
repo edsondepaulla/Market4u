@@ -3,7 +3,9 @@
 
     <md-content id="boxCategorias" class="scrollable-content flex" scroll flex md-scroll-x>
         <ul>
-            <li ng-click="getCategoria(CAT)" class="{{CAT.ACTIVE?'active':''}}" ng-repeat="CAT in $root.PRODUTOS_COMPRAS.CATEGORIAS">{{CAT.DESCRICAO}}</li>
+            <li class="{{CAT.ACTIVE?'active':''}}" ng-repeat="CAT in $root.PRODUTOS_COMPRAS.CATEGORIAS">
+                <a ng-click="getCategoria(CAT)">{{CAT.DESCRICAO}}</a>
+            </li>
         </ul>
     </md-content>
 
