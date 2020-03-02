@@ -24,8 +24,12 @@
                         <i ng-click="addRemoveQtdeProd(PROD, '-')" class="mdi mdi-content-remove-circle"></i>
                     </div>
                 </li>
+                <li style="height: auto;text-align: center" ng-if="!$root.CARRINHO_COMPRAS.PRODUTOS">
+                    Nenhum produto adicionado na sua lista de compra!
+                </li>
                 <li style="height: auto;">
-                    <a id="addMaisItens" ng-click="location('#!/')"><i class="mdi mdi-content-add-circle"></i>Adicionar{{$root.CARRINHO_COMPRAS.PRODUTOS?' mais itens':''}}</a>
+                    <a ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR" id="limparCarrinho" ng-click="limparCarrinho()">Limpar carrinho<i class="mdi mdi-content-remove-circle"></i></a>
+                    <a id="addMaisItens" ng-click="location('#!/')">Adicionar{{$root.CARRINHO_COMPRAS.PRODUTOS?' mais itens':''}}<i class="mdi mdi-content-add-circle"></i></a>
                 </li>
             </ul>
         </div>

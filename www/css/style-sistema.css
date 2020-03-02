@@ -2419,7 +2419,7 @@ right: 0;
   border-bottom: 1px solid rgba(11, 99, 64, 0.1);
   text-overflow: ellipsis;
   white-space: nowrap;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -5087,18 +5087,32 @@ ul#boxTour li[idx="1"] div{
   margin-top: 0;
   border-top: 0;
 }
-
+.boxPopup[box="carrinho"] #limparCarrinho{
+  width: 100%;
+  display: block;
+  text-align: right;
+  border-radius: 5px;
+  font-size: 13px;
+  text-decoration: underline;
+  color: #e94847;
+  margin-bottom: 5px;
+}
+.boxPopup[box="carrinho"] #limparCarrinho i{
+  margin-left: 5px;
+  vertical-align: middle;
+}
 .boxPopup[box="carrinho"] #addMaisItens{
   width: 100%;
   display: block;
-  text-align: center;
+  text-align: right;
   border-radius: 5px;
   font-size: 13px;
   text-decoration: underline;
   color: #00ab46;
 }
 .boxPopup[box="carrinho"] #addMaisItens i{
-  margin-right: 5px;
+  margin-left: 5px;
+  vertical-align: middle;
 }
 .boxPopup[box="carrinho"] ul li{
   position: relative;

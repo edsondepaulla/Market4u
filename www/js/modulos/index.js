@@ -114,6 +114,23 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         }, 500);
     };
 
+    $rootScope.limparCarrinho = function () {
+        try {
+            navigator.notification.confirm(
+                'Tem certeza que deseja sua lista de compra?',
+                function (buttonIndex) {
+                    if (buttonIndex == 1)
+                        $rootScope.SetAddRemoveQtdeProd(-1, 0);
+                },
+                'Confirmar',
+                'Sim,Não'
+            );
+        } catch (e) {
+            if (confirm('Tem certeza que deseja sua lista de compra?'))
+                $rootScope.SetAddRemoveQtdeProd(-1, 0);
+        }
+    };
+
     $rootScope.addRemoveQtdeProd = function (PROD, type) {
         if (!PROD.QTDE_ORIGINAL)
             PROD.QTDE_ORIGINAL = PROD.QTDE;
