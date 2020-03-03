@@ -96,7 +96,7 @@
     <img ng-click="location('#!/')" src="img/logo.png" border="0">
   </div>
 
-  <div class="app" ng-controller="Main" ui-prevent-touchmove-defaults>
+  <div class="app" ng-controller="Main">
     <a ng-if="usuario.WHATSAPP.ATIVO && $root.NO_WHATSAPP" id="whatsapp" ng-click="whatsapp()">
       <img src="img/whatsapp.png">
     </a>
