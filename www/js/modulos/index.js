@@ -49,17 +49,19 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     $rootScope.STEP = parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1;
 
     $scope.getCategoria = function (CAT) {
-        Factory.ajax(
-            {
-                action: 'payment/compras',
-                data: {
-                    ID: parseInt(CAT.ID)
+        if(!parseInt(CAT.ACTIVE)) {
+            Factory.ajax(
+                {
+                    action: 'payment/compras',
+                    data: {
+                        ID: parseInt(CAT.ID)
+                    }
+                },
+                function (data) {
+                    $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS = data;
                 }
-            },
-            function (data) {
-                $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS = data;
-            }
-        );
+            );
+        }
     };
 
     if ($rootScope.usuario.COMPRAR) {

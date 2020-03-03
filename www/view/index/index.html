@@ -18,10 +18,11 @@
                     <div class="clearBoth"></div>
                 </div>
                 <md-content class="scrollable-content flex" scroll flex md-scroll-x>
-                    <ul>
+                    <ul style="width: {{PROD.ITENS.length*110}}px;">
                         <li ng-repeat="ITEM in PROD.ITENS" ng-click="$root.toolbar=false; $root.PROD_DETALHES = ITEM;">
                             <h4>{{ITEM.NOME}}</h4>
                         </li>
+                        <div class="clearBoth"></div>
                     </ul>
                 </md-content>
             </li>
