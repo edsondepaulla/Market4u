@@ -5254,7 +5254,7 @@ md-content#boxProdutos md-content{
   overflow-scrolling: touch;
 }
 md-content#boxProdutos md-content ul{
-  height: 100%;
+  height: 141px;
   overflow: hidden;
 }
 md-content#boxProdutos md-content ul li{
@@ -5271,9 +5271,10 @@ md-content#boxProdutos md-content ul li h4{
 md-content#boxCategorias ul{
   overflow: hidden;
   width: 5000px;
+  height: 58px;
+  display: block;
 }
 md-content#boxCategorias{
-  white-space: nowrap;
   overflow-x: scroll;
   overflow-y: hidden;
   padding: 5px 5px 0;

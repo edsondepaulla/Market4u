@@ -111,8 +111,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     $scope.voltarTop = function (ORIGEM) {
         switch (ORIGEM) {
             case 'carrinho':
-                $rootScope.CARRINHO = false;
-                $rootScope.toolbar = true;
+                $rootScope.location('#!/');
                 break;
         }
     };
