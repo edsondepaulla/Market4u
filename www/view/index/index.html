@@ -1,14 +1,12 @@
 <div id="boxCompras" ng-if="$root.TIPO_PG == 'COMPRAR' && $root.usuario.COMPRAR">
     <i ng-if="$root.usuario.AUTOATENDIMENTO" ng-click="$root.TIPO_PG='PAGAMENTO'" class="mdi mdi-editor-attach-money"></i>
 
-    <md-content id="boxCategorias">
-        <ul class="scrollable-content flex" scroll flex md-scroll-x>
-            <li class="{{CAT.ACTIVE?'active':''}}" ng-repeat="CAT in $root.PRODUTOS_COMPRAS.CATEGORIAS">
-                <a ng-click="getCategoria(CAT)">{{CAT.DESCRICAO}}</a>
-            </li>
-            <div class="clearBoth"></div>
-        </ul>
-    </md-content>
+    <ul id="boxCategorias" class="scrollable-content flex" scroll flex md-scroll-x>
+        <li class="{{CAT.ACTIVE?'active':''}}" ng-repeat="CAT in $root.PRODUTOS_COMPRAS.CATEGORIAS">
+            <a ng-click="getCategoria(CAT)">{{CAT.DESCRICAO}}</a>
+        </li>
+        <div class="clearBoth"></div>
+    </ul>
 
     <md-content id="boxProdutos" class="scrollable-content flex" scroll flex md-scroll-y>
         <ul>

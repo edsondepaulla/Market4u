@@ -5246,35 +5246,37 @@ md-content#boxProdutos li > div.t{
 md-content#boxProdutos ul.scrollable-content{
   overflow-x: scroll;
   overflow-y: hidden;
-  padding: 0 5px;
+  padding: 0 5px 20px;
   width: 100%;
-  height: 150px;
+  height: auto;
   -webkit-overflow-scrolling: touch;
   overflow-scrolling: touch;
   white-space: nowrap;
 }
 md-content#boxProdutos ul.scrollable-content li{
   width: 100px;
-  height: 120px;
+  height: 150px;
   text-align: center;
-  margin: 10px 0 10px 5px;
+  margin: 10px 0 -10px 5px;
   display: inline-block;
   border: 1px solid red;
+  white-space: normal;
 }
 md-content#boxProdutos ul.scrollable-content li h4{
   font-size: 12px;
-  white-space: normal;
+  display: flex;
 }
-md-content#boxCategorias ul{
+ul#boxCategorias{
   overflow: hidden;
-  height: 53px;
+  height: auto;
   display: block;
   white-space: nowrap;
   overflow-y: hidden;
   overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
+  padding-bottom: 10px;
 }
-#boxCategorias ul li a{
+ul#boxCategorias li a{
   color: #00ab46;
   background: #fcfcfc;
   padding: 2px 13px;
@@ -5282,15 +5284,15 @@ md-content#boxCategorias ul{
   margin: 15px 0;
   display: block;
 }
-#boxCategorias ul li{
+ul#boxCategorias li{
   display: inline-block;
   margin-right: 5px;
   font-size: 14px;
   letter-spacing: 1px;
-  margin: 0 5px 10px;
-  height: 40px;
+  margin: 0 5px -10px;
+  height: 55px;
 }
-#boxCategorias ul li.active a{
+ul#boxCategorias li.active a{
   color: #FFF;
   background: #00ab46;
   font-weight: 500;
