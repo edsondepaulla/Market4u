@@ -5239,14 +5239,14 @@ md-content#boxProdutos li > div.t a{
   font-weight: 500;
 }
 md-content#boxProdutos li > div.t{
-  background: #fcfcfc;
+  background: #f9f9f9;
   padding: 5px 10px;
   font-size: 12px;
 }
 md-content#boxProdutos ul.scrollable-content{
   overflow-x: scroll;
   overflow-y: hidden;
-  padding: 0 5px 20px;
+  padding: 0 5px 20px !important;
   width: 100%;
   height: auto;
   -webkit-overflow-scrolling: touch;
@@ -5274,11 +5274,11 @@ ul#boxCategorias{
   overflow-y: hidden;
   overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 10px;
+  padding-bottom: 10px !important;
 }
 ul#boxCategorias li a{
   color: #00ab46;
-  background: #fcfcfc;
+  background: #f9f9f9;
   padding: 2px 13px;
   border-radius: 5px;
   margin: 15px 0;
