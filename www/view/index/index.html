@@ -17,8 +17,20 @@
                     <div class="clearBoth"></div>
                 </div>
                 <ul class="scrollable-content flex" scroll flex md-scroll-x>
-                    <li ng-repeat="ITEM in PROD.ITENS" ng-click="$root.toolbar=false; $root.PROD_DETALHES = ITEM;">
-                        <h4>{{ITEM.NOME}}</h4>
+                    <li ng-repeat="ITEM in PROD.ITENS">
+                        <div ng-click="$root.toolbar=false; $root.PROD_DETALHES = ITEM;">
+                            <img src="{{ITEM.IMAGE}}" onerror="onErrorProd(this)">
+                            <p class="preco">
+                                <label class="de">R$ 999,99</label>
+                                <label>R$ 984,99</label>
+                            </p>
+                            <h4>{{ITEM.NOME}}</h4>
+                        </div>
+                        <div class="addRemoveProd">
+                            <i class="mdi mdi-content-remove"></i>
+                            150
+                            <i class="mdi mdi-content-add"></i>
+                        </div>
                     </li>
                     <div class="clearBoth"></div>
                 </ul>

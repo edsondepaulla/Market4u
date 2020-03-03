@@ -5072,7 +5072,7 @@ ul#boxTour li[idx="1"] div{
   color: #00ab46;
 }
 .boxPopup[box="carrinho"] ul li > div.b label.total_de{
-  color: #e94847;
+  color: #CCC;
   margin-right: 5px;
 }
 .boxPopup[box="carrinho"] ul li > div.b label.total_de .v{
@@ -5225,7 +5225,7 @@ body b, body strong {
   height: 100%;
 }
 md-content#boxProdutos{
-  padding-bottom: 200px !important;
+  padding-bottom: 180px !important;
   display: block;
   width: 100%;
   height: 100%;
@@ -5241,55 +5241,108 @@ md-content#boxProdutos li > div.t a{
 md-content#boxProdutos li > div.t{
   background: #f9f9f9;
   padding: 5px 10px;
-  font-size: 12px;
+  font-size: 13px;
+}
+md-content#boxProdutos ul.scrollable-content::-webkit-scrollbar {
+  display: none;
 }
 md-content#boxProdutos ul.scrollable-content{
   overflow-x: scroll;
   overflow-y: hidden;
-  padding: 0 5px;
+  padding: 0 10px;
   width: 100%;
   height: auto;
   -webkit-overflow-scrolling: touch;
   overflow-scrolling: touch;
   white-space: nowrap;
+  scrollbar-width: none;
 }
 md-content#boxProdutos ul.scrollable-content li{
-  width: 100px;
-  height: 150px;
-  text-align: center;
-  margin: 10px 0 10px 5px;
-  display: inline-block;
-  border: 1px solid red;
-  white-space: normal;
+    width: 122px;
+    height: 160px;
+    text-align: center;
+    margin: 10px 5px;
+    display: inline-block;
+    white-space: normal;
+}
+md-content#boxProdutos ul.scrollable-content li img{
+    height: 60px;
+    margin-bottom: 5px;
+}
+md-content#boxProdutos ul.scrollable-content li img[src="img/market4u.png"]{
+    opacity: 0.1;
+}
+md-content#boxProdutos ul.scrollable-content li p.preco{
+    font-size: 12px;
+    margin: 0 0 5px;
+}
+md-content#boxProdutos ul.scrollable-content li p.preco label{
+    color: #00ab46;
+    font-weight: 600;
+    display: inline-block;
+}
+md-content#boxProdutos ul.scrollable-content li p.preco label.de{
+    text-decoration: line-through;
+    color: #CCC;
+    font-weight: normal;
+}
+md-content#boxProdutos ul.scrollable-content li div.addRemoveProd{
+    background: #f9f9f9;
+    text-align: center;
+    font-size: 15px;
+    width: calc(100% - 30px);
+    margin: 5px auto 0;
+    border-radius: 10px;
+    position: relative;
+}
+md-content#boxProdutos ul.scrollable-content li div.addRemoveProd .mdi{
+    font-size: 25px;
+    color: #00ab46;
+    top: -17px;
+    padding: 10px;
+}
+md-content#boxProdutos ul.scrollable-content li div.addRemoveProd .mdi-content-remove{
+    position: absolute;
+    left: -7px;
+}
+md-content#boxProdutos ul.scrollable-content li div.addRemoveProd .mdi-content-add{
+    position: absolute;
+    right: -9px;
 }
 md-content#boxProdutos ul.scrollable-content li h4{
-  font-size: 12px;
-  display: flex;
+    font-size: 12px;
+    display: flex;
+    margin: 0;
+    height: 27px;
+    overflow: hidden;
 }
 ul#boxCategorias{
   overflow: hidden;
-  height: 53px;
+  height: auto;
   display: block;
   white-space: nowrap;
   overflow-y: hidden;
   overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+ul#boxCategorias::-webkit-scrollbar {
+  display: none;
 }
 ul#boxCategorias li a{
   color: #00ab46;
   background: #f9f9f9;
-  padding: 2px 13px;
+  padding: 4px 15px;
   border-radius: 5px;
-  margin: 15px 0;
+  margin: 15px 0 10px 10px;
   display: block;
 }
 ul#boxCategorias li{
   display: inline-block;
-  margin-right: 5px;
   font-size: 14px;
   letter-spacing: 1px;
-  margin: 0 5px 10px;
-  height: 53px;
+  margin: 0;
+  height: auto;
 }
 ul#boxCategorias li.active a{
   color: #FFF;
