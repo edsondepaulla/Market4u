@@ -5304,9 +5304,16 @@ md-content#boxProdutos ul.scrollable-content li div.addRemoveProd{
   position: relative;
   height: 21px;
 }
-md-content#boxProdutos ul.scrollable-content li div.addRemoveProd[unidade_medida="KG"]{
+
+md-content#boxProdutos ul.scrollable-content li div.addRemoveProd[unidade_medida="KG"] .mdi-content-remove{
+  left: 24px;
+}
+md-content#boxProdutos ul.scrollable-content li div.addRemoveProd[unidade_medida="KG"][qtde="0"],
+md-content#boxProdutos ul.scrollable-content li div.addRemoveProd[unidade_medida="KG"] .mdi-content-add,
+md-content#boxProdutos ul.scrollable-content li div.addRemoveProd[unidade_medida="KG"] span{
   visibility: hidden;
 }
+
 md-content#boxProdutos ul.scrollable-content li div.addRemoveProd .mdi{
   font-size: 25px;
   color: #00ab46;

@@ -1,4 +1,5 @@
 var Payment = {
+    QTDE_PRODUTOS: [],
     PRODUTOS_COMPRAS: [],
     CARRINHO_COMPRAS: [],
     clear: function (cancelar, status) {
@@ -46,9 +47,10 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     }
     $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS;
     $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS;
+    $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS;
     $rootScope.STEP = parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1;
 
-    $scope.getCategoria = function (CAT) {
+    $scope.getCompras = function (CAT) {
         if(!parseInt(CAT.ACTIVE)) {
             Factory.ajax(
                 {
@@ -58,25 +60,16 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                     }
                 },
                 function (data) {
-                    $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS = data;
+                    $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS = data.COMPRAS;
+                    $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
+                    $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS = data.CARRINHO;
                 }
             );
         }
     };
 
-    if ($rootScope.usuario.COMPRAR) {
-        if(!$rootScope.CARRINHO)
-            $scope.getCategoria({ID: 0});
-
-        Factory.ajax(
-            {
-                action: 'payment/carrinho'
-            },
-            function (data) {
-                $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS = data;
-            }
-        );
-    }
+    if ($rootScope.usuario.COMPRAR)
+        $scope.getCompras({ID: 0});
 
     if (($rootScope.usuario.COMPRAR && $rootScope.usuario.AUTOATENDIMENTO) || $rootScope.usuario.COMPRAR || $rootScope.CARRINHO) {
         $rootScope.TIPO_PG = 'COMPRAR';
@@ -129,8 +122,10 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                     }
                 },
                 function (data) {
-                    if (!QTDE && parseInt(PROD.PROD_ID))
+                    if (!QTDE && parseInt(PROD.PROD_ID)) {
                         PROD.QTDE = 0;
+                        $rootScope.QTDE_PRODUTOS[PROD.PROD_ID] = PROD.QTDE;
+                    }
                     $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS = data;
                 }
             );
@@ -161,6 +156,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         switch (type) {
             case '+':
                 PROD.QTDE = parseInt(PROD.QTDE) + 1;
+                $rootScope.QTDE_PRODUTOS[PROD.PROD_ID] = PROD.QTDE;
                 $rootScope.SetAddRemoveQtdeProd(PROD, PROD.QTDE);
                 break;
             case '-':
@@ -172,8 +168,10 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                                 function (buttonIndex) {
                                     if (buttonIndex == 1)
                                         $rootScope.SetAddRemoveQtdeProd(PROD, 0);
-                                    else
+                                    else {
                                         PROD.QTDE = PROD.QTDE_ORIGINAL;
+                                        $rootScope.QTDE_PRODUTOS[PROD.PROD_ID] = PROD.QTDE;
+                                    }
                                 },
                                 'Confirmar',
                                 'Sim,Não'
@@ -184,6 +182,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                         }
                     } else {
                         PROD.QTDE = parseInt(PROD.QTDE) - 1;
+                        $rootScope.QTDE_PRODUTOS[PROD.PROD_ID] = PROD.QTDE;
                         $rootScope.SetAddRemoveQtdeProd(PROD, PROD.QTDE);
                     }
                 }

@@ -401,7 +401,13 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                 Page.start();
 
             window.location = url;
-            if (url != '#!/conecte-se' && url != '#!/boas-vindas')
+            if (url == '#!/') {
+                $rootScope.toolbar = true;
+                $rootScope.PROD_DETALHES = false;
+                $rootScope.CARRINHO = false;
+                $rootScope.TIPO_PG = 'COMPRAR';
+            }
+            if (url != '#!/conecte-se' && url != '#!/boas-vindas' && url != '#!/')
                 $route.reload();
         }
     };

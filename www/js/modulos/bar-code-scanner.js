@@ -6,7 +6,7 @@ var BarCodeScanner = {
         }
         Factory.ajax(
             {
-                action: type == 'qrcode' || type == 'destravar' ? 'qrcode/get' : 'barcode/get',
+                action: 'qrcode/get',
                 data: {
                     TEXT: text
                 }
