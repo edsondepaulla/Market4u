@@ -19,18 +19,26 @@
                 <ul class="scrollable-content flex" scroll flex md-scroll-x>
                     <li ng-repeat="ITEM in PROD.ITENS">
                         <div ng-click="$root.toolbar=false; $root.PROD_DETALHES = ITEM;">
-                            <img src="{{ITEM.IMAGE}}" onerror="onErrorProd(this)">
+                            <img src="{{ITEM.IMAGEM}}" >
                             <p class="preco">
                                 <label class="de">R$ 999,99</label>
                                 <label>R$ 984,99</label>
                             </p>
                             <h4>{{ITEM.NOME}}</h4>
                         </div>
-                        <div class="addRemoveProd">
-                            <i class="mdi mdi-content-remove"></i>
-                            150
-                            <i class="mdi mdi-content-add"></i>
+                        <div unidade_medida="{{ITEM.UNIDADE_MEDIDA}}" class="addRemoveProd" qtde="{{ITEM.QTDE?ITEM.QTDE:0}}">
+                            <i class="mdi mdi-content-remove" ng-click="ITEM.QTDE=ITEM.QTDE-1"></i>
+                            <span>{{ITEM.QTDE}}</span>
+                            <i class="mdi mdi-content-add" ng-click="ITEM.QTDE=ITEM.QTDE+1"></i>
                         </div>
+                    </li>
+                    <li class="nao_encontrou">
+                        Não encontrou o que queria?
+                        Descreva o produto
+                    </li>
+                    <li class="nao_encontrou">
+                        Veja todos os produtos
+                        <i class="mdi mdi-navigation-arrow-forward"></i>
                     </li>
                     <div class="clearBoth"></div>
                 </ul>
@@ -63,8 +71,8 @@
                     Nenhum produto adicionado na sua lista de compra!
                 </li>
                 <li style="height: auto;">
-                    <a ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR" id="limparCarrinho" ng-click="limparCarrinho()">Limpar carrinho<i class="mdi mdi-content-remove-circle"></i></a>
                     <a id="addMaisItens" ng-click="location('#!/')">Adicionar{{$root.CARRINHO_COMPRAS.PRODUTOS?' mais itens':''}}<i class="mdi mdi-content-add-circle"></i></a>
+                    <a ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR" id="limparCarrinho" ng-click="limparCarrinho()">Limpar carrinho<i class="mdi mdi-content-remove-circle"></i></a>
                 </li>
             </ul>
         </div>
@@ -76,14 +84,14 @@
 
     <div class="boxPopup" box="produto" ng-if="$root.PROD_DETALHES">
         <div class="topTitulo">
-            <a class="open-left" ng-click="$root.toolbar=true; $root.PROD_DETALHES = false;">
+            <a class="open-left" ng-click="$root.toolbar=$root.PROD_DETALHES.ORIGEM=='COMPRAS'?true:false; $root.PROD_DETALHES = false;">
                 <i class="mdi mdi-navigation-chevron-left"></i>
             </a>
             <div class="textoTitulo">{{$root.PROD_DETALHES.NOME}}</div>
         </div>
         <div class="scrollable-content" scroll flex md-scroll-y>
             fds
-            <div ng-if="$root.PROD_DETALHES.UNIDADE_MEDIDA!='KG'" class="addRemoveQtdeProduto" unidade_medida="{{$root.PROD_DETALHES.UNIDADE_MEDIDA}}">
+            <div ng-if="$root.PROD_DETALHES.UNIDADE_MEDIDA!='KG'||$root.PROD_DETALHES.QTDE" class="addRemoveQtdeProduto" unidade_medida="{{$root.PROD_DETALHES.UNIDADE_MEDIDA}}">
                 <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '+')" class="mdi mdi-content-add-circle"></i>
                 <span>{{$root.PROD_DETALHES.QTDE}}</span>
                 <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '-')" class="mdi mdi-content-remove-circle"></i>
