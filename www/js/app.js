@@ -402,6 +402,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
 
             window.location = url;
             if (url == '#!/') {
+                $rootScope.swipeLeft();
                 $rootScope.toolbar = true;
                 $rootScope.PROD_DETALHES = false;
                 $rootScope.CARRINHO = false;
