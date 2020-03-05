@@ -145,7 +145,8 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                     if (!QTDE && parseInt(PROD.PROD_ID)) {
                         PROD.QTDE = 0;
                         $rootScope.QTDE_PRODUTOS[PROD.PROD_ID] = PROD.QTDE;
-                    }
+                    } else if (PROD == -1)
+                        $rootScope.QTDE_PRODUTOS = [];
                     $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS = data;
                 }
             );
@@ -175,7 +176,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
 
         switch (type) {
             case '+':
-                PROD.QTDE = parseInt($rootScope.QTDE_PRODUTOS[PROD.PROD_ID]) + 1;
+                PROD.QTDE = parseInt($rootScope.QTDE_PRODUTOS[PROD.PROD_ID] || 0) + 1;
                 $rootScope.QTDE_PRODUTOS[PROD.PROD_ID] = PROD.QTDE;
                 $rootScope.SetAddRemoveQtdeProd(PROD, PROD.QTDE);
                 break;

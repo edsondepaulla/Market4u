@@ -5271,8 +5271,11 @@ md-content#boxProdutos ul.scrollable-content li[clear_both="1"]{
   display: table-column;
   visibility: hidden;
 }
-md-content#boxProdutos ul.scrollable-content li{
+md-content#boxProdutos li[count="1"] ul.scrollable-content li{
   width: 30.5%;
+}
+md-content#boxProdutos ul.scrollable-content li{
+  width: 27.5%;
   height: auto;
   text-align: center;
   margin: 1.4%;
@@ -5349,11 +5352,12 @@ md-content#boxProdutos ul.scrollable-content li div.addRemoveProd .mdi-content-a
     right: -9px;
 }
 md-content#boxProdutos ul.scrollable-content li h4{
-    font-size: 12px;
-    display: flex;
-    margin: 0;
-    height: 27px;
-    overflow: hidden;
+  font-size: 12px;
+  display: flex;
+  margin: 0;
+  height: 27px;
+  overflow: hidden;
+  justify-content: center;
 }
 ul#boxCategorias{
   overflow: hidden;

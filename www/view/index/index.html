@@ -10,14 +10,14 @@
 
     <md-content id="boxProdutos" class="scrollable-content flex" type="produtos" scroll="{{$root.PRODUTOS_COMPRAS.SCROLL.ATIVO}}" flex md-scroll-y>
         <ul>
-            <li ng-repeat="SUBCAT in $root.PRODUTOS_COMPRAS.SUBCATEGORIAS">
-                <div ng-if="SUBCAT.COUNT > 1" class="t">
+            <li count="{{$root.PRODUTOS_COMPRAS.SUBCATEGORIAS.length}}" ng-repeat="SUBCAT in $root.PRODUTOS_COMPRAS.SUBCATEGORIAS">
+                <div ng-if="$root.PRODUTOS_COMPRAS.SUBCATEGORIAS.length > 1" class="t">
                     <span>{{SUBCAT.DESCRICAO}}</span>
                     <a>Todos os produtos</a>
                     <div class="clearBoth"></div>
                 </div>
                 <ul class="scrollable-content flex" scroll md-scroll-x>
-                    <li clear_both="{{ITEM.CLEAR_BOTH}}" ng-repeat="ITEM in SUBCAT.ITENS">
+                    <li clear_both="{{ITEM.CLEAR_BOTH?1:0}}" ng-repeat="ITEM in SUBCAT.ITENS">
                         <div ng-if="ITEM.TYPE=='PROD'" ng-click="$root.toolbar=false; $root.PROD_DETALHES = ITEM;">
                             <img data-src="{{ITEM.IMAGEM}}" src="img/market4u.png" alt="">
                             <p class="preco">
