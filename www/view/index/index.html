@@ -1,12 +1,12 @@
 <div id="boxCompras" ng-if="$root.TIPO_PG == 'COMPRAR' && $root.usuario.COMPRAR">
+    <i ng-if="$root.PRODUTOS_COMPRAS.CATEGORIAS" ng-click="$root.toolbar=false;$root.MenuBottom=false;$root.PRODUTOS_BUSCA=true;" id="buscaProdutos" class="mdi mdi-action-search"></i>
     <ul id="boxCategorias">
         <li class="{{CAT.ACTIVE?'active':''}}" ng-repeat="CAT in $root.PRODUTOS_COMPRAS.CATEGORIAS">
             <a ng-click="getCompras(CAT)">{{CAT.DESCRICAO}}</a>
         </li>
         <div class="clearBoth"></div>
     </ul>
-
-    <a ng-if="$root.PRODUTOS_COMPRAS.CATEGORIAS" ng-click="$root.toolbar=false;$root.MenuBottom=false;$root.PRODUTOS_BUSCA=true;">Busca</a>
+    <div class="clearBoth"></div>
 
     <div class="boxPopup" box="busca" ng-if="$root.PRODUTOS_BUSCA">
         <div class="topTitulo">
@@ -15,7 +15,6 @@
             </a>
             <div class="textoTitulo">Busca de produtos</div>
         </div>
-
     </div>
 
     <md-content id="boxProdutos" class="scrollable-content flex" type="produtos" scroll="{{$root.PRODUTOS_COMPRAS.SCROLL.ATIVO}}" flex md-scroll-y>
@@ -101,6 +100,7 @@
         </div>
         <div class="scrollable-content" scroll md-scroll-y>
             <img data-src="{{$root.PROD_DETALHES.IMAGEM}}" src="img/market4u.png" alt="">
+            <BR>{{$root.PROD_DETALHES.VALOR_FORMAT}}
             <div ng-if="$root.PROD_DETALHES.UNIDADE_MEDIDA!='KG'||$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]" class="addRemoveQtdeProduto" unidade_medida="{{$root.PROD_DETALHES.UNIDADE_MEDIDA}}">
                 <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '+')" class="mdi mdi-content-add-circle"></i>
                 <span>{{$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]?$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]:0}}</span>

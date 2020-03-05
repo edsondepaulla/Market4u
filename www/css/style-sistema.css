@@ -4461,15 +4461,15 @@ ul#menu-bottom li span{
   position: absolute;
   background: #FFF;
   border-radius: 50%;
-  font-size: 12px;
+  font-size: 10px;
   padding: 2px;
-  top: -7px;
-  right: -3px;
+  top: -4px;
+  right: 2px;
   color: #000;
   border: 3px solid #e94847;
   font-weight: 500;
-  height: 31px;
-  width: 31px;
+  height: 27px;
+  width: 27px;
   line-height: 1.8;
   text-align: center;
 }
@@ -5050,9 +5050,18 @@ ul#boxTour li[idx="1"] div{
 .boxPopup[box="carrinho"] .scrollable-content{
   padding-bottom: 202px !important;
 }
+.boxPopup[box="produto"] .scrollable-content > img[src="img/market4u.png"]{
+  opacity: 0.1;
+  width: 90px;
+  margin: 10px;
+}
+.boxPopup[box="produto"] .scrollable-content > img{
+  width: 120px;
+}
 .boxPopup[box="produto"] .scrollable-content {
   padding-bottom: 100px;
   margin-top: 46px;
+  text-align: center;
 }
 .boxPopup[box="carrinho"] #fechar_compra{
   background: #444;
@@ -5254,6 +5263,7 @@ body b, body strong {
 }
 #boxCompras{
   height: 100%;
+  position: relative;
 }
 md-content#boxProdutos{
   padding-bottom: 220px !important;
@@ -5381,6 +5391,17 @@ md-content#boxProdutos ul.scrollable-content li h4{
   overflow: hidden;
   justify-content: center;
 }
+#buscaProdutos{
+  font-size: 36px;
+  margin: 0;
+  color: #00ab46;
+  position: absolute;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.95);
+  top: 11px;
+  padding-left: 12px;
+  padding-right: 5px;
+}
 ul#boxCategorias{
   overflow: hidden;
   height: auto;
@@ -5390,6 +5411,7 @@ ul#boxCategorias{
   overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  padding-left: 40px;
 }
 ul#boxCategorias::-webkit-scrollbar {
   display: none;
