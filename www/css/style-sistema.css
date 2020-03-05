@@ -4544,13 +4544,13 @@ body[controller="Index"] .scrollable-content#boxPagamento #Payment > h4{
 
 body[controller="Index"] .scrollable-content#boxPagamento #Produtos{
   position: fixed;
-  top: 12px;
+  top: 0;
   background: rgba(255, 255, 255, 1);
   height: 100%;
   z-index: 5;
   left: 0;
   width: 100%;
-  padding: 60px 15px 30px;
+  padding: 10px 10px 30px 10px;
   display: none;
 }
 
@@ -4563,7 +4563,7 @@ body[controller="Index"] .scrollable-content#boxPagamento #Produtos > h5{
   line-height: 1.3;
   font-family: unset;
   font-weight: 500;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   font-weight: 500;
   color: #00ab46;
   font-size: 21px;
@@ -4571,8 +4571,8 @@ body[controller="Index"] .scrollable-content#boxPagamento #Produtos > h5{
 
 body[controller="Index"] .scrollable-content#boxPagamento #Produtos > i.mdi-navigation-close{
   position: absolute;
-  top: 51px;
-  right: 15px;
+  top: 0;
+  right: 10px;
   font-size: 30px;
 }
 
@@ -5234,13 +5234,14 @@ body b, body strong {
   height: 100%;
 }
 md-content#boxProdutos{
-  padding-bottom: 180px !important;
+  padding-bottom: 190px !important;
   display: block;
   width: 100%;
   height: 100%;
-  overflow: auto;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   overflow-scrolling: touch;
+  overflow-y: auto;
 }
 md-content#boxProdutos li > div.t a{
   color: #00ab46;
@@ -5258,7 +5259,7 @@ md-content#boxProdutos ul.scrollable-content::-webkit-scrollbar {
 md-content#boxProdutos ul.scrollable-content{
   overflow-x: scroll;
   overflow-y: hidden;
-  padding: 0 10px;
+  padding: 5px 0;
   width: 100%;
   height: auto;
   -webkit-overflow-scrolling: touch;
@@ -5266,13 +5267,17 @@ md-content#boxProdutos ul.scrollable-content{
   white-space: nowrap;
   scrollbar-width: none;
 }
+md-content#boxProdutos ul.scrollable-content li[clear_both="1"]{
+  display: table-column;
+  visibility: hidden;
+}
 md-content#boxProdutos ul.scrollable-content li{
-    width: 122px;
-    height: auto;
-    text-align: center;
-    margin: 10px 5px;
-    display: inline-block;
-    white-space: normal;
+  width: 30.5%;
+  height: auto;
+  text-align: center;
+  margin: 1.4%;
+  display: inline-block;
+  white-space: normal;
 }
 md-content#boxProdutos ul.scrollable-content li img{
     height: 100px;
@@ -5320,7 +5325,7 @@ md-content#boxProdutos ul.scrollable-content li div.addRemoveProd .mdi{
   font-size: 25px;
   color: #00ab46;
   top: -17px;
-  margin: 10px;
+  padding: 10px;
   transition: 0.5s;
 }
 md-content#boxProdutos ul.scrollable-content li div.addRemoveProd[qtde="0"] span{
@@ -5335,7 +5340,8 @@ md-content#boxProdutos ul.scrollable-content li div.addRemoveProd .mdi-content-r
     left: -7px;
 }
 md-content#boxProdutos ul.scrollable-content li div.addRemoveProd[qtde="0"] .mdi-content-add{
-  right: 24px;
+  right: 0;
+  padding: 10px calc(50% - 13px);
 }
 
 md-content#boxProdutos ul.scrollable-content li div.addRemoveProd .mdi-content-add{

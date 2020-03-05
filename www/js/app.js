@@ -973,12 +973,35 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
 
 app.directive('onErrorSrc', function() {
     return {
-        link: function(scope, element, attrs) {
+        link: function (scope, element, attrs) {
             element.bind('error', function () {
                 attrs.$set('src', 'img/login_default.png');
             });
         }
     }
+});
+
+var scrollTimeout = null;
+app.directive('scroll', function($routeParams) {
+    return {
+        link: function (scope, element, attrs) {
+            angular.element(element).bind("scroll", function () {
+                var _this = $(this);
+                if(parseInt(_this.attr('scroll'))) {
+                    switch (_this.attr('type')) {
+                        case 'produtos':
+                            clearTimeout(scrollTimeout);
+                            scrollTimeout = setTimeout(function () {
+                                if ((_this.find('> ul').height() - _this.height() - _this.scrollTop()) <= 10) {
+                                    Factory.$rootScope.scroll();
+                                }
+                            }, 100);
+                            break;
+                    }
+                }
+            });
+        }
+    };
 });
 
 app.directive('selectSearch', function() {

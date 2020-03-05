@@ -8,39 +8,38 @@
         <div class="clearBoth"></div>
     </ul>
 
-    <md-content id="boxProdutos" class="scrollable-content flex" scroll flex md-scroll-y>
+    <md-content id="boxProdutos" class="scrollable-content flex" type="produtos" scroll="{{$root.PRODUTOS_COMPRAS.SCROLL.ATIVO}}" flex md-scroll-y>
         <ul>
-            <li ng-repeat="PROD in $root.PRODUTOS_COMPRAS.PRODUTOS">
-                <div class="t">
-                    <span>{{PROD.DESCRICAO}}</span>
+            <li ng-repeat="SUBCAT in $root.PRODUTOS_COMPRAS.SUBCATEGORIAS">
+                <div ng-if="SUBCAT.COUNT > 1" class="t">
+                    <span>{{SUBCAT.DESCRICAO}}</span>
                     <a>Todos os produtos</a>
                     <div class="clearBoth"></div>
                 </div>
-                <ul class="scrollable-content flex" scroll flex md-scroll-x>
-                    <li ng-repeat="ITEM in PROD.ITENS">
-                        <div ng-click="$root.toolbar=false; $root.PROD_DETALHES = ITEM;">
-                            <img src="{{ITEM.IMAGEM}}">
+                <ul class="scrollable-content flex" scroll md-scroll-x>
+                    <li clear_both="{{ITEM.CLEAR_BOTH}}" ng-repeat="ITEM in SUBCAT.ITENS">
+                        <div ng-if="ITEM.TYPE=='PROD'" ng-click="$root.toolbar=false; $root.PROD_DETALHES = ITEM;">
+                            <img data-src="{{ITEM.IMAGEM}}" src="img/market4u.png" alt="">
                             <p class="preco">
-                                <label class="de">R$ 999,99</label>
-                                <label>R$ 984,99</label>
+                                <label class="de" ng-if="ITEM.VALOR_DE">{{ITEM.VALOR_DE_FORMAT}}</label>
+                                <label>{{ITEM.VALOR_FORMAT}}</label>
                             </p>
                             <h4>{{ITEM.NOME}}</h4>
                         </div>
-                        <div unidade_medida="{{ITEM.UNIDADE_MEDIDA}}" class="addRemoveProd" qtde="{{$root.QTDE_PRODUTOS[ITEM.PROD_ID]?$root.QTDE_PRODUTOS[ITEM.PROD_ID]:0}}">
+                        <div ng-if="ITEM.TYPE=='PROD'" unidade_medida="{{ITEM.UNIDADE_MEDIDA}}" class="addRemoveProd" qtde="{{$root.QTDE_PRODUTOS[ITEM.PROD_ID]?$root.QTDE_PRODUTOS[ITEM.PROD_ID]:0}}">
                             <i ng-click="addRemoveQtdeProd(ITEM, '-')" class="mdi mdi-content-remove"></i>
                             <span>{{$root.QTDE_PRODUTOS[ITEM.PROD_ID]?$root.QTDE_PRODUTOS[ITEM.PROD_ID]:0}}</span>
                             <i ng-click="addRemoveQtdeProd(ITEM, '+')" class="mdi mdi-content-add"></i>
                         </div>
+                        <div ng-if="ITEM.TYPE=='NAO_ENCONTROU'">
+                            Não encontrou o que queria?
+                            Descreva o produto
+                        </div>
+                        <div ng-if="ITEM.TYPE=='VEJA_tODOS'">
+                            Veja todos os produtos
+                            <i class="mdi mdi-navigation-arrow-forward"></i>
+                        </div>
                     </li>
-                    <li class="nao_encontrou">
-                        Não encontrou o que queria?
-                        Descreva o produto
-                    </li>
-                    <li class="nao_encontrou">
-                        Veja todos os produtos
-                        <i class="mdi mdi-navigation-arrow-forward"></i>
-                    </li>
-                    <div class="clearBoth"></div>
                 </ul>
             </li>
         </ul>
@@ -53,7 +52,7 @@
             </a>
             <div class="textoTitulo">Carrinho</div>
         </div>
-        <div class="scrollable-content" scroll flex md-scroll-y>
+        <div class="scrollable-content" scroll md-scroll-y>
             <ul>
                 <li ng-repeat="PROD in $root.CARRINHO_COMPRAS.PRODUTOS">
                     <div class="b" ng-click="$root.PROD_DETALHES = PROD;">
@@ -89,8 +88,8 @@
             </a>
             <div class="textoTitulo">{{$root.PROD_DETALHES.NOME}}</div>
         </div>
-        <div class="scrollable-content" scroll flex md-scroll-y>
-            <img src="{{$root.PROD_DETALHES.IMAGEM}}">
+        <div class="scrollable-content" scroll md-scroll-y>
+            <img data-src="{{$root.PROD_DETALHES.IMAGEM}}" src="img/market4u.png" alt="">
             <div ng-if="$root.PROD_DETALHES.UNIDADE_MEDIDA!='KG'||$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]" class="addRemoveQtdeProduto" unidade_medida="{{$root.PROD_DETALHES.UNIDADE_MEDIDA}}">
                 <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '+')" class="mdi mdi-content-add-circle"></i>
                 <span>{{$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]?$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]:0}}</span>
@@ -104,7 +103,7 @@
     </a>
 </div>
 
-<md-content id="boxPagamento" ng-if="$root.TIPO_PG == 'PAGAMENTO'" t="{{$root.BTN_TYPE}}" step="{{STEP}}" class="scrollable-content" mn-touch swipe-left="clickBtnHome(1)" scroll flex md-scroll-y>
+<md-content id="boxPagamento" ng-if="$root.TIPO_PG == 'PAGAMENTO'" t="{{$root.BTN_TYPE}}" step="{{STEP}}" class="scrollable-content" mn-touch swipe-left="clickBtnHome(1)" scroll md-scroll-y>
     <h4 ng-if="!$root.STEPS.length">
         Aguarde por favor, carregando...
     </h4>
@@ -124,7 +123,7 @@
             <div ng-if="STEP==ITEM.STEP&&STEP==3" id="Payment">
                 <h4 ng-if="$root.STATUS_TEXTO">{{$root.STATUS_TEXTO}}</h4>
 
-                <div ng-if="!$root.transacaoIdCarrinho" id="Produtos" class="scrollable-content" scroll flex md-scroll-y>
+                <div ng-if="!$root.transacaoIdCarrinho" id="Produtos" class="scrollable-content" scroll md-scroll-y>
                     <h5>Carrinho</h5>
 
                     <i class="mdi-navigation-close" onclick="$('#Produtos').hide();"></i>
@@ -144,6 +143,8 @@
                 </div>
 
                 <div id="boxPg" ng-include src="'view/payment/formas_pg.html'"></div>
+
+                <a ng-click="location('#!/')" ng-if="!$root.transacaoIdCarrinho">Cancelar</a>
             </div>
         </li>
     </ul>

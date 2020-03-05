@@ -60,12 +60,32 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                     }
                 },
                 function (data) {
+                    $('#boxProdutos').scrollTop(0);
                     $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS = data.COMPRAS;
                     $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
                     $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS = data.CARRINHO;
                 }
             );
         }
+    };
+
+    $rootScope.scroll = function(ID) {
+        Payment.PRODUTOS_COMPRAS.SCROLL['OFFSET'] += parseInt(Payment.PRODUTOS_COMPRAS.SCROLL['LIMIT']);
+        Factory.ajax(
+            {
+                action: 'payment/compras',
+                data: {
+                    ID: parseInt(Payment.PRODUTOS_COMPRAS.CATEGORIA),
+                    SCROLL: Payment.PRODUTOS_COMPRAS.SCROLL
+                }
+            },
+            function (data) {
+                $.each(data.COMPRAS.SUBCATEGORIAS[0]['ITENS'], function (idx, item) {
+                    Payment.PRODUTOS_COMPRAS.SUBCATEGORIAS[0]['ITENS'].push(item);
+                });
+                $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS;
+            }
+        );
     };
 
     if ($rootScope.usuario.COMPRAR)
@@ -151,11 +171,11 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
 
     $rootScope.addRemoveQtdeProd = function (PROD, type) {
         if (!PROD.QTDE_ORIGINAL)
-            PROD.QTDE_ORIGINAL = PROD.QTDE;
+            PROD.QTDE_ORIGINAL = parseFloat($rootScope.QTDE_PRODUTOS[PROD.PROD_ID] || 0);
 
         switch (type) {
             case '+':
-                PROD.QTDE = parseInt(PROD.QTDE) + 1;
+                PROD.QTDE = parseInt($rootScope.QTDE_PRODUTOS[PROD.PROD_ID]) + 1;
                 $rootScope.QTDE_PRODUTOS[PROD.PROD_ID] = PROD.QTDE;
                 $rootScope.SetAddRemoveQtdeProd(PROD, PROD.QTDE);
                 break;
@@ -181,7 +201,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                                 $rootScope.SetAddRemoveQtdeProd(PROD, 0);
                         }
                     } else {
-                        PROD.QTDE = parseInt(PROD.QTDE) - 1;
+                        PROD.QTDE = parseInt($rootScope.QTDE_PRODUTOS[PROD.PROD_ID]) - 1;
                         $rootScope.QTDE_PRODUTOS[PROD.PROD_ID] = PROD.QTDE;
                         $rootScope.SetAddRemoveQtdeProd(PROD, PROD.QTDE);
                     }

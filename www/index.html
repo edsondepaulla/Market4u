@@ -155,7 +155,6 @@
         <li ng-repeat="menu in MenuLeft" ng-if="usuario.ID || menu.logado">
           <a ng-click="location(menu.url, menu.external)">
             <i ng-if="menu.icon" class="mdi {{menu.icon}}"></i>
-            <img ng-if="menu.img" src="img/{{menu.img}}" border="0">
             {{menu.titulo}}
           </a>
         </li>
