@@ -93,7 +93,7 @@
         Meu saldo <b>{{usuario.MEUSALDO_FORMAT}}</b> <span ng-if="!usuario.MEUSALDO"><i class="mdi mdi-content-add-circle"></i> Adicionar saldo</span>
       </div>
     </div>
-    <img ng-click="location('#!/')" src="img/logo.png" border="0">
+    <img ng-if="controller != 'Index'" ng-click="location('#!/')" src="img/logo.png" border="0">
   </div>
 
   <div class="app" ng-controller="Main">

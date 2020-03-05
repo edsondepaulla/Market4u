@@ -1,12 +1,22 @@
 <div id="boxCompras" ng-if="$root.TIPO_PG == 'COMPRAR' && $root.usuario.COMPRAR">
-    <i ng-if="$root.usuario.AUTOATENDIMENTO" ng-click="$root.TIPO_PG='PAGAMENTO'" class="mdi mdi-editor-attach-money"></i>
-
     <ul id="boxCategorias">
         <li class="{{CAT.ACTIVE?'active':''}}" ng-repeat="CAT in $root.PRODUTOS_COMPRAS.CATEGORIAS">
             <a ng-click="getCompras(CAT)">{{CAT.DESCRICAO}}</a>
         </li>
         <div class="clearBoth"></div>
     </ul>
+
+    <a ng-if="$root.PRODUTOS_COMPRAS.CATEGORIAS" ng-click="$root.toolbar=false;$root.MenuBottom=false;$root.PRODUTOS_BUSCA=true;">Busca</a>
+
+    <div class="boxPopup" box="busca" ng-if="$root.PRODUTOS_BUSCA">
+        <div class="topTitulo">
+            <a class="open-left" ng-click="voltarTop('index')">
+                <i class="mdi mdi-navigation-chevron-left"></i>
+            </a>
+            <div class="textoTitulo">Busca de produtos</div>
+        </div>
+
+    </div>
 
     <md-content id="boxProdutos" class="scrollable-content flex" type="produtos" scroll="{{$root.PRODUTOS_COMPRAS.SCROLL.ATIVO}}" flex md-scroll-y>
         <ul>
@@ -18,7 +28,7 @@
                 </div>
                 <ul class="scrollable-content flex" scroll md-scroll-x>
                     <li clear_both="{{ITEM.CLEAR_BOTH?1:0}}" ng-repeat="ITEM in SUBCAT.ITENS">
-                        <div ng-if="ITEM.TYPE=='PROD'" ng-click="$root.toolbar=false; $root.PROD_DETALHES = ITEM;">
+                        <div ng-if="ITEM.TYPE=='PROD'" ng-click="$root.toolbar=false; $root.MenuBottom=false; $root.PROD_DETALHES = ITEM;">
                             <img data-src="{{ITEM.IMAGEM}}" src="img/market4u.png" alt="">
                             <p class="preco">
                                 <label class="de" ng-if="ITEM.VALOR_DE">{{ITEM.VALOR_DE_FORMAT}}</label>
@@ -55,7 +65,8 @@
         <div class="scrollable-content" scroll md-scroll-y>
             <ul>
                 <li ng-repeat="PROD in $root.CARRINHO_COMPRAS.PRODUTOS">
-                    <div class="b" ng-click="$root.PROD_DETALHES = PROD;">
+                    <div class="b" ng-click="$root.MenuBottom=false; $root.PROD_DETALHES = PROD;">
+                        <img data-src="{{PROD.IMAGEM}}" src="img/market4u.png" alt="">
                         <h4>{{PROD.NOME}} <i ng-if="PROD.CONTEUDO != NULL">({{PROD.CONTEUDO}})</i></h4>
                         <label class="total_de" ng-if="PROD.DE_PRECO_FORMAT"><span class="v">{{PROD.DE_PRECO_FORMAT}}</span></label>
                         <label><span class="v">{{PROD.PRECO_FORMAT}}</span></label>
@@ -83,7 +94,7 @@
 
     <div class="boxPopup" box="produto" ng-if="$root.PROD_DETALHES">
         <div class="topTitulo">
-            <a class="open-left" ng-click="$root.toolbar=$root.PROD_DETALHES.ORIGEM=='COMPRAS'?true:false; $root.PROD_DETALHES = false;">
+            <a class="open-left" ng-click="$root.MenuBottom=true; $root.toolbar=$root.PROD_DETALHES.ORIGEM=='COMPRAS'?true:false; $root.PROD_DETALHES = false;">
                 <i class="mdi mdi-navigation-chevron-left"></i>
             </a>
             <div class="textoTitulo">{{$root.PROD_DETALHES.NOME}}</div>
@@ -98,16 +109,12 @@
         </div>
     </div>
 
-    <a ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR && $root.TIPO_PG != 'PAGAMENTO'" id="boxCarrinhoFloat" style="z-index: {{$root.PROD_DETALHES?2:1}}" ng-click="$root.toolbar=false;$root.CARRINHO=true;$root.PROD_DETALHES=false;">
+    <a bottom="{{$root.PROD_DETALHES?1:0}}" ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR && $root.TIPO_PG != 'PAGAMENTO'" id="boxCarrinhoFloat" style="z-index: {{$root.PROD_DETALHES?2:1}}" ng-click="$root.MenuBottom=true;$root.toolbar=false;$root.CARRINHO=true;$root.PROD_DETALHES=false;">
         <i class="mdi mdi-action-shopping-cart"></i> R$ {{$root.CARRINHO_COMPRAS.TOTAL_POR}}
     </a>
 </div>
 
 <md-content id="boxPagamento" ng-if="$root.TIPO_PG == 'PAGAMENTO'" t="{{$root.BTN_TYPE}}" step="{{STEP}}" class="scrollable-content" mn-touch swipe-left="clickBtnHome(1)" scroll md-scroll-y>
-    <h4 ng-if="!$root.STEPS.length">
-        Aguarde por favor, carregando...
-    </h4>
-    <i ng-if="STEP == 1 && $root.usuario.COMPRAR" ng-click="$root.TIPO_PG='COMPRAR'" class="mdi mdi-action-shopping-cart"></i>
     <ul ng-if="$root.STEPS">
         <li ng-click="ITEM.STEP==1?clickBtnHome():null" step="{{ITEM.STEP}}" ng-repeat="ITEM in $root.STEPS" class="{{STEP>=ITEM.STEP?'active':''}}">
             <p>

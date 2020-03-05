@@ -123,6 +123,11 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
 
     $scope.voltarTop = function (ORIGEM) {
         switch (ORIGEM) {
+            case 'index':
+                $rootScope.toolbar = true;
+                $rootScope.MenuBottom = true;
+                $rootScope.PRODUTOS_BUSCA = false;
+                break;
             case 'carrinho':
                 $rootScope.CARRINHO = false;
                 $rootScope.toolbar = true;
@@ -229,23 +234,9 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     $rootScope.STEPS =
         [
             {
-                'STEP': 'AA',
-                'TEXTO': 'Autoatendimento'
-            },
-            {
-                'STEP': 1,
-                'STEP_TEXTO': 1,
-                'TEXTO': 'Ler o QRCode'
-            },
-            {
                 'STEP': 3,
                 'STEP_TEXTO': 2,
                 'TEXTO': 'Modo de pagamento'
-            },
-            {
-                'STEP': 4,
-                'STEP_TEXTO': 3,
-                'TEXTO': 'Compra realizada com sucesso'
             }
         ];
 

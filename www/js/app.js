@@ -366,7 +366,8 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     Factory.$rootScope = $rootScope;
 
     // Get login
-    Login.get();
+    if (!parseInt(Login.getData().ID))
+        Login.get();
 
     $rootScope.location = function (url, external, active) {
         if (active)
@@ -407,6 +408,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                 $rootScope.PROD_DETALHES = false;
                 $rootScope.CARRINHO = false;
                 $rootScope.TIPO_PG = 'COMPRAR';
+                $('#boxProdutos').scrollTop(0);
             }
             if (url != '#!/conecte-se' && url != '#!/boas-vindas' && url != '#!/')
                 $route.reload();
