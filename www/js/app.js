@@ -1016,21 +1016,18 @@ app.directive('onErrorSrc', function() {
     }
 });
 
-var scrollTimeout = null;
 app.directive('scroll', function($routeParams) {
     return {
         link: function (scope, element, attrs) {
             angular.element(element).bind("scroll", function () {
                 var _this = $(this);
-                if(parseInt(_this.attr('scroll'))) {
+                if (parseInt(_this.attr('scroll'))) {
                     switch (_this.attr('type')) {
                         case 'produtos':
-                            clearTimeout(scrollTimeout);
-                            scrollTimeout = setTimeout(function () {
-                                if ((_this.find('> ul').height() - _this.height() - _this.scrollTop()) <= 10) {
-                                    Factory.$rootScope.scroll();
-                                }
-                            }, 100);
+                            if (Factory.$rootScope.scrollLiberado && (_this.find('> ul').height() - _this.height() - _this.scrollTop()) <= 300) {
+                                Factory.$rootScope.scrollLiberado = false;
+                                Factory.$rootScope.scroll();
+                            }
                             break;
                     }
                 }

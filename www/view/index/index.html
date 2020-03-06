@@ -48,8 +48,8 @@
                         <div ng-if="ITEM.TYPE=='PROD'" ng-click="$root.toolbar=false; $root.MenuBottom=false; $root.PROD_DETALHES = ITEM;">
                             <img data-src="{{ITEM.IMAGEM}}" src="img/market4u.png" alt="">
                             <p class="preco">
-                                <label class="de" ng-if="ITEM.VALOR_DE">{{ITEM.VALOR_DE_FORMAT}}</label>
-                                <label>{{ITEM.VALOR_FORMAT}}</label>
+                                <label class="de" ng-if="ITEM.DE_PRECO_FORMAT">{{ITEM.DE_PRECO_FORMAT}}</label>
+                                <label>{{ITEM.PRECO_FORMAT}}</label>
                             </p>
                             <h4>{{ITEM.NOME}}</h4>
                         </div>
@@ -97,8 +97,8 @@
                 <li style="height: auto;text-align: center" ng-if="!$root.CARRINHO_COMPRAS.PRODUTOS">
                     Nenhum produto adicionado na sua lista de compra!
                 </li>
-                <li style="height: auto;">
-                    <a id="addMaisItens" ng-click="$root.clickItem('carrinho')">Adicionar{{$root.CARRINHO_COMPRAS.PRODUTOS?' mais itens':''}}<i class="mdi mdi-content-add-circle"></i></a>
+                <li style="height: auto;padding-bottom: 0;">
+                    <a style="{{$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR?'':'text-align: center;'}}" id="addMaisItens" ng-click="$root.clickItem('carrinho')">Adicionar{{$root.CARRINHO_COMPRAS.PRODUTOS?' mais itens':''}}<i class="mdi mdi-content-add-circle"></i></a>
                     <a ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR" id="limparCarrinho" ng-click="limparCarrinho()">Limpar carrinho<i class="mdi mdi-content-remove-circle"></i></a>
                 </li>
             </ul>
@@ -114,20 +114,28 @@
             <a class="open-left" ng-click="$root.MenuBottom=true; $root.toolbar=$root.PROD_DETALHES.ORIGEM=='COMPRAS'?true:false; $root.PROD_DETALHES = false;">
                 <i class="mdi mdi-navigation-chevron-left"></i>
             </a>
-            <div class="textoTitulo">{{$root.PROD_DETALHES.NOME}}</div>
+            <div class="textoTitulo"></div>
         </div>
         <div class="scrollable-content" scroll md-scroll-y>
-            <img data-src="{{$root.PROD_DETALHES.IMAGEM}}" src="img/market4u.png" alt="">
-            <BR>{{$root.PROD_DETALHES.VALOR_FORMAT}}
             <div ng-if="$root.PROD_DETALHES.UNIDADE_MEDIDA!='KG'||$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]" class="addRemoveQtdeProduto" unidade_medida="{{$root.PROD_DETALHES.UNIDADE_MEDIDA}}">
                 <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '+')" class="mdi mdi-content-add-circle"></i>
-                <span>{{$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]?$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]:0}}</span>
+                <span>{{$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]?$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]:1}}</span>
                 <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '-')" class="mdi mdi-content-remove-circle"></i>
             </div>
+
+            <img data-src="{{$root.PROD_DETALHES.IMAGEM}}" src="img/market4u.png" alt="">
+            <h4>{{$root.PROD_DETALHES.NOME}}</h4>
+
+            <p class="preco">
+                <label class="de" ng-if="$root.PROD_DETALHES.DE_PRECO_FORMAT">{{$root.PROD_DETALHES.DE_PRECO_FORMAT}}</label>
+                <label>{{$root.PROD_DETALHES.PRECO_FORMAT}}</label>
+            </p>
+
+            <a ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '+')" id="comprar">COMPRAR</a>
         </div>
     </div>
 
-    <a bottom="{{$root.PROD_DETALHES?1:0}}" ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR && $root.TIPO_PG != 'PAGAMENTO'" id="boxCarrinhoFloat" style="z-index: {{$root.PROD_DETALHES?2:1}}" ng-click="$root.MenuBottom=true;$root.toolbar=false;$root.CARRINHO=true;$root.PROD_DETALHES=false;">
+    <a top="{{$root.PROD_DETALHES?1:0}}" ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR && $root.TIPO_PG != 'PAGAMENTO'" id="boxCarrinhoFloat" style="z-index: {{$root.PROD_DETALHES?2:1}}" ng-click="$root.MenuBottom=true;$root.toolbar=false;$root.CARRINHO=true;$root.PROD_DETALHES=false;">
         <i class="mdi mdi-action-shopping-cart"></i> R$ {{$root.CARRINHO_COMPRAS.TOTAL_POR}}
     </a>
 </div>

@@ -59,6 +59,7 @@ var Factory = {
             case 'payment/cancel':
             case 'cadastro/verify':
             case 'payment/carrinho':
+            case 'payment/addremoveqtde':
                 return false;
                 break;
         }
@@ -67,7 +68,7 @@ var Factory = {
     ajax: function (params, successCallback, functionError) {
         if (params.action) {
             // Loading
-            var diffCarregando = this.diffCarregando(params.action);
+            var diffCarregando = params.data['LOADER_CARREGANDO'] === false ? false : this.diffCarregando(params.action);
             if (diffCarregando) {
                 clearTimeout(Factory.timeoutCarregando);
                 $('#carregando').show().css('opacity', 1);

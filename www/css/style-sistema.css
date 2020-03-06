@@ -3234,21 +3234,18 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li.active{
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-body[controller="Index"] #boxCarrinhoFloat[bottom="1"] .mdi-action-shopping-cart{
-  font-size: 30px;
-}
 body[controller="Index"] #boxCarrinhoFloat .mdi-action-shopping-cart{
   font-size: 24px;
   vertical-align: middle;
 }
-body[controller="Index"] #boxCarrinhoFloat[bottom="1"]{
-  bottom: 10px;
-  font-size: 24px;
-  width: calc(100% - 20px);
-  display: flex;
-  height: 50px;
-  align-items: center;
-  justify-content: space-between;
+body[controller="Index"] #boxCarrinhoFloat[top="1"]{
+  top: 6px;
+  bottom: unset;
+  right: 6px;
+  background: transparent;
+  box-shadow: unset;
+  color: #444;
+  font-weight: 500;
 }
 body[controller="Index"] #boxCarrinhoFloat{
   background: #00ab46;
@@ -5061,7 +5058,7 @@ ul#boxTour li[idx="1"] div{
 .boxPopup[box="produto"] .scrollable-content > img[src="img/market4u.png"]{
   opacity: 0.1;
   width: 90px;
-  margin: 10px;
+  margin: 15px;
 }
 .boxPopup[box="produto"] .scrollable-content > img{
   width: 120px;
@@ -5144,6 +5141,7 @@ ul#boxTour li[idx="1"] div{
   text-decoration: underline;
   color: #e94847;
   margin-bottom: 5px;
+  padding: 5px 0;
 }
 .boxPopup[box="carrinho"] #limparCarrinho i{
   margin-left: 5px;
@@ -5157,6 +5155,7 @@ ul#boxTour li[idx="1"] div{
   font-size: 13px;
   text-decoration: underline;
   color: #00ab46;
+  padding: 5px 0;
 }
 .boxPopup[box="carrinho"] #addMaisItens i{
   margin-left: 5px;
@@ -5274,7 +5273,7 @@ body b, body strong {
   position: relative;
 }
 md-content#boxProdutos{
-  padding-bottom: 220px !important;
+  padding-bottom: 190px !important;
   display: block;
   width: 100%;
   height: 100%;
@@ -5511,4 +5510,37 @@ body[controller="Index"] > #toolbar #local{
   text-align: center;
   line-height: 15px;
   transition: 0.5s;
+}
+.boxPopup[box="produto"] .scrollable-content > h4{
+  color: #00ab46;
+  padding: 10px;
+  font-weight: 500;
+  margin: 0;
+}
+.boxPopup[box="produto"] .scrollable-content > #comprar{
+  background: #00ab46;
+  color: #FFF;
+  border-radius: 5px;
+  z-index: 1;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26), 0 2px 10px 0 rgba(0,0,0,0.22);
+  transition: 0.5s;
+  padding: 7px 20px;
+  font-size: 18px;
+  display: inline-flex;
+}
+
+.boxPopup[box="produto"] .scrollable-content > p.preco{
+  font-size: 20px;
+  margin: 0 15px 15px;
+  display: block;
+}
+.boxPopup[box="produto"] .scrollable-content > p.preco label{
+  color: #444;
+  display: inline-block;
+  font-weight: 500;
+}
+.boxPopup[box="produto"] .scrollable-content > p.preco label.de{
+  text-decoration: line-through;
+  color: #CCC;
+  font-size: 15px;
 }

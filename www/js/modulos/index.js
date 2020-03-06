@@ -69,6 +69,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         }
     };
 
+    $rootScope.scrollLiberado = true;
     $rootScope.scroll = function(ID) {
         Payment.PRODUTOS_COMPRAS.SCROLL['OFFSET'] += parseInt(Payment.PRODUTOS_COMPRAS.SCROLL['LIMIT']);
         Factory.ajax(
@@ -76,14 +77,22 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                 action: 'payment/compras',
                 data: {
                     ID: parseInt(Payment.PRODUTOS_COMPRAS.CATEGORIA),
-                    SCROLL: Payment.PRODUTOS_COMPRAS.SCROLL
+                    SCROLL: Payment.PRODUTOS_COMPRAS.SCROLL,
+                    LOADER_CARREGANDO: false
                 }
             },
             function (data) {
-                $.each(data.COMPRAS.SUBCATEGORIAS[0]['ITENS'], function (idx, item) {
-                    Payment.PRODUTOS_COMPRAS.SUBCATEGORIAS[0]['ITENS'].push(item);
-                });
-                $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS;
+                $rootScope.scrollLiberado = true;
+                if (data.COMPRAS.SUBCATEGORIAS[0]) {
+                    $rootScope.PRODUTOS_COMPRAS.SCROLL.ATIVO = parseInt(data.COMPRAS.SCROLL.ATIVO || 0);
+                    $.each(data.COMPRAS.SUBCATEGORIAS[0]['ITENS'], function (idx, item) {
+                        Payment.PRODUTOS_COMPRAS.SUBCATEGORIAS[0]['ITENS'].push(item);
+                    });
+                    $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS;
+                } else
+                    $rootScope.PRODUTOS_COMPRAS.SCROLL.ATIVO = 0;
+            }, function () {
+                $rootScope.scrollLiberado = true;
             }
         );
     };

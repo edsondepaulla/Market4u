@@ -78,6 +78,8 @@ var Login = {
         Factory.ajax(
             {
                 action: 'login/logout'
+            }, function () {
+                Factory.$rootScope.LOCAL = [];
             }
         );
     },
