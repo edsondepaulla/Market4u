@@ -5444,3 +5444,71 @@ ul#boxCategorias li.active a{
   background: #00ab46;
   font-weight: 500;
 }
+.boxPopup[box="busca"] .open-left i.mdi-navigation-chevron-left{
+  line-height: 55px;
+}
+.boxPopup[box="busca"] .topTitulo{
+  background: #fcfcfc;
+  min-height: 56px;
+}
+.boxPopup #busca{
+  position: relative;
+  width: calc(100% - 54px);
+  float: right;
+}
+.boxPopup #busca input::placeholder {
+  color: #444;
+  opacity: 0.5;
+  font-weight: normal;
+  font-family: 'Montserrat',sans-serif;
+  letter-spacing: 0px;
+  font-size: 14px;
+}
+.boxPopup #busca input{
+  width: calc(100% - 10px);
+  border-radius: 44px;
+  border: 1px solid #EEE;
+  padding: 6px 18px 5px 35px;
+  margin: 10px 0 0;
+}
+.boxPopup #busca i.mdi-action-search{
+  position: absolute;
+  top: 10px;
+  left: 8px;
+  font-size: 27px;
+  color: #e2e2e2;
+}
+.boxPopup #busca i.mdi-content-clear{
+  position: absolute;
+  top: 2px;
+  right: 6px;
+  font-size: 22px;
+  margin: 10px;
+}
+body[controller="Index"] > #toolbar #local i{
+  color: #00ab46;
+  font-size: 18px;
+}
+body[controller="Index"] > #toolbar #local span{
+  display: block;
+  font-weight: 600;
+  color: #00ab46;
+  font-size: 13px;
+  max-width: 94px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+body[controller="Index"] > #toolbar #local[encontrou="0"]{
+  top: 14px;
+  right: 6px;
+}
+body[controller="Index"] > #toolbar #local{
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 11px;
+  text-align: center;
+  line-height: 15px;
+  transition: 0.5s;
+}

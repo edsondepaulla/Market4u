@@ -126,8 +126,16 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     };
 
     $rootScope.PRODUTOS_BUSCA = [];
-    $scope.clickItem = function (ORIGEM) {
+    $rootScope.clickItem = function (ORIGEM) {
         switch (ORIGEM) {
+            case 'busca_locais':
+                $rootScope.toolbar = false;
+                $rootScope.MenuBottom = false;
+                $rootScope.LOCAL.ATIVO = true;
+                setTimeout(function(){
+                    $('.boxPopup[box="busca_locais"] #busca input').focus();
+                }, 500);
+                break;
             case 'busca':
                 $rootScope.toolbar = false;
                 $rootScope.MenuBottom = false;
@@ -140,12 +148,19 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                 $rootScope.toolbar = true;
                 $rootScope.MenuBottom = true;
                 $rootScope.PRODUTOS_BUSCA.ATIVO = false;
+                $rootScope.LOCAL.ATIVO = false;
                 break;
             case 'carrinho':
                 $rootScope.CARRINHO = false;
                 $rootScope.toolbar = true;
                 break;
         }
+    };
+
+    $scope.setLocal = function (ITEM) {
+        $rootScope.LOCAL.TEXTO = ITEM.NOME_ABV;
+        $rootScope.clickItem('index');
+        $scope.getCompras({ID: 0});
     };
 
     $rootScope.SetAddRemoveQtdeProd = function (PROD, QTDE) {

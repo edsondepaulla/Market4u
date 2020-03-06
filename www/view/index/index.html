@@ -1,5 +1,5 @@
 <div id="boxCompras" ng-if="$root.TIPO_PG == 'COMPRAR' && $root.usuario.COMPRAR">
-    <i ng-if="$root.PRODUTOS_COMPRAS.CATEGORIAS" ng-click="clickItem('busca')" id="buscaProdutos" class="mdi mdi-action-search"></i>
+    <i ng-if="$root.PRODUTOS_COMPRAS.CATEGORIAS" ng-click="$root.clickItem('busca')" id="buscaProdutos" class="mdi mdi-action-search"></i>
     <ul id="boxCategorias">
         <li class="{{CAT.ACTIVE?'active':''}}" ng-repeat="CAT in $root.PRODUTOS_COMPRAS.CATEGORIAS">
             <a ng-click="getCompras(CAT)">{{CAT.DESCRICAO}}</a>
@@ -8,9 +8,23 @@
     </ul>
     <div class="clearBoth"></div>
 
+    <div class="boxPopup" box="locais" ng-if="$root.LOCAL.ATIVO">
+        <div class="topTitulo">
+            <a class="open-left" ng-click="$root.clickItem('index')">
+                <i class="mdi mdi-navigation-chevron-left"></i>
+            </a>
+            <div class="textoTitulo">Locais</div>
+        </div>
+        <ul>
+            <li ng-click="setLocal(ITEM)" ng-repeat="ITEM in $root.LOCAL.ITENS">
+                {{ITEM.NOME}}
+            </li>
+        </ul>
+    </div>
+
     <div class="boxPopup" box="busca" ng-if="$root.PRODUTOS_BUSCA.ATIVO">
         <div class="topTitulo">
-            <a class="open-left" ng-click="clickItem('index')">
+            <a class="open-left" ng-click="$root.clickItem('index')">
                 <i class="mdi mdi-navigation-chevron-left"></i>
             </a>
             <div id="busca">
@@ -19,49 +33,6 @@
                 <i ng-if="$root.pesquisa && $root.pesquisa != ''" ng-click="clearPesquisa()" class="mdi mdi-content-clear"></i>
             </div>
         </div>
-        <style>
-            .boxPopup[box="busca"] .open-left i.mdi-navigation-chevron-left{
-                line-height: 55px;
-            }
-            .boxPopup[box="busca"] .topTitulo{
-                background: #fcfcfc;
-                min-height: 56px;
-            }
-            .boxPopup[box="busca"] #busca{
-                position: relative;
-                width: calc(100% - 54px);
-                float: right;
-            }
-            .boxPopup[box="busca"] #busca input::placeholder {
-                color: #444;
-                opacity: 0.5;
-                font-weight: normal;
-                font-family: 'Montserrat',sans-serif;
-                letter-spacing: 0px;
-                font-size: 14px;
-            }
-            .boxPopup[box="busca"] #busca input{
-                width: calc(100% - 10px);
-                border-radius: 44px;
-                border: 1px solid #EEE;
-                padding: 6px 18px 5px 35px;
-                margin: 10px 0 0;
-            }
-            .boxPopup[box="busca"] #busca i.mdi-action-search{
-                position: absolute;
-                top: 10px;
-                left: 8px;
-                font-size: 27px;
-                color: #e2e2e2;
-            }
-            .boxPopup[box="busca"] #busca i.mdi-content-clear{
-                position: absolute;
-                top: 2px;
-                right: 6px;
-                font-size: 22px;
-                margin: 10px;
-            }
-        </style>
     </div>
 
     <md-content id="boxProdutos" class="scrollable-content flex" type="produtos" scroll="{{$root.PRODUTOS_COMPRAS.SCROLL.ATIVO}}" flex md-scroll-y>
@@ -103,7 +74,7 @@
 
     <div class="boxPopup" box="carrinho" ng-if="$root.CARRINHO">
         <div class="topTitulo">
-            <a class="open-left" ng-click="clickItem('carrinho')">
+            <a class="open-left" ng-click="$root.clickItem('carrinho')">
                 <i class="mdi mdi-navigation-chevron-left"></i>
             </a>
             <div class="textoTitulo">Carrinho</div>
@@ -127,7 +98,7 @@
                     Nenhum produto adicionado na sua lista de compra!
                 </li>
                 <li style="height: auto;">
-                    <a id="addMaisItens" ng-click="clickItem('carrinho')">Adicionar{{$root.CARRINHO_COMPRAS.PRODUTOS?' mais itens':''}}<i class="mdi mdi-content-add-circle"></i></a>
+                    <a id="addMaisItens" ng-click="$root.clickItem('carrinho')">Adicionar{{$root.CARRINHO_COMPRAS.PRODUTOS?' mais itens':''}}<i class="mdi mdi-content-add-circle"></i></a>
                     <a ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR" id="limparCarrinho" ng-click="limparCarrinho()">Limpar carrinho<i class="mdi mdi-content-remove-circle"></i></a>
                 </li>
             </ul>

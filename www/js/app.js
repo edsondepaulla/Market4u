@@ -353,9 +353,9 @@ app.controller('AtualizarApp', function($rootScope, $scope, ReturnData) {
     $scope.REG = ReturnData;
 });
 
+var TimeOutGetLocation = null;
 app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route, $mdSelect, $animate, $sce, deviceDetector) {
     $rootScope.usuario = Login.getData();
-    navigator.geolocation;
     Factory.prepare();
 
     $rootScope.device = deviceDetector.os;
@@ -365,9 +365,38 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     Factory.$http = $http;
     Factory.$rootScope = $rootScope;
 
+    // Local
+    $rootScope.LOCAL = [];
+    $rootScope.geolocation = function () {
+        clearTimeout(TimeOutGetLocation);
+        TimeOutGetLocation = setTimeout(function () {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function (position) {
+                        try {
+                            Factory.ajax(
+                                {
+                                    action: 'cadastro/setgeolocation',
+                                    data: position.coords
+                                },
+                                function (data) {
+                                    $rootScope.LOCAL = data.LOCAL;
+                                }
+                            );
+                        } catch (e) {
+
+                        }
+                    }
+                );
+            }
+        }, 1000);
+    };
+
     // Get login
     if (!parseInt(Login.getData().ID))
         Login.get();
+    else
+        $rootScope.geolocation();
 
     $rootScope.location = function (url, external, active) {
         if (active)
@@ -469,6 +498,10 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                 case 'ConecteSeCodigo':
                     break;
                 default:
+                    if (parseInt(Login.getData().ID)) {
+                        if (!$rootScope.LOCAL.TEXTO)
+                            $rootScope.geolocation();
+                    }
                     clearTimeout(Factory.timeout);
                     Factory.timeout = setTimeout(function () {
                         if (parseInt(Login.getData().ID)) {
