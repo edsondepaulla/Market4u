@@ -37,7 +37,10 @@ var BarCodeScanner = {
                                     if (results.buttonIndex == 1) {
                                         if (results.input1.length)
                                             BarCodeScanner.getScan(results.input1, type);
-                                    }
+                                        else
+                                            $('#carregando').hide().css('opacity', 0);
+                                    }else
+                                        $('#carregando').hide().css('opacity', 0);
                                 },
                                 'Atenção',
                                 ['Continue', 'Cancelar'],
