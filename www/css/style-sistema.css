@@ -2515,6 +2515,7 @@ line-height: 0;
 text-align: left;
 padding-left: 10px;
 }
+.topTitulo .open-left i.mdi-navigation-close,
 .topTitulo .open-left i.mdi-navigation-chevron-left {
   font-size: 34px;
   line-height: 45px;
@@ -3105,15 +3106,15 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li.active{
   background: transparent;
   border-bottom: 1px solid rgba(11, 99, 64, 1);
   border-radius: 0 !important;
-}
-::placeholder {
-  color: #444;
-  opacity: 0.5;
-  font-weight: normal;
-  font-family: 'Montserrat',sans-serif;
-  letter-spacing: 0px;
-  font-size: 18px;
-}
+  }
+  ::placeholder {
+    color: #444;
+    opacity: 0.5;
+    font-weight: normal;
+    font-family: 'Montserrat',sans-serif;
+    letter-spacing: 0px;
+    font-size: 18px;
+  }
 #boxPg > ul > li[tipo="VOUCHER"] ul li.c a{
   margin: 10px 0 0px;
   float: right;
@@ -4507,16 +4508,23 @@ ul#menu-bottom li i.mdi-editor-format-align-justify{
   margin-top: 7px;
 }
 
-ul#menu-bottom li label[type="COMPRAR"]{
-  background: #00ab46;
+ul#menu-bottom li#pagar_escanear img{
+  width: 37px;
+  position: absolute;
+  top: 14px;
+  z-index: 1;
+  left: calc(50% - 17px);
+}
+ul#menu-bottom li#pagar_escanear label{
   display: block;
   z-index: 1;
   position: absolute;
   width: 92%;
-  top: 33px;
+  top: 34px;
   border-radius: 15px;
-  left: 4%;
+  left: 4px;
   padding-top: 0px;
+  font-size: 11px;
 }
 
 ul#menu-bottom li i{

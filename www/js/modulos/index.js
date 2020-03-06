@@ -121,12 +121,25 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             $('#Produtos').show();
     };
 
-    $scope.voltarTop = function (ORIGEM) {
+    $scope.clearPesquisa = function () {
+        $rootScope.pesquisa = '';
+    };
+
+    $rootScope.PRODUTOS_BUSCA = [];
+    $scope.clickItem = function (ORIGEM) {
         switch (ORIGEM) {
+            case 'busca':
+                $rootScope.toolbar = false;
+                $rootScope.MenuBottom = false;
+                $rootScope.PRODUTOS_BUSCA.ATIVO = true;
+                setTimeout(function(){
+                    $('.boxPopup[box="busca"] #busca input').focus();
+                }, 500);
+                break;
             case 'index':
                 $rootScope.toolbar = true;
                 $rootScope.MenuBottom = true;
-                $rootScope.PRODUTOS_BUSCA = false;
+                $rootScope.PRODUTOS_BUSCA.ATIVO = false;
                 break;
             case 'carrinho':
                 $rootScope.CARRINHO = false;
