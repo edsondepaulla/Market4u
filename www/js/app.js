@@ -11,16 +11,6 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             templateUrl: "view/index/index.html",
             controller: 'Index'
         })
-        .when("/scanner", {
-            templateUrl: "view/pages/scanner.html",
-            controller: 'Scanner',
-            resolve: {
-                ReturnData: function ($route) {
-                    if (!Page.active)
-                        window.history.go(-1);
-                }
-            }
-        })
         .when("/area-restrita", {
             templateUrl: "view/pages/area-restrita.html",
             controller: 'AreaRestrita'
@@ -317,11 +307,6 @@ app.controller('AreaRestrita', function($rootScope, $scope, $routeParams) {
     $rootScope.border_top = 1;
     $rootScope.NO_WHATSAPP = false;
     $rootScope.Titulo = "Área restrita";
-});
-
-app.controller('Scanner', function($rootScope, $scope, $routeParams) {
-    $rootScope.border_top = 1;
-    $rootScope.Titulo = "Scanner";
 });
 
 app.controller('Faq', function($rootScope, $scope, $routeParams, ReturnData) {
