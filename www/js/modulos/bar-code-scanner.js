@@ -30,19 +30,27 @@ var BarCodeScanner = {
                     if (result.text)
                         BarCodeScanner.getScan(result.text, type);
                     else {
-                        $('#carregando').hide().css('opacity', 0);
-                        navigator.notification.prompt(
-                            'Não conseguiu escanear o código, digite se preferir',
-                            function (results) {
-                                if (results.buttonIndex == 1) {
-                                    if (results.input1.length)
-                                        BarCodeScanner.getScan(results.input1, type);
-                                }
-                            },
-                            'Atenção',
-                            ['Continue', 'Cancelar'],
-                            ''
-                        );
+                        try {
+                            navigator.notification.prompt(
+                                'Não conseguiu escanear o código, digite se preferir:',
+                                function (results) {
+                                    if (results.buttonIndex == 1) {
+                                        if (results.input1.length)
+                                            BarCodeScanner.getScan(results.input1, type);
+                                    }
+                                },
+                                'Atenção',
+                                ['Continue', 'Cancelar'],
+                                ''
+                            );
+                        } catch (err) {
+                            var text = prompt("Não conseguiu escanear o código, digite se preferir:", "");
+                            if (text != null)
+                                BarCodeScanner.getScan(text, type);
+                            else {
+                                $('#carregando').hide().css('opacity', 0);
+                            }
+                        }
                     }
                 },
                 function (error) {
