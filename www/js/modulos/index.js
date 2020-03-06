@@ -84,6 +84,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             function (data) {
                 $rootScope.scrollLiberado = true;
                 if (data.COMPRAS.SUBCATEGORIAS[0]) {
+                    $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
                     $rootScope.PRODUTOS_COMPRAS.SCROLL.ATIVO = parseInt(data.COMPRAS.SCROLL.ATIVO || 0);
                     $.each(data.COMPRAS.SUBCATEGORIAS[0]['ITENS'], function (idx, item) {
                         Payment.PRODUTOS_COMPRAS.SUBCATEGORIAS[0]['ITENS'].push(item);
@@ -134,29 +135,52 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         $rootScope.pesquisa = '';
     };
 
-    $rootScope.PRODUTOS_BUSCA = [];
+    $rootScope.PRODUTOS_CATEGORIAS_BUSCA = [];
     $rootScope.clickItem = function (ORIGEM) {
         switch (ORIGEM) {
+            case 'naoEncontrou':
+                $rootScope.toolbar = false;
+                $rootScope.MenuBottom = false;
+                $rootScope.NAO_ENCONTROU = true;
+                break;
+            case 'naoEncontrouVoltar':
+                $rootScope.toolbar = true;
+                $rootScope.MenuBottom = true;
+                $rootScope.NAO_ENCONTROU = false;
+                break;
+            case 'produtoVoltar':
+                $rootScope.MenuBottom = true;
+                $rootScope.toolbar = $rootScope.PROD_DETALHES.ORIGEM == 'COMPRAS' ? true : false;
+                $rootScope.PROD_DETALHES = false;
+                break;
             case 'busca_locais':
                 $rootScope.toolbar = false;
                 $rootScope.MenuBottom = false;
                 $rootScope.LOCAL.ATIVO = true;
-                setTimeout(function(){
+                setTimeout(function () {
                     $('.boxPopup[box="busca_locais"] #busca input').focus();
+                }, 500);
+                break;
+            case 'verProdutos':
+                $rootScope.toolbar = false;
+                $rootScope.MenuBottom = false;
+                $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ATIVO = true;
+                setTimeout(function () {
+                    $('.boxPopup[box="busca"] #busca input').focus();
                 }, 500);
                 break;
             case 'busca':
                 $rootScope.toolbar = false;
                 $rootScope.MenuBottom = false;
-                $rootScope.PRODUTOS_BUSCA.ATIVO = true;
-                setTimeout(function(){
+                $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ATIVO = true;
+                setTimeout(function () {
                     $('.boxPopup[box="busca"] #busca input').focus();
                 }, 500);
                 break;
             case 'index':
                 $rootScope.toolbar = true;
                 $rootScope.MenuBottom = true;
-                $rootScope.PRODUTOS_BUSCA.ATIVO = false;
+                $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ATIVO = false;
                 $rootScope.LOCAL.ATIVO = false;
                 break;
             case 'carrinho':

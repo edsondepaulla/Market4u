@@ -5343,6 +5343,42 @@ md-content#boxProdutos ul.scrollable-content li p.preco label.de{
   color: #CCC;
   font-size: 10px;
 }
+md-content#boxProdutos ul.scrollable-content li[type="NAO_ENCONTROU"] div b{
+  font-weight: 600;
+}
+md-content#boxProdutos ul.scrollable-content li[type="NAO_ENCONTROU"] div i{
+  display: block;
+  font-size: 41px;
+  opacity: 0.8;
+  color: #00ab46;
+  margin-top: 5px;
+}
+md-content#boxProdutos ul.scrollable-content li[type="NAO_ENCONTROU"] div{
+  border: 1px solid #f9f9f9;
+  height: 160px;
+  display: table-cell;
+  padding: 5px;
+  font-size: 12px;
+  border-radius: 10px;
+}
+md-content#boxProdutos ul.scrollable-content li[type="VEJA_TODOS"] i{
+  color: #00ab46;
+  font-size: 29px;
+  vertical-align: middle;
+}
+md-content#boxProdutos ul.scrollable-content li[type="VEJA_TODOS"]{
+  width: 150px;
+}
+md-content#boxProdutos ul.scrollable-content li[type="VEJA_TODOS"] div{
+  border: 1px solid #f9f9f9;
+  height: 160px;
+  display: table-cell;
+  padding: 5px;
+  font-size: 18px;
+  border-radius: 10px;
+  padding-top: 50px;
+  font-weight: 500;
+}
 md-content#boxProdutos ul.scrollable-content li div.addRemoveProd{
   background: #f9f9f9;
   text-align: center;

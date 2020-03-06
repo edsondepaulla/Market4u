@@ -22,7 +22,7 @@
         </ul>
     </div>
 
-    <div class="boxPopup" box="busca" ng-if="$root.PRODUTOS_BUSCA.ATIVO">
+    <div class="boxPopup" box="busca" ng-if="$root.PRODUTOS_CATEGORIAS_BUSCA.ATIVO">
         <div class="topTitulo">
             <a class="open-left" ng-click="$root.clickItem('index')">
                 <i class="mdi mdi-navigation-chevron-left"></i>
@@ -40,11 +40,11 @@
             <li count="{{$root.PRODUTOS_COMPRAS.SUBCATEGORIAS.length}}" ng-repeat="SUBCAT in $root.PRODUTOS_COMPRAS.SUBCATEGORIAS">
                 <div ng-if="$root.PRODUTOS_COMPRAS.SUBCATEGORIAS.length > 1" class="t">
                     <span>{{SUBCAT.DESCRICAO}}</span>
-                    <a>Todos os produtos</a>
+                    <a ng-click="$root.clickItem('verProdutos')" ng-if="SUBCAT.VEJA_TODOS">Todos os produtos</a>
                     <div class="clearBoth"></div>
                 </div>
                 <ul class="scrollable-content flex" scroll md-scroll-x>
-                    <li clear_both="{{ITEM.CLEAR_BOTH?1:0}}" ng-repeat="ITEM in SUBCAT.ITENS">
+                    <li type="{{ITEM.TYPE}}" clear_both="{{ITEM.CLEAR_BOTH?1:0}}" ng-repeat="ITEM in SUBCAT.ITENS">
                         <div ng-if="ITEM.TYPE=='PROD'" ng-click="$root.toolbar=false; $root.MenuBottom=false; $root.PROD_DETALHES = ITEM;">
                             <img data-src="{{ITEM.IMAGEM}}" src="img/market4u.png" alt="">
                             <p class="preco">
@@ -58,11 +58,12 @@
                             <span>{{$root.QTDE_PRODUTOS[ITEM.PROD_ID]?$root.QTDE_PRODUTOS[ITEM.PROD_ID]:0}}</span>
                             <i ng-click="addRemoveQtdeProd(ITEM, '+')" class="mdi mdi-content-add"></i>
                         </div>
-                        <div ng-if="ITEM.TYPE=='NAO_ENCONTROU'">
-                            Não encontrou o que queria?
-                            Descreva o produto
+                        <div ng-click="$root.clickItem('naoEncontrou')" ng-if="ITEM.TYPE=='NAO_ENCONTROU'">
+                            <i class="mdi mdi-communication-message"></i>
+                            <b>Não encontrou o que queria?</b>
+                            Informe-nos
                         </div>
-                        <div ng-if="ITEM.TYPE=='VEJA_tODOS'">
+                        <div ng-click="$root.clickItem('verProdutos')" ng-if="ITEM.TYPE=='VEJA_TODOS'">
                             Veja todos os produtos
                             <i class="mdi mdi-navigation-arrow-forward"></i>
                         </div>
@@ -71,6 +72,16 @@
             </li>
         </ul>
     </md-content>
+
+    <div class="boxPopup" box="locais" ng-if="$root.NAO_ENCONTROU">
+        <div class="topTitulo">
+            <a class="open-left" ng-click="$root.clickItem('naoEncontrouVoltar')">
+                <i class="mdi mdi-navigation-chevron-left"></i>
+            </a>
+            <div class="textoTitulo">Não encontrou o que queria?</div>
+        </div>
+        XXXX
+    </div>
 
     <div class="boxPopup" box="carrinho" ng-if="$root.CARRINHO">
         <div class="topTitulo">
@@ -111,7 +122,7 @@
 
     <div class="boxPopup" box="produto" ng-if="$root.PROD_DETALHES">
         <div class="topTitulo">
-            <a class="open-left" ng-click="$root.MenuBottom=true; $root.toolbar=$root.PROD_DETALHES.ORIGEM=='COMPRAS'?true:false; $root.PROD_DETALHES = false;">
+            <a class="open-left" ng-click="$root.clickItem('produtoVoltar')">
                 <i class="mdi mdi-navigation-chevron-left"></i>
             </a>
             <div class="textoTitulo"></div>
