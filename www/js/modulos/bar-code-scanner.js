@@ -25,22 +25,28 @@ var BarCodeScanner = {
     scan: function (type) {
         $('#carregando').show().css('opacity', 1);
         try {
-            if (Factory.$rootScope.device == 'android') {
-                Page.start();
-                Factory.$rootScope.location('#!/scanner');
-            }
             cordova.plugins.barcodeScanner.scan(
                 function (result) {
                     if (result.text)
                         BarCodeScanner.getScan(result.text, type);
                     else {
                         $('#carregando').hide().css('opacity', 0);
-                        Factory.$rootScope.location('#!/');
+                        navigator.notification.prompt(
+                            'Não conseguiu escanear o código, digite se preferir',
+                            function (results) {
+                                if (results.buttonIndex == 1) {
+                                    if (results.input1.length)
+                                        BarCodeScanner.getScan(results.input1, type);
+                                }
+                            },
+                            'Atenção',
+                            ['Continue', 'Cancelar'],
+                            ''
+                        );
                     }
                 },
                 function (error) {
                     $('#carregando').hide().css('opacity', 0);
-                    Factory.$rootScope.location('#!/');
                 },
                 {
                     preferFrontCamera: false,
@@ -79,7 +85,6 @@ var BarCodeScanner = {
                     BarCodeScanner.getScan(text, type);
                 else {
                     $('#carregando').hide().css('opacity', 0);
-                    Factory.$rootScope.location('#!/');
                 }
             }
         }
