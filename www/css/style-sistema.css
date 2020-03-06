@@ -5354,7 +5354,6 @@ md-content#boxProdutos ul.scrollable-content li[type="NAO_ENCONTROU"] div i{
   margin-top: 5px;
 }
 md-content#boxProdutos ul.scrollable-content li[type="NAO_ENCONTROU"] div{
-  border: 1px solid #f9f9f9;
   height: 160px;
   display: table-cell;
   padding: 5px;
@@ -5370,14 +5369,14 @@ md-content#boxProdutos ul.scrollable-content li[type="VEJA_TODOS"]{
   width: 150px;
 }
 md-content#boxProdutos ul.scrollable-content li[type="VEJA_TODOS"] div{
-  border: 1px solid #f9f9f9;
   height: 160px;
   display: table-cell;
   padding: 5px;
-  font-size: 18px;
+  font-size: 14px;
   border-radius: 10px;
-  padding-top: 50px;
+  padding-top: 63px;
   font-weight: 500;
+  line-height: 19px;
 }
 md-content#boxProdutos ul.scrollable-content li div.addRemoveProd{
   background: #f9f9f9;
