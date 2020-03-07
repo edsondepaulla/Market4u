@@ -15,11 +15,13 @@
             </a>
             <div class="textoTitulo">Locais</div>
         </div>
-        <ul>
-            <li ng-click="setLocal(ITEM)" ng-repeat="ITEM in $root.LOCAL.ITENS">
-                {{ITEM.NOME}}
-            </li>
-        </ul>
+        <div class="scrollable-content" scroll md-scroll-y>
+            <ul>
+                <li ng-click="setLocal(ITEM)" ng-repeat="ITEM in $root.LOCAL.ITENS">
+                    {{ITEM.NOME}}
+                </li>
+            </ul>
+        </div>
     </div>
 
     <div class="boxPopup" box="busca" ng-if="$root.PRODUTOS_CATEGORIAS_BUSCA.ATIVO">
@@ -29,9 +31,18 @@
             </a>
             <div id="busca">
                 <i class="mdi mdi-action-search"></i>
-                <input ng-keyup="getLst(true)" ng-model="$root.pesquisa" placeholder="Digite o que você procura">
-                <i ng-if="$root.pesquisa && $root.pesquisa != ''" ng-click="clearPesquisa()" class="mdi mdi-content-clear"></i>
+                <input ng-keyup="buscaProdutos(1)" ng-model="$root.PESQUISA" placeholder="{{$root.PRODUTOS_CATEGORIAS_BUSCA.PLACEHOLDER}}">
+                <i ng-if="$root.PESQUISA && $root.PESQUISA != ''" ng-click="clearPesquisa()" class="mdi mdi-content-clear"></i>
             </div>
+        </div>
+        <div class="scrollable-content flex" type="produtos_categorias_busca" scroll="{{$root.PRODUTOS_CATEGORIAS_BUSCA.SCROLL.ATIVO?1:0}}" md-scroll-y>
+            <ul class="produtos_lst">
+                <li type="{{ITEM.TYPE}}" clear_both="{{ITEM.CLEAR_BOTH?1:0}}" ng-repeat="ITEM in $root.PRODUTOS_CATEGORIAS_BUSCA.ITENS" ng-include src="'view/index/produto.html'"></li>
+                <li ng-if="!$root.scrollLiberado && $root.PRODUTOS_CATEGORIAS_BUSCA.SCROLL.ATIVO" type="LOADING">
+                    <img src="img/loader.gif" border="0">
+                    Carregando...
+                </li>
+            </ul>
         </div>
     </div>
 
@@ -40,24 +51,40 @@
             <li count="{{$root.PRODUTOS_COMPRAS.SUBCATEGORIAS.length}}" ng-repeat="SUBCAT in $root.PRODUTOS_COMPRAS.SUBCATEGORIAS">
                 <div ng-if="$root.PRODUTOS_COMPRAS.SUBCATEGORIAS.length > 1" class="t">
                     <span>{{SUBCAT.DESCRICAO}}</span>
-                    <a ng-click="$root.clickItem('verProdutos')" ng-if="SUBCAT.VEJA_TODOS">Todos os produtos</a>
+                    <a ng-click="$root.clickItem('verProdutos', SUBCAT)" ng-if="SUBCAT.VEJA_TODOS">Todos os produtos</a>
                     <div class="clearBoth"></div>
                 </div>
-                <ul class="scrollable-content flex" scroll md-scroll-x>
+                <ul class="produtos_lst scrollable-content flex" scroll md-scroll-x>
                     <li type="{{ITEM.TYPE}}" clear_both="{{ITEM.CLEAR_BOTH?1:0}}" ng-repeat="ITEM in SUBCAT.ITENS" ng-include src="'view/index/produto.html'"></li>
+                    <li ng-if="!$root.scrollLiberado && $root.PRODUTOS_COMPRAS.SCROLL.ATIVO" type="LOADING">
+                        <img src="img/loader.gif" border="0">
+                        Carregando...
+                    </li>
                 </ul>
             </li>
         </ul>
     </md-content>
 
-    <div class="boxPopup" box="locais" ng-if="$root.NAO_ENCONTROU">
+    <div class="boxPopup" box="nao_encontrou" ng-if="$root.NAO_ENCONTROU">
         <div class="topTitulo">
             <a class="open-left" ng-click="$root.clickItem('naoEncontrouVoltar')">
                 <i class="mdi mdi-navigation-chevron-left"></i>
             </a>
             <div class="textoTitulo">Não encontrou o que queria?</div>
         </div>
-        XXXX
+        <div class="scrollable-content" scroll md-scroll-y>
+            <h4 ng-if="$root.usuario.FACEBOOK.ATIVO || $root.usuario.INSTAGRAM.ATIVO" style="text-align: center; padding: 10px 10px 0">
+                Segue a gente nas <b>redes sociais</b> :)
+                <div style="margin-top: 10px">
+                    <img ng-if="$root.usuario.FACEBOOK.ATIVO" ng-click="AppBrowser($root.usuario.FACEBOOK)" width="32" style="margin-right: 20px;" src="img/icon-facebook.png" border="0">
+                    <img ng-if="$root.usuario.INSTAGRAM.ATIVO" ng-click="AppBrowser($root.usuario.INSTAGRAM)" width="50" src="img/icon-instagram.png" border="0">
+                </div>
+            </h4>
+            <form id="formNaoEncontrou" class="form" onsubmit="return false;" method="post">
+                <textarea placeholder="Informe-nos e/ou deixe sua sugestão aqui" id="sugestao"></textarea>
+                <button ng-click="naoEncontrou()" type="button">Enviar</button>
+            </form>
+        </div>
     </div>
 
     <div class="boxPopup" box="carrinho" ng-if="$root.CARRINHO">
@@ -126,7 +153,7 @@
         </div>
     </div>
 
-    <a top="{{$root.PROD_DETALHES?1:0}}" ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR && $root.TIPO_PG != 'PAGAMENTO'" id="boxCarrinhoFloat" style="z-index: {{$root.PROD_DETALHES?2:1}}" ng-click="$root.MenuBottom=true;$root.toolbar=false;$root.CARRINHO=true;$root.PROD_DETALHES=false;">
+    <a top="{{$root.PROD_DETALHES?1:0}}" bottom="{{$root.PRODUTOS_CATEGORIAS_BUSCA.ATIVO?1:0}}" ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR && $root.TIPO_PG != 'PAGAMENTO'" id="boxCarrinhoFloat" style="z-index: {{$root.PROD_DETALHES||$root.PRODUTOS_CATEGORIAS_BUSCA.ATIVO?2:1}}" ng-click="$root.MenuBottom=true;$root.toolbar=false;$root.CARRINHO=true;$root.PROD_DETALHES=false;">
         <i class="mdi mdi-action-shopping-cart"></i> R$ {{$root.CARRINHO_COMPRAS.TOTAL_POR}}
     </a>
 </div>

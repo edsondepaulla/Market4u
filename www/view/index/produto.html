@@ -15,9 +15,9 @@
 <div ng-click="$root.clickItem('naoEncontrou')" ng-if="ITEM.TYPE=='NAO_ENCONTROU'">
     <i class="mdi mdi-communication-message"></i>
     <b>Não encontrou o que queria?</b>
-    Informe-nos
+    Informe-nos e/ou deixe sua sugestão
 </div>
-<div ng-click="$root.clickItem('verProdutos')" ng-if="ITEM.TYPE=='VEJA_TODOS'">
+<div ng-click="$root.clickItem('verProdutos', SUBCAT)" ng-if="ITEM.TYPE=='VEJA_TODOS'">
     Veja todos os produtos
     <i class="mdi mdi-navigation-arrow-forward"></i>
 </div>

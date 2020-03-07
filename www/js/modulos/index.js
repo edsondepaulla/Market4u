@@ -50,6 +50,25 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS;
     $rootScope.STEP = parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1;
 
+    $scope.naoEncontrou = function () {
+        if (!$('#sugestao').val())
+            $('#sugestao').focus();
+        else {
+            Factory.ajax(
+                {
+                    action: 'cadastro/sugestao',
+                    data: {
+                        DESCRICAO: $('#sugestao').val()
+                    }
+                },
+                function (data) {
+                    if (data.status == 1)
+                        $('#sugestao').val('');
+                }
+            );
+        }
+    };
+
     $rootScope.scrollLiberado = true;
     $scope.getCompras = function (CAT) {
         if(!parseInt(CAT.ACTIVE)) {
@@ -76,32 +95,74 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         }
     };
 
-    $rootScope.scroll = function(ID) {
-        Payment.PRODUTOS_COMPRAS.SCROLL['OFFSET'] += parseInt(Payment.PRODUTOS_COMPRAS.SCROLL['LIMIT']);
-        Factory.ajax(
-            {
-                action: 'payment/compras',
-                data: {
-                    ID: parseInt(Payment.PRODUTOS_COMPRAS.CATEGORIA),
-                    SCROLL: Payment.PRODUTOS_COMPRAS.SCROLL,
-                    LOADER_CARREGANDO: false
+    $rootScope.scroll = function(TYPE) {
+        switch (TYPE) {
+            case 'produtos':
+                Payment.PRODUTOS_COMPRAS.SCROLL['OFFSET'] += parseInt(Payment.PRODUTOS_COMPRAS.SCROLL['LIMIT']);
+                Factory.ajax(
+                    {
+                        action: 'payment/compras',
+                        data: {
+                            ID: parseInt(Payment.PRODUTOS_COMPRAS.CATEGORIA),
+                            SCROLL: Payment.PRODUTOS_COMPRAS.SCROLL,
+                            LOADER_CARREGANDO: false
+                        }
+                    },
+                    function (data) {
+                        $rootScope.scrollLiberado = true;
+                        if (data.COMPRAS.SUBCATEGORIAS[0]) {
+                            $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
+                            $rootScope.PRODUTOS_COMPRAS.SCROLL.ATIVO = parseInt(data.COMPRAS.SCROLL.ATIVO || 0);
+                            $.each(data.COMPRAS.SUBCATEGORIAS[0]['ITENS'], function (idx, item) {
+                                Payment.PRODUTOS_COMPRAS.SUBCATEGORIAS[0]['ITENS'].push(item);
+                            });
+                            $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS;
+                        } else
+                            $rootScope.PRODUTOS_COMPRAS.SCROLL.ATIVO = 0;
+                    }, function () {
+                        $rootScope.scrollLiberado = true;
+                    }
+                );
+                break;
+            case 'produtos_categorias_busca':
+                $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL['OFFSET'] += parseInt($rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL['LIMIT']);
+                var data = null;
+                if ($rootScope.PRODUTOS_CATEGORIAS_BUSCA.BUSCA) {
+                    data = {
+                        BUSCA: 1,
+                        PESQUISA: $rootScope.PESQUISA,
+                        SCROLL: $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL,
+                        LOADER_CARREGANDO: false
+                    };
+                } else {
+                    data = {
+                        ID: parseInt($rootScope.PRODUTOS_CATEGORIAS_BUSCA.CATEGORIA),
+                        SUBCATEGORIA: parseInt($rootScope.PRODUTOS_CATEGORIAS_BUSCA.SUBCATEGORIA),
+                        SCROLL: $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL,
+                        LOADER_CARREGANDO: false
+                    };
                 }
-            },
-            function (data) {
-                $rootScope.scrollLiberado = true;
-                if (data.COMPRAS.SUBCATEGORIAS[0]) {
-                    $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
-                    $rootScope.PRODUTOS_COMPRAS.SCROLL.ATIVO = parseInt(data.COMPRAS.SCROLL.ATIVO || 0);
-                    $.each(data.COMPRAS.SUBCATEGORIAS[0]['ITENS'], function (idx, item) {
-                        Payment.PRODUTOS_COMPRAS.SUBCATEGORIAS[0]['ITENS'].push(item);
-                    });
-                    $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS;
-                } else
-                    $rootScope.PRODUTOS_COMPRAS.SCROLL.ATIVO = 0;
-            }, function () {
-                $rootScope.scrollLiberado = true;
-            }
-        );
+                Factory.ajax(
+                    {
+                        action: 'payment/compras',
+                        data: data
+                    },
+                    function (data) {
+                        $rootScope.scrollLiberado = true;
+                        if (data.COMPRAS.SUBCATEGORIAS[0]) {
+                            $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
+                            $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL.ATIVO = parseInt(data.COMPRAS.SCROLL.ATIVO || 0);
+                            $.each(data.COMPRAS.SUBCATEGORIAS[0]['ITENS'], function (idx, item) {
+                                $rootScope.PRODUTOS_CATEGORIAS_BUSCA['ITENS'].push(item);
+                            });
+                        } else
+                            $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL.ATIVO = 0;
+                    }, function () {
+                        $rootScope.scrollLiberado = true;
+                    }
+                );
+                break;
+        }
     };
 
     if ($rootScope.usuario.COMPRAR && !parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']))
@@ -137,12 +198,44 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             $('#Produtos').show();
     };
 
-    $scope.clearPesquisa = function () {
-        $rootScope.pesquisa = '';
+    $rootScope.PESQUISA = '';
+    $rootScope.PRODUTOS_CATEGORIAS_BUSCA = [];
+    $scope.buscaProdutos = function (PESQUISA) {
+        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.PLACEHOLDER = 'Digite o que você procura';
+        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.CATEGORIA = 0;
+        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SUBCATEGORIA = 0;
+        clearTimeout(Factory.timeout);
+        Factory.timeout = setTimeout(function () {
+            $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ITENS = [];
+            $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL = [];
+            Factory.ajax(
+                {
+                    action: 'payment/compras',
+                    data: {
+                        BUSCA: 1,
+                        PESQUISA: $rootScope.PESQUISA
+                    }
+                },
+                function (data) {
+                    if (data.COMPRAS.SUBCATEGORIAS[0]) {
+                        $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
+                        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL = data.COMPRAS.SCROLL;
+                        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ITENS = data.COMPRAS.SUBCATEGORIAS[0]['ITENS'];
+                    } else {
+                        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ITENS = [];
+                        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL.ATIVO = 0;
+                    }
+                }
+            );
+        }, PESQUISA?1000:0);
     };
 
-    $rootScope.PRODUTOS_CATEGORIAS_BUSCA = [];
-    $rootScope.clickItem = function (ORIGEM) {
+    $scope.clearPesquisa = function () {
+        $rootScope.PESQUISA = '';
+        $scope.buscaProdutos();
+    };
+
+    $rootScope.clickItem = function (ORIGEM, VALS) {
         switch (ORIGEM) {
             case 'naoEncontrou':
                 $rootScope.toolbar = false;
@@ -155,43 +248,70 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                 $rootScope.NAO_ENCONTROU = false;
                 break;
             case 'produtoVoltar':
-                $rootScope.MenuBottom = true;
-                $rootScope.toolbar = $rootScope.PROD_DETALHES.ORIGEM == 'COMPRAS' ? true : false;
+                $rootScope.PESQUISA = '';
+                if ($rootScope.PROD_DETALHES.ORIGEM == 'BUSCA_CATEGORIAS'){
+                    $rootScope.toolbar = false;
+                    $rootScope.MenuBottom = false;
+                }else {
+                    $rootScope.MenuBottom = true;
+                    $rootScope.toolbar = $rootScope.PROD_DETALHES.ORIGEM == 'COMPRAS' ? true : false;
+                }
                 $rootScope.PROD_DETALHES = false;
                 break;
             case 'busca_locais':
                 $rootScope.toolbar = false;
                 $rootScope.MenuBottom = false;
                 $rootScope.LOCAL.ATIVO = true;
-                setTimeout(function () {
-                    $('.boxPopup[box="busca_locais"] #busca input').focus();
-                }, 500);
                 break;
             case 'verProdutos':
-                $rootScope.toolbar = false;
-                $rootScope.MenuBottom = false;
-                $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ATIVO = true;
-                setTimeout(function () {
-                    $('.boxPopup[box="busca"] #busca input').focus();
-                }, 500);
-                break;
             case 'busca':
                 $rootScope.toolbar = false;
                 $rootScope.MenuBottom = false;
                 $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ATIVO = true;
-                setTimeout(function () {
-                    $('.boxPopup[box="busca"] #busca input').focus();
-                }, 500);
+                $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ITENS = [];
+                $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL = [];
+                if (ORIGEM == 'verProdutos') {
+                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA.BUSCA = false;
+                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA.PLACEHOLDER = VALS.CAT_DESCRICAO + VALS.DESCRICAO;
+                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA.CATEGORIA = parseInt(VALS.CATEGORIA);
+                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SUBCATEGORIA = parseInt(VALS.SUBCATEGORIA);
+                    Factory.ajax(
+                        {
+                            action: 'payment/compras',
+                            data: {
+                                ID: parseInt(VALS.CATEGORIA),
+                                SUBCATEGORIA: parseInt(VALS.SUBCATEGORIA)
+                            }
+                        },
+                        function (data) {
+                            if (data.COMPRAS.SUBCATEGORIAS[0]) {
+                                $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
+                                $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL = data.COMPRAS.SCROLL;
+                                $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ITENS = data.COMPRAS.SUBCATEGORIAS[0]['ITENS'];
+                            } else {
+                                $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ITENS = [];
+                                $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL.ATIVO = 0;
+                            }
+                        }
+                    );
+                } else {
+                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA.BUSCA = true;
+                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA.PLACEHOLDER = 'Digite o que você procura';
+                    $scope.buscaProdutos();
+                }
                 break;
             case 'index':
+                $rootScope.PESQUISA = '';
                 $rootScope.toolbar = true;
                 $rootScope.MenuBottom = true;
-                $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ATIVO = false;
+                $rootScope.PRODUTOS_CATEGORIAS_BUSCA = [];
                 $rootScope.LOCAL.ATIVO = false;
                 break;
             case 'carrinho':
+                $rootScope.PESQUISA = '';
                 $rootScope.CARRINHO = false;
                 $rootScope.toolbar = true;
+                $rootScope.PRODUTOS_CATEGORIAS_BUSCA = [];
                 break;
         }
     };

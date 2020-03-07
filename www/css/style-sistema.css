@@ -1817,10 +1817,10 @@ form input[type="text"]{
 }
 
 form textarea{
-  border: none;
   resize: none;
-  border-bottom: 1px solid rgb(169, 169, 169);
-  height: 35px;
+  border: 1px solid rgb(169, 169, 169);
+  height: 200px;
+  width: 100%;
 }
 
 .float-left{
@@ -2418,6 +2418,7 @@ right: 0;
 .topTitulo{
   min-height: 46px;
 }
+.boxPopup[box="nao_encontrou"] .topTitulo,
 .boxPopup[box="produto"] .topTitulo,
 .boxPopup[box="carrinho"] .topTitulo{
   border-bottom: 1px solid rgba(11, 99, 64, 0.1);
@@ -3237,6 +3238,18 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li.active{
 body[controller="Index"] #boxCarrinhoFloat .mdi-action-shopping-cart{
   font-size: 24px;
   vertical-align: middle;
+}
+body[controller="Index"] #boxCarrinhoFloat[top="0"][bottom="1"] .mdi-action-shopping-cart{
+  font-size: 30px;
+}
+body[controller="Index"] #boxCarrinhoFloat[top="0"][bottom="1"]{
+  bottom: 10px;
+  font-size: 24px;
+  width: calc(100% - 20px);
+  display: flex;
+  height: 50px;
+  align-items: center;
+  justify-content: space-between;
 }
 body[controller="Index"] #boxCarrinhoFloat[top="1"]{
   top: 6px;
@@ -5310,14 +5323,16 @@ md-content#boxProdutos ul.scrollable-content{
   white-space: nowrap;
   scrollbar-width: none;
 }
-md-content#boxProdutos ul.scrollable-content li[clear_both="1"]{
+#boxCompras ul.produtos_lst li[clear_both="1"]{
   display: table-column;
   visibility: hidden;
 }
+
+#boxCompras .boxPopup[box="busca"] ul.produtos_lst li,
 md-content#boxProdutos li[count="1"] ul.scrollable-content li{
   width: 30.5%;
 }
-md-content#boxProdutos ul.scrollable-content li{
+#boxCompras ul.produtos_lst li{
   width: 27.5%;
   height: auto;
   text-align: center;
@@ -5325,60 +5340,60 @@ md-content#boxProdutos ul.scrollable-content li{
   display: inline-block;
   white-space: normal;
 }
-md-content#boxProdutos ul.scrollable-content li img{
+#boxCompras ul.produtos_lst li img{
     height: 100px;
     margin-bottom: 5px;
 }
-md-content#boxProdutos ul.scrollable-content li img[src="img/market4u.png"]{
+#boxCompras ul.produtos_lst li img[src="img/market4u.png"]{
   opacity: 0.1;
   height: 70px;
   margin: 17px 0;
 }
-md-content#boxProdutos ul.scrollable-content li p.preco{
+#boxCompras ul.produtos_lst li p.preco{
     font-size: 12px;
     margin: 0 0 5px;
 }
-md-content#boxProdutos ul.scrollable-content li p.preco label.kg{
+#boxCompras ul.produtos_lst li p.preco label.kg{
   color: #CCC;
   font-size: 10px;
   font-weight: 500;
 }
 
-md-content#boxProdutos ul.scrollable-content li p.preco label{
+#boxCompras ul.produtos_lst li p.preco label{
     color: #00ab46;
     display: inline-block;
 }
-md-content#boxProdutos ul.scrollable-content li p.preco label.de{
+#boxCompras ul.produtos_lst li p.preco label.de{
   text-decoration: line-through;
   color: #CCC;
   font-size: 10px;
 }
-md-content#boxProdutos ul.scrollable-content li[type="NAO_ENCONTROU"] div b{
+#boxCompras ul.produtos_lst li[type="NAO_ENCONTROU"] div b{
   font-weight: 600;
 }
-md-content#boxProdutos ul.scrollable-content li[type="NAO_ENCONTROU"] div i{
+#boxCompras ul.produtos_lst li[type="NAO_ENCONTROU"] div i{
   display: block;
   font-size: 41px;
   opacity: 0.8;
   color: #00ab46;
   margin-top: 5px;
 }
-md-content#boxProdutos ul.scrollable-content li[type="NAO_ENCONTROU"] div{
+#boxCompras ul.produtos_lst li[type="NAO_ENCONTROU"] div{
   height: 160px;
   display: table-cell;
   padding: 5px;
   font-size: 12px;
   border-radius: 10px;
 }
-md-content#boxProdutos ul.scrollable-content li[type="VEJA_TODOS"] i{
+#boxCompras ul.produtos_lst li[type="VEJA_TODOS"] i{
   color: #00ab46;
   font-size: 29px;
   vertical-align: middle;
 }
-md-content#boxProdutos ul.scrollable-content li[type="VEJA_TODOS"]{
+#boxCompras ul.produtos_lst li[type="VEJA_TODOS"]{
   width: 120px;
 }
-md-content#boxProdutos ul.scrollable-content li[type="VEJA_TODOS"] div{
+#boxCompras ul.produtos_lst li[type="VEJA_TODOS"] div{
   height: 160px;
   display: table-cell;
   padding: 5px;
@@ -5388,7 +5403,18 @@ md-content#boxProdutos ul.scrollable-content li[type="VEJA_TODOS"] div{
   font-weight: 500;
   line-height: 19px;
 }
-md-content#boxProdutos ul.scrollable-content li div.addRemoveProd{
+#boxCompras ul.produtos_lst li[type="LOADING"]{
+  display: block;
+  text-align: center;
+  width: 100% !important;
+  font-size: 13px;
+}
+#boxCompras ul.produtos_lst li[type="LOADING"] img{
+  height: 70px;
+  display: block;
+  margin: 0 auto;
+}
+#boxCompras ul.produtos_lst li div.addRemoveProd{
   background: #f9f9f9;
   text-align: center;
   font-size: 15px;
@@ -5399,44 +5425,44 @@ md-content#boxProdutos ul.scrollable-content li div.addRemoveProd{
   height: 21px;
 }
 
-md-content#boxProdutos ul.scrollable-content li div.addRemoveProd[unidade_medida="KG"] .mdi-content-remove{
+#boxCompras ul.produtos_lst li div.addRemoveProd[unidade_medida="KG"] .mdi-content-remove{
   left: 0;
   padding: 10px calc(50% - 13px);
 }
-md-content#boxProdutos ul.scrollable-content li div.addRemoveProd[unidade_medida="KG"][qtde="0"],
-md-content#boxProdutos ul.scrollable-content li div.addRemoveProd[unidade_medida="KG"] .mdi-content-add,
-md-content#boxProdutos ul.scrollable-content li div.addRemoveProd[unidade_medida="KG"] span{
+#boxCompras ul.produtos_lst li div.addRemoveProd[unidade_medida="KG"][qtde="0"],
+#boxCompras ul.produtos_lst li div.addRemoveProd[unidade_medida="KG"] .mdi-content-add,
+#boxCompras ul.produtos_lst li div.addRemoveProd[unidade_medida="KG"] span{
   visibility: hidden;
 }
 
-md-content#boxProdutos ul.scrollable-content li div.addRemoveProd .mdi{
+#boxCompras ul.produtos_lst li div.addRemoveProd .mdi{
   font-size: 25px;
   color: #00ab46;
   top: -17px;
   padding: 10px;
   transition: 0.5s;
 }
-md-content#boxProdutos ul.scrollable-content li div.addRemoveProd[qtde="0"] span{
+#boxCompras ul.produtos_lst li div.addRemoveProd[qtde="0"] span{
   color: #f9f9f9;
 }
-md-content#boxProdutos ul.scrollable-content li div.addRemoveProd[qtde="0"] .mdi-content-remove{
+#boxCompras ul.produtos_lst li div.addRemoveProd[qtde="0"] .mdi-content-remove{
   display: none;
 }
 
-md-content#boxProdutos ul.scrollable-content li div.addRemoveProd .mdi-content-remove{
+#boxCompras ul.produtos_lst li div.addRemoveProd .mdi-content-remove{
     position: absolute;
     left: -7px;
 }
-md-content#boxProdutos ul.scrollable-content li div.addRemoveProd[qtde="0"] .mdi-content-add{
+#boxCompras ul.produtos_lst li div.addRemoveProd[qtde="0"] .mdi-content-add{
   right: 0;
   padding: 10px calc(50% - 13px);
 }
 
-md-content#boxProdutos ul.scrollable-content li div.addRemoveProd .mdi-content-add{
+#boxCompras ul.produtos_lst li div.addRemoveProd .mdi-content-add{
     position: absolute;
     right: -9px;
 }
-md-content#boxProdutos ul.scrollable-content li h4{
+#boxCompras ul.produtos_lst li h4{
   font-size: 12px;
   display: flex;
   margin: 0;
@@ -5599,4 +5625,32 @@ body[controller="Index"] > #toolbar #local{
   text-decoration: line-through;
   color: #CCC;
   font-size: 15px;
+}
+.boxPopup[box="nao_encontrou"] .scrollable-content #formNaoEncontrou textarea::placeholder {
+  color: #444;
+  opacity: 0.5;
+  font-weight: normal;
+  font-family: 'Montserrat',sans-serif;
+  letter-spacing: 0px;
+  font-size: 17px;
+  text-align: center;
+}
+.boxPopup[box="nao_encontrou"] .scrollable-content #formNaoEncontrou textarea{
+  border: 1px solid #EEE;
+  border-radius: 5px;
+  padding: 5px 10px;
+  height: 300px;
+}
+.boxPopup[box="nao_encontrou"] .scrollable-content #formNaoEncontrou{
+  padding: 0;
+}
+.boxPopup[box="nao_encontrou"] .scrollable-content #formNaoEncontrou button{
+  padding: 6px 12px;
+  margin: 20px auto 0;
+}
+.boxPopup[box="nao_encontrou"] .scrollable-content{
+  padding: 10px 10px 67px;
+}
+.boxPopup[box="busca"] .scrollable-content{
+  padding-bottom: 130px !important;
 }

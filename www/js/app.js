@@ -423,6 +423,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                 $rootScope.CARRINHO = false;
                 $rootScope.TIPO_PG = 'COMPRAR';
                 $('#boxProdutos').scrollTop(0);
+                $rootScope.clickItem('index');
             }
             if (url != '#!/conecte-se' && url != '#!/boas-vindas' && url != '#!/')
                 $route.reload();
@@ -1007,13 +1008,14 @@ app.directive('scroll', function($routeParams) {
             angular.element(element).bind("scroll", function () {
                 var _this = $(this);
                 if (parseInt(_this.attr('scroll')) && Factory.$rootScope.scrollLiberado) {
-                    switch (_this.attr('type')) {
-                        case 'produtos':
-                            if ((_this.find('> ul').height() - _this.height() - _this.scrollTop()) <= 400) {
-                                Factory.$rootScope.scrollLiberado = false;
-                                Factory.$rootScope.scroll();
-                            }
-                            break;
+                    if ((_this.find('> ul').height() - _this.height() - _this.scrollTop()) <= 400) {
+                        Factory.$rootScope.scrollLiberado = false;
+                        switch (_this.attr('type')) {
+                            case 'produtos':
+                            case 'produtos_categorias_busca':
+                                Factory.$rootScope.scroll(_this.attr('type'));
+                                break;
+                        }
                     }
                 }
             });
