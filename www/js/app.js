@@ -1006,10 +1006,10 @@ app.directive('scroll', function($routeParams) {
         link: function (scope, element, attrs) {
             angular.element(element).bind("scroll", function () {
                 var _this = $(this);
-                if (parseInt(_this.attr('scroll'))) {
+                if (parseInt(_this.attr('scroll')) && Factory.$rootScope.scrollLiberado) {
                     switch (_this.attr('type')) {
                         case 'produtos':
-                            if (Factory.$rootScope.scrollLiberado && (_this.find('> ul').height() - _this.height() - _this.scrollTop()) <= 300) {
+                            if ((_this.find('> ul').height() - _this.height() - _this.scrollTop()) <= 400) {
                                 Factory.$rootScope.scrollLiberado = false;
                                 Factory.$rootScope.scroll();
                             }

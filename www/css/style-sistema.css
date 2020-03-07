@@ -5055,13 +5055,17 @@ ul#boxTour li[idx="1"] div{
 .boxPopup[box="carrinho"] .scrollable-content{
   padding-bottom: 202px !important;
 }
+img[src="img/market4u.png"]{
+  opacity: 0.1;
+  height: 70px;
+}
 .boxPopup[box="produto"] .scrollable-content > img[src="img/market4u.png"]{
   opacity: 0.1;
-  width: 90px;
+  height: 80px;
   margin: 15px;
 }
 .boxPopup[box="produto"] .scrollable-content > img{
-  width: 120px;
+  height: 120px;
 }
 .boxPopup[box="produto"] .scrollable-content {
   padding-bottom: 100px;
@@ -5093,13 +5097,13 @@ ul#boxTour li[idx="1"] div{
   font-size: 17px;
 }
 .boxPopup[box="carrinho"] ul li img{
-  width: 80px;
+  height: 80px;
   float: left;
   margin-right: 5px;
 }
 .boxPopup[box="carrinho"] ul li img[src="img/market4u.png"]{
   opacity: 0.1;
-  width: 50px;
+  height: 44px;
   margin: 1px 17px;
 }
 .boxPopup[box="carrinho"] ul li h4{
@@ -5334,6 +5338,12 @@ md-content#boxProdutos ul.scrollable-content li p.preco{
     font-size: 12px;
     margin: 0 0 5px;
 }
+md-content#boxProdutos ul.scrollable-content li p.preco label.kg{
+  color: #CCC;
+  font-size: 10px;
+  font-weight: 500;
+}
+
 md-content#boxProdutos ul.scrollable-content li p.preco label{
     color: #00ab46;
     display: inline-block;
@@ -5366,7 +5376,7 @@ md-content#boxProdutos ul.scrollable-content li[type="VEJA_TODOS"] i{
   vertical-align: middle;
 }
 md-content#boxProdutos ul.scrollable-content li[type="VEJA_TODOS"]{
-  width: 150px;
+  width: 120px;
 }
 md-content#boxProdutos ul.scrollable-content li[type="VEJA_TODOS"] div{
   height: 160px;
@@ -5390,7 +5400,8 @@ md-content#boxProdutos ul.scrollable-content li div.addRemoveProd{
 }
 
 md-content#boxProdutos ul.scrollable-content li div.addRemoveProd[unidade_medida="KG"] .mdi-content-remove{
-  left: 24px;
+  left: 0;
+  padding: 10px calc(50% - 13px);
 }
 md-content#boxProdutos ul.scrollable-content li div.addRemoveProd[unidade_medida="KG"][qtde="0"],
 md-content#boxProdutos ul.scrollable-content li div.addRemoveProd[unidade_medida="KG"] .mdi-content-add,
@@ -5562,12 +5573,22 @@ body[controller="Index"] > #toolbar #local{
   padding: 7px 20px;
   font-size: 18px;
   display: inline-flex;
+  margin-bottom: 15px;
+}
+
+.boxPopup[box="produto"] .scrollable-content > p.descricao{
+  text-align: justify;
+  padding: 0 15px;
 }
 
 .boxPopup[box="produto"] .scrollable-content > p.preco{
   font-size: 20px;
   margin: 0 15px 15px;
   display: block;
+}
+.boxPopup[box="produto"] .scrollable-content > p.preco label.kg{
+  color: #00ab46;
+  font-size: 15px;
 }
 .boxPopup[box="produto"] .scrollable-content > p.preco label{
   color: #444;

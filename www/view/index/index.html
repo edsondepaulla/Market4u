@@ -44,30 +44,7 @@
                     <div class="clearBoth"></div>
                 </div>
                 <ul class="scrollable-content flex" scroll md-scroll-x>
-                    <li type="{{ITEM.TYPE}}" clear_both="{{ITEM.CLEAR_BOTH?1:0}}" ng-repeat="ITEM in SUBCAT.ITENS">
-                        <div ng-if="ITEM.TYPE=='PROD'" ng-click="$root.toolbar=false; $root.MenuBottom=false; $root.PROD_DETALHES = ITEM;">
-                            <img data-src="{{ITEM.IMAGEM}}" src="img/market4u.png" alt="">
-                            <p class="preco">
-                                <label class="de" ng-if="ITEM.DE_PRECO_FORMAT">{{ITEM.DE_PRECO_FORMAT}}</label>
-                                <label>{{ITEM.PRECO_FORMAT}}</label>
-                            </p>
-                            <h4>{{ITEM.NOME}}</h4>
-                        </div>
-                        <div ng-if="ITEM.TYPE=='PROD'" unidade_medida="{{ITEM.UNIDADE_MEDIDA}}" class="addRemoveProd" qtde="{{$root.QTDE_PRODUTOS[ITEM.PROD_ID]?$root.QTDE_PRODUTOS[ITEM.PROD_ID]:0}}">
-                            <i ng-click="addRemoveQtdeProd(ITEM, '-')" class="mdi mdi-content-remove"></i>
-                            <span>{{$root.QTDE_PRODUTOS[ITEM.PROD_ID]?$root.QTDE_PRODUTOS[ITEM.PROD_ID]:0}}</span>
-                            <i ng-click="addRemoveQtdeProd(ITEM, '+')" class="mdi mdi-content-add"></i>
-                        </div>
-                        <div ng-click="$root.clickItem('naoEncontrou')" ng-if="ITEM.TYPE=='NAO_ENCONTROU'">
-                            <i class="mdi mdi-communication-message"></i>
-                            <b>Não encontrou o que queria?</b>
-                            Informe-nos
-                        </div>
-                        <div ng-click="$root.clickItem('verProdutos')" ng-if="ITEM.TYPE=='VEJA_TODOS'">
-                            Veja todos os produtos
-                            <i class="mdi mdi-navigation-arrow-forward"></i>
-                        </div>
-                    </li>
+                    <li type="{{ITEM.TYPE}}" clear_both="{{ITEM.CLEAR_BOTH?1:0}}" ng-repeat="ITEM in SUBCAT.ITENS" ng-include src="'view/index/produto.html'"></li>
                 </ul>
             </li>
         </ul>
@@ -95,7 +72,7 @@
                 <li ng-repeat="PROD in $root.CARRINHO_COMPRAS.PRODUTOS">
                     <div class="b" ng-click="$root.MenuBottom=false; $root.PROD_DETALHES = PROD;">
                         <img data-src="{{PROD.IMAGEM}}" src="img/market4u.png" alt="">
-                        <h4>{{PROD.NOME}} <i ng-if="PROD.CONTEUDO != NULL">({{PROD.CONTEUDO}})</i></h4>
+                        <h4>{{PROD.NOME}}</h4>
                         <label class="total_de" ng-if="PROD.DE_PRECO_FORMAT"><span class="v">{{PROD.DE_PRECO_FORMAT}}</span></label>
                         <label><span class="v">{{PROD.PRECO_FORMAT}}</span></label>
                     </div>
@@ -125,12 +102,12 @@
             <a class="open-left" ng-click="$root.clickItem('produtoVoltar')">
                 <i class="mdi mdi-navigation-chevron-left"></i>
             </a>
-            <div class="textoTitulo"></div>
+            <div class="textoTitulo">PRODUTO</div>
         </div>
         <div class="scrollable-content" scroll md-scroll-y>
-            <div ng-if="$root.PROD_DETALHES.UNIDADE_MEDIDA!='KG'||$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]" class="addRemoveQtdeProduto" unidade_medida="{{$root.PROD_DETALHES.UNIDADE_MEDIDA}}">
+            <div ng-if="$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]" class="addRemoveQtdeProduto" unidade_medida="{{$root.PROD_DETALHES.UNIDADE_MEDIDA}}">
                 <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '+')" class="mdi mdi-content-add-circle"></i>
-                <span>{{$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]?$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]:1}}</span>
+                <span>{{$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]?$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]:0}}</span>
                 <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '-')" class="mdi mdi-content-remove-circle"></i>
             </div>
 
@@ -140,9 +117,12 @@
             <p class="preco">
                 <label class="de" ng-if="$root.PROD_DETALHES.DE_PRECO_FORMAT">{{$root.PROD_DETALHES.DE_PRECO_FORMAT}}</label>
                 <label>{{$root.PROD_DETALHES.PRECO_FORMAT}}</label>
+                <label class="kg" ng-if="$root.PROD_DETALHES.UNIDADE_MEDIDA=='KG'">KG</label>
             </p>
 
-            <a ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '+')" id="comprar">COMPRAR</a>
+            <a ng-if="$root.PROD_DETALHES.UNIDADE_MEDIDA!='KG'" ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '+')" id="comprar">COMPRAR{{$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]?' +1':''}}</a>
+
+            <p class="descricao" ng-if="$root.PROD_DETALHES.DESCRICAO" ng-bind-html="$root.PROD_DETALHES.DESCRICAO"></p>
         </div>
     </div>
 
@@ -175,7 +155,7 @@
                     <ul ng-if="$root.PRODUTOS && !$root.transacaoIdCarrinho">
                         <li ng-repeat="PROD in $root.PRODUTOS">
                             <div class="info">
-                                <h4>{{PROD.NOME}} <i ng-if="PROD.CONTEUDO != NULL">({{PROD.CONTEUDO}})</i></h4>
+                                <h4>{{PROD.NOME}}</h4>
                                 <span ng-if="PROD.QTDE != NULL">Quantidade <b>{{PROD.QTDE}}</b></span>
                                 <label class="total_de" ng-if="PROD.DE_PRECO_FORMAT"><span class="v">{{PROD.DE_PRECO_FORMAT}}</span></label>
                                 <label><span class="v">{{PROD.PRECO_FORMAT}}</span></label>

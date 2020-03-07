@@ -50,8 +50,10 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS;
     $rootScope.STEP = parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1;
 
+    $rootScope.scrollLiberado = true;
     $scope.getCompras = function (CAT) {
         if(!parseInt(CAT.ACTIVE)) {
+            $rootScope.scrollLiberado = false;
             Factory.ajax(
                 {
                     action: 'payment/compras',
@@ -60,16 +62,20 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                     }
                 },
                 function (data) {
-                    $('#boxProdutos').scrollTop(0);
                     $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS = data.COMPRAS;
                     $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
                     $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS = data.CARRINHO;
+                    setTimeout(function () {
+                        $("#boxProdutos").animate({ scrollTop: 0 }, 500);
+                        setTimeout(function () {
+                            $rootScope.scrollLiberado = true;
+                        }, 500);
+                    }, 500);
                 }
             );
         }
     };
 
-    $rootScope.scrollLiberado = true;
     $rootScope.scroll = function(ID) {
         Payment.PRODUTOS_COMPRAS.SCROLL['OFFSET'] += parseInt(Payment.PRODUTOS_COMPRAS.SCROLL['LIMIT']);
         Factory.ajax(
@@ -98,7 +104,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         );
     };
 
-    if ($rootScope.usuario.COMPRAR)
+    if ($rootScope.usuario.COMPRAR && !parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']))
         $scope.getCompras({ID: 0});
 
     if (($rootScope.usuario.COMPRAR && $rootScope.usuario.AUTOATENDIMENTO) || $rootScope.usuario.COMPRAR || $rootScope.CARRINHO) {

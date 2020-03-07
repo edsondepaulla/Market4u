@@ -22,6 +22,32 @@ var BarCodeScanner = {
             }
         );
     },
+    prompt: function(msg, type){
+        try {
+            navigator.notification.prompt(
+                msg,
+                function (results) {
+                    if (results.buttonIndex == 1) {
+                        if (results.input1.length)
+                            BarCodeScanner.getScan(results.input1, type);
+                        else
+                            $('#carregando').hide().css('opacity', 0);
+                    }else
+                        $('#carregando').hide().css('opacity', 0);
+                },
+                'Atenção',
+                ['Continue', 'Cancelar'],
+                ''
+            );
+        } catch (err) {
+            var text = prompt(msg, "");
+            if (text != null)
+                BarCodeScanner.getScan(text, type);
+            else {
+                $('#carregando').hide().css('opacity', 0);
+            }
+        }
+    },
     scan: function (type) {
         $('#carregando').show().css('opacity', 1);
         try {
@@ -29,32 +55,8 @@ var BarCodeScanner = {
                 function (result) {
                     if (result.text)
                         BarCodeScanner.getScan(result.text, type);
-                    else {
-                        try {
-                            navigator.notification.prompt(
-                                'Não conseguiu escanear o código, digite se preferir:',
-                                function (results) {
-                                    if (results.buttonIndex == 1) {
-                                        if (results.input1.length)
-                                            BarCodeScanner.getScan(results.input1, type);
-                                        else
-                                            $('#carregando').hide().css('opacity', 0);
-                                    }else
-                                        $('#carregando').hide().css('opacity', 0);
-                                },
-                                'Atenção',
-                                ['Continue', 'Cancelar'],
-                                ''
-                            );
-                        } catch (err) {
-                            var text = prompt("Não conseguiu escanear o código, digite se preferir:", "");
-                            if (text != null)
-                                BarCodeScanner.getScan(text, type);
-                            else {
-                                $('#carregando').hide().css('opacity', 0);
-                            }
-                        }
-                    }
+                    else if(type != 'destravar')
+                        BarCodeScanner.prompt("Não conseguiu escanear o código? Digite o código abaixo se preferir:", type);
                 },
                 function (error) {
                     $('#carregando').hide().css('opacity', 0);
@@ -73,31 +75,7 @@ var BarCodeScanner = {
                 }
             );
         } catch (err) {
-            try {
-                navigator.notification.prompt(
-                    'Digite o código',
-                    function (results) {
-                        if (results.buttonIndex == 1) {
-                            if (results.input1.length)
-                                BarCodeScanner.getScan(results.input1, type);
-                            else {
-                                $('#carregando').hide().css('opacity', 0);
-                                return false;
-                            }
-                        }
-                    },
-                    'Atenção',
-                    ['Continue', 'Cancelar'],
-                    ''
-                );
-            } catch (err) {
-                var text = prompt("Digite o código", "");
-                if (text != null)
-                    BarCodeScanner.getScan(text, type);
-                else {
-                    $('#carregando').hide().css('opacity', 0);
-                }
-            }
+            BarCodeScanner.prompt("Digite o código:", type);
         }
     }
 };
