@@ -1,7 +1,7 @@
 <div id="boxCompras" ng-if="$root.TIPO_PG == 'COMPRAR'">
     <i ng-if="$root.PRODUTOS_COMPRAS.CATEGORIAS" ng-click="$root.clickItem('busca')" id="buscaProdutos" class="mdi mdi-action-search"></i>
     <ul id="boxCategorias">
-        <li class="{{CAT.ACTIVE?'active':''}}" ng-repeat="CAT in $root.PRODUTOS_COMPRAS.CATEGORIAS">
+        <li data-id="{{CAT.ID}}" class="{{CAT.ACTIVE?'active':''}}" ng-repeat="CAT in $root.PRODUTOS_COMPRAS.CATEGORIAS">
             <a ng-click="getCompras(CAT)">{{CAT.DESCRICAO}}</a>
         </li>
     </ul>

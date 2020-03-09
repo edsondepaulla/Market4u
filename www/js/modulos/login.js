@@ -79,6 +79,7 @@ var Login = {
             {
                 action: 'login/logout'
             }, function () {
+                Payment.PRODUTOS_COMPRAS = [];
                 Factory.$rootScope.LOCAL = [];
             }
         );

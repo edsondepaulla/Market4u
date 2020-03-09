@@ -89,10 +89,8 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                     $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
                     $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS = data.CARRINHO;
                     setTimeout(function () {
-                        if (!parseInt(CAT.ID))
-                            $("#boxCategorias").animate({scrollLeft: 0}, 500);
-                        else {
-                            var width = 0;
+                        var width = 0;
+                        if (parseInt(CAT.ID)) {
                             var active = 0;
                             $('ul#boxCategorias li').each(function () {
                                 if (!active) {
@@ -101,8 +99,8 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                                         width += $(this).innerWidth();
                                 }
                             });
-                            $("#boxCategorias").animate({scrollLeft: width}, 500);
                         }
+                        $("#boxCategorias").animate({scrollLeft: width}, 500);
                         $("#boxProdutos").animate({scrollTop: 0}, 500);
                         setTimeout(function () {
                             $rootScope.scrollLiberado = true;
@@ -183,15 +181,15 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         }
     };
 
-    if (!parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA'])) {
+    if (!parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']) || $rootScope.CARRINHO) {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 function (position) {
-                    $scope.getCompras({ID: 0}, position.coords ? position.coords : -1);
+                    $scope.getCompras({ID: parseInt($('ul#boxCategorias li.active').data('id') || 0)}, position.coords ? position.coords : -1);
                 }
             );
         } else
-            $scope.getCompras({ID: 0}, -1);
+            $scope.getCompras({ID: parseInt($('ul#boxCategorias li.active').data('id') || 0)}, -1);
     }
 
     $rootScope.TIPO_PG = 'COMPRAR';
