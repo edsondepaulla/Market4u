@@ -70,22 +70,26 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     };
 
     $rootScope.scrollLiberado = true;
-    $scope.getCompras = function (CAT) {
-        if(!parseInt(CAT.ACTIVE)) {
+    $rootScope.LOCAL = $rootScope.LOCAL?$rootScope.LOCAL:[];
+    $scope.getCompras = function (CAT, COORDS) {
+        if (!parseInt(CAT.ACTIVE)) {
             $rootScope.scrollLiberado = false;
             Factory.ajax(
                 {
                     action: 'payment/compras',
                     data: {
-                        ID: parseInt(CAT.ID)
+                        ID: parseInt(CAT.ID),
+                        COORDS: COORDS ? COORDS : null
                     }
                 },
                 function (data) {
+                    if(data.LOCAL)
+                        $rootScope.LOCAL = data.LOCAL;
                     $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS = data.COMPRAS;
                     $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
                     $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS = data.CARRINHO;
                     setTimeout(function () {
-                        $("#boxProdutos").animate({ scrollTop: 0 }, 500);
+                        $("#boxProdutos").animate({scrollTop: 0}, 500);
                         setTimeout(function () {
                             $rootScope.scrollLiberado = true;
                         }, 500);
@@ -165,8 +169,16 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         }
     };
 
-    if ($rootScope.usuario.COMPRAR && !parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']))
-        $scope.getCompras({ID: 0});
+    if ($rootScope.usuario.COMPRAR && !parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA'])) {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    $scope.getCompras({ID: 0}, position.coords ? position.coords : -1);
+                }
+            );
+        } else
+            $scope.getCompras({ID: 0}, -1);
+    }
 
     if (($rootScope.usuario.COMPRAR && $rootScope.usuario.AUTOATENDIMENTO) || $rootScope.usuario.COMPRAR || $rootScope.CARRINHO) {
         $rootScope.TIPO_PG = 'COMPRAR';
@@ -319,7 +331,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     $scope.setLocal = function (ITEM) {
         $rootScope.LOCAL.TEXTO = ITEM.NOME_ABV;
         $rootScope.clickItem('index');
-        $scope.getCompras({ID: 0});
+        $scope.getCompras({ID: 0}, parseInt(ITEM.ID));
     };
 
     $rootScope.SetAddRemoveQtdeProd = function (PROD, QTDE) {
@@ -330,6 +342,8 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                     action: 'payment/addremoveqtde',
                     data: {
                         ID: PROD == -1 ? -1 : PROD.PROD_ID,
+                        TRANSACAO_PRODUTO: parseInt(PROD.TRANSACAO_PRODUTO) || 0,
+                        UNIDADE_MEDIDA: PROD.UNIDADE_MEDIDA,
                         QTDE: QTDE
                     }
                 },

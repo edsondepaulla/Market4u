@@ -338,7 +338,6 @@ app.controller('AtualizarApp', function($rootScope, $scope, ReturnData) {
     $scope.REG = ReturnData;
 });
 
-var TimeOutGetLocation = null;
 app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route, $mdSelect, $animate, $sce, deviceDetector) {
     $rootScope.usuario = Login.getData();
     Factory.prepare();
@@ -350,38 +349,9 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     Factory.$http = $http;
     Factory.$rootScope = $rootScope;
 
-    // Local
-    $rootScope.LOCAL = [];
-    $rootScope.geolocation = function () {
-        clearTimeout(TimeOutGetLocation);
-        TimeOutGetLocation = setTimeout(function () {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function (position) {
-                        try {
-                            Factory.ajax(
-                                {
-                                    action: 'cadastro/setgeolocation',
-                                    data: position.coords
-                                },
-                                function (data) {
-                                    $rootScope.LOCAL = data.LOCAL;
-                                }
-                            );
-                        } catch (e) {
-
-                        }
-                    }
-                );
-            }
-        }, 1000);
-    };
-
     // Get login
     if (!parseInt(Login.getData().ID))
         Login.get();
-    else
-        $rootScope.geolocation();
 
     $rootScope.location = function (url, external, active) {
         if (active)
@@ -417,13 +387,18 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
 
             window.location = url;
             if (url == '#!/') {
+                if (parseInt(Login.getData().ID))
+                    $('#toolbar > img').hide();
                 $rootScope.swipeLeft();
                 $rootScope.toolbar = true;
                 $rootScope.PROD_DETALHES = false;
                 $rootScope.CARRINHO = false;
                 $rootScope.TIPO_PG = 'COMPRAR';
+                $rootScope.PESQUISA = '';
+                $rootScope.MenuBottom = true;
+                $rootScope.PRODUTOS_CATEGORIAS_BUSCA = [];
+                $rootScope.LOCAL.ATIVO = false;
                 $('#boxProdutos').scrollTop(0);
-                $rootScope.clickItem('index');
             }
             if (url != '#!/conecte-se' && url != '#!/boas-vindas' && url != '#!/')
                 $route.reload();
@@ -484,10 +459,6 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                 case 'ConecteSeCodigo':
                     break;
                 default:
-                    if (parseInt(Login.getData().ID)) {
-                        if (!$rootScope.LOCAL.TEXTO)
-                            $rootScope.geolocation();
-                    }
                     clearTimeout(Factory.timeout);
                     Factory.timeout = setTimeout(function () {
                         if (parseInt(Login.getData().ID)) {
@@ -851,59 +822,83 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     $rootScope.processPayment = function (origem, extra) {
         clearTimeout(clearTimeoutProcessPayment);
         clearTimeoutProcessPayment = setTimeout(function () {
-            switch (origem) {
-                case 'saldo':
-                    Factory.ajax(
-                        {
-                            action: 'cadastro/addsaldo',
-                            data: {
-                                FORMA_PAGAMENTO: $rootScope.FORMA_PAGAMENTO,
-                                VALOR_PG: $rootScope.VALOR_PG,
-                                EXTRA: extra
+            var submitPayment = function () {
+                switch (origem) {
+                    case 'saldo':
+                        Factory.ajax(
+                            {
+                                action: 'cadastro/addsaldo',
+                                data: {
+                                    FORMA_PAGAMENTO: $rootScope.FORMA_PAGAMENTO,
+                                    VALOR_PG: $rootScope.VALOR_PG,
+                                    EXTRA: extra
+                                }
+                            },
+                            function () {
+                                $('.btnConfirme').attr('disabled', false);
+                            },
+                            function () {
+                                $('.btnConfirme').attr('disabled', false);
                             }
-                        },
-                        function () {
-                            $('.btnConfirme').attr('disabled', false);
-                        },
-                        function () {
-                            $('.btnConfirme').attr('disabled', false);
-                        }
-                    );
-                    break;
-                case 'compra':
-                    Factory.ajax(
-                        {
-                            action: 'payment/confirm',
-                            data: {
-                                UTILIZADO_SALDO: $rootScope.ACTIVE_SALDO,
-                                VOUCHER: $rootScope.VOUCHER || 0,
-                                FORMA_PAGAMENTO: $rootScope.FORMA_PAGAMENTO,
-                                TRANSACAO_ID: $rootScope.transacaoId,
-                                EXTRA: extra
-                            }
-                        },
-                        function (data) {
-                            $('.btnConfirme').attr('disabled', false);
+                        );
+                        break;
+                    case 'compra':
+                        Factory.ajax(
+                            {
+                                action: 'payment/confirm',
+                                data: {
+                                    UTILIZADO_SALDO: $rootScope.ACTIVE_SALDO,
+                                    VOUCHER: $rootScope.VOUCHER || 0,
+                                    FORMA_PAGAMENTO: $rootScope.FORMA_PAGAMENTO,
+                                    TRANSACAO_ID: $rootScope.transacaoId,
+                                    EXTRA: extra
+                                }
+                            },
+                            function (data) {
+                                $('.btnConfirme').attr('disabled', false);
 
-                            switch (parseInt(data.status)) {
-                                case 1:
-                                    $rootScope.verify();
-                                    break;
-                                case 2:
+                                switch (parseInt(data.status)) {
+                                    case 1:
+                                        $rootScope.verify();
+                                        break;
+                                    case 2:
 
-                                    break;
-                                default:
-                                    Payment.cancel();
-                                    break;
+                                        break;
+                                    default:
+                                        Payment.cancel();
+                                        break;
+                                }
+                            },
+                            function () {
+                                $('.btnConfirme').attr('disabled', false);
                             }
-                        },
-                        function () {
+                        );
+                        break;
+                }
+            };
+            var msg = 'Tem certeza que deseja realizar ' + (origem == 'saldo' ? 'a compra de saldo de R$ ' + $rootScope.VALOR_PG + ' para sua carteira' : 'esta compra') + '?';
+            try {
+                navigator.notification.confirm(
+                    msg,
+                    function (buttonIndex) {
+                        if (buttonIndex == 1)
+                            submitPayment();
+                        else {
                             $('.btnConfirme').attr('disabled', false);
+                            $('#carregando').hide().css('opacity', 0);
                         }
-                    );
-                    break;
+                    },
+                    'Confirmar',
+                    'Sim,Não'
+                );
+            } catch (e) {
+                if (confirm(msg))
+                    submitPayment();
+                else {
+                    $('.btnConfirme').attr('disabled', false);
+                    $('#carregando').hide().css('opacity', 0);
+                }
             }
-
         }, 100);
     };
     $rootScope.confirmPayment = function (origem) {
