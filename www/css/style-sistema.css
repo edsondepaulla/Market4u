@@ -5489,6 +5489,9 @@ ul#boxCategorias li a{
   margin: 18px 0 10px 15px;
   display: block;
 }
+ul#boxCategorias li:last-child a{
+  margin-right: 15px;
+}
 ul#boxCategorias li{
   display: inline-block;
   font-size: 15px;

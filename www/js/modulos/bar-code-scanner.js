@@ -59,7 +59,7 @@ var BarCodeScanner = {
                     if (result.text)
                         BarCodeScanner.getScan(result.text, type);
                     else if(type != 'destravar')
-                        BarCodeScanner.prompt("Não conseguiu escanear? Digite o código:", type);
+                        BarCodeScanner.prompt("Não conseguiu escanear?\nDigite o código:", type);
                     else
                         $('#carregando').hide().css('opacity', 0);
                 },

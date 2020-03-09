@@ -4,9 +4,7 @@
         <li class="{{CAT.ACTIVE?'active':''}}" ng-repeat="CAT in $root.PRODUTOS_COMPRAS.CATEGORIAS">
             <a ng-click="getCompras(CAT)">{{CAT.DESCRICAO}}</a>
         </li>
-        <div class="clearBoth"></div>
     </ul>
-    <div class="clearBoth"></div>
 
     <div class="boxPopup" box="locais" ng-if="$root.LOCAL.ATIVO">
         <div class="topTitulo">

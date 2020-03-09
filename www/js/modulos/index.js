@@ -83,12 +83,26 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                     }
                 },
                 function (data) {
-                    if(data.LOCAL)
+                    if (data.LOCAL)
                         $rootScope.LOCAL = data.LOCAL;
                     $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS = data.COMPRAS;
                     $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
                     $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS = data.CARRINHO;
                     setTimeout(function () {
+                        if (!parseInt(CAT.ID))
+                            $("#boxCategorias").animate({scrollLeft: 0}, 500);
+                        else {
+                            var width = 0;
+                            var active = 0;
+                            $('ul#boxCategorias li').each(function () {
+                                if (!active) {
+                                    active = $(this).hasClass('active') ? 1 : 0;
+                                    if (!active)
+                                        width += $(this).innerWidth();
+                                }
+                            });
+                            $("#boxCategorias").animate({scrollLeft: width}, 500);
+                        }
                         $("#boxProdutos").animate({scrollTop: 0}, 500);
                         setTimeout(function () {
                             $rootScope.scrollLiberado = true;
