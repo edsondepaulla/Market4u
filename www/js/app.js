@@ -121,6 +121,14 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             controller: 'Token',
             resolve: {
                 ReturnData: function ($route, $rootScope) {
+                    switch ($route.current.params.TOKEN) {
+                        case 'fecharcompra':
+                            if (!Page.active) {
+                                $rootScope.location('#!/index/CARRINHO');
+                                return;
+                            }
+                            break;
+                    }
                     return Factory.ajax(
                         {
                             action: 'options/token',

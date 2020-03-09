@@ -16,6 +16,9 @@ var BarCodeScanner = {
                     if (parseInt(data.TRANSACAO_ID))
                         Factory.$rootScope.transacaoId = parseInt(data.TRANSACAO_ID);
 
+                    if(data.CARRINHO)
+                        Factory.$rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS = data.CARRINHO;
+
                     if (data.url)
                         Factory.$rootScope.location(data.url);
                 }

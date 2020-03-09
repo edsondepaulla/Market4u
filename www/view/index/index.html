@@ -99,7 +99,7 @@
         <div class="scrollable-content" scroll md-scroll-y>
             <ul>
                 <li ng-repeat="PROD in $root.CARRINHO_COMPRAS.PRODUTOS">
-                    <div class="b" ng-click="$root.MenuBottom=false; $root.PROD_DETALHES = PROD;">
+                    <div class="b" ng-click="$root.MenuBottom=true; $root.PROD_DETALHES = PROD;">
                         <img data-src="{{PROD.IMAGEM}}" src="img/market4u.png" alt="">
                         <h4>{{PROD.NOME}}</h4>
                         <label class="total_de" ng-if="PROD.DE_PRECO_FORMAT"><span class="v">{{PROD.DE_PRECO_FORMAT}}</span></label>
@@ -122,7 +122,7 @@
         </div>
         <div ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR" id="subTotalCarrinho">
             Subtotal estimado: <span ng-if="$root.CARRINHO_COMPRAS.TOTAL_DE">R$ {{$root.CARRINHO_COMPRAS.TOTAL_DE}}</span><b>R$ {{$root.CARRINHO_COMPRAS.TOTAL_POR}}</b>
-            <br><a id="fechar_compra" ng-click="location('#!/token/fecharcompra')"><i class="mdi mdi-editor-attach-money"></i> Finalizar compra</a>
+            <br><a id="fechar_compra" ng-click="location('#!/token/fecharcompra', 0, 1);"><i class="mdi mdi-editor-attach-money"></i> Finalizar compra</a>
         </div>
     </div>
 
@@ -155,7 +155,7 @@
         </div>
     </div>
 
-    <a top="{{$root.PROD_DETALHES?1:0}}" bottom="{{$root.PRODUTOS_CATEGORIAS_BUSCA.ATIVO?1:0}}" ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR && $root.TIPO_PG != 'PAGAMENTO'" id="boxCarrinhoFloat" style="z-index: {{$root.PROD_DETALHES||$root.PRODUTOS_CATEGORIAS_BUSCA.ATIVO?2:1}}" ng-click="$root.MenuBottom=true;$root.toolbar=false;$root.CARRINHO=true;$root.PROD_DETALHES=false;">
+    <a bottom="{{$root.PRODUTOS_CATEGORIAS_BUSCA.ATIVO?1:0}}" ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR && $root.TIPO_PG != 'PAGAMENTO'" id="boxCarrinhoFloat" style="z-index: {{$root.PROD_DETALHES||$root.PRODUTOS_CATEGORIAS_BUSCA.ATIVO?2:1}}" ng-click="$root.MenuBottom=true;$root.toolbar=false;$root.CARRINHO=true;$root.PROD_DETALHES=false;">
         <i class="mdi mdi-action-shopping-cart"></i> R$ {{$root.CARRINHO_COMPRAS.TOTAL_POR}}
     </a>
 </div>

@@ -252,16 +252,16 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                 $rootScope.NAO_ENCONTROU = true;
                 break;
             case 'naoEncontrouVoltar':
-                $rootScope.toolbar = true;
-                $rootScope.MenuBottom = true;
+                $rootScope.toolbar = $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ATIVO ? false : true;
+                $rootScope.MenuBottom = $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ATIVO ? false : true;
                 $rootScope.NAO_ENCONTROU = false;
                 break;
             case 'produtoVoltar':
                 $rootScope.PESQUISA = '';
-                if ($rootScope.PROD_DETALHES.ORIGEM == 'BUSCA_CATEGORIAS'){
+                if ($rootScope.PROD_DETALHES.ORIGEM == 'BUSCA_CATEGORIAS') {
                     $rootScope.toolbar = false;
                     $rootScope.MenuBottom = false;
-                }else {
+                } else {
                     $rootScope.MenuBottom = true;
                     $rootScope.toolbar = $rootScope.PROD_DETALHES.ORIGEM == 'COMPRAS' ? true : false;
                 }

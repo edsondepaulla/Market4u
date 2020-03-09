@@ -3239,10 +3239,10 @@ body[controller="Index"] #boxCarrinhoFloat .mdi-action-shopping-cart{
   font-size: 24px;
   vertical-align: middle;
 }
-body[controller="Index"] #boxCarrinhoFloat[top="0"][bottom="1"] .mdi-action-shopping-cart{
+body[controller="Index"] #boxCarrinhoFloat[bottom="1"] .mdi-action-shopping-cart{
   font-size: 30px;
 }
-body[controller="Index"] #boxCarrinhoFloat[top="0"][bottom="1"]{
+body[controller="Index"] #boxCarrinhoFloat[bottom="1"]{
   bottom: 10px;
   font-size: 24px;
   width: calc(100% - 20px);
@@ -3250,15 +3250,6 @@ body[controller="Index"] #boxCarrinhoFloat[top="0"][bottom="1"]{
   height: 50px;
   align-items: center;
   justify-content: space-between;
-}
-body[controller="Index"] #boxCarrinhoFloat[top="1"]{
-  top: 6px;
-  bottom: unset;
-  right: 6px;
-  background: transparent;
-  box-shadow: unset;
-  color: #444;
-  font-weight: 500;
 }
 body[controller="Index"] #boxCarrinhoFloat{
   background: #00ab46;
@@ -5064,11 +5055,11 @@ img[src="img/market4u.png"]{
 }
 .boxPopup[box="produto"] .scrollable-content {
   padding-bottom: 160px;
-  margin-top: 46px;
+  margin-top: 10px;
   text-align: center;
 }
 .boxPopup[box="carrinho"] #fechar_compra{
-  background: #444;
+  background: #00ab46;
   color: #FFF;
   padding: 5px 10px;
   border-radius: 5px;
