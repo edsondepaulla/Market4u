@@ -353,6 +353,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     if (!parseInt(Login.getData().ID))
         Login.get();
 
+    $rootScope.LOCAL = [];
     $rootScope.location = function (url, external, active) {
         if (active)
             Page.start();
@@ -552,7 +553,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
         switch (type) {
             case 'inicio':
                 if ($rootScope.TOUR)
-                    return;
+                    $rootScope.TOUR = 1;
                 else
                     $rootScope.location('#!/');
                 break;

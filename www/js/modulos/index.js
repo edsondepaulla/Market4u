@@ -169,7 +169,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         }
     };
 
-    if ($rootScope.usuario.COMPRAR && !parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA'])) {
+    if (!parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA'])) {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 function (position) {
@@ -180,11 +180,8 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             $scope.getCompras({ID: 0}, -1);
     }
 
-    if (($rootScope.usuario.COMPRAR && $rootScope.usuario.AUTOATENDIMENTO) || $rootScope.usuario.COMPRAR || $rootScope.CARRINHO) {
-        $rootScope.TIPO_PG = 'COMPRAR';
-        $rootScope.MenuBottom = 1;
-    }else if ($rootScope.usuario.AUTOATENDIMENTO)
-        $rootScope.TIPO_PG = 'PAGAMENTO';
+    $rootScope.TIPO_PG = 'COMPRAR';
+    $rootScope.MenuBottom = 1;
     $rootScope.top_0 = 0;
     switch ($rootScope.STEP) {
         case 1:
