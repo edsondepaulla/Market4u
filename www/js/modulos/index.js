@@ -13,8 +13,12 @@ var Payment = {
             Factory.$rootScope.transacaoIdCarrinho = false;
 
             // Redirect
-            if (!parseInt(cancelar) && status == 'success')
+            if (!parseInt(cancelar) && status == 'success') {
+                Payment.QTDE_PRODUTOS = [];
+                Payment.PRODUTOS_COMPRAS = [];
+                Payment.CARRINHO_COMPRAS = [];
                 Factory.$rootScope.location('#!/');
+            }
         }
     },
     cancel: function () {
@@ -97,7 +101,8 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                     action: 'payment/compras',
                     data: {
                         ID: parseInt(CAT.ID),
-                        COORDS: COORDS ? COORDS : null
+                        COORDS: COORDS ? COORDS : null,
+                        LOADER_CARREGANDO: $('#boxPago:visible').length ? false : true
                     }
                 },
                 function (data) {
@@ -260,6 +265,11 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
 
     $rootScope.clickItem = function (ORIGEM, VALS) {
         switch (ORIGEM) {
+            case 'locaisVoltar':
+                $rootScope.toolbar = $rootScope.CARRINHO?false:true;
+                $rootScope.MenuBottom = true;
+                $rootScope.LOCAL.ATIVO = false;
+                break;
             case 'naoEncontrou':
                 $rootScope.toolbar = false;
                 $rootScope.MenuBottom = false;
@@ -341,7 +351,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
 
     $scope.setLocal = function (ITEM) {
         $rootScope.LOCAL.TEXTO = ITEM.NOME_ABV;
-        $rootScope.clickItem('index');
+        $rootScope.clickItem('locaisVoltar');
         $scope.getCompras({ID: 0}, parseInt(ITEM.ID));
     };
 

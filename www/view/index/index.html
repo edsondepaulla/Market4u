@@ -8,15 +8,17 @@
 
     <div class="boxPopup" box="locais" ng-if="$root.LOCAL.ATIVO">
         <div class="topTitulo">
-            <a class="open-left" ng-click="$root.clickItem('index')">
+            <a class="open-left" ng-click="$root.clickItem('locaisVoltar')">
                 <i class="mdi mdi-navigation-chevron-left"></i>
             </a>
             <div class="textoTitulo">Locais</div>
         </div>
         <div class="scrollable-content" scroll md-scroll-y>
             <ul>
-                <li ng-click="setLocal(ITEM)" ng-repeat="ITEM in $root.LOCAL.ITENS">
-                    {{ITEM.NOME}}
+                <li class="{{ITEM.ACTIVE?'active':''}}" ng-click="setLocal(ITEM)" ng-repeat="ITEM in $root.LOCAL.ITENS">
+                    {{ITEM.NOME_ABV}}
+                    <label ng-if="ITEM.MAPS.DISTANCE">{{ITEM.MAPS.DISTANCE}}</label>
+                    <span>{{ITEM.ENDERECO}}, {{ITEM.NUMERO}} {{ITEM.BAIRRO}} - {{ITEM.CIDADE}}{{ITEM.ESTADO?' - '+ITEM.ESTADO:''}}</span>
                 </li>
             </ul>
         </div>
@@ -96,6 +98,11 @@
         </div>
         <div class="scrollable-content" scroll md-scroll-y>
             <ul>
+                <li ng-click="$root.clickItem('busca_locais')" id="local_item" ng-if="$root.CARRINHO_COMPRAS.PRODUTOS && $root.LOCAL.ITEM">
+                    {{$root.LOCAL.ITEM.NOME_ABV}}
+                    <label ng-if="$root.LOCAL.ITEM.MAPS.DISTANCE">{{$root.LOCAL.ITEM.MAPS.DISTANCE}}</label>
+                    <span>{{$root.LOCAL.ITEM.ENDERECO}}, {{$root.LOCAL.ITEM.NUMERO}} {{$root.LOCAL.ITEM.BAIRRO}} - {{$root.LOCAL.ITEM.CIDADE}}{{$root.LOCAL.ITEM.ESTADO?' - '+$root.LOCAL.ITEM.ESTADO:''}}</span>
+                </li>
                 <li ng-repeat="PROD in $root.CARRINHO_COMPRAS.PRODUTOS">
                     <div class="b" ng-click="$root.MenuBottom=true; $root.PROD_DETALHES = PROD;">
                         <img data-src="{{PROD.IMAGEM}}" src="img/market4u.png" alt="">
