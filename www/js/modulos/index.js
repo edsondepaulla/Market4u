@@ -1,4 +1,5 @@
 var Payment = {
+    ATUALIZAR: true,
     QTDE_PRODUTOS: [],
     PRODUTOS_COMPRAS: [],
     CARRINHO_COMPRAS: [],
@@ -14,9 +15,7 @@ var Payment = {
 
             // Redirect
             if (!parseInt(cancelar) && status == 'success') {
-                Payment.QTDE_PRODUTOS = [];
-                Payment.PRODUTOS_COMPRAS = [];
-                Payment.CARRINHO_COMPRAS = [];
+                Payment.ATUALIZAR = true;
                 Factory.$rootScope.location('#!/');
             }
         }
@@ -187,7 +186,8 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         }
     };
 
-    if (!parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']) || $rootScope.CARRINHO) {
+    if (!parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']) || $rootScope.CARRINHO || Payment.ATUALIZAR) {
+        Payment.ATUALIZAR = false;
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 function (position) {

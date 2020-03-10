@@ -47,6 +47,10 @@
     </div>
 
     <md-content id="boxProdutos" class="scrollable-content flex" type="produtos" scroll="{{$root.PRODUTOS_COMPRAS.SCROLL.ATIVO}}" flex md-scroll-y>
+        <!--<div ng-if="$root.PRODUTOS_COMPRAS.CATEGORIAS" style="width: 100%;height: 70px; background: red">
+
+
+        </div>-->
         <ul>
             <li count="{{$root.PRODUTOS_COMPRAS.SUBCATEGORIAS.length}}" ng-repeat="SUBCAT in $root.PRODUTOS_COMPRAS.SUBCATEGORIAS">
                 <div ng-if="$root.PRODUTOS_COMPRAS.SUBCATEGORIAS.length > 1" class="t">
@@ -98,7 +102,7 @@
         </div>
         <div class="scrollable-content" scroll md-scroll-y>
             <ul>
-                <li ng-click="$root.clickItem('busca_locais')" id="local_item" ng-if="$root.CARRINHO_COMPRAS.PRODUTOS && $root.LOCAL.ITEM">
+                <li ng-click="$root.clickItem('busca_locais')" id="local_item" ng-if="$root.LOCAL.ITEM">
                     {{$root.LOCAL.ITEM.NOME_ABV}}
                     <label ng-if="$root.LOCAL.ITEM.MAPS.DISTANCE">{{$root.LOCAL.ITEM.MAPS.DISTANCE}}</label>
                     <span>{{$root.LOCAL.ITEM.ENDERECO}}, {{$root.LOCAL.ITEM.NUMERO}} {{$root.LOCAL.ITEM.BAIRRO}} - {{$root.LOCAL.ITEM.CIDADE}}{{$root.LOCAL.ITEM.ESTADO?' - '+$root.LOCAL.ITEM.ESTADO:''}}</span>
