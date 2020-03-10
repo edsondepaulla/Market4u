@@ -68,7 +68,7 @@ var Factory = {
     ajax: function (params, successCallback, functionError) {
         if (params.action) {
             // Loading
-            var diffCarregando = (params.data ? params.data['LOADER_CARREGANDO'] === false : false) ? false : this.diffCarregando(params.action);
+            var diffCarregando = (params.data ? params.data['LOADER_CARREGANDO'] === false : false) ? false : ((params.data ? params.data['LOADER_CARREGANDO'] === true : false) ? true : this.diffCarregando(params.action));
             if (diffCarregando) {
                 clearTimeout(Factory.timeoutCarregando);
                 $('#carregando').show().css('opacity', 1);

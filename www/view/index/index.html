@@ -71,19 +71,19 @@
             <div class="textoTitulo">Não encontrou o que queria?</div>
         </div>
         <div class="scrollable-content" scroll md-scroll-y>
-            <h4 ng-if="$root.usuario.FACEBOOK.ATIVO || $root.usuario.INSTAGRAM.ATIVO" style="text-align: center; padding: 10px 10px 0">
-                Segue a gente nas <b>redes sociais</b> :)
-                <div style="margin-top: 10px">
-                    <img ng-if="$root.usuario.FACEBOOK.ATIVO" ng-click="AppBrowser($root.usuario.FACEBOOK)" width="32" style="margin-right: 20px;" src="img/icon-facebook.png" border="0">
-                    <img ng-if="$root.usuario.INSTAGRAM.ATIVO" ng-click="AppBrowser($root.usuario.INSTAGRAM)" width="50" src="img/icon-instagram.png" border="0">
-                </div>
-            </h4>
             <form id="formNaoEncontrou" class="form" onsubmit="return false;" method="post">
                 <label for="sugestao">
                     <textarea placeholder="Informe-nos e/ou deixe sua sugestão aqui" id="sugestao"></textarea>
                 </label>
                 <button ng-click="naoEncontrou()" type="button">Enviar</button>
             </form>
+            <h4 ng-if="$root.usuario.FACEBOOK.ATIVO || $root.usuario.INSTAGRAM.ATIVO" style="text-align: center; padding: 15px 10px 0">
+                Segue a gente nas <b>redes sociais</b> :)
+                <div style="margin-top: 10px">
+                    <img ng-if="$root.usuario.FACEBOOK.ATIVO" ng-click="AppBrowser($root.usuario.FACEBOOK)" width="32" style="margin-right: 20px;" src="img/icon-facebook.png" border="0">
+                    <img ng-if="$root.usuario.INSTAGRAM.ATIVO" ng-click="AppBrowser($root.usuario.INSTAGRAM)" width="50" src="img/icon-instagram.png" border="0">
+                </div>
+            </h4>
         </div>
     </div>
 
@@ -104,9 +104,9 @@
                         <label><span class="v">{{PROD.PRECO_FORMAT}}</span></label>
                     </div>
                     <div class="addRemoveQtdeProduto" unidade_medida="{{PROD.UNIDADE_MEDIDA}}">
-                        <i ng-click="addRemoveQtdeProd(PROD, '+')" class="mdi mdi-content-add-circle"></i>
-                        <span>{{$root.QTDE_PRODUTOS[PROD.PROD_ID]?$root.QTDE_PRODUTOS[PROD.PROD_ID]:0}}</span>
-                        <i ng-click="addRemoveQtdeProd(PROD, '-')" class="mdi mdi-content-remove-circle"></i>
+                        <i ng-click="addRemoveQtdeProd(PROD, '+', true)" class="mdi mdi-content-add-circle"></i>
+                        <span>{{$root.QTDE_PRODUTOS[PROD.PROD_ID]?(PROD.UNIDADE_MEDIDA=='KG'?$root.formatValor($root.QTDE_PRODUTOS[PROD.PROD_ID]):$root.QTDE_PRODUTOS[PROD.PROD_ID]):0}}{{PROD.UNIDADE_MEDIDA=='KG'?'kg':''}}</span>
+                        <i ng-click="addRemoveQtdeProd(PROD, '-', true)" class="mdi mdi-content-remove-circle"></i>
                     </div>
                 </li>
                 <li style="height: auto;text-align: center" ng-if="!$root.CARRINHO_COMPRAS.PRODUTOS">

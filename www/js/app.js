@@ -358,8 +358,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     Factory.$rootScope = $rootScope;
 
     // Get login
-    if (!parseInt(Login.getData().ID))
-        Login.get();
+    Login.get();
 
     $rootScope.LOCAL = [];
     $rootScope.location = function (url, external, active) {
@@ -668,6 +667,10 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
             $('#fundo_transparente').hide();
         }, 1000);
         $('body').removeAttr('menu_left');
+    };
+
+    $rootScope.formatValor = function (text) {
+        return String(text).replace('.', ',');
     };
 
     /*

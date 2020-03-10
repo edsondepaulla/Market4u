@@ -5171,7 +5171,13 @@ img[src="img/market4u.png"]{
 .addRemoveQtdeProduto[unidade_medida="KG"]{
   background: transparent;
 }
-.addRemoveQtdeProduto[unidade_medida="KG"] span,
+.addRemoveQtdeProduto[unidade_medida="KG"] span{
+  right: 0;
+  left: unset;
+  width: 70px;
+  text-align: right;
+  font-size: 12px;
+}
 .addRemoveQtdeProduto[unidade_medida="KG"] .mdi.mdi-content-add-circle{
   display: none;
 }

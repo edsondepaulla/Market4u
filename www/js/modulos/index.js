@@ -70,7 +70,25 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     };
 
     $rootScope.scrollLiberado = true;
-    $rootScope.LOCAL = $rootScope.LOCAL?$rootScope.LOCAL:[];
+    $rootScope.LOCAL = $rootScope.LOCAL ? $rootScope.LOCAL : [];
+    $scope.scrollLeft = function () {
+        setTimeout(function () {
+            var width = 0;
+            var active = 0;
+            $('ul#boxCategorias li').each(function () {
+                if (!active) {
+                    active = $(this).hasClass('active') ? 1 : 0;
+                    if (!active)
+                        width += $(this).innerWidth();
+                }
+            });
+            $("#boxCategorias").animate({scrollLeft: width}, 500);
+            $("#boxProdutos").animate({scrollTop: 0}, 500);
+            setTimeout(function () {
+                $rootScope.scrollLiberado = true;
+            }, 500);
+        }, 500);
+    };
     $scope.getCompras = function (CAT, COORDS) {
         if (!parseInt(CAT.ACTIVE)) {
             $rootScope.scrollLiberado = false;
@@ -88,30 +106,13 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                     $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS = data.COMPRAS;
                     $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
                     $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS = data.CARRINHO;
-                    setTimeout(function () {
-                        var width = 0;
-                        if (parseInt(CAT.ID)) {
-                            var active = 0;
-                            $('ul#boxCategorias li').each(function () {
-                                if (!active) {
-                                    active = $(this).hasClass('active') ? 1 : 0;
-                                    if (!active)
-                                        width += $(this).innerWidth();
-                                }
-                            });
-                        }
-                        $("#boxCategorias").animate({scrollLeft: width}, 500);
-                        $("#boxProdutos").animate({scrollTop: 0}, 500);
-                        setTimeout(function () {
-                            $rootScope.scrollLiberado = true;
-                        }, 500);
-                    }, 500);
+                    $scope.scrollLeft();
                 }
             );
         }
     };
 
-    $rootScope.scroll = function(TYPE) {
+    $rootScope.scroll = function (TYPE) {
         switch (TYPE) {
             case 'produtos':
                 Payment.PRODUTOS_COMPRAS.SCROLL['OFFSET'] += parseInt(Payment.PRODUTOS_COMPRAS.SCROLL['LIMIT']);
@@ -190,7 +191,8 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             );
         } else
             $scope.getCompras({ID: parseInt($('ul#boxCategorias li.active').data('id') || 0)}, -1);
-    }
+    } else
+        $scope.scrollLeft();
 
     $rootScope.TIPO_PG = 'COMPRAR';
     $rootScope.MenuBottom = 1;
@@ -213,7 +215,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         $rootScope.toolbar = false;
 
     $scope.verCarrinho = function () {
-        if($rootScope.transacaoIdCarrinho)
+        if ($rootScope.transacaoIdCarrinho)
             $rootScope.location('#!/index/CARRINHO');
         else
             $('#Produtos').show();
@@ -248,7 +250,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                     }
                 }
             );
-        }, PESQUISA?1000:0);
+        }, PESQUISA ? 1000 : 0);
     };
 
     $scope.clearPesquisa = function () {
@@ -343,13 +345,14 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         $scope.getCompras({ID: 0}, parseInt(ITEM.ID));
     };
 
-    $rootScope.SetAddRemoveQtdeProd = function (PROD, QTDE) {
+    $rootScope.SetAddRemoveQtdeProd = function (PROD, QTDE, LOADER_CARREGANDO) {
         clearTimeout(Factory.timeout);
         Factory.timeout = setTimeout(function () {
             Factory.ajax(
                 {
                     action: 'payment/addremoveqtde',
                     data: {
+                        LOADER_CARREGANDO: LOADER_CARREGANDO ? true : false,
                         ID: PROD == -1 ? -1 : PROD.PROD_ID,
                         TRANSACAO_PRODUTO: parseInt(PROD.TRANSACAO_PRODUTO) || 0,
                         UNIDADE_MEDIDA: PROD.UNIDADE_MEDIDA,
@@ -365,7 +368,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                     $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS = data;
                 }
             );
-        }, 500);
+        }, PROD == -1 ? 0 : 500);
     };
 
     $rootScope.limparCarrinho = function () {
@@ -374,18 +377,18 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                 'Tem certeza que deseja sua lista de compra?',
                 function (buttonIndex) {
                     if (buttonIndex == 1)
-                        $rootScope.SetAddRemoveQtdeProd(-1, 0);
+                        $rootScope.SetAddRemoveQtdeProd(-1, 0, true);
                 },
                 'Confirmar',
                 'Sim,Não'
             );
         } catch (e) {
             if (confirm('Tem certeza que deseja sua lista de compra?'))
-                $rootScope.SetAddRemoveQtdeProd(-1, 0);
+                $rootScope.SetAddRemoveQtdeProd(-1, 0, true);
         }
     };
 
-    $rootScope.addRemoveQtdeProd = function (PROD, type) {
+    $rootScope.addRemoveQtdeProd = function (PROD, type, LOADER_CARREGANDO) {
         if (!PROD.QTDE_ORIGINAL)
             PROD.QTDE_ORIGINAL = parseFloat($rootScope.QTDE_PRODUTOS[PROD.PROD_ID] || 0);
 
@@ -393,7 +396,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             case '+':
                 PROD.QTDE = parseInt($rootScope.QTDE_PRODUTOS[PROD.PROD_ID] || 0) + 1;
                 $rootScope.QTDE_PRODUTOS[PROD.PROD_ID] = PROD.QTDE;
-                $rootScope.SetAddRemoveQtdeProd(PROD, PROD.QTDE);
+                $rootScope.SetAddRemoveQtdeProd(PROD, PROD.QTDE, LOADER_CARREGANDO);
                 break;
             case '-':
                 if (parseFloat(PROD.QTDE)) {
@@ -403,7 +406,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                                 'Tem certeza que deseja remover este item da sua lista de compra?',
                                 function (buttonIndex) {
                                     if (buttonIndex == 1)
-                                        $rootScope.SetAddRemoveQtdeProd(PROD, 0);
+                                        $rootScope.SetAddRemoveQtdeProd(PROD, 0, LOADER_CARREGANDO);
                                     else {
                                         PROD.QTDE = PROD.QTDE_ORIGINAL;
                                         $rootScope.QTDE_PRODUTOS[PROD.PROD_ID] = PROD.QTDE;
@@ -414,12 +417,12 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                             );
                         } catch (e) {
                             if (confirm('Tem certeza que deseja remover este item da sua lista de compra?'))
-                                $rootScope.SetAddRemoveQtdeProd(PROD, 0);
+                                $rootScope.SetAddRemoveQtdeProd(PROD, 0, LOADER_CARREGANDO);
                         }
                     } else {
                         PROD.QTDE = parseInt($rootScope.QTDE_PRODUTOS[PROD.PROD_ID]) - 1;
                         $rootScope.QTDE_PRODUTOS[PROD.PROD_ID] = PROD.QTDE;
-                        $rootScope.SetAddRemoveQtdeProd(PROD, PROD.QTDE);
+                        $rootScope.SetAddRemoveQtdeProd(PROD, PROD.QTDE, LOADER_CARREGANDO);
                     }
                 }
                 break;
