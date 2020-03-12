@@ -1129,7 +1129,6 @@ body > .app{
 body > .app{
   background: #f2f2f2;
   padding-top: 46px;
-  display: none;
 }
 body > .app[open="1"]{
   position: absolute;
