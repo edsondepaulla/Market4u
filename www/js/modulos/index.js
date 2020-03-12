@@ -315,7 +315,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                 break;
             case 'busca_locais':
                 $rootScope.toolbar = false;
-                $rootScope.MenuBottom = false;
+                $rootScope.MenuBottom = true;
                 $rootScope.LOCAL.ATIVO = true;
                 break;
             case 'verProdutos':

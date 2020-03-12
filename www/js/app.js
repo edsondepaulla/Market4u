@@ -575,19 +575,19 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
         switch (type) {
             case 'inicio':
                 if ($rootScope.TOUR)
-                    $rootScope.TOUR = 1;
+                    $rootScope.TOUR = 2;
                 else
                     $rootScope.location('#!/');
                 break;
             case 'carteira':
                 if ($rootScope.TOUR)
-                    $rootScope.TOUR = 2;
+                    $rootScope.TOUR = 3;
                 else
                     $rootScope.location('#!/minha-carteira');
                 break;
             case 'pagar_escanear':
                     if ($rootScope.TOUR)
-                        $rootScope.TOUR = 3;
+                        $rootScope.TOUR = 4;
                     else {
                         if ($rootScope.TIPO_PG == 'PAGAMENTO')
                             $rootScope.clickEscanear('qrcode');
@@ -597,13 +597,13 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                 break;
             case 'destravar':
                 if ($rootScope.TOUR)
-                    $rootScope.TOUR = 4;
+                    $rootScope.TOUR = 5;
                 else
                     $rootScope.clickEscanear('destravar');
                 break;
             case 'ajustes':
                 if ($rootScope.TOUR)
-                    $rootScope.TOUR = 5;
+                    $rootScope.TOUR = 6;
                 else
                     $rootScope.location('#!/cadastro');
                 break;

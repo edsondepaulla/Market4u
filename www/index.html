@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <title>Market4u</title>
+  <title>market4u</title>
   <meta charset="UTF-8">
   <meta http-equiv="Content-Language" content="pt_BR">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -89,9 +89,6 @@
         <i class="mdi mdi-navigation-chevron-left"></i>
       </a>
       <div class="textoTitulo" ng-bind-html="Titulo"></div>
-      <div id="meu_saldo" ng-click="location('#!/minha-carteira')" ng-if="usuario.ID && usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO">
-        Meu saldo <b>{{usuario.MEUSALDO_FORMAT}}</b> <span ng-if="!usuario.MEUSALDO"><i class="mdi mdi-content-add-circle"></i> Adicionar saldo</span>
-      </div>
     </div>
     <img ng-if="controller != 'Index'" ng-click="location('#!/')" src="img/logo.png" border="0">
     <div ng-click="$root.clickItem('busca_locais')" ng-if="controller == 'Index'" encontrou="{{$root.LOCAL.TEXTO?1:0}}" id="local">
@@ -105,7 +102,7 @@
       <img src="img/whatsapp.png">
     </a>
 
-    <div class="app-body" top_0="{{top_0}}" top_46="{{(controller == 'Index'?(!usuario.MEUSALDO && usuario.MEUSALDO_ATIVADO?0:1):(usuario.ID && usuario.MEUSALDO_ATIVADO && $root.BARRA_SALDO?0:1))}}">
+    <div class="app-body" top_0="{{top_0}}">
       <div class="app-content">
         <div class="scrollable ng-scope" border-top="{{$root.BARRA_SALDO?0:border_top}}" ng-view></div>
       </div>

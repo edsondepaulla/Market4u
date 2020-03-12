@@ -1414,10 +1414,6 @@ input[type="search"].campoBusca:focus {
   display: none;
 }
 
-.app-body[top_46="1"]{
-  top: 46px;
-}
-
 .app-body[top_0="1"]{
   top: 0 !important;
 }
@@ -1428,7 +1424,7 @@ input[type="search"].campoBusca:focus {
   display: block;
   z-index: 2;
   position: fixed;
-  top: 65px;
+  top: 46px;
   left: 0;
   width: 100%;
   background: #FFF;
@@ -2417,12 +2413,13 @@ right: 0;
 
 .topTitulo{
   min-height: 46px;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.1), 0 2px 10px 0 rgba(0,0,0,0.2);
+  background: #fcfcfc;
 }
 .boxPopup[box="nao_encontrou"] .topTitulo,
 .boxPopup[box="produto"] .topTitulo,
 .boxPopup[box="locais"] .topTitulo,
 .boxPopup[box="carrinho"] .topTitulo{
-  border-bottom: 1px solid rgba(11, 99, 64, 0.1);
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 100%;
@@ -2488,30 +2485,14 @@ visibility: visible;
 }
 
 .topTitulo .textoTitulo{
-display: inline-block;
-font-size: 13px;
-line-height: 3.4;
-text-transform: uppercase;
-background: rgba(255, 255, 255, 0.9);
-z-index: 1;
-position: relative;
-padding-right: 3px;
-}
-.topTitulo #meu_saldo{
-background: rgba(11, 99, 64, 0.05);
-text-align: center;
-padding: 2px 0;
-font-size: 12px;
-color: #00ab46;
-}
-.topTitulo #meu_saldo span{
-border-left: 1px solid #00ab46;
-padding-left: 10px;
-margin-left: 10px;
-}
-.topTitulo #meu_saldo i{
-font-size: 10px;
-line-height: 0;
+  display: inline-block;
+  font-size: 15px;
+  line-height: 3;
+  text-transform: uppercase;
+  z-index: 1;
+  position: relative;
+  padding-right: 3px;
+  font-weight: 500;
 }
 .topTitulo .open-left{
 text-align: left;
@@ -4370,7 +4351,8 @@ ul#menu-bottom[tour="2"],
 ul#menu-bottom[tour="3"],
 ul#menu-bottom[tour="4"],
 ul#menu-bottom[tour="5"],
-ul#menu-bottom[tour="6"]{
+ul#menu-bottom[tour="6"],
+ul#menu-bottom[tour="7"]{
   z-index: 7;
 }
 
@@ -4926,7 +4908,7 @@ body[controller="Cadastro"] ul#preferencias li img{
 /*
  * Tour
  */
-ul#boxTour[tour="6"]{
+ul#boxTour[tour="7"]{
   z-index: 100;
 }
 ul#boxTour[tour="1"]{
@@ -4943,28 +4925,48 @@ ul#boxTour{
   text-align: center;
   color: #FFF;
 }
+ul#boxTour > i.mdi-navigation-close{
+  right: unset;
+  left: 10px;
+  font-size: 40px;
+}
+ul#boxTour > i{
+  position: absolute;
+  top: 0;
+  right: 10px;
+  z-index: 99999;
+  color: #FFF;
+  font-size: 52px;
+}
+ul#boxTour[tour="1"] > i,
+ul#boxTour[tour="7"] > i{
+  display: none;
+}
 ul#boxTour li i.mdi.mdi-hardware-keyboard-backspace{
   transform: rotate(270deg);
   position: absolute;
   bottom: 60px;
   color: #FFF;
 }
-ul#boxTour li[idx="6"] > div{
+ul#boxTour li[idx="7"] > div{
   position: absolute;
   bottom: 15px;
   left: 0;
   width: 100%;
 }
 ul#boxTour li[idx="2"] i.mdi.mdi-hardware-keyboard-backspace{
-  left: calc(30% - 22px);
-}
-ul#boxTour li[idx="5"] i.mdi.mdi-hardware-keyboard-backspace{
-  left: calc(90% - 22px);
-}
-ul#boxTour li[idx="4"] i.mdi.mdi-hardware-keyboard-backspace{
-  left: calc(70% - 22px);
+  left: calc(10% - 22px);
 }
 ul#boxTour li[idx="3"] i.mdi.mdi-hardware-keyboard-backspace{
+  left: calc(30% - 22px);
+}
+ul#boxTour li[idx="6"] i.mdi.mdi-hardware-keyboard-backspace{
+  left: calc(90% - 22px);
+}
+ul#boxTour li[idx="5"] i.mdi.mdi-hardware-keyboard-backspace{
+  left: calc(70% - 22px);
+}
+ul#boxTour li[idx="4"] i.mdi.mdi-hardware-keyboard-backspace{
   left: calc(50% - 22px);
   bottom: 80px;
 }
@@ -5014,7 +5016,7 @@ ul#boxTour li{
   padding-top: 80px;
   position: relative;
 }
-ul#boxTour[tour="6"] li{
+ul#boxTour[tour="7"] li{
   background: -webkit-linear-gradient(transparent, #000);
   background: -o-linear-gradient(transparent, #000);
   background: -moz-linear-gradient(transparent, #000);
@@ -5025,7 +5027,8 @@ ul#boxTour[tour="2"] li[idx="2"],
 ul#boxTour[tour="3"] li[idx="3"],
 ul#boxTour[tour="4"] li[idx="4"],
 ul#boxTour[tour="5"] li[idx="5"],
-ul#boxTour[tour="6"] li[idx="6"]{
+ul#boxTour[tour="6"] li[idx="6"],
+ul#boxTour[tour="7"] li[idx="7"]{
   display: block;
 }
 ul#boxTour li[idx="1"]{
@@ -5665,6 +5668,9 @@ body[controller="Index"] > #toolbar #local{
   padding-bottom: 130px !important;
   overflow-x: hidden;
 }
+.boxPopup[box="locais"] .scrollable-content{
+  padding-bottom: 130px;
+}
 .boxPopup[box="locais"]{
   z-index: 3;
 }
@@ -5714,7 +5720,6 @@ body[controller="Index"] > #toolbar #local{
   border-left: 5px solid #00ab46;
   padding-left: 10px;
   height: auto;
-  background: #fcfcfc;
   padding-right: 10px;
   position: relative;
   margin: 0 0 -11px;

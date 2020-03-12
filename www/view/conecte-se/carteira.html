@@ -1,5 +1,8 @@
 <md-content class="scrollable-content" scroll md-scroll-y>
     <form id="formMinhaCarteira" class="form" onsubmit="return false;" method="post">
+        <h4 style="text-align: center">Funciona assim:</h4>
+        <span style="display: block;margin-bottom: 15px;text-align: center;color: #00ab46">Adicionando antecipadamente <b>saldo na carteira</b>, você fica com um valor <b>pré pago</b>, melhorando ainda mais sua experiência de compra em poucos cliques.</span>
+
         Meu saldo:
         <h4>{{usuario.MEUSALDO_FORMAT}}</h4>
 
@@ -13,7 +16,7 @@
         </ul>
         <div class="clearBoth"></div>
 
-        <div style="margin: 15px 0 0 -15px">Modo de pagamento:</div>
+        <div style="margin: 15px 0 0 -15px">Selecione o <b>método de pagamento</b> que você deseja usar:</div>
         <div id="boxPg" ng-include src="'view/payment/formas_pg.html'"></div>
     </form>
 </md-content>
