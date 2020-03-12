@@ -8,6 +8,8 @@
         <label class="utilizado_voucher" ng-if="PG.TIPO=='VOUCHER'">Cupons de desconto</label>
         {{PG.TIPO=='SALDO'||PG.TIPO=='VOUCHER'?'':PG.NOME}} <i class="mdi mdi-action-done"></i>
         <label class="valor" ng-if="PG.TIPO=='SALDO'">{{usuario.MEUSALDO_FORMAT}}</label>
+        <div class="clearBoth" ng-if="PG.TIPO=='SALDO' && VALOR_PG"></div>
+        <label style="margin-top: 15px;display: block;" ng-if="PG.TIPO=='SALDO' && VALOR_PG">Selecione o <b>método de pagamento</b> que você deseja usar:</label>
         <div class="clearBoth"></div>
         <ul ng-if="PG.TIPO=='VOUCHER'">
             <li class="{{V.ACTIVE?'active':''}} itens" ng-repeat="V in PG.ITENS" ng-click="selectVoucher(PG.ITENS, V)">
