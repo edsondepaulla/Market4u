@@ -82,6 +82,8 @@ var BarCodeScanner = {
                     disableSuccessBeep: true
                 }
             );
+            if(Factory.$rootScope.device == 'android')
+                Factory.$rootScope.location('#!/index/ESCANEAR');
         } catch (err) {
             BarCodeScanner.prompt("Digite o código:", type);
         }

@@ -37,6 +37,7 @@ var Payment = {
 
 app.controller('Index', function($scope, $rootScope, $routeParams) {
     $rootScope.TOUR = $routeParams.STEP == 'TOUR' ? 1 : 0;
+    $rootScope.ESCANEAR = $routeParams.STEP == 'ESCANEAR' ? 1 : 0;
     $rootScope.CARRINHO = $routeParams.STEP == 'CARRINHO' ? 1 : 0;
     $rootScope.PROD_DETALHES = false;
     if ($rootScope.TOUR && !parseInt($rootScope.usuario.TOUR)) {
