@@ -269,7 +269,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                 msg,
                 function (buttonIndex) {
                     if (buttonIndex == 1)
-                        location('#!/token/fecharcompra', 0, 1);
+                        $rootScope.location('#!/token/fecharcompra', 0, 1);
                     else
                         $rootScope.clickItem('busca_locais');
                 },
@@ -278,7 +278,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             );
         } catch (e) {
             if (confirm(msg))
-                location('#!/token/fecharcompra', 0, 1);
+                $rootScope.location('#!/token/fecharcompra', 0, 1);
             else
                 $rootScope.clickItem('busca_locais');
         }
