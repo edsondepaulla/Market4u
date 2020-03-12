@@ -38,14 +38,10 @@ html{
 }
 
 body {
+  background: transparent !important;
   overflow-x: hidden;
   -moz-user-select: none;
   -webkit-user-select: none;
-  background-image: url("../img/fundo.png") !important;
-  background-color: #FFF !important;
-  background-repeat: no-repeat !important;
-  background-size: 100% auto !important;
-  background-position: center top !important;
 }
 
 body > div#container {
@@ -5674,6 +5670,7 @@ body[controller="Index"] > #toolbar #local{
 .boxPopup[box="busca"] .scrollable-content{
   padding-bottom: 130px !important;
   overflow-x: hidden;
+  padding-top: 10px;
 }
 .boxPopup[box="locais"] .scrollable-content{
   padding-bottom: 130px;
@@ -5732,4 +5729,20 @@ body[controller="Index"] > #toolbar #local{
   margin: 0 0 -11px;
   border-bottom: 1px solid rgba(11, 99, 64, 0.1);
   z-index: 1;
+}
+
+.banners{
+  margin: 0;
+  width: 100%;
+}
+.banners > li.active{
+  display: block;
+}
+.banners > li{
+  margin: 0;
+  display: none;
+}
+.banners > li > img{
+  width: 100%;
+  margin: 0;
 }

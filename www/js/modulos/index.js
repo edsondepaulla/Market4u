@@ -3,6 +3,7 @@ var Payment = {
     QTDE_PRODUTOS: [],
     PRODUTOS_COMPRAS: [],
     CARRINHO_COMPRAS: [],
+    timeoutBanner: [],
     clear: function (cancelar, status) {
         if (parseInt(Factory.$rootScope.transacaoId)) {
             // Cancelar transacao
@@ -94,14 +95,32 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             }, 500);
         }, 500);
     };
+    $scope.banner = function (TYPE) {
+        if ($('.banners[type="' + TYPE + '"] > li').length > 1) {
+            clearTimeout(Payment.timeoutBanner[TYPE]);
+            Payment.timeoutBanner[TYPE] = setTimeout(function () {
+                var banner = $('.banners[type="' + TYPE + '"] > li.active');
+                if (banner.length) {
+                    if (banner.next('li').length)
+                        banner.next('li').addClass('active');
+                    else
+                        $('.banners[type="' + TYPE + '"] > li:first-child').addClass('active');
+                    banner.removeClass('active');
+                    $scope.banner(TYPE);
+                }
+            }, 5000);
+        }
+    };
     $scope.getCompras = function (CAT, COORDS) {
         if (!parseInt(CAT.ACTIVE)) {
+            clearTimeout(Payment.timeoutBanner['COMPRAS']);
             $rootScope.scrollLiberado = false;
             Factory.ajax(
                 {
                     action: 'payment/compras',
                     data: {
                         ID: parseInt(CAT.ID),
+                        PRODUTO: parseInt(CAT.PRODUTO) || 0,
                         COORDS: COORDS ? COORDS : null,
                         LOADER_CARREGANDO: $('#boxPago:visible').length ? false : true
                     }
@@ -109,7 +128,17 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                 function (data) {
                     if (data.LOCAL)
                         $rootScope.LOCAL = data.LOCAL;
+                    if (data.PRODUTO) {
+                        $rootScope.toolbar = false;
+                        $rootScope.MenuBottom = true;
+                        $rootScope.PROD_DETALHES = data.PRODUTO;
+                    }
                     $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS = data.COMPRAS;
+                    if (data.COMPRAS.BANNERS.length) {
+                        setTimeout(function () {
+                            $scope.banner('COMPRAS');
+                        }, 1000);
+                    }
                     $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
                     $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS = data.CARRINHO;
                     $scope.scrollLeft();
@@ -188,19 +217,21 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         }
     };
 
-    if (!parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']) || Payment.ATUALIZAR) {
+    var ID_CATEGORIA = parseInt($routeParams.EXTRA) && $routeParams.STEP == 'COMPRAS' ? parseInt($routeParams.EXTRA) : parseInt($('ul#boxCategorias li.active').data('id')) || 0;
+    var ID_PRODUTO = parseInt($routeParams.EXTRA) && $routeParams.STEP == 'PRODUTO' ? parseInt($routeParams.EXTRA) : 0;
+    if (!parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']) || Payment.ATUALIZAR || ID_CATEGORIA || ID_PRODUTO) {
         Payment.ATUALIZAR = false;
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 function (position) {
-                    $scope.getCompras({ID: parseInt($('ul#boxCategorias li.active').data('id') || 0)}, position.coords ? position.coords : -1);
+                    $scope.getCompras({ID: ID_CATEGORIA, PRODUTO: ID_PRODUTO}, position.coords ? position.coords : -1);
                 },
-                function(){
-                    $scope.getCompras({ID: parseInt($('ul#boxCategorias li.active').data('id') || 0)}, -1);
+                function () {
+                    $scope.getCompras({ID: ID_CATEGORIA, PRODUTO: ID_PRODUTO}, -1);
                 }
             );
         } else
-            $scope.getCompras({ID: parseInt($('ul#boxCategorias li.active').data('id') || 0)}, -1);
+            $scope.getCompras({ID: ID_CATEGORIA, PRODUTO: ID_PRODUTO}, -1);
     } else
         $scope.scrollLeft();
 
@@ -231,6 +262,10 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             $('#Produtos').show();
     };
 
+    $scope.clickBanner = function (BANNER) {
+        $rootScope.location(BANNER.URL);
+    };
+
     $rootScope.PESQUISA = '';
     $rootScope.PRODUTOS_CATEGORIAS_BUSCA = [];
     $scope.buscaProdutos = function (PESQUISA) {
@@ -239,8 +274,10 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SUBCATEGORIA = 0;
         clearTimeout(Factory.timeout);
         Factory.timeout = setTimeout(function () {
+            $rootScope.PRODUTOS_CATEGORIAS_BUSCA.BANNERS = [];
             $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ITENS = [];
             $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL = [];
+            clearTimeout(Payment.timeoutBanner['BUSCA']);
             Factory.ajax(
                 {
                     action: 'payment/compras',
@@ -252,6 +289,12 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                 function (data) {
                     if (data.COMPRAS.SUBCATEGORIAS[0]) {
                         $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
+                        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.BANNERS = data.COMPRAS.BANNERS;
+                        if (data.COMPRAS.BANNERS.length) {
+                            setTimeout(function () {
+                                $scope.banner('BUSCA');
+                            }, 1000);
+                        }
                         $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL = data.COMPRAS.SCROLL;
                         $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ITENS = data.COMPRAS.SUBCATEGORIAS[0]['ITENS'];
                     } else {
@@ -271,8 +314,12 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                 function (buttonIndex) {
                     if (buttonIndex == 1)
                         $rootScope.location('#!/token/fecharcompra', 0, 1);
-                    else
+                    else {
                         $rootScope.clickItem('busca_locais');
+                        setTimeout(function () {
+                            $rootScope.clickItem('busca_locais');
+                        }, 500);
+                    }
                 },
                 'Confirmar',
                 'Sim,Não'
@@ -293,7 +340,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     $rootScope.clickItem = function (ORIGEM, VALS) {
         switch (ORIGEM) {
             case 'locaisVoltar':
-                $rootScope.toolbar = $rootScope.CARRINHO?false:true;
+                $rootScope.toolbar = $rootScope.CARRINHO ? false : true;
                 $rootScope.MenuBottom = true;
                 $rootScope.LOCAL.ATIVO = false;
                 break;
@@ -374,6 +421,15 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                 $rootScope.PRODUTOS_CATEGORIAS_BUSCA = [];
                 break;
         }
+    };
+
+    switch ($routeParams.STEP) {
+        case 'COMPRAS_BUSCA':
+            $rootScope.STEP = 1;
+            $rootScope.TIPO_PG = 'COMPRAR';
+            $rootScope.clickItem('busca');
+            $rootScope.PESQUISA = $routeParams.EXTRA;
+            break;
     };
 
     $scope.setLocal = function (ITEM) {

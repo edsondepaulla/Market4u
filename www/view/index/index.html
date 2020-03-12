@@ -37,6 +37,9 @@
             </label>
         </div>
         <div class="scrollable-content flex" type="produtos_categorias_busca" scroll="{{$root.PRODUTOS_CATEGORIAS_BUSCA.SCROLL.ATIVO?1:0}}" md-scroll-y>
+            <ul type="BUSCA" class="banners" ng-if="$root.PRODUTOS_CATEGORIAS_BUSCA.BANNERS">
+                <li class="{{BANNER.ACTIVE?'active':''}}" ng-click="clickBanner(BANNER)" ng-repeat="BANNER in $root.PRODUTOS_CATEGORIAS_BUSCA.BANNERS"><img src="{{BANNER.IMAGE}}" /></li>
+            </ul>
             <ul class="produtos_lst">
                 <li type="{{ITEM.TYPE}}" clear_both="{{ITEM.CLEAR_BOTH?1:0}}" ng-repeat="ITEM in $root.PRODUTOS_CATEGORIAS_BUSCA.ITENS" ng-include src="'view/index/produto.html'"></li>
                 <li ng-if="!$root.scrollLiberado && $root.PRODUTOS_CATEGORIAS_BUSCA.SCROLL.ATIVO" type="LOADING">
@@ -46,12 +49,10 @@
             </ul>
         </div>
     </div>
-
     <md-content id="boxProdutos" class="scrollable-content flex" type="produtos" scroll="{{$root.PRODUTOS_COMPRAS.SCROLL.ATIVO}}" flex md-scroll-y>
-        <!--<div ng-if="$root.PRODUTOS_COMPRAS.CATEGORIAS" style="width: 100%;height: 70px; background: red">
-
-
-        </div>-->
+        <ul type="COMPRAS" class="banners" ng-if="$root.PRODUTOS_COMPRAS.BANNERS">
+            <li class="{{BANNER.ACTIVE?'active':''}}" ng-click="clickBanner(BANNER)" ng-repeat="BANNER in $root.PRODUTOS_COMPRAS.BANNERS"><img src="{{BANNER.IMAGE}}" /></li>
+        </ul>
         <ul>
             <li count="{{$root.PRODUTOS_COMPRAS.SUBCATEGORIAS.length}}" ng-repeat="SUBCAT in $root.PRODUTOS_COMPRAS.SUBCATEGORIAS">
                 <div ng-if="$root.PRODUTOS_COMPRAS.SUBCATEGORIAS.length > 1" class="t">
@@ -103,7 +104,7 @@
         </div>
         <div class="scrollable-content" scroll md-scroll-y>
             <ul>
-                <li ng-click="$root.clickItem('busca_locais')" id="local_item" ng-if="$root.LOCAL.ITEM">
+                <li ng-click="$root.clickItem('busca_locais')" id="local_item" ng-if="$root.LOCAL.ITEM && $root.CARRINHO_COMPRAS.PRODUTOS">
                     {{$root.LOCAL.ITEM.NOME_ABV}}
                     <a>Alterar</a>
                     <label ng-if="$root.LOCAL.ITEM.MAPS.DISTANCE">{{$root.LOCAL.ITEM.MAPS.DISTANCE}}</label>
