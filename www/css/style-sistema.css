@@ -38,10 +38,14 @@ html{
 }
 
 body {
-  background: transparent !important;
   overflow-x: hidden;
   -moz-user-select: none;
   -webkit-user-select: none;
+  background-image: url("../img/fundo.png") !important;
+  background-color: #FFF !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% auto !important;
+  background-position: center top !important;
 }
 
 body > div#container {
@@ -1125,6 +1129,7 @@ body > .app{
 body > .app{
   background: #f2f2f2;
   padding-top: 46px;
+  display: none;
 }
 body > .app[open="1"]{
   position: absolute;
@@ -5478,9 +5483,6 @@ md-content#boxProdutos li[count="1"] ul.scrollable-content li{
   font-size: 12px;
   display: flex;
   margin: 0;
-  height: 27px;
-  overflow: hidden;
-  justify-content: center;
 }
 #buscaProdutos{
   font-size: 36px;

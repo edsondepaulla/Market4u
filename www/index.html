@@ -111,7 +111,7 @@
 
   <ul tour="{{$root.TOUR}}" id="boxTour" ng-if="$root.TOUR && controller == 'Index'" ng-include src="'view/pages/tour.html'"></ul>
 
-  <ul ng-if="$root.MenuBottom" id="menu-bottom" step="{{STEP}}" tour="{{$root.TOUR}}">
+  <ul ng-show="$root.MenuBottom" id="menu-bottom" step="{{STEP}}" tour="{{$root.TOUR}}">
     <li class="{{controller == 'Index'?'active':''}}" ng-click="clickMenu('inicio')">
       <i class="mdi mdi-action-store"></i> Produtos
     </li>

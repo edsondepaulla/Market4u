@@ -133,7 +133,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                     },
                     function (data) {
                         $rootScope.scrollLiberado = true;
-                        if (data.COMPRAS.SUBCATEGORIAS[0]) {
+                        if (data.COMPRAS ? data.COMPRAS.SUBCATEGORIAS[0] : false) {
                             $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
                             $rootScope.PRODUTOS_COMPRAS.SCROLL.ATIVO = parseInt(data.COMPRAS.SCROLL.ATIVO || 0);
                             $.each(data.COMPRAS.SUBCATEGORIAS[0]['ITENS'], function (idx, item) {
@@ -172,7 +172,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                     },
                     function (data) {
                         $rootScope.scrollLiberado = true;
-                        if (data.COMPRAS.SUBCATEGORIAS[0]) {
+                        if (data.COMPRAS ? data.COMPRAS.SUBCATEGORIAS[0] : false) {
                             $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
                             $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL.ATIVO = parseInt(data.COMPRAS.SCROLL.ATIVO || 0);
                             $.each(data.COMPRAS.SUBCATEGORIAS[0]['ITENS'], function (idx, item) {

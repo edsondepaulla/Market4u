@@ -366,6 +366,10 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     $rootScope.usuario = Login.getData();
     Factory.prepare();
 
+    setTimeout(function(){
+        $('body > .app').fadeIn();
+    }, 1000);
+
     $rootScope.device = deviceDetector.os;
 
     $rootScope.versao_app_mobile = config.versao_app_mobile;
