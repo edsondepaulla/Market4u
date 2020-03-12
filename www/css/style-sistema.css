@@ -2411,6 +2411,10 @@ transition: 0.6s ease-in-out;
 right: 0;
 }
 
+body[controller="ConecteSe"] .topTitulo{
+  box-shadow: unset;
+  background: #FFF;
+}
 .topTitulo{
   min-height: 46px;
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.1), 0 2px 10px 0 rgba(0,0,0,0.2);
@@ -4932,7 +4936,7 @@ ul#boxTour > i.mdi-navigation-close{
 }
 ul#boxTour > i{
   position: absolute;
-  top: 0;
+  top: 10px;
   right: 10px;
   z-index: 99999;
   color: #FFF;

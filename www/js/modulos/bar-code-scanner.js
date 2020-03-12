@@ -19,6 +19,9 @@ var BarCodeScanner = {
                     if(data.CARRINHO)
                         Factory.$rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS = data.CARRINHO;
 
+                    if(data.QTDE_PRODUTOS)
+                        Factory.$rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
+
                     if (data.url)
                         Factory.$rootScope.location(data.url);
                 }

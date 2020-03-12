@@ -187,7 +187,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         }
     };
 
-    if (!parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']) || $rootScope.CARRINHO || Payment.ATUALIZAR) {
+    if (!parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']) || Payment.ATUALIZAR) {
         Payment.ATUALIZAR = false;
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
@@ -263,21 +263,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     };
 
     $scope.fecharCompra = function () {
-        var msg = "Local de compra: " + $rootScope.LOCAL.TEXTO;
-        try {
-            navigator.notification.confirm(
-                msg,
-                function (buttonIndex) {
-                    if (buttonIndex == 1)
-                        $rootScope.location('#!/token/fecharcompra', 0, 1);
-                },
-                'Confirmar',
-                'Sim,Não'
-            );
-        } catch (e) {
-            if (confirm(msg))
-                $rootScope.location('#!/token/fecharcompra', 0, 1);
-        }
+        $rootScope.location('#!/token/fecharcompra', 0, 1);
     };
 
     $scope.clearPesquisa = function () {
@@ -404,9 +390,10 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
     };
 
     $rootScope.limparCarrinho = function () {
+        var msg = 'Tem certeza que deseja limpar sua lista de compra?';
         try {
             navigator.notification.confirm(
-                'Tem certeza que deseja sua lista de compra?',
+                msg,
                 function (buttonIndex) {
                     if (buttonIndex == 1)
                         $rootScope.SetAddRemoveQtdeProd(-1, 0, true);
@@ -415,7 +402,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                 'Sim,Não'
             );
         } catch (e) {
-            if (confirm('Tem certeza que deseja sua lista de compra?'))
+            if (confirm(msg))
                 $rootScope.SetAddRemoveQtdeProd(-1, 0, true);
         }
     };
