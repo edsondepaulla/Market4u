@@ -21,6 +21,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             resolve: {
                 ReturnData: function ($route, $rootScope) {
                     switch ($route.current.params.STEP) {
+                        case '3':
                         case 'TOUR':
                             if (!Page.active)
                                 $rootScope.location('#!/');
@@ -377,6 +378,11 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
 
     $rootScope.LOCAL = [];
     $rootScope.location = function (url, external, active) {
+        switch (url) {
+            case '#!/index/3':
+                active = true;
+                break;
+        }
         if (active)
             Page.start();
         if (parseInt(external)) {

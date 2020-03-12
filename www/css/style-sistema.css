@@ -2419,6 +2419,8 @@ body[controller="ConecteSe"] .topTitulo{
   min-height: 46px;
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.1), 0 2px 10px 0 rgba(0,0,0,0.2);
   background: #fcfcfc;
+  position: relative;
+  z-index: 1;
 }
 .boxPopup[box="nao_encontrou"] .topTitulo,
 .boxPopup[box="produto"] .topTitulo,
