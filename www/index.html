@@ -115,8 +115,8 @@
   <ul tour="{{$root.TOUR}}" id="boxTour" ng-if="$root.TOUR && controller == 'Index'" ng-include src="'view/pages/tour.html'"></ul>
 
   <ul ng-if="$root.MenuBottom" id="menu-bottom" step="{{STEP}}" tour="{{$root.TOUR}}">
-    <li ng-click="clickMenu('inicio')">
-      <i class="mdi mdi-action-home"></i> Início
+    <li class="{{controller == 'Index'?'active':''}}" ng-click="clickMenu('inicio')">
+      <i class="mdi mdi-action-store"></i> Produtos
     </li>
     <li ng-click="clickMenu('carteira')">
       <i class="mdi mdi-action-credit-card"></i> Carteira
@@ -125,7 +125,7 @@
       <img src="img/barcodeQrCode.png">
       <label>Escanear</label>
     </li>
-    <li style="float: right" ng-click="clickMenu('ajustes')">
+    <li class="{{controller == 'Cadastro'?'active':''}}" style="float: right" ng-click="clickMenu('ajustes')">
       <i class="mdi mdi-action-settings"></i> Ajustes
     </li>
     <li style="float: right" ng-click="clickMenu('destravar')">
@@ -156,14 +156,14 @@
         </div>
       </div>
       <ul>
-        <li ng-repeat="menu in MenuLeft" ng-if="usuario.ID || menu.logado">
-          <a ng-click="location(menu.url, menu.external)">
+        <li class="{{controller == menu.controller?'active':''}}" ng-repeat="menu in MenuLeft" ng-if="usuario.ID || menu.logado">
+          <a ng-click="location(menu.url, menu.external, menu.pageStart?1:0)">
             <i ng-if="menu.icon" class="mdi {{menu.icon}}"></i>
             {{menu.titulo}}
           </a>
         </li>
-        <li ng-if="usuario.RESTRITO">
-          <a style="color: #00ab46" ng-click="location('#!/area-restrita')">
+        <li class="{{controller == 'AreaRestrita'?'active':''}}" ng-if="usuario.RESTRITO">
+          <a ng-click="location('#!/area-restrita')">
             <i class="mdi mdi-action-lock"></i>
             Área restrita
           </a>

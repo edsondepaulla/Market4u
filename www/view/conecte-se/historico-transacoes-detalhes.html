@@ -29,7 +29,7 @@
             <li ng-repeat="PROD in REG.PRODUTOS">
                 <div class="info">
                     <h4>{{PROD.NOME}}</h4>
-                    <span>{{PROD.CAT_DESCRICAO}} - {{PROD.FAB_DESCRICAO}}</span>
+                    <span>{{PROD.CAT_DESCRICAO}}</span>
                     <span ng-if="PROD.QTDE != NULL">Quantidade <b>{{PROD.QTDE}}</b></span>
                     <label class="total_de" ng-if="PROD.DE_PRECO_FORMAT"><span class="v">{{PROD.DE_PRECO_FORMAT}}</span></label>
                     <label><span class="v">{{PROD.PRECO_FORMAT}}</span></label>

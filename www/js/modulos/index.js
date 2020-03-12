@@ -10,6 +10,7 @@ var Payment = {
                 Payment.cancel();
 
             // Id
+            Factory.$rootScope.VOUCHER = 0;
             Factory.$rootScope.transacaoId = 0;
             Factory.$rootScope.transacaoIdCarrinho = false;
 
@@ -192,6 +193,9 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             navigator.geolocation.getCurrentPosition(
                 function (position) {
                     $scope.getCompras({ID: parseInt($('ul#boxCategorias li.active').data('id') || 0)}, position.coords ? position.coords : -1);
+                },
+                function(){
+                    $scope.getCompras({ID: parseInt($('ul#boxCategorias li.active').data('id') || 0)}, -1);
                 }
             );
         } else
@@ -256,6 +260,24 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                 }
             );
         }, PESQUISA ? 1000 : 0);
+    };
+
+    $scope.fecharCompra = function () {
+        var msg = "Local de compra: " + $rootScope.LOCAL.TEXTO;
+        try {
+            navigator.notification.confirm(
+                msg,
+                function (buttonIndex) {
+                    if (buttonIndex == 1)
+                        $rootScope.location('#!/token/fecharcompra', 0, 1);
+                },
+                'Confirmar',
+                'Sim,Não'
+            );
+        } catch (e) {
+            if (confirm(msg))
+                $rootScope.location('#!/token/fecharcompra', 0, 1);
+        }
     };
 
     $scope.clearPesquisa = function () {

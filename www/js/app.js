@@ -17,14 +17,29 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
         })
         .when("/index/:STEP", {
             templateUrl: "view/index/index.html",
-            controller: 'Index'
+            controller: 'Index',
+            resolve: {
+                ReturnData: function ($route, $rootScope) {
+                    switch ($route.current.params.STEP) {
+                        case 'TOUR':
+                            if (!Page.active)
+                                $rootScope.location('#!/');
+                            break;
+                    }
+                    return;
+                }
+            }
         })
         .when("/conecte-se", {
             templateUrl: "view/conecte-se/conecte-se.html",
             controller: 'ConecteSe',
             resolve: {
-                ReturnData: function ($route) {
-                    return Login.get('#!/cadastro');
+                ReturnData: function ($route, $rootScope) {
+                    if (parseInt(Login.getData().ID)) {
+                        $rootScope.location('#!/');
+                        return;
+                    } else
+                        return Login.get('#!/cadastro');
                 }
             }
         })
@@ -474,7 +489,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                                 if (!parseInt(Login.getData().BOAS_VINDAS))
                                     $rootScope.location('#!/boas-vindas');
                                 else if (!parseInt(Login.getData().TOUR))
-                                    $rootScope.location('#!/index/TOUR');
+                                    $rootScope.location('#!/index/TOUR', false, true);
                             } else
                                 $rootScope.location('#!/cadastro');
                         } else
@@ -607,37 +622,43 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     // Menu
     $rootScope.MenuLeft = [
         {
-            titulo: 'Início',
+            titulo: 'Produtos',
+            controller: 'Index',
             url: '#!/',
-            icon: 'mdi-action-home',
+            icon: 'mdi-action-store',
             logado: 1
         },
         {
             titulo: 'Cupons de desconto',
+            controller: 'VoucherLst',
             url: '#!/voucher',
             icon: 'mdi-action-loyalty',
             logado: 0
         },
         {
             titulo: 'Minha carteira',
+            controller: 'MinhaCarteira',
             url: '#!/minha-carteira',
             icon: 'mdi-editor-attach-money',
             logado: 0
         },
         {
             titulo: 'Meus cartões',
+            controller: 'Card',
             url: '#!/card',
             icon: 'mdi-action-credit-card',
             logado: 0
         },
         {
             titulo: 'Histórico de transações',
+            controller: 'HistoricoTransacoesLst',
             url: '#!/historico-transacoes',
             icon: 'mdi-action-history',
             logado: 0
         },
         {
             titulo: 'Notificações',
+            controller: 'NotificacoesLst',
             url: '#!/notificacoes',
             icon: 'mdi-social-notifications-none',
             logado: 0
@@ -646,10 +667,12 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
             titulo: 'Tour pelo app',
             url: '#!/index/TOUR',
             icon: 'mdi-image-remove-red-eye',
-            logado: 0
+            logado: 0,
+            pageStart: 1
         },
         {
             titulo: 'Suporte',
+            controller: 'Suporte',
             url: '#!/suporte',
             icon: 'mdi-communication-live-help',
             logado: 1

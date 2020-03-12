@@ -4420,6 +4420,11 @@ ul#menu-bottom li#pagar_escanear{
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26), 0 2px 10px 0 rgba(0,0,0,0.22);
 }
 
+#contentLeft > ul li.active a,
+ul#menu-bottom li.active{
+  color: #00ab46;
+}
+
 ul#menu-bottom li{
   float: left;
   width: 20%;
@@ -5338,6 +5343,7 @@ md-content#boxProdutos li[count="1"] ul.scrollable-content li{
     height: 100px;
     margin-bottom: 5px;
 }
+#boxCompras ul.produtos_lst li img[load="0"],
 #boxCompras ul.produtos_lst li img[src="img/market4u.png"]{
   opacity: 0.1;
   height: 70px;
@@ -5572,6 +5578,7 @@ body[controller="Index"] > #toolbar #local span{
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  text-decoration: underline;
 }
 body[controller="Index"] > #toolbar #local[encontrou="0"]{
   top: 14px;
@@ -5666,6 +5673,22 @@ body[controller="Index"] > #toolbar #local{
   color: #00ab46;
   border-left: 5px solid #00ab46;
   padding-left: 10px;
+  margin: 0;
+}
+
+.boxPopup[box="carrinho"] ul li#local_item a,
+.boxPopup[box="locais"] ul li.active a,
+.boxPopup[box="locais"] ul li a{
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  text-decoration: underline;
+  font-size: 12px;
+  color: #00ab46;
+  z-index: 1;
+}
+.boxPopup[box="locais"] ul li a{
+  right: 0;
 }
 .boxPopup[box="carrinho"] ul li#local_item span,
 .boxPopup[box="locais"] ul li span{
@@ -5683,14 +5706,18 @@ body[controller="Index"] > #toolbar #local{
   margin: 0 10px;
   padding: 10px 0;
   border-bottom: 1px solid rgba(11, 99, 64, 0.1);
+  position: relative;
 }
 .boxPopup[box="carrinho"] ul li#local_item{
   font-weight: 500;
   color: #00ab46;
   border-left: 5px solid #00ab46;
   padding-left: 10px;
-  margin-bottom: -10px;
   height: auto;
   background: #fcfcfc;
   padding-right: 10px;
+  position: relative;
+  margin: 0 0 -11px;
+  border-bottom: 1px solid rgba(11, 99, 64, 0.1);
+  z-index: 1;
 }

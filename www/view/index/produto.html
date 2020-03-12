@@ -1,5 +1,5 @@
 <div ng-if="ITEM.TYPE=='PROD'" ng-click="$root.toolbar=false; $root.MenuBottom=true; $root.PROD_DETALHES = ITEM;">
-    <img data-src="{{ITEM.IMAGEM}}" src="img/market4u.png" alt="">
+    <img data-src="{{ITEM.IMAGEM}}" src="img/market4u.png" onload="$(this).attr('load', 1)" load="0" alt="">
     <p class="preco">
         <label class="de" ng-if="ITEM.DE_PRECO_FORMAT">{{ITEM.DE_PRECO_FORMAT}}</label>
         <label>{{ITEM.PRECO_FORMAT}}</label>
