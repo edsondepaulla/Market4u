@@ -2455,6 +2455,7 @@ display: none;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   transition: 0.5s;
+  z-index: 1;
 }
 body[controller="AtualizarApp"] #toolbar > img,
 body[controller="ConecteSe"] #toolbar > img {
