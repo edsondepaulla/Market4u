@@ -1,5 +1,5 @@
 var config = {
-    versao_app_mobile: "1.0.14",
+    versao_app_mobile: "1.0.15",
     ambiente: "producao",
     idApp: "market4uapp",
     url_api: {

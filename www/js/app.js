@@ -387,12 +387,8 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
             Page.start();
         if (parseInt(external)) {
             $rootScope.swipeLeft();
-            try {
-                cordova.InAppBrowser.open(url, '_self');
-            } catch (e) {
-                window.open(url, '_system');
-            }
-        } else {
+            Factory.AppBrowser(url.url, url);
+        }else {
             switch (url) {
                 case '#!/':
                     if (!parseInt(Login.getData().ID))

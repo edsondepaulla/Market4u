@@ -278,7 +278,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                 $rootScope.PESQUISA = BANNER.VALUE;
                 break;
             case 'REDIRECT':
-                $rootScope.location(BANNER.VALUE);
+                $rootScope.location(BANNER.VALUE, BANNER.EXTERNAL ? 1 : 0, 1);
                 break;
         }
         Factory.ajax(
