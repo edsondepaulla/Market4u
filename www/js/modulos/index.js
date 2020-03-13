@@ -129,12 +129,14 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                 function (data) {
                     if (data.LOCAL)
                         $rootScope.LOCAL = data.LOCAL;
-                    $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS = data.COMPRAS;
-                    $rootScope.BANNERS_MODAL = data.COMPRAS.BANNERS_MODAL;
-                    if (data.COMPRAS.BANNERS.length) {
-                        setTimeout(function () {
-                            $scope.banner('COMPRAS', data.COMPRAS.BANNERS_TIME);
-                        }, 1000);
+                    if (data.COMPRAS) {
+                        $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS = data.COMPRAS;
+                        $rootScope.BANNERS_MODAL = data.COMPRAS.BANNERS_MODAL;
+                        if (data.COMPRAS.BANNERS.length) {
+                            setTimeout(function () {
+                                $scope.banner('COMPRAS', data.COMPRAS.BANNERS_TIME);
+                            }, 1000);
+                        }
                     }
                     $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
                     $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS = data.CARRINHO;
