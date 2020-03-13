@@ -111,6 +111,15 @@
 
   <ul tour="{{$root.TOUR}}" id="boxTour" ng-if="$root.TOUR && controller == 'Index'" ng-include src="'view/pages/tour.html'"></ul>
 
+  <div id="banner_modal" ng-click="$root.BANNERS_MODAL=[];" ng-if="$root.BANNERS_MODAL.length && !$root.TOUR && controller == 'Index'">
+    <ul>
+      <li class="{{BANNER.ACTIVE?'active':''}}" ng-repeat="BANNER in $root.BANNERS_MODAL">
+        <i ng-click="$root.BANNERS_MODAL=[];" class="mdi mdi-navigation-close"></i>
+        <a ng-click="$root.clickBanner(BANNER)"><img src="{{BANNER.IMAGE}}" /></a>
+      </li>
+    </ul>
+  </div>
+
   <ul ng-show="$root.MenuBottom" id="menu-bottom" step="{{STEP}}" tour="{{$root.TOUR}}">
     <li class="{{controller == 'Index'?'active':''}}" ng-click="clickMenu('inicio')">
       <i class="mdi mdi-action-store"></i> Produtos

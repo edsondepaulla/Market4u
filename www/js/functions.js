@@ -60,6 +60,7 @@ var Factory = {
             case 'cadastro/verify':
             case 'payment/carrinho':
             case 'payment/addremoveqtde':
+            case 'payment/bannercount':
                 return false;
                 break;
         }

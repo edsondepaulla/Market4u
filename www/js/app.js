@@ -31,10 +31,6 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                 }
             }
         })
-        .when("/index/:STEP/:EXTRA", {
-            templateUrl: "view/index/index.html",
-            controller: 'Index'
-        })
         .when("/conecte-se", {
             templateUrl: "view/conecte-se/conecte-se.html",
             controller: 'ConecteSe',

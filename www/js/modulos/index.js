@@ -95,7 +95,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             }, 500);
         }, 500);
     };
-    $scope.banner = function (TYPE) {
+    $scope.banner = function (TYPE, TIME) {
         if ($('.banners[type="' + TYPE + '"] > li').length > 1) {
             clearTimeout(Payment.timeoutBanner[TYPE]);
             Payment.timeoutBanner[TYPE] = setTimeout(function () {
@@ -106,11 +106,12 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                     else
                         $('.banners[type="' + TYPE + '"] > li:first-child').addClass('active');
                     banner.removeClass('active');
-                    $scope.banner(TYPE);
+                    $scope.banner(TYPE, TIME);
                 }
-            }, 5000);
+            }, TIME);
         }
     };
+    $rootScope.BANNERS_MODAL = $rootScope.BANNERS_MODAL?$rootScope.BANNERS_MODAL:[];
     $scope.getCompras = function (CAT, COORDS) {
         if (!parseInt(CAT.ACTIVE)) {
             clearTimeout(Payment.timeoutBanner['COMPRAS']);
@@ -128,15 +129,11 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                 function (data) {
                     if (data.LOCAL)
                         $rootScope.LOCAL = data.LOCAL;
-                    if (data.PRODUTO) {
-                        $rootScope.toolbar = false;
-                        $rootScope.MenuBottom = true;
-                        $rootScope.PROD_DETALHES = data.PRODUTO;
-                    }
                     $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS = data.COMPRAS;
+                    $rootScope.BANNERS_MODAL = data.COMPRAS.BANNERS_MODAL;
                     if (data.COMPRAS.BANNERS.length) {
                         setTimeout(function () {
-                            $scope.banner('COMPRAS');
+                            $scope.banner('COMPRAS', data.COMPRAS.BANNERS_TIME);
                         }, 1000);
                     }
                     $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
@@ -217,21 +214,21 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         }
     };
 
-    var ID_CATEGORIA = parseInt($routeParams.EXTRA) && $routeParams.STEP == 'COMPRAS' ? parseInt($routeParams.EXTRA) : parseInt($('ul#boxCategorias li.active').data('id')) || 0;
-    var ID_PRODUTO = parseInt($routeParams.EXTRA) && $routeParams.STEP == 'PRODUTO' ? parseInt($routeParams.EXTRA) : 0;
-    if (!parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']) || Payment.ATUALIZAR || ID_CATEGORIA || ID_PRODUTO) {
+
+    if (!parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']) || Payment.ATUALIZAR) {
         Payment.ATUALIZAR = false;
+        var ID_CATEGORIA = parseInt($('ul#boxCategorias li.active').data('id')) || 0;
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 function (position) {
-                    $scope.getCompras({ID: ID_CATEGORIA, PRODUTO: ID_PRODUTO}, position.coords ? position.coords : -1);
+                    $scope.getCompras({ID: ID_CATEGORIA}, position.coords ? position.coords : -1);
                 },
                 function () {
-                    $scope.getCompras({ID: ID_CATEGORIA, PRODUTO: ID_PRODUTO}, -1);
+                    $scope.getCompras({ID: ID_CATEGORIA}, -1);
                 }
             );
         } else
-            $scope.getCompras({ID: ID_CATEGORIA, PRODUTO: ID_PRODUTO}, -1);
+            $scope.getCompras({ID: ID_CATEGORIA}, -1);
     } else
         $scope.scrollLeft();
 
@@ -262,8 +259,36 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             $('#Produtos').show();
     };
 
-    $scope.clickBanner = function (BANNER) {
-        $rootScope.location(BANNER.URL);
+    $rootScope.clickBanner = function (BANNER) {
+        $rootScope.BANNERS_MODAL = [];
+        switch (BANNER.TYPE) {
+            case 'PRODUTO':
+                $rootScope.toolbar = false;
+                $rootScope.MenuBottom = true;
+                $rootScope.PROD_DETALHES = BANNER.VALUE;
+                break;
+            case 'CATEGORIA':
+                $rootScope.clickItem('index');
+                $scope.getCompras({ID: parseInt(BANNER.VALUE)});
+                break;
+            case 'BUSCA_PRODUTOS':
+                $rootScope.STEP = 1;
+                $rootScope.TIPO_PG = 'COMPRAR';
+                $rootScope.clickItem('busca');
+                $rootScope.PESQUISA = BANNER.VALUE;
+                break;
+            case 'REDIRECT':
+                $rootScope.location(BANNER.VALUE);
+                break;
+        }
+        Factory.ajax(
+            {
+                action: 'payment/bannercount',
+                data: {
+                    ID: BANNER.ID
+                }
+            }
+        );
     };
 
     $rootScope.PESQUISA = '';
@@ -290,9 +315,10 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                     if (data.COMPRAS.SUBCATEGORIAS[0]) {
                         $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
                         $rootScope.PRODUTOS_CATEGORIAS_BUSCA.BANNERS = data.COMPRAS.BANNERS;
+                        $rootScope.BANNERS_MODAL = data.COMPRAS.BANNERS_MODAL;
                         if (data.COMPRAS.BANNERS.length) {
                             setTimeout(function () {
-                                $scope.banner('BUSCA');
+                                $scope.banner('BUSCA', data.COMPRAS.BANNERS_TIME);
                             }, 1000);
                         }
                         $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL = data.COMPRAS.SCROLL;
@@ -421,15 +447,6 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                 $rootScope.PRODUTOS_CATEGORIAS_BUSCA = [];
                 break;
         }
-    };
-
-    switch ($routeParams.STEP) {
-        case 'COMPRAS_BUSCA':
-            $rootScope.STEP = 1;
-            $rootScope.TIPO_PG = 'COMPRAR';
-            $rootScope.clickItem('busca');
-            $rootScope.PESQUISA = $routeParams.EXTRA;
-            break;
     };
 
     $scope.setLocal = function (ITEM) {

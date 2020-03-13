@@ -37,9 +37,13 @@
             </label>
         </div>
         <div class="scrollable-content flex" type="produtos_categorias_busca" scroll="{{$root.PRODUTOS_CATEGORIAS_BUSCA.SCROLL.ATIVO?1:0}}" md-scroll-y>
-            <ul type="BUSCA" class="banners" ng-if="$root.PRODUTOS_CATEGORIAS_BUSCA.BANNERS">
-                <li class="{{BANNER.ACTIVE?'active':''}}" ng-click="clickBanner(BANNER)" ng-repeat="BANNER in $root.PRODUTOS_CATEGORIAS_BUSCA.BANNERS"><img src="{{BANNER.IMAGE}}" /></li>
-            </ul>
+            <div ng-if="$root.PRODUTOS_CATEGORIAS_BUSCA.BANNERS.length">
+                <ul type="BUSCA" class="banners">
+                    <li class="{{BANNER.ACTIVE?'active':''}}" ng-repeat="BANNER in $root.PRODUTOS_CATEGORIAS_BUSCA.BANNERS">
+                        <a ng-click="$root.clickBanner(BANNER)"><img src="{{BANNER.IMAGE}}" /></a>
+                    </li>
+                </ul>
+            </div>
             <ul class="produtos_lst">
                 <li type="{{ITEM.TYPE}}" clear_both="{{ITEM.CLEAR_BOTH?1:0}}" ng-repeat="ITEM in $root.PRODUTOS_CATEGORIAS_BUSCA.ITENS" ng-include src="'view/index/produto.html'"></li>
                 <li ng-if="!$root.scrollLiberado && $root.PRODUTOS_CATEGORIAS_BUSCA.SCROLL.ATIVO" type="LOADING">
@@ -50,9 +54,13 @@
         </div>
     </div>
     <md-content id="boxProdutos" class="scrollable-content flex" type="produtos" scroll="{{$root.PRODUTOS_COMPRAS.SCROLL.ATIVO}}" flex md-scroll-y>
-        <ul type="COMPRAS" class="banners" ng-if="$root.PRODUTOS_COMPRAS.BANNERS">
-            <li class="{{BANNER.ACTIVE?'active':''}}" ng-click="clickBanner(BANNER)" ng-repeat="BANNER in $root.PRODUTOS_COMPRAS.BANNERS"><img src="{{BANNER.IMAGE}}" /></li>
-        </ul>
+        <div ng-if="$root.PRODUTOS_COMPRAS.BANNERS.length">
+            <ul type="COMPRAS" class="banners">
+                <li class="{{BANNER.ACTIVE?'active':''}}" ng-repeat="BANNER in $root.PRODUTOS_COMPRAS.BANNERS">
+                    <a ng-click="$root.clickBanner(BANNER)"><img src="{{BANNER.IMAGE}}" /></a>
+                </li>
+            </ul>
+        </div>
         <ul>
             <li count="{{$root.PRODUTOS_COMPRAS.SUBCATEGORIAS.length}}" ng-repeat="SUBCAT in $root.PRODUTOS_COMPRAS.SUBCATEGORIAS">
                 <div ng-if="$root.PRODUTOS_COMPRAS.SUBCATEGORIAS.length > 1" class="t">
