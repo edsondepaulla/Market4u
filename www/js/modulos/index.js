@@ -314,20 +314,22 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                     }
                 },
                 function (data) {
-                    if (data.COMPRAS.SUBCATEGORIAS[0]) {
-                        $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
-                        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.BANNERS = data.COMPRAS.BANNERS;
-                        $rootScope.BANNERS_MODAL = data.COMPRAS.BANNERS_MODAL;
-                        if (data.COMPRAS.BANNERS.length) {
-                            setTimeout(function () {
-                                $scope.banner('BUSCA', data.COMPRAS.BANNERS_TIME);
-                            }, 1000);
+                    if(data.COMPRAS) {
+                        if (data.COMPRAS.SUBCATEGORIAS[0]) {
+                            $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
+                            $rootScope.PRODUTOS_CATEGORIAS_BUSCA.BANNERS = data.COMPRAS.BANNERS;
+                            $rootScope.BANNERS_MODAL = data.COMPRAS.BANNERS_MODAL;
+                            if (data.COMPRAS.BANNERS.length) {
+                                setTimeout(function () {
+                                    $scope.banner('BUSCA', data.COMPRAS.BANNERS_TIME);
+                                }, 1000);
+                            }
+                            $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL = data.COMPRAS.SCROLL;
+                            $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ITENS = data.COMPRAS.SUBCATEGORIAS[0]['ITENS'];
+                        } else {
+                            $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ITENS = [];
+                            $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL.ATIVO = 0;
                         }
-                        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL = data.COMPRAS.SCROLL;
-                        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ITENS = data.COMPRAS.SUBCATEGORIAS[0]['ITENS'];
-                    } else {
-                        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ITENS = [];
-                        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL.ATIVO = 0;
                     }
                 }
             );
