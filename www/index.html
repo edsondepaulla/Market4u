@@ -132,7 +132,7 @@
       <label>Escanear</label>
     </li>
     <li class="{{controller == 'Cadastro'?'active':''}}" style="float: right" ng-click="clickMenu('ajustes')">
-      <i class="mdi mdi-action-settings"></i> Ajustes
+      <i class="mdi mdi-social-person"></i> {{usuario.PRIMEIRONOME?usuario.PRIMEIRONOME:'Perfil'}}
     </li>
     <li style="float: right" ng-click="clickMenu('destravar')">
       <i class="mdi mdi-action-lock-open"></i> Destravar <span>18+</span>
@@ -158,7 +158,7 @@
         <div ng-if="usuario.ID" ng-click="location('#!/cadastro')">
           <b>{{usuario.NOME}}</b>
           <label>{{usuario.EMAIL}}</label>
-          <a>Ajustes</a>
+          <a>Perfil</a>
         </div>
       </div>
       <ul>

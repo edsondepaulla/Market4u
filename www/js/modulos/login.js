@@ -156,7 +156,7 @@ app.controller('BoasVindas', function($rootScope, $scope, ReturnData) {
 app.controller('Cadastro', function($rootScope, $scope) {
     $rootScope.BARRA_SALDO = false;
     $rootScope.LogoBody = 1;
-    $rootScope.Titulo = parseInt($rootScope.usuario.ID) ? "AJUSTES" : "CADASTRAR-SE";
+    $rootScope.Titulo = parseInt($rootScope.usuario.ID) ? "PERFIL" : "CADASTRAR-SE";
     $rootScope.NO_WHATSAPP = false;
     $scope.AJUSTES = ($rootScope.usuario.ID?$rootScope.usuario.DADOS_ATUALIZADO:false);
 

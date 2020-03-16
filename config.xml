@@ -76,13 +76,13 @@
         <preference name="SplashShowOnlyFirstTime" value="false" />
         <preference name="StatusBarStyle" value="lightcontent" />
         <preference name="ShowSplashScreenSpinner" value="false" />
+        <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+            <string>Permissões de acesso</string>
+        </edit-config>
         <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
             <string>Permissões de acesso</string>
         </edit-config>
         <edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
-            <string>Permissões de acesso</string>
-        </edit-config>
-        <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
             <string>Permissões de acesso</string>
         </edit-config>
     </platform>
