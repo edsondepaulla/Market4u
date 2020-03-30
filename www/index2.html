@@ -185,29 +185,7 @@
       alert("ERROR: " + JSON.stringify(reason)); // real apps should use notification.alert
     }
   };
-  //app.initialize();
-  var app2 = {
-    verifica: function () {
-      ble.enable(
-              function () {
-                alert("Bluetooth ligado");
-
-                ble.scan(
-                        [],
-                        5,
-                        function (device) {
-                          alert(device.name + ' - ' + device.rssi + ' - ' + device.id);
-                        },
-                        app.onError
-                );
-              },
-              function () {
-                alert("Bluetooth não ligado");
-              }
-      );
-    }
-  };
-  app2.verifica();
+  app.initialize();
 </script>
 </body>
 </html>
