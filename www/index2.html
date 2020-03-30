@@ -71,7 +71,7 @@
   var app = {
     initialize: function() {
       this.bindEvents();
-      detailPage.hidden = true;
+      //detailPage.hidden = true;
     },
     bindEvents: function() {
       document.addEventListener('deviceready', this.onDeviceReady, false);
@@ -174,12 +174,12 @@
       ble.disconnect(deviceId, app.showMainPage, app.onError);
     },
     showMainPage: function() {
-      mainPage.hidden = false;
-      detailPage.hidden = true;
+      /*mainPage.hidden = false;
+      detailPage.hidden = true;*/
     },
     showDetailPage: function() {
-      mainPage.hidden = true;
-      detailPage.hidden = false;
+      /*mainPage.hidden = true;
+      detailPage.hidden = false;*/
     },
     onError: function(reason) {
       alert("ERROR: " + JSON.stringify(reason)); // real apps should use notification.alert
