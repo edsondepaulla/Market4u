@@ -5298,6 +5298,9 @@ body b, body strong {
   height: 100%;
   position: relative;
 }
+body[addsaldo="1"] #boxCompras{
+  margin-top: 20px;
+}
 md-content#boxProdutos{
   padding-bottom: 190px !important;
   display: block;

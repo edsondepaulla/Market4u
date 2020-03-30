@@ -91,6 +91,9 @@ var Factory = {
             if (config.versao_app_mobile)
                 data.append('versao_app_mobile', config.versao_app_mobile);
 
+            // Ambiente
+            data.append('ambiente', config.ambiente);
+
             // Set data
             if (params.data) {
                 $.each(params.data, function (index, val) {
@@ -321,6 +324,8 @@ var Factory = {
     },
     prepare: function () {
         document.addEventListener("deviceready", function () {
+            //cordova.plugins.bluetoothle.initialize(initializeResult, params);
+
             cordova.plugins.notification.local.requestPermission(function (granted) {
 
             });

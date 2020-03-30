@@ -62,7 +62,7 @@ var BarCodeScanner = {
                     if (result.text)
                         BarCodeScanner.getScan(result.text, type);
                     else if(type != 'destravar')
-                        BarCodeScanner.prompt("Não conseguiu escanear?\nDigite o código:", type);
+                        BarCodeScanner.prompt("Não conseguiu escanear?\nDigite o código de barras:", type);
                     else
                         $('#carregando').hide().css('opacity', 0);
                 },
@@ -85,7 +85,7 @@ var BarCodeScanner = {
             if(Factory.$rootScope.device == 'android')
                 Factory.$rootScope.location('#!/index/ESCANEAR');
         } catch (err) {
-            BarCodeScanner.prompt("Digite o código:", type);
+            BarCodeScanner.prompt("Digite o código de barras:", type);
         }
     }
 };
