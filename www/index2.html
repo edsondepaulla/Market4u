@@ -63,15 +63,15 @@
 
   // this is Nordic's UART service
   var bluefruit = {
-    serviceUUID: '20EBB795-A0E4-A0E3-5E7C-2BF59DFD9B78',
-    txCharacteristic: '20EBB795-A0E4-A0E3-5E7C-2BF59DFD9B78', // transmit is from the phone's perspective
-    rxCharacteristic: '20EBB795-A0E4-A0E3-5E7C-2BF59DFD9B78'  // receive is from the phone's perspective
+    serviceUUID: '6e400001-b5a3-f393-e0a9-e50e24dcca9e',
+    txCharacteristic: '6e400002-b5a3-f393-e0a9-e50e24dcca9e', // transmit is from the phone's perspective
+    rxCharacteristic: '6e400003-b5a3-f393-e0a9-e50e24dcca9e'  // receive is from the phone's perspective
   };
 
   var app = {
     initialize: function() {
       this.bindEvents();
-      //detailPage.hidden = true;
+      detailPage.hidden = true;
     },
     bindEvents: function() {
       document.addEventListener('deviceready', this.onDeviceReady, false);
@@ -85,7 +85,7 @@
     },
     refreshDeviceList: function() {
       deviceList.innerHTML = ''; // empties the list
-      ble.scan([], 5, app.onDiscoverDevice, app.onError);
+      ble.scan([bluefruit.serviceUUID], 5, app.onDiscoverDevice, app.onError);
 
       // if Android can't find your device try scanning for all devices
       // ble.scan([], 5, app.onDiscoverDevice, app.onError);
@@ -174,18 +174,40 @@
       ble.disconnect(deviceId, app.showMainPage, app.onError);
     },
     showMainPage: function() {
-      /*mainPage.hidden = false;
-      detailPage.hidden = true;*/
+      mainPage.hidden = false;
+      detailPage.hidden = true;
     },
     showDetailPage: function() {
-      /*mainPage.hidden = true;
-      detailPage.hidden = false;*/
+      mainPage.hidden = true;
+      detailPage.hidden = false;
     },
     onError: function(reason) {
       alert("ERROR: " + JSON.stringify(reason)); // real apps should use notification.alert
     }
   };
-  app.initialize();
+  //app.initialize();
+  var app2 = {
+    verifica: function () {
+      ble.enable(
+              function () {
+                alert("Bluetooth ligado");
+
+                ble.scan(
+                        [],
+                        5,
+                        function (device) {
+                          alert(device.name + ' - ' + device.rssi + ' - ' + device.id);
+                        },
+                        app.onError
+                );
+              },
+              function () {
+                alert("Bluetooth não ligado");
+              }
+      );
+    }
+  };
+  app2.verifica();
 </script>
 </body>
 </html>
