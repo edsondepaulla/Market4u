@@ -65,7 +65,7 @@
       app.refreshDeviceList();
     },
     refreshDeviceList: function() {
-      ble.enable(
+      /*ble.enable(
               function () {
                 alert("Bluetooth ligado");
 
@@ -81,6 +81,14 @@
               function () {
                 alert("Bluetooth não ligado");
               }
+      );*/
+      ble.scan(
+              [],
+              5,
+              function (device) {
+                alert(device.name + ' - ' + device.rssi + ' - ' + device.id);
+              },
+              app.onError
       );
 
 
