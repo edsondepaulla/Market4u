@@ -82,28 +82,19 @@
                 alert("Bluetooth não ligado");
               }
       );*/
-      ble.scan(
-              [],
-              5,
-              function (device) {
-                alert(device.name + ' - ' + device.rssi + ' - ' + device.id);
-              },
-              app.onError
-      );
-
-
-      //ble.scan([], 5, app.onDiscoverDevice, app.onError);
-
+      ble.scan([], 5, app.onDiscoverDevice, app.onError);
     },
     onDiscoverDevice: function(device) {
-      var listItem = document.createElement('li'),
+      alert(device.name);
+
+      /*var listItem = document.createElement('li'),
               html = '<b>' + device.name + '</b><br/>' +
                       'RSSI: ' + device.rssi + '&nbsp;|&nbsp;' +
                       device.id;
 
       listItem.dataset.deviceId = device.id;
       listItem.innerHTML = html;
-      deviceList.appendChild(listItem);
+      deviceList.appendChild(listItem);*/
     },
     connect: function(e) {
       var deviceId = e.target.dataset.deviceId,
