@@ -280,8 +280,8 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                                             bluetooth.detravar();
                                         }, 5000);
                                         return {
-                                            'TEXTO': 'Aguarde por favor, carregando...',
-                                            'TITULO': 'CONECTANDO COM BLUETOOTH...'
+                                            'TEXTO': '<div style="text-align: center;">Conectando com o dispositivo, aguarde por favor...<br><a style="text-decoration: underline;" ng-click="clickMenu(\'destravar\')">Tente novamente!</a></div>',
+                                            'TITULO': '<i class="mdi mdi-action-settings-bluetooth"></i> BLUETOOTH'
                                         };
                                         break;
                                     case 'BEB_ALC':
