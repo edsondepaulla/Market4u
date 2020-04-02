@@ -36,9 +36,10 @@ var bluetooth = {
                                     'ffe0',
                                     'ffe1',
                                     function (data) {
-                                        alert('fdsfsd');
+
                                     },
-                                    function(){
+                                    function(e){
+                                        alert(e);
                                         bluetooth.disconnect();
                                         Page.active = 0;
                                         window.history.go(-1);
@@ -82,9 +83,9 @@ var bluetooth = {
                     }, 1000);
                 },
                 function(){
-                    bluetooth.disconnect();
+                    /*bluetooth.disconnect();
                     Page.active = 0;
-                    window.history.go(-1);
+                    window.history.go(-1);*/
                 }
             );
         } else {
@@ -100,9 +101,9 @@ var bluetooth = {
                     }, 1000);
                 },
                 function(){
-                    bluetooth.disconnect();
+                    /*bluetooth.disconnect();
                     Page.active = 0;
-                    window.history.go(-1);
+                    window.history.go(-1);*/
                 }
             );
         }
