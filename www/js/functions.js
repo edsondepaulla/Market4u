@@ -324,6 +324,8 @@ var Factory = {
     },
     prepare: function () {
         document.addEventListener("deviceready", function () {
+            cordova.plugins.BluetoothStatus.initPlugin();
+
             //cordova.plugins.bluetoothle.initialize(initializeResult, params);
 
             cordova.plugins.notification.local.requestPermission(function (granted) {
