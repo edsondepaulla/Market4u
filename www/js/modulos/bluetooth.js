@@ -36,7 +36,7 @@ var bluetooth = {
                                     'ffe0',
                                     'ffe1',
                                     function (data) {
-
+                                        alert(JSON.stringify(data));
                                     },
                                     bluetooth.disconnect
                                 );
@@ -95,7 +95,8 @@ var bluetooth = {
             );
         }
     },
-    disconnect: function (event) {
+    disconnect: function (e) {
+        alert(e);
         try {
             ble.stopScan(
                 function () {
