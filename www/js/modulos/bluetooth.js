@@ -10,19 +10,19 @@ var bluetooth = {
             5,
             function (device) {
                 if (device.name == 'market4u') {
-                    alert('Conectado');
+                    //alert('Conectado');
                     bluetooth.deviceId = device.id;
                     ble.connect(
                         bluetooth.deviceId,
                         function (peripheral) {
-                            alert('Conectado 1');
+                            //alert('Conectado 1');
                             var characteristic = peripheral.characteristics.filter(function (element) {
                                 if (element.characteristic.toLowerCase() === 'ffe1')
                                     return element;
                             })[0];
                             bluetooth.writeWithoutResponse = characteristic.properties.indexOf('WriteWithoutResponse') > -1 ? true : false;
 
-                            alert('Conectado 2');
+                            //alert('Conectado 2');
                             ble.startNotification(
                                 bluetooth.deviceId,
                                 'ffe0',
@@ -33,7 +33,7 @@ var bluetooth = {
                                 bluetooth.onError
                             );
 
-                            alert('Conectado 3');
+                            //alert('Conectado 3');
                             bluetooth.sendData('1');
 
 
@@ -47,7 +47,7 @@ var bluetooth = {
     },
     sendData: function (value) {
 
-        alert('Conectado 4');
+        //alert('Conectado 4');
         var array = new Uint8Array(value.length);
         for (var i = 0, l = value.length; i < l; i++)
             array[i] = value.charCodeAt(i);
@@ -58,7 +58,8 @@ var bluetooth = {
                 'ffe1',
                 array.buffer,
                 function () {
-                    alert('Conectado 5');
+                    //alert('Conectado 5');
+                    bluetooth.disconnect();
                 },
                 bluetooth.onError
             );
@@ -69,14 +70,15 @@ var bluetooth = {
                 'ffe1',
                 array.buffer,
                 function () {
-                    alert('Conectado 5');
+                    //alert('Conectado 5');
+                    bluetooth.disconnect();
                 },
                 bluetooth.onError
             );
         }
     },
     disconnect: function (event) {
-        alert('disconectado');
+        //alert('disconectado');
         ble.disconnect(
             bluetooth.deviceId,
             function () {
@@ -89,7 +91,7 @@ var bluetooth = {
     },
     tentativas: 0,
     onError: function (e) {
-        alert('Error: ' + e);
+        //alert('Error: ' + e);
         bluetooth.disconnect();
         if (bluetooth.tentativas <= 3) {
             bluetooth.tentativas++;
