@@ -221,8 +221,8 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         if (!parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']) || Payment.ATUALIZAR) {
             Payment.ATUALIZAR = false;
             var ID_CATEGORIA = parseInt($('ul#boxCategorias li.active').data('id')) || 0;
-            if (navigator.geolocation) {
-                $(document).ready(function(){
+            $(document).ready(function () {
+                if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(
                         function (position) {
                             $scope.getCompras({ID: ID_CATEGORIA}, position.coords ? position.coords : -1);
@@ -231,19 +231,19 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                             $scope.getCompras({ID: ID_CATEGORIA}, -1);
                         }
                     );
-                });
-                /*document.addEventListener("deviceready", function () {
-                    navigator.geolocation.getCurrentPosition(
-                        function (position) {
-                            $scope.getCompras({ID: ID_CATEGORIA}, position.coords ? position.coords : -1);
-                        },
-                        function () {
-                            $scope.getCompras({ID: ID_CATEGORIA}, -1);
-                        }
-                    );
-                }, false);*/
-            } else
-                $scope.getCompras({ID: ID_CATEGORIA}, -1);
+                } else
+                    $scope.getCompras({ID: ID_CATEGORIA}, -1);
+            });
+            /*document.addEventListener("deviceready", function () {
+                navigator.geolocation.getCurrentPosition(
+                    function (position) {
+                        $scope.getCompras({ID: ID_CATEGORIA}, position.coords ? position.coords : -1);
+                    },
+                    function () {
+                        $scope.getCompras({ID: ID_CATEGORIA}, -1);
+                    }
+                );
+            }, false);*/
         } else
             $scope.scrollLeft();
 
