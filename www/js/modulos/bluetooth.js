@@ -36,26 +36,21 @@ var bluetooth = {
                                     'ffe0',
                                     'ffe1',
                                     function (data) {
-
+                                        alert('fdsfsd');
                                     },
                                     function(){
-                                        alert('2');
+                                        bluetooth.disconnect();
+                                        Page.active = 0;
+                                        window.history.go(-1);
                                     }
-                                    //bluetooth.disconnect
                                 );
                                 bluetooth.sendData('1');
                             },
-                            function(){
-                                alert('3');
-                            }
-                            //bluetooth.disconnect
+                            bluetooth.disconnect
                         );
                     }
                 },
-                function(){
-                    alert('1');
-                }
-                //bluetooth.disconnect
+                bluetooth.disconnect
             );
         } else {
             if (set == 1)
@@ -86,7 +81,11 @@ var bluetooth = {
                         bluetooth.disconnect();
                     }, 1000);
                 },
-                bluetooth.disconnect
+                function(){
+                    bluetooth.disconnect();
+                    Page.active = 0;
+                    window.history.go(-1);
+                }
             );
         } else {
             ble.write(
@@ -100,7 +99,11 @@ var bluetooth = {
                         bluetooth.disconnect();
                     }, 1000);
                 },
-                bluetooth.disconnect
+                function(){
+                    bluetooth.disconnect();
+                    Page.active = 0;
+                    window.history.go(-1);
+                }
             );
         }
     },
