@@ -222,14 +222,26 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
             Payment.ATUALIZAR = false;
             var ID_CATEGORIA = parseInt($('ul#boxCategorias li.active').data('id')) || 0;
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function (position) {
-                        $scope.getCompras({ID: ID_CATEGORIA}, position.coords ? position.coords : -1);
-                    },
-                    function () {
-                        $scope.getCompras({ID: ID_CATEGORIA}, -1);
-                    }
-                );
+                $(document).ready(function(){
+                    navigator.geolocation.getCurrentPosition(
+                        function (position) {
+                            $scope.getCompras({ID: ID_CATEGORIA}, position.coords ? position.coords : -1);
+                        },
+                        function () {
+                            $scope.getCompras({ID: ID_CATEGORIA}, -1);
+                        }
+                    );
+                });
+                /*document.addEventListener("deviceready", function () {
+                    navigator.geolocation.getCurrentPosition(
+                        function (position) {
+                            $scope.getCompras({ID: ID_CATEGORIA}, position.coords ? position.coords : -1);
+                        },
+                        function () {
+                            $scope.getCompras({ID: ID_CATEGORIA}, -1);
+                        }
+                    );
+                }, false);*/
             } else
                 $scope.getCompras({ID: ID_CATEGORIA}, -1);
         } else
