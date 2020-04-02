@@ -276,8 +276,8 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                             } else {
                                 switch ($route.current.params.SET) {
                                     case 'BLUETOOTH':
-                                        Factory.timeout = setInterval(function () {
-                                            bluetooth.detravar(1);
+                                        Factory.timeout = setTimeout(function () {
+                                            bluetooth.detravar();
                                         }, 5000);
                                         return {
                                             'TEXTO': 'Aguarde por favor, carregando...',
@@ -285,6 +285,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                                         };
                                         break;
                                     case 'BEB_ALC':
+                                        clearTimeout(Factory.timeout);
                                         return {
                                             'TIME': parseInt(Login.getData().TIME_TRAVA ? Login.getData().TIME_TRAVA : 30),
                                             'TEXTO': '<i class="mdi mdi-action-lock-open"></i> Portas destravadas<span><i class="mdi mdi-av-timer"></i> Fechando em...</span>',
