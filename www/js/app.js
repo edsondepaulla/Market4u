@@ -276,16 +276,12 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                             } else {
                                 switch ($route.current.params.SET) {
                                     case 'BLUETOOTH':
-                                        Factory.timeout = setTimeout(function () {
-                                            bluetooth.detravar();
-                                        }, 5000);
                                         return {
-                                            'TEXTO': '<div style="text-align: center;">Conectando com o dispositivo, <br>aguarde por favor...<br><a style="text-decoration: underline;" ng-click="clickMenu(\'destravar\')">Tente novamente!</a></div>',
+                                            'TEXTO': '<div style="text-align: center;">Conectando com o dispositivo...<br><a style="text-decoration: underline;" ng-click="clickMenu(\'destravar\')">Tente novamente!</a></div>',
                                             'TITULO': '<i class="mdi mdi-action-settings-bluetooth"></i> BLUETOOTH'
                                         };
                                         break;
                                     case 'BEB_ALC':
-                                        clearTimeout(Factory.timeout);
                                         return {
                                             'TIME': parseInt(Login.getData().TIME_TRAVA ? Login.getData().TIME_TRAVA : 30),
                                             'TEXTO': '<i class="mdi mdi-action-lock-open"></i> Portas destravadas<span><i class="mdi mdi-av-timer"></i> Fechando em...</span>',
@@ -626,7 +622,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                     $rootScope.TOUR = 5;
                 else {
                     if (parseInt(Login.getData().MAIOR_18_ANOS))
-                        bluetooth.detravar();
+                        bluetooth.detravar(1);
                     else {
                         Factory.alert('Proibida a venda de bebidas alcoólicas para menores de 18 anos!');
                         $rootScope.location('#!/command/18+/destravar/VENDA_BEBIDA_PROIBIDA', 0, 1);
