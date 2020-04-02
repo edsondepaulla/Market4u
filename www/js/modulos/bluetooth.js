@@ -59,7 +59,7 @@ var bluetooth = {
                 'ffe1',
                 array.buffer,
                 function () {
-                    Factory.$rootScope.location('#!/command/18+/destravar/BEB_ALC');
+                    Factory.$rootScope.location('#!/command/18+/destravar/BEB_ALC', 0, 1);
                     setTimeout(function(){
                         bluetooth.disconnect();
                     }, 1000);
@@ -73,7 +73,7 @@ var bluetooth = {
                 'ffe1',
                 array.buffer,
                 function () {
-                    Factory.$rootScope.location('#!/command/18+/destravar/BEB_ALC');
+                    Factory.$rootScope.location('#!/command/18+/destravar/BEB_ALC', 0, 1);
                     setTimeout(function(){
                         bluetooth.disconnect();
                     }, 1000);

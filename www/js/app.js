@@ -264,6 +264,16 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             controller: 'Command',
             resolve: {
                 ReturnData: function ($route) {
+                    switch ($route.current.params.SET) {
+                        case 'BLUETOOTH':
+                        case 'VENDA_BEBIDA_PROIBIDA':
+                        case 'BEB_ALC':
+                            if (!Page.active) {
+                                window.history.go(-1);
+                                return [];
+                            }
+                            break;
+                    }
                     return Factory.ajax(
                         {
                             action: 'options/command',
@@ -580,11 +590,12 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                 if ($rootScope.TOUR)
                     $rootScope.TOUR = 5;
                 else {
-                    if (parseInt(Login.getData().MAIOR_18_ANOS))
+                    if (parseInt(Login.getData().MAIOR_18_ANOS)) {
+                        $rootScope.location('#!/command/18+/destravar/BLUETOOTH', 0, 1);
                         bluetooth.detravar();
-                    else {
+                    } else {
                         Factory.alert('Proibida a venda de bebidas alcoólicas para menores de 18 anos!');
-                        $rootScope.location('#!/command/18+/destravar/VENDA_BEBIDA_PROIBIDA');
+                        $rootScope.location('#!/command/18+/destravar/VENDA_BEBIDA_PROIBIDA', 0, 1);
                     }
                 }
                 break;
