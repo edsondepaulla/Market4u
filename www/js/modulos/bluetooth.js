@@ -2,9 +2,11 @@
 var bluetooth = {
     deviceId: null,
     ativado: false,
+    callback_ativado: false,
     writeWithoutResponse: null,
-    detravar: function () {
+    detravar: function (set) {
         if (bluetooth.ativado) {
+            bluetooth.callback_ativado = false;
             ble.scan(
                 [],
                 5,
@@ -47,6 +49,8 @@ var bluetooth = {
                 bluetooth.disconnect
             );
         } else {
+            if (set == 1)
+                bluetooth.callback_ativado = true;
             switch (Factory.$rootScope.device) {
                 case 'ios':
                     Factory.alert("Favor ativar o Bluetooth");

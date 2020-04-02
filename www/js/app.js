@@ -341,7 +341,7 @@ app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData)
                 $scope.PERCENTUAL = Math.ceil(100 / seTime);
                 var time = seTime;
                 var percentual = 0;
-                Factory.timeout = setInterval(function () {
+                var timeoutTime = setInterval(function () {
                     time--;
                     percentual += 100 / seTime;
                     if (time <= 0 || percentual >= 100)
@@ -353,7 +353,7 @@ app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData)
                             $scope.REG.TEXTO = $scope.REG.TEXTO1;
                     });
                     if (time <= 0)
-                        clearInterval(Factory.timeout);
+                        clearInterval(timeoutTime);
                 }, seTime ? 1000 : 0);
             }
             break;
@@ -622,7 +622,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                     $rootScope.TOUR = 5;
                 else {
                     if (parseInt(Login.getData().MAIOR_18_ANOS))
-                        bluetooth.detravar();
+                        bluetooth.detravar(1);
                     else {
                         Factory.alert('Proibida a venda de bebidas alcoólicas para menores de 18 anos!');
                         $rootScope.location('#!/command/18+/destravar/VENDA_BEBIDA_PROIBIDA', 0, 1);
