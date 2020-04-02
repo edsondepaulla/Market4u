@@ -221,7 +221,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
         if (!parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']) || Payment.ATUALIZAR) {
             Payment.ATUALIZAR = false;
             var ID_CATEGORIA = parseInt($('ul#boxCategorias li.active').data('id')) || 0;
-            $(document).ready(function () {
+            var getLocation = function () {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(
                         function (position) {
@@ -233,17 +233,13 @@ app.controller('Index', function($scope, $rootScope, $routeParams) {
                     );
                 } else
                     $scope.getCompras({ID: ID_CATEGORIA}, -1);
-            });
-            /*document.addEventListener("deviceready", function () {
-                navigator.geolocation.getCurrentPosition(
-                    function (position) {
-                        $scope.getCompras({ID: ID_CATEGORIA}, position.coords ? position.coords : -1);
-                    },
-                    function () {
-                        $scope.getCompras({ID: ID_CATEGORIA}, -1);
-                    }
-                );
-            }, false);*/
+            };
+            if (deviceDetector.isMobile()) {
+                document.addEventListener("deviceready", function () {
+                    getLocation();
+                }, false);
+            } else
+                getLocation();
         } else
             $scope.scrollLeft();
 
