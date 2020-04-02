@@ -3,7 +3,9 @@ var bluetooth = {
     deviceId: null,
     writeWithoutResponse: null,
     detravar: function () {
-        try {
+        if(Factory.$rootScope.device == 'ios')
+            bluetooth.scan();
+        else{
             ble.enable(
                 function () {
                     bluetooth.scan();
@@ -12,56 +14,53 @@ var bluetooth = {
                     Factory.alert("LIGAR BLUETOOTH");
                 }
             );
-        } catch (e) {
-            bluetooth.scan();
         }
     },
     scan: function () {
-        try {
-            ble.scan(
-                [],
-                5,
-                function (device) {
-                    if (device.name == 'market4u') {
-                        Factory.$rootScope.location('#!/command/18+/destravar/BLUETOOTH', 0, 1);
-                        bluetooth.deviceId = device.id;
-                        try {
-                            ble.stopScan(
-                                function () {
-                                },
-                                function () {
-                                }
-                            );
-                        } catch (e) {
-                        }
-                        ble.connect(
-                            bluetooth.deviceId,
-                            function (peripheral) {
-                                var characteristic = peripheral.characteristics.filter(function (element) {
-                                    if (element.characteristic.toLowerCase() === 'ffe1')
-                                        return element;
-                                })[0];
-                                bluetooth.writeWithoutResponse = characteristic.properties.indexOf('WriteWithoutResponse') > -1 ? true : false;
-                                ble.startNotification(
-                                    bluetooth.deviceId,
-                                    'ffe0',
-                                    'ffe1',
-                                    function (data) {
-
-                                    },
-                                    bluetooth.disconnect
-                                );
-                                bluetooth.sendData('1');
+        ble.scan(
+            [],
+            5,
+            function (device) {
+                if (device.name == 'market4u') {
+                    Factory.$rootScope.location('#!/command/18+/destravar/BLUETOOTH', 0, 1);
+                    bluetooth.deviceId = device.id;
+                    try {
+                        ble.stopScan(
+                            function () {
                             },
-                            bluetooth.disconnect
+                            function () {
+                            }
                         );
+                    } catch (e) {
                     }
-                },
-                bluetooth.disconnect
-            );
-        }catch (e) {
-            Factory.alert("LIGAR BLUETOOTH");
-        }
+                    ble.connect(
+                        bluetooth.deviceId,
+                        function (peripheral) {
+                            var characteristic = peripheral.characteristics.filter(function (element) {
+                                if (element.characteristic.toLowerCase() === 'ffe1')
+                                    return element;
+                            })[0];
+                            bluetooth.writeWithoutResponse = characteristic.properties.indexOf('WriteWithoutResponse') > -1 ? true : false;
+                            ble.startNotification(
+                                bluetooth.deviceId,
+                                'ffe0',
+                                'ffe1',
+                                function (data) {
+
+                                },
+                                bluetooth.disconnect
+                            );
+                            bluetooth.sendData('1');
+                        },
+                        bluetooth.disconnect
+                    );
+                }
+            },
+            function(e){
+                alert(e);
+            }
+            //bluetooth.disconnect
+        );
     },
     sendData: function (value) {
         var array = new Uint8Array(value.length);
