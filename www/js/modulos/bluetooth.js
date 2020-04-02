@@ -101,8 +101,7 @@ var bluetooth = {
             );
         } catch (e) {
         }
-        if(bluetooth.deviceId) {
-            bluetooth.deviceId = null;
+        if (bluetooth.deviceId) {
             try {
                 ble.disconnect(
                     bluetooth.deviceId,
@@ -113,6 +112,7 @@ var bluetooth = {
 
                     }
                 );
+                bluetooth.deviceId = null;
             } catch (e) {
             }
         }
