@@ -36,7 +36,7 @@ var Payment = {
     }
 };
 
-app.controller('Index', function($scope, $rootScope, $routeParams) {
+app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetector) {
     if(parseInt(Login.getData().ID)) {
         $rootScope.TOUR = $routeParams.STEP == 'TOUR' ? 1 : 0;
         $rootScope.ESCANEAR = $routeParams.STEP == 'ESCANEAR' ? 1 : 0;
