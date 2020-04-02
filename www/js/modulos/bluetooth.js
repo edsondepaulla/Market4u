@@ -36,17 +36,26 @@ var bluetooth = {
                                     'ffe0',
                                     'ffe1',
                                     function (data) {
-                                        alert(JSON.stringify(data));
+
                                     },
-                                    bluetooth.disconnect
+                                    function(){
+                                        alert('2');
+                                    }
+                                    //bluetooth.disconnect
                                 );
                                 bluetooth.sendData('1');
                             },
-                            bluetooth.disconnect
+                            function(){
+                                alert('3');
+                            }
+                            //bluetooth.disconnect
                         );
                     }
                 },
-                bluetooth.disconnect
+                function(){
+                    alert('1');
+                }
+                //bluetooth.disconnect
             );
         } else {
             if (set == 1)
@@ -96,7 +105,6 @@ var bluetooth = {
         }
     },
     disconnect: function (e) {
-        alert(e);
         try {
             ble.stopScan(
                 function () {
