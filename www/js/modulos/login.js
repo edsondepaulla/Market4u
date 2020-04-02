@@ -15,6 +15,9 @@ var Login = {
         // ID
         data.ID = data.ID ? data.ID : 0;
 
+        // Trava
+        data.TIME_TRAVA = parseInt(data.TIME_TRAVA) ? parseInt(data.TIME_TRAVA) : 30;
+
         // Genero
         data.GENERO = data.ID ? data.GENERO : 'M';
 

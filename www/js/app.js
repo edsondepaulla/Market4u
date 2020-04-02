@@ -283,7 +283,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                                         break;
                                     case 'BEB_ALC':
                                         return {
-                                            'TIME': parseInt(Login.getData().TIME_TRAVA ? Login.getData().TIME_TRAVA : 30),
+                                            'TIME': parseInt(Login.getData().TIME_TRAVA),
                                             'TEXTO': '<i class="mdi mdi-action-lock-open"></i> Portas destravadas<span><i class="mdi mdi-av-timer"></i> Fechando em...</span>',
                                             'TITULO': 'BEBIDAS ALCOÓLICAS',
                                             'TEXTO1': 'Portas travadas'
