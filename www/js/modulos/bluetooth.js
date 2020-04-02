@@ -10,8 +10,15 @@ var bluetooth = {
             5,
             function (device) {
                 if (device.name == 'market4u') {
-                    //alert('Conectado');
                     bluetooth.deviceId = device.id;
+                    try {
+                        ble.stopScan(
+                            function () {
+                            },
+                            function () {
+                            }
+                        );
+                    }catch (e) { }
                     ble.connect(
                         bluetooth.deviceId,
                         function (peripheral) {
@@ -34,9 +41,9 @@ var bluetooth = {
                             );
 
                             //alert('Conectado 3');
-                            bluetooth.sendData('1');
-
-
+                            setTimeout(function(){
+                                bluetooth.sendData('1');
+                            }, 2000);
                         },
                         bluetooth.onError
                     );
@@ -59,7 +66,9 @@ var bluetooth = {
                 array.buffer,
                 function () {
                     //alert('Conectado 5');
-                    bluetooth.disconnect();
+                    setTimeout(function(){
+                        bluetooth.disconnect();
+                    }, 1000);
                 },
                 bluetooth.onError
             );
@@ -71,7 +80,9 @@ var bluetooth = {
                 array.buffer,
                 function () {
                     //alert('Conectado 5');
-                    bluetooth.disconnect();
+                    setTimeout(function(){
+                        bluetooth.disconnect();
+                    }, 1000);
                 },
                 bluetooth.onError
             );
