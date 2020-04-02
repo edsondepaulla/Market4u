@@ -3,7 +3,16 @@ var bluetooth = {
     deviceId: null,
     writeWithoutResponse: null,
     detravar: function () {
-        if(Factory.$rootScope.device == 'ios')
+        try {
+            cordova.plugins.BluetoothStatus.initPlugin();
+            alert(cordova.plugins.BluetoothStatus.BTenabled());
+        }catch (e) {
+
+        }
+
+
+
+        /*if(Factory.$rootScope.device == 'ios')
             bluetooth.scan();
         else{
             ble.enable(
@@ -14,7 +23,7 @@ var bluetooth = {
                     Factory.alert("LIGAR BLUETOOTH");
                 }
             );
-        }
+        }*/
     },
     scan: function () {
         ble.scan(
