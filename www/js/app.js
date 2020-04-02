@@ -306,12 +306,12 @@ app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData)
                 var percentual = 0;
                 Factory.timeout = setInterval(function () {
                     time--;
-                    percentual += Math.ceil(100 / seTime);
+                    percentual += 100 / seTime;
                     if (time <= 0 || percentual >= 100)
                         percentual = 100;
                     $scope.$apply(function () {
                         $scope.TIME = '00:' + (time < 10 ? '0' : '') + time;
-                        $scope.PERCENTUAL = percentual;
+                        $scope.PERCENTUAL = Math.ceil(percentual);
                         if (percentual == 100)
                             $scope.REG.TEXTO = $scope.REG.TEXTO1;
                     });
