@@ -38,11 +38,8 @@ var bluetooth = {
                                     function (data) {
 
                                     },
-                                    function(e){
-                                        alert(e);
-                                        bluetooth.disconnect();
-                                        Page.active = 0;
-                                        window.history.go(-1);
+                                    function (e) {
+
                                     }
                                 );
                                 bluetooth.sendData('1');

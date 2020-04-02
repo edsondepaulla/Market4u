@@ -276,14 +276,17 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                             } else {
                                 switch ($route.current.params.SET) {
                                     case 'BLUETOOTH':
+                                        Factory.timeout = setInterval(function () {
+                                            bluetooth.detravar(1);
+                                        }, 5000);
                                         return {
                                             'TEXTO': 'Aguarde por favor, carregando...',
-                                            'TITULO': 'CONECTANDO...'
+                                            'TITULO': 'CONECTANDO COM BLUETOOTH...'
                                         };
                                         break;
                                     case 'BEB_ALC':
                                         return {
-                                            'TIME': parseInt(Login.getData().TIME_TRAVA?Login.getData().TIME_TRAVA:30),
+                                            'TIME': parseInt(Login.getData().TIME_TRAVA ? Login.getData().TIME_TRAVA : 30),
                                             'TEXTO': '<i class="mdi mdi-action-lock-open"></i> Portas destravadas<span><i class="mdi mdi-av-timer"></i> Fechando em...</span>',
                                             'TITULO': 'BEBIDAS ALCOÓLICAS',
                                             'TEXTO1': 'Portas travadas'
