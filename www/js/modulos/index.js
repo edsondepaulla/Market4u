@@ -234,7 +234,8 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                 } else
                     $scope.getCompras({ID: ID_CATEGORIA}, -1);
             };
-            if (deviceDetector.isMobile()) {
+            alert("cordova" in window);
+            if ("cordova" in window) {
                 document.addEventListener("deviceready", function () {
                     getLocation();
                 }, false);
