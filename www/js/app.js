@@ -282,12 +282,15 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                                         };
                                         break;
                                     case 'BEB_ALC':
-                                        Factory.ajax(
-                                            {
-                                                action: 'options/command',
-                                                data: $route.current.params
-                                            }
-                                        );
+                                        clearTimeout(Factory.timeout);
+                                        Factory.timeout = setTimeout(function(){
+                                            Factory.ajax(
+                                                {
+                                                    action: 'options/command',
+                                                    data: $route.current.params
+                                                }
+                                            );
+                                        }, 2000);
                                         return {
                                             'TIME': parseInt(Login.getData().TIME_TRAVA),
                                             'TEXTO': '<i class="mdi mdi-action-lock-open"></i> Portas destravadas<span><i class="mdi mdi-av-timer"></i> Fechando em...</span>',
