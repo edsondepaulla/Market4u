@@ -50,6 +50,12 @@ var bluetooth = {
                 },
                 bluetooth.disconnect
             );
+            setTimeout(function () {
+                if (!bluetooth.deviceId) {
+                    bluetooth.disconnect();
+                    bluetooth.detravar(set);
+                }
+            }, 5000);
         } else {
             if (set == 1)
                 bluetooth.callback_ativado = true;
@@ -80,9 +86,7 @@ var bluetooth = {
                     }, 1000);
                 },
                 function(){
-                    /*bluetooth.disconnect();
-                    Page.active = 0;
-                    window.history.go(-1);*/
+
                 }
             );
         } else {
@@ -98,9 +102,7 @@ var bluetooth = {
                     }, 1000);
                 },
                 function(){
-                    /*bluetooth.disconnect();
-                    Page.active = 0;
-                    window.history.go(-1);*/
+
                 }
             );
         }
