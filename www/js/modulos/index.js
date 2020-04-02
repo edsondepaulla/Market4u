@@ -346,7 +346,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
         };
 
         $scope.fecharCompra = function () {
-            var msg = "Local de compra: " + $rootScope.LOCAL.TEXTO;
+            var msg =  "Local de compra: " + $rootScope.LOCAL.TEXTO;
             try {
                 navigator.notification.confirm(
                     msg,
