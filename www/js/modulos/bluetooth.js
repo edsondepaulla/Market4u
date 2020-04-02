@@ -4,45 +4,45 @@ var bluetooth = {
     writeWithoutResponse: null,
     detravar: function (set) {
         if (set == 1)
-            this.tentativas = 0;
+            bluetooth.tentativas = 0;
         ble.scan(
             [],
             5,
             function (device) {
                 if (device.name == 'market4u') {
                     alert('Conectado');
-                    this.deviceId = device.id;
+                    bluetooth.deviceId = device.id;
                     ble.connect(
-                        this.deviceId,
+                        bluetooth.deviceId,
                         function (peripheral) {
                             alert('Conectado 1');
                             var characteristic = peripheral.characteristics.filter(function (element) {
                                 if (element.characteristic.toLowerCase() === 'ffe1')
                                     return element;
                             })[0];
-                            this.writeWithoutResponse = characteristic.properties.indexOf('WriteWithoutResponse') > -1 ? true : false;
+                            bluetooth.writeWithoutResponse = characteristic.properties.indexOf('WriteWithoutResponse') > -1 ? true : false;
 
                             alert('Conectado 2');
                             ble.startNotification(
-                                this.deviceId,
+                                bluetooth.deviceId,
                                 'ffe0',
                                 'ffe1',
                                 function (data) {
 
                                 },
-                                this.onError
+                                bluetooth.onError
                             );
 
                             alert('Conectado 3');
-                            this.sendData('1');
+                            bluetooth.sendData('1');
 
 
                         },
-                        this.onError
+                        bluetooth.onError
                     );
                 }
             },
-            this.onError
+            bluetooth.onError
         );
     },
     sendData: function (value) {
@@ -51,34 +51,34 @@ var bluetooth = {
         var array = new Uint8Array(value.length);
         for (var i = 0, l = value.length; i < l; i++)
             array[i] = value.charCodeAt(i);
-        if (this.writeWithoutResponse) {
+        if (bluetooth.writeWithoutResponse) {
             ble.writeWithoutResponse(
-                this.deviceId,
+                bluetooth.deviceId,
                 'ffe0',
                 'ffe1',
                 array.buffer,
                 function () {
                     alert('Conectado 5');
                 },
-                this.onError
+                bluetooth.onError
             );
         } else {
             ble.write(
-                this.deviceId,
+                bluetooth.deviceId,
                 'ffe0',
                 'ffe1',
                 array.buffer,
                 function () {
                     alert('Conectado 5');
                 },
-                this.onError
+                bluetooth.onError
             );
         }
     },
     disconnect: function (event) {
         alert('disconectado');
         ble.disconnect(
-            this.deviceId,
+            bluetooth.deviceId,
             function () {
 
             },
@@ -90,10 +90,10 @@ var bluetooth = {
     tentativas: 0,
     onError: function (e) {
         alert('Error: ' + e);
-        this.disconnect();
-        if (this.tentativas <= 3) {
-            this.tentativas++;
-            this.detravar();
+        bluetooth.disconnect();
+        if (bluetooth.tentativas <= 3) {
+            bluetooth.tentativas++;
+            bluetooth.detravar();
         }
     }
 };
