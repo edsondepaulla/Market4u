@@ -6,6 +6,7 @@ var bluetooth = {
     callback_ativado: false,
     writeWithoutResponse: null,
     detravar: function (set) {
+        bluetooth.disconnect();
         if (bluetooth.ativado) {
             bluetooth.callback_ativado = false;
             Factory.$rootScope.location('#!/command/18+/destravar/BLUETOOTH', 0, 1);
@@ -110,6 +111,7 @@ var bluetooth = {
         }
     },
     disconnect: function (e) {
+        clearTimeout(bluetooth.timeout);
         try {
             ble.stopScan(
                 function () {
