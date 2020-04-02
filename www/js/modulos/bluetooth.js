@@ -7,12 +7,12 @@ var bluetooth = {
     detravar: function (set) {
         if (bluetooth.ativado) {
             bluetooth.callback_ativado = false;
+            Factory.$rootScope.location('#!/command/18+/destravar/BLUETOOTH', 0, 1);
             ble.scan(
                 [],
                 5,
                 function (device) {
                     if (device.name == 'market4u') {
-                        Factory.$rootScope.location('#!/command/18+/destravar/BLUETOOTH', 0, 1);
                         bluetooth.deviceId = device.id;
                         try {
                             ble.stopScan(
