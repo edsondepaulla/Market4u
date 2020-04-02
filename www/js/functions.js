@@ -327,8 +327,6 @@ var Factory = {
             cordova.plugins.BluetoothStatus.initPlugin();
             window.addEventListener('BluetoothStatus.enabled', function() {
                 bluetooth.ativado = true;
-                if(bluetooth.callback_ativado)
-                    bluetooth.detravar();
             });
             window.addEventListener('BluetoothStatus.disabled', function() {
                 bluetooth.ativado = false;
