@@ -3,45 +3,50 @@ var bluetooth = {
     deviceId: null,
     writeWithoutResponse: null,
     detravar: function () {
-        ble.scan(
-            [],
-            5,
-            function (device) {
-                if (device.name == 'market4u') {
-                    bluetooth.deviceId = device.id;
-                    try {
-                        ble.stopScan(
-                            function () {
-                            },
-                            function () {
-                            }
-                        );
-                    }catch (e) { }
-                    ble.connect(
-                        bluetooth.deviceId,
-                        function (peripheral) {
-                            var characteristic = peripheral.characteristics.filter(function (element) {
-                                if (element.characteristic.toLowerCase() === 'ffe1')
-                                    return element;
-                            })[0];
-                            bluetooth.writeWithoutResponse = characteristic.properties.indexOf('WriteWithoutResponse') > -1 ? true : false;
-                            ble.startNotification(
-                                bluetooth.deviceId,
-                                'ffe0',
-                                'ffe1',
-                                function (data) {
-
+        try {
+            ble.scan(
+                [],
+                5,
+                function (device) {
+                    if (device.name == 'market4u') {
+                        bluetooth.deviceId = device.id;
+                        try {
+                            ble.stopScan(
+                                function () {
                                 },
-                                bluetooth.onError
+                                function () {
+                                }
                             );
-                            bluetooth.sendData('1');
-                        },
-                        bluetooth.onError
-                    );
-                }
-            },
-            bluetooth.onError
-        );
+                        } catch (e) {
+                        }
+                        ble.connect(
+                            bluetooth.deviceId,
+                            function (peripheral) {
+                                var characteristic = peripheral.characteristics.filter(function (element) {
+                                    if (element.characteristic.toLowerCase() === 'ffe1')
+                                        return element;
+                                })[0];
+                                bluetooth.writeWithoutResponse = characteristic.properties.indexOf('WriteWithoutResponse') > -1 ? true : false;
+                                ble.startNotification(
+                                    bluetooth.deviceId,
+                                    'ffe0',
+                                    'ffe1',
+                                    function (data) {
+
+                                    },
+                                    bluetooth.disconnect
+                                );
+                                bluetooth.sendData('1');
+                            },
+                            bluetooth.disconnect
+                        );
+                    }
+                },
+                bluetooth.disconnect
+            );
+        }catch (e) {
+            
+        }
     },
     sendData: function (value) {
         var array = new Uint8Array(value.length);
@@ -56,9 +61,9 @@ var bluetooth = {
                 function () {
                     setTimeout(function(){
                         bluetooth.disconnect();
-                    }, 1000);
+                    }, 100);
                 },
-                bluetooth.onError
+                bluetooth.disconnect
             );
         } else {
             ble.write(
@@ -69,9 +74,9 @@ var bluetooth = {
                 function () {
                     setTimeout(function(){
                         bluetooth.disconnect();
-                    }, 1000);
+                    }, 100);
                 },
-                bluetooth.onError
+                bluetooth.disconnect
             );
         }
     },
@@ -85,8 +90,5 @@ var bluetooth = {
 
             }
         );
-    },
-    onError: function (e) {
-        bluetooth.disconnect();
     }
 };

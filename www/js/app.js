@@ -297,7 +297,7 @@ app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData)
     $rootScope.MenuBottom = 1;
 
     switch ($routeParams.TYPE) {
-        case 'arduino':
+        case '18+':
             if ($routeParams.SET == 'BEB_ALC') {
                 var seTime = ReturnData.TIME;
                 $scope.TIME = '00:' + (seTime < 10 ? '0' : '') + seTime;
@@ -315,11 +315,8 @@ app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData)
                         if (percentual == 100)
                             $scope.REG.TEXTO = $scope.REG.TEXTO1;
                     });
-                    $rootScope.KEY_ARDUINO = $routeParams.KEY;
-                    if (time <= 0) {
-                        $rootScope.fecharPortaBebidasAlcoolicas();
+                    if (time <= 0)
                         clearInterval(Factory.timeout);
-                    }
                 }, seTime ? 1000 : 0);
             }
             break;
@@ -449,22 +446,6 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
         $rootScope.menuClose();
     });
 
-    $rootScope.KEY_ARDUINO = null;
-    $rootScope.fecharPortaBebidasAlcoolicas = function () {
-        Factory.ajax(
-            {
-                action: 'options/arduino',
-                data: {
-                    KEY: $rootScope.KEY_ARDUINO,
-                    TYPE: 'BEB_ALC',
-                    V: 'FECHAR'
-                }
-            },function(){
-                $rootScope.KEY_ARDUINO = null;
-            }
-        );
-    };
-
     $rootScope.controller = 'Index';
     $rootScope.$on('$routeChangeSuccess', function () {
         $rootScope.NO_WHATSAPP = true;
@@ -503,8 +484,6 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
             if ($rootScope.controller != 'Index' || (parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1) == 1)
                 Payment.clear(1);
         }
-        if ($rootScope.KEY_ARDUINO)
-            $rootScope.fecharPortaBebidasAlcoolicas();
     });
 
     $rootScope.trustAsHtml = function (string) {
@@ -601,8 +580,13 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                 if ($rootScope.TOUR)
                     $rootScope.TOUR = 5;
                 else {
-                    bluetooth.detravar();
-                    //$rootScope.clickEscanear('destravar');
+                    if (parseInt(Login.getData().MAIOR_18_ANOS)) {
+                        $rootScope.location('#!/command/18+/destravar/BEB_ALC');
+                        bluetooth.detravar();
+                    } else {
+                        Factory.alert('Proibida a venda de bebidas alcoólicas para menores de 18 anos!');
+                        $rootScope.location('#!/command/18+/destravar/VENDA_BEBIDA_PROIBIDA');
+                    }
                 }
                 break;
             case 'ajustes':
