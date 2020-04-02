@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="br.com.mobile.market4u" version="1.0.16" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="br.com.mobile.market4u" version="1.0.17" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>market4u</name>
     <description>
         Um mercado para você
     </description>
-    <content src="index2.html#!/" />
+    <content src="index.html#!/" />
     <access origin="*" />
     <allow-navigation href="*" />
     <allow-intent href="*" />
@@ -33,7 +33,7 @@
     <preference name="ios-version" value="cli-10.0.0" />
     <preference name="SwiftVersion" value="3.0" />
     <preference name="android-build-tool" value="gradle" />
-    <!--<platform name="android">
+    <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="res/android/icon32.png" />
         <icon density="mdpi" src="res/android/icon48.png" />
@@ -45,7 +45,7 @@
         <splash density="port-ldpi" src="res/screen/android/200.png" />
         <splash density="port-mdpi" src="res/screen/android/320.png" />
         <splash density="port-xhdpi" src="res/screen/android/720.png" />
-    </platform>-->
+    </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
@@ -99,8 +99,7 @@
     <plugin name="cordova-plugin-dialogs" spec="^2.0.1" />
     <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.2" />
     <plugin name="phonegap-plugin-barcodescanner" />
-    <!--<plugin name="cordova-plugin-bluetoothle" />-->
-    <plugin name="cordova-plugin-ble-central" />
+    <plugin name="cordova-plugin-ble-central"/>
     <plugin name="cordova-plugin-customurlscheme" spec="5.0.0">
         <param name="URL_SCHEME" value="market4uapp" />
     </plugin>

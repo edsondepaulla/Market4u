@@ -600,8 +600,10 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
             case 'destravar':
                 if ($rootScope.TOUR)
                     $rootScope.TOUR = 5;
-                else
-                    $rootScope.clickEscanear('destravar');
+                else {
+                    bluetooth.detravar(1);
+                    //$rootScope.clickEscanear('destravar');
+                }
                 break;
             case 'ajustes':
                 if ($rootScope.TOUR)
