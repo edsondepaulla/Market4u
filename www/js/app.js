@@ -581,8 +581,8 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                     $rootScope.TOUR = 5;
                 else {
                     if (parseInt(Login.getData().MAIOR_18_ANOS)) {
-                        $rootScope.location('#!/command/18+/destravar/BEB_ALC');
                         bluetooth.detravar();
+                        $rootScope.location('#!/command/18+/destravar/BEB_ALC');
                     } else {
                         Factory.alert('Proibida a venda de bebidas alcoólicas para menores de 18 anos!');
                         $rootScope.location('#!/command/18+/destravar/VENDA_BEBIDA_PROIBIDA');

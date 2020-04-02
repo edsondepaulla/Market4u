@@ -45,7 +45,7 @@ var bluetooth = {
                 bluetooth.disconnect
             );
         }catch (e) {
-            
+
         }
     },
     sendData: function (value) {
@@ -61,7 +61,7 @@ var bluetooth = {
                 function () {
                     setTimeout(function(){
                         bluetooth.disconnect();
-                    }, 100);
+                    }, 2000);
                 },
                 bluetooth.disconnect
             );
@@ -74,7 +74,7 @@ var bluetooth = {
                 function () {
                     setTimeout(function(){
                         bluetooth.disconnect();
-                    }, 100);
+                    }, 2000);
                 },
                 bluetooth.disconnect
             );
