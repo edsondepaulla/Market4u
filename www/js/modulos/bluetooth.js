@@ -2,6 +2,7 @@
 var bluetooth = {
     deviceId: null,
     ativado: false,
+    timeout: null,
     callback_ativado: false,
     writeWithoutResponse: null,
     detravar: function (set) {
@@ -13,6 +14,7 @@ var bluetooth = {
                 5,
                 function (device) {
                     if (device.name == 'market4u') {
+                        clearTimeout(bluetooth.timeout);
                         bluetooth.deviceId = device.id;
                         try {
                             ble.stopScan(
@@ -50,7 +52,7 @@ var bluetooth = {
                 },
                 bluetooth.disconnect
             );
-            setTimeout(function () {
+            bluetooth.timeout = setTimeout(function () {
                 if (!bluetooth.deviceId) {
                     bluetooth.disconnect();
                     bluetooth.detravar(set);
