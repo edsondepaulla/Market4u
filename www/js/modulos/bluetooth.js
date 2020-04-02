@@ -4,45 +4,53 @@ var bluetooth = {
     writeWithoutResponse: null,
     detravar: function () {
         try {
-            ble.scan(
-                [],
-                5,
-                function (device) {
-                    if (device.name == 'market4u') {
-                        bluetooth.deviceId = device.id;
-                        try {
-                            ble.stopScan(
-                                function () {
-                                },
-                                function () {
+            ble.enable(
+                function () {
+                    Factory.$rootScope.location('#!/command/18+/destravar/BLUETOOTH', 0, 1);
+                    ble.scan(
+                        [],
+                        5,
+                        function (device) {
+                            if (device.name == 'market4u') {
+                                bluetooth.deviceId = device.id;
+                                try {
+                                    ble.stopScan(
+                                        function () {
+                                        },
+                                        function () {
+                                        }
+                                    );
+                                } catch (e) {
                                 }
-                            );
-                        } catch (e) {
-                        }
-                        ble.connect(
-                            bluetooth.deviceId,
-                            function (peripheral) {
-                                var characteristic = peripheral.characteristics.filter(function (element) {
-                                    if (element.characteristic.toLowerCase() === 'ffe1')
-                                        return element;
-                                })[0];
-                                bluetooth.writeWithoutResponse = characteristic.properties.indexOf('WriteWithoutResponse') > -1 ? true : false;
-                                ble.startNotification(
+                                ble.connect(
                                     bluetooth.deviceId,
-                                    'ffe0',
-                                    'ffe1',
-                                    function (data) {
+                                    function (peripheral) {
+                                        var characteristic = peripheral.characteristics.filter(function (element) {
+                                            if (element.characteristic.toLowerCase() === 'ffe1')
+                                                return element;
+                                        })[0];
+                                        bluetooth.writeWithoutResponse = characteristic.properties.indexOf('WriteWithoutResponse') > -1 ? true : false;
+                                        ble.startNotification(
+                                            bluetooth.deviceId,
+                                            'ffe0',
+                                            'ffe1',
+                                            function (data) {
 
+                                            },
+                                            bluetooth.disconnect
+                                        );
+                                        bluetooth.sendData('1');
                                     },
                                     bluetooth.disconnect
                                 );
-                                bluetooth.sendData('1');
-                            },
-                            bluetooth.disconnect
-                        );
-                    }
+                            }
+                        },
+                        bluetooth.disconnect
+                    );
                 },
-                bluetooth.disconnect
+                function () {
+                    Factory.alert("LIGAR BLUETOOTH");
+                }
             );
         } catch (e) {
 
