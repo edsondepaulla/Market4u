@@ -1,31 +1,16 @@
 'use strict';
 var bluetooth = {
     deviceId: null,
+    ativado: false,
     writeWithoutResponse: null,
     detravar: function () {
-        try {
-            alert(cordova.plugins.BluetoothStatus.BTenabled());
-        }catch (e) {
-            alert('ERROR: '+e);
-        }
-        try {
-            alert(cordova.plugins.BluetoothStatus.iosAuthorized());
-        }catch (e) {
-            alert('ERROR: '+e);
-        }
-        try {
-            alert(cordova.plugins.BluetoothStatus.enableBT());
-        }catch (e) {
-            alert('ERROR: '+e);
-        }
+        alert(bluetooth.ativado);
+
         try {
             alert(cordova.plugins.BluetoothStatus.promptForBT());
         }catch (e) {
             alert('ERROR: '+e);
         }
-        window.addEventListener('BluetoothStatus.enabled', function() {
-            alert('Bluetooth has been enabled');
-        });
 
 
         /*if(Factory.$rootScope.device == 'ios')
