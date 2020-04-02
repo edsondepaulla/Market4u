@@ -130,5 +130,6 @@ var bluetooth = {
             } catch (e) {
             }
         }
+        bluetooth.callback_ativado = false;
     }
 };
