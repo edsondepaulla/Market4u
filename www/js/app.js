@@ -265,6 +265,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             resolve: {
                 ReturnData: function ($route) {
                     Factory.$rootScope.MenuBottom = 1;
+                    var get = 0;
                     switch ($route.current.params.SET) {
                         case 'BLUETOOTH':
                         case 'VENDA_BEBIDA_PROIBIDA':
@@ -272,15 +273,40 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                             if (!Page.active) {
                                 window.history.go(-1);
                                 return [];
+                            } else {
+                                switch ($route.current.params.SET) {
+                                    case 'BLUETOOTH':
+                                        return {
+                                            'TEXTO': 'Aguarde por favor, carregando...',
+                                            'TITULO': 'CONECTANDO...'
+                                        };
+                                        break;
+                                    case 'BEB_ALC':
+                                        return {
+                                            'TIME': parseInt(Login.getData().TIME_TRAVA?Login.getData().TIME_TRAVA:30),
+                                            'TEXTO': '<i class="mdi mdi-action-lock-open"></i> Portas destravadas<span><i class="mdi mdi-av-timer"></i> Fechando em...</span>',
+                                            'TITULO': 'BEBIDAS ALCOÓLICAS',
+                                            'TEXTO1': 'Portas travadas'
+                                        };
+                                        break;
+                                    default:
+                                        get = 1;
+                                        break;
+                                }
                             }
                             break;
+                        default:
+                            get = 1;
+                            break;
                     }
-                    return Factory.ajax(
-                        {
-                            action: 'options/command',
-                            data: $route.current.params
-                        }
-                    );
+                    if (get) {
+                        return Factory.ajax(
+                            {
+                                action: 'options/command',
+                                data: $route.current.params
+                            }
+                        );
+                    }
                 }
             }
         })
