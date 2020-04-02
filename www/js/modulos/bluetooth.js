@@ -4,73 +4,58 @@ var bluetooth = {
     ativado: false,
     writeWithoutResponse: null,
     detravar: function () {
-        alert(bluetooth.ativado);
-
-        try {
-            alert(cordova.plugins.BluetoothStatus.promptForBT());
-        }catch (e) {
-            alert('ERROR: '+e);
-        }
-
-
-        /*if(Factory.$rootScope.device == 'ios')
-            bluetooth.scan();
-        else{
-            ble.enable(
-                function () {
-                    bluetooth.scan();
-                },
-                function () {
-                    Factory.alert("LIGAR BLUETOOTH");
-                }
-            );
-        }*/
-    },
-    scan: function () {
-        ble.scan(
-            [],
-            5,
-            function (device) {
-                if (device.name == 'market4u') {
-                    Factory.$rootScope.location('#!/command/18+/destravar/BLUETOOTH', 0, 1);
-                    bluetooth.deviceId = device.id;
-                    try {
-                        ble.stopScan(
-                            function () {
-                            },
-                            function () {
-                            }
-                        );
-                    } catch (e) {
-                    }
-                    ble.connect(
-                        bluetooth.deviceId,
-                        function (peripheral) {
-                            var characteristic = peripheral.characteristics.filter(function (element) {
-                                if (element.characteristic.toLowerCase() === 'ffe1')
-                                    return element;
-                            })[0];
-                            bluetooth.writeWithoutResponse = characteristic.properties.indexOf('WriteWithoutResponse') > -1 ? true : false;
-                            ble.startNotification(
-                                bluetooth.deviceId,
-                                'ffe0',
-                                'ffe1',
-                                function (data) {
-
+        if (bluetooth.ativado) {
+            ble.scan(
+                [],
+                5,
+                function (device) {
+                    if (device.name == 'market4u') {
+                        Factory.$rootScope.location('#!/command/18+/destravar/BLUETOOTH', 0, 1);
+                        bluetooth.deviceId = device.id;
+                        try {
+                            ble.stopScan(
+                                function () {
                                 },
-                                bluetooth.disconnect
+                                function () {
+                                }
                             );
-                            bluetooth.sendData('1');
-                        },
-                        bluetooth.disconnect
-                    );
-                }
-            },
-            function(e){
-                alert(e);
+                        } catch (e) {
+                        }
+                        ble.connect(
+                            bluetooth.deviceId,
+                            function (peripheral) {
+                                var characteristic = peripheral.characteristics.filter(function (element) {
+                                    if (element.characteristic.toLowerCase() === 'ffe1')
+                                        return element;
+                                })[0];
+                                bluetooth.writeWithoutResponse = characteristic.properties.indexOf('WriteWithoutResponse') > -1 ? true : false;
+                                ble.startNotification(
+                                    bluetooth.deviceId,
+                                    'ffe0',
+                                    'ffe1',
+                                    function (data) {
+
+                                    },
+                                    bluetooth.disconnect
+                                );
+                                bluetooth.sendData('1');
+                            },
+                            bluetooth.disconnect
+                        );
+                    }
+                },
+                bluetooth.disconnect
+            );
+        } else {
+            switch (Factory.$rootScope.device) {
+                case 'ios':
+                    Factory.alert("Favor ativar o Bluetooth");
+                    break;
+                case 'android':
+                    cordova.plugins.BluetoothStatus.promptForBT();
+                    break;
             }
-            //bluetooth.disconnect
-        );
+        }
     },
     sendData: function (value) {
         var array = new Uint8Array(value.length);
@@ -117,6 +102,7 @@ var bluetooth = {
         } catch (e) {
         }
         if(bluetooth.deviceId) {
+            bluetooth.deviceId = null;
             try {
                 ble.disconnect(
                     bluetooth.deviceId,

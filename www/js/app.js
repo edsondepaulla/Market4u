@@ -520,6 +520,10 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
             $rootScope.controller = $route.current.controller;
             if ($rootScope.controller != 'Index' || (parseInt($routeParams.STEP) ? parseInt($routeParams.STEP) : 1) == 1)
                 Payment.clear(1);
+
+            // Destravar
+            if ($route.current.controller != 'Command')
+                bluetooth.disconnect();
         }
     });
 
