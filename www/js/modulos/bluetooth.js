@@ -2,9 +2,7 @@
 var bluetooth = {
     deviceId: null,
     writeWithoutResponse: null,
-    detravar: function (set) {
-        if (set == 1)
-            bluetooth.tentativas = 0;
+    detravar: function () {
         ble.scan(
             [],
             5,
@@ -22,14 +20,11 @@ var bluetooth = {
                     ble.connect(
                         bluetooth.deviceId,
                         function (peripheral) {
-                            //alert('Conectado 1');
                             var characteristic = peripheral.characteristics.filter(function (element) {
                                 if (element.characteristic.toLowerCase() === 'ffe1')
                                     return element;
                             })[0];
                             bluetooth.writeWithoutResponse = characteristic.properties.indexOf('WriteWithoutResponse') > -1 ? true : false;
-
-                            //alert('Conectado 2');
                             ble.startNotification(
                                 bluetooth.deviceId,
                                 'ffe0',
@@ -39,11 +34,7 @@ var bluetooth = {
                                 },
                                 bluetooth.onError
                             );
-
-                            //alert('Conectado 3');
-                            setTimeout(function(){
-                                bluetooth.sendData('1');
-                            }, 2000);
+                            bluetooth.sendData('1');
                         },
                         bluetooth.onError
                     );
@@ -53,8 +44,6 @@ var bluetooth = {
         );
     },
     sendData: function (value) {
-
-        //alert('Conectado 4');
         var array = new Uint8Array(value.length);
         for (var i = 0, l = value.length; i < l; i++)
             array[i] = value.charCodeAt(i);
@@ -65,7 +54,6 @@ var bluetooth = {
                 'ffe1',
                 array.buffer,
                 function () {
-                    //alert('Conectado 5');
                     setTimeout(function(){
                         bluetooth.disconnect();
                     }, 1000);
@@ -79,7 +67,6 @@ var bluetooth = {
                 'ffe1',
                 array.buffer,
                 function () {
-                    //alert('Conectado 5');
                     setTimeout(function(){
                         bluetooth.disconnect();
                     }, 1000);
@@ -89,7 +76,6 @@ var bluetooth = {
         }
     },
     disconnect: function (event) {
-        //alert('disconectado');
         ble.disconnect(
             bluetooth.deviceId,
             function () {
@@ -100,13 +86,7 @@ var bluetooth = {
             }
         );
     },
-    tentativas: 0,
     onError: function (e) {
-        //alert('Error: ' + e);
         bluetooth.disconnect();
-        if (bluetooth.tentativas <= 3) {
-            bluetooth.tentativas++;
-            bluetooth.detravar();
-        }
     }
 };

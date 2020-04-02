@@ -601,7 +601,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                 if ($rootScope.TOUR)
                     $rootScope.TOUR = 5;
                 else {
-                    bluetooth.detravar(1);
+                    bluetooth.detravar();
                     //$rootScope.clickEscanear('destravar');
                 }
                 break;
