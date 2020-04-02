@@ -44,7 +44,7 @@ var bluetooth = {
                 },
                 bluetooth.disconnect
             );
-        }catch (e) {
+        } catch (e) {
 
         }
     },
@@ -60,7 +60,7 @@ var bluetooth = {
                 array.buffer,
                 function () {
                     Factory.$rootScope.location('#!/command/18+/destravar/BEB_ALC', 0, 1);
-                    setTimeout(function(){
+                    setTimeout(function () {
                         bluetooth.disconnect();
                     }, 1000);
                 },
@@ -74,7 +74,7 @@ var bluetooth = {
                 array.buffer,
                 function () {
                     Factory.$rootScope.location('#!/command/18+/destravar/BEB_ALC', 0, 1);
-                    setTimeout(function(){
+                    setTimeout(function () {
                         bluetooth.disconnect();
                     }, 1000);
                 },
@@ -83,14 +83,28 @@ var bluetooth = {
         }
     },
     disconnect: function (event) {
-        ble.disconnect(
-            bluetooth.deviceId,
-            function () {
+        try {
+            ble.stopScan(
+                function () {
+                },
+                function () {
+                }
+            );
+        } catch (e) {
+        }
+        if(bluetooth.deviceId) {
+            try {
+                ble.disconnect(
+                    bluetooth.deviceId,
+                    function () {
 
-            },
-            function () {
+                    },
+                    function () {
 
+                    }
+                );
+            } catch (e) {
             }
-        );
+        }
     }
 };
