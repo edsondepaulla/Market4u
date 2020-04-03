@@ -88,6 +88,9 @@
         <edit-config target="NSBluetoothPeripheralUsageDescription" file="*-Info.plist" mode="merge">
             <string>Permissões de acesso</string>
         </edit-config>
+        <edit-config target="NSBluetoothAlwaysUsageDescription" file="*-Info.plist" mode="merge">
+            <string>Permissões de acesso</string>
+        </edit-config>
     </platform>
     <engine name="ios" spec="^5.0.1" />
     <engine name="android" spec="~8.0.0" />
