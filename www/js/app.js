@@ -550,8 +550,10 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                 Payment.clear(1);
 
             // Destravar
-            if ($route.current.controller != 'Command')
+            if ($route.current.controller != 'Command') {
+                clearTimeout(bluetooth.timeout);
                 bluetooth.disconnect();
+            }
         }
     });
 

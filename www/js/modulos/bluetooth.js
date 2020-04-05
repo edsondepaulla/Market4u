@@ -91,7 +91,6 @@ var bluetooth = {
         }
     },
     disconnect: function () {
-        clearTimeout(bluetooth.timeout);
         try {
             ble.stopScan(
                 function () {
