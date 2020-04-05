@@ -328,7 +328,8 @@ app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData)
             if (!bluetooth.deviceId) {
                 $scope.$apply(function () {
                     $scope.TENTATIVAS++;
-                    if ($scope.TENTATIVAS != 1 && $scope.TENTATIVAS < 7)
+                    alert($scope.TENTATIVAS);
+                    if (!($scope.TENTATIVAS == 0 || $scope.TENTATIVAS == 1) && $scope.TENTATIVAS < 7)
                         bluetooth.detravar();
                     if ($scope.TENTATIVAS < 7)
                         $rootScope.Bluetooth();
