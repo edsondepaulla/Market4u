@@ -30,38 +30,39 @@ var bluetooth = {
                         ble.connect(
                             bluetooth.deviceId,
                             function () {
-                                ble.startNotification(
-                                    bluetooth.deviceId,
-                                    'ffe0',
-                                    'ffe1',
-                                    function (data) {
-                                        var state = new Uint8Array(data);
-                                        alert(data + " --- " + JSON.stringify(state));
-                                    },
-                                    function (e) {
-                                        alert(e);
-                                    }
-                                );
-                                var value = (parseInt(Login.getData().TIME_TRAVA) * 1000).toString();
-                                var array = new Uint8Array(value.length);
-                                for (var i = 0, l = value.length; i < l; i++)
-                                    array[i] = value.charCodeAt(i);
+                                try {
+                                    ble.startNotification(
+                                        bluetooth.deviceId,
+                                        'ffe0',
+                                        'ffe1',
+                                        function (data) {
+                                        },
+                                        function (e) {
+                                        }
+                                    );
+                                    var value = (parseInt(Login.getData().TIME_TRAVA) * 1000).toString();
+                                    var array = new Uint8Array(value.length);
+                                    for (var i = 0, l = value.length; i < l; i++)
+                                        array[i] = value.charCodeAt(i);
 
-                                ble.writeWithoutResponse(
-                                    bluetooth.deviceId,
-                                    'ffe0',
-                                    'ffe1',
-                                    array.buffer,
-                                    function (e) {
-                                        Factory.$rootScope.location('#!/command/18+/destravar/BEB_ALC', 0, 1);
-                                        setTimeout(function () {
-                                            bluetooth.disconnect();
-                                        }, 1000);
-                                    },
-                                    function (e) {
+                                    ble.writeWithoutResponse(
+                                        bluetooth.deviceId,
+                                        'ffe0',
+                                        'ffe1',
+                                        array.buffer,
+                                        function (e) {
+                                            Factory.$rootScope.location('#!/command/18+/destravar/BEB_ALC', 0, 1);
+                                            setTimeout(function () {
+                                                bluetooth.disconnect();
+                                            }, 1000);
+                                        },
+                                        function (e) {
 
-                                    }
-                                );
+                                        }
+                                    );
+                                } catch (e) {
+                                    alert('ERROR: ' + e);
+                                }
                             },
                             bluetooth.disconnect
                         );
