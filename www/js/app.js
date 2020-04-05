@@ -270,7 +270,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                         case 'BLUETOOTH':
                         case 'VENDA_BEBIDA_PROIBIDA':
                         case 'BEB_ALC':
-                            if (!Page.active) {
+                            if (!Page.active && false) {
                                 window.history.go(-1);
                                 return [];
                             } else {
@@ -324,32 +324,37 @@ app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData)
     $scope.TEXTO_BLUETOOTH = 'Conectando com o dispositivo...';
     bluetooth.tentativas = 0;
     $rootScope.Bluetooth = function () {
-        bluetooth.timeout = setTimeout(function () {
+        setTimeout(function(){
+            $scope.$apply(function () {
+                $scope.REG = {'TEXTO': $scope.TEXTO_BLUETOOTH};
+                $scope.IMG = 1;
+            });
+        }, 1);
+        if (bluetooth.tentativas == 1)
+            bluetooth.detravar();
+        clearInterval(bluetooth.timeout);
+        bluetooth.timeout = setInterval(function () {
             if (!bluetooth.deviceId) {
+                bluetooth.tentativas++;
+                if (!(bluetooth.tentativas == 0 || bluetooth.tentativas == 1) && bluetooth.tentativas < 7)
+                    bluetooth.detravar();
                 $scope.$apply(function () {
-                    bluetooth.tentativas++;
-                    alert(bluetooth.tentativas);
-                    if (!(bluetooth.tentativas == 0 || bluetooth.tentativas == 1) && bluetooth.tentativas < 7)
-                        bluetooth.detravar();
-                    if (bluetooth.tentativas < 7)
-                        $rootScope.Bluetooth();
                     $scope.IMG = bluetooth.tentativas == 7 ? 0 : 1;
                     if (bluetooth.tentativas == 7) {
-                        bluetooth.tentativas = 1;
                         $scope.REG = {'TEXTO': 'Nenhum dispositivo encontrado.<br><br><br><a style="text-decoration: underline" onclick="Factory.$rootScope.Bluetooth()">Tentar novamente</a>'};
-                    } else {
-                        $scope.REG = {'TEXTO': $scope.TEXTO_BLUETOOTH};
+                        bluetooth.tentativas = 1;
+                        clearInterval(bluetooth.timeout);
                     }
                 });
             }
-        }, bluetooth.tentativas == 0 || bluetooth.tentativas == 1 ? 0 : 3000);
+        }, 3000);
     };
 
     switch ($routeParams.TYPE) {
         case '18+':
             switch ($routeParams.SET) {
                 case 'BEB_ALC':
-                    clearTimeout(bluetooth.timeout);
+                    clearInterval(bluetooth.timeout);
                     $rootScope.Titulo = 'BEBIDAS ALCOÓLICAS';
                     $scope.REG = {
                         'TIME': parseInt(Login.getData().TIME_TRAVA),
@@ -551,7 +556,7 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
 
             // Destravar
             if ($route.current.controller != 'Command') {
-                clearTimeout(bluetooth.timeout);
+                clearInterval(bluetooth.timeout);
                 bluetooth.disconnect();
             }
         }

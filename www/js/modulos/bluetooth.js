@@ -17,7 +17,7 @@ var bluetooth = {
                 5,
                 function (device) {
                     if (device.name == 'market4u') {
-                        clearTimeout(bluetooth.timeout);
+                        clearInterval(bluetooth.timeout);
                         bluetooth.deviceId = device.id;
                         try {
                             ble.stopScan(
