@@ -270,7 +270,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                         case 'BLUETOOTH':
                         case 'VENDA_BEBIDA_PROIBIDA':
                         case 'BEB_ALC':
-                            if (!Page.active && false) {
+                            if (!Page.active) {
                                 window.history.go(-1);
                                 return [];
                             } else {
