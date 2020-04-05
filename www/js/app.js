@@ -328,12 +328,12 @@ app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData)
             if (!bluetooth.deviceId) {
                 $scope.$apply(function () {
                     $scope.TENTATIVAS++;
-                    if ($scope.TENTATIVAS != 1 && $scope.TENTATIVAS < 5)
+                    if ($scope.TENTATIVAS != 1 && $scope.TENTATIVAS < 7)
                         bluetooth.detravar();
-                    if ($scope.TENTATIVAS < 5)
+                    if ($scope.TENTATIVAS < 7)
                         $rootScope.Bluetooth();
-                    $scope.IMG = $scope.TENTATIVAS == 5 ? 0 : 1;
-                    if ($scope.TENTATIVAS == 5) {
+                    $scope.IMG = $scope.TENTATIVAS == 7 ? 0 : 1;
+                    if ($scope.TENTATIVAS == 7) {
                         $scope.TENTATIVAS = 1;
                         $scope.REG = {'TEXTO': 'Nenhum dispositivo encontrado.<br><br><br><a style="text-decoration: underline" onclick="Factory.$rootScope.Bluetooth()">Tentar novamente</a>'};
                     } else {
@@ -341,7 +341,7 @@ app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData)
                     }
                 });
             }
-        }, $scope.TENTATIVAS == 0 || $scope.TENTATIVAS == 1 ? 0 : 5000);
+        }, $scope.TENTATIVAS == 0 || $scope.TENTATIVAS == 1 ? 0 : 3000);
     };
 
     switch ($routeParams.TYPE) {
