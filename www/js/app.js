@@ -270,7 +270,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                         case 'BLUETOOTH':
                         case 'VENDA_BEBIDA_PROIBIDA':
                         case 'BEB_ALC':
-                            if (!Page.active && false) {
+                            if (!Page.active) {
                                 window.history.go(-1);
                                 return [];
                             } else {
@@ -358,7 +358,7 @@ app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData)
                     $rootScope.Titulo = 'BEBIDAS ALCOÓLICAS';
                     $scope.REG = {
                         'TIME': parseInt(Login.getData().TIME_TRAVA),
-                        'TEXTO': '<i class="mdi mdi-action-lock-open"></i> Portas destravadas<span><i class="mdi mdi-av-timer"></i> Fechando em...</span>'
+                        'TEXTO': '<i class="mdi mdi-action-lock-open"></i> Portas destravadas<span>Fechando em...</span>'
                     };
                     var seTime = $scope.REG.TIME;
                     $scope.TIME = '00:' + (seTime < 10 ? '0' : '') + seTime;
@@ -643,22 +643,25 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
                     $rootScope.location('#!/minha-carteira');
                 break;
             case 'pagar_escanear':
-                    if ($rootScope.TOUR)
-                        $rootScope.TOUR = 4;
-                    else {
-                        if ($rootScope.TIPO_PG == 'PAGAMENTO')
-                            $rootScope.clickEscanear('qrcode');
-                        else
-                            $rootScope.clickEscanear('comprar');
-                    }
+                if ($rootScope.TOUR)
+                    $rootScope.TOUR = 4;
+                else {
+                    if ($rootScope.TIPO_PG == 'PAGAMENTO')
+                        $rootScope.clickEscanear('qrcode');
+                    else
+                        $rootScope.clickEscanear('comprar');
+                }
                 break;
             case 'destravar':
                 if ($rootScope.TOUR)
                     $rootScope.TOUR = 5;
                 else {
-                    if (parseInt(Login.getData().MAIOR_18_ANOS))
-                        bluetooth.detravar(1);
-                    else {
+                    if (parseInt(Login.getData().MAIOR_18_ANOS)) {
+                        if (Login.getData().DESTRAVAR_AVISO)
+                            Factory.alert(Login.getData().DESTRAVAR_AVISO);
+                        else
+                            bluetooth.detravar(1);
+                    } else {
                         Factory.alert('Proibida a venda de bebidas alcoólicas para menores de 18 anos!');
                         $rootScope.location('#!/command/18+/destravar/VENDA_BEBIDA_PROIBIDA', 0, 1);
                     }

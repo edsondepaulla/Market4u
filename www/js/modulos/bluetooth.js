@@ -30,18 +30,18 @@ var bluetooth = {
                         ble.connect(
                             bluetooth.deviceId,
                             function () {
-                                var x = ble.startNotification(
+                                ble.startNotification(
                                     bluetooth.deviceId,
                                     'ffe0',
                                     'ffe1',
                                     function (data) {
+                                        alert(data);
                                     },
                                     function (e) {
+                                        alert(e);
                                     }
                                 );
-                                alert(x);
-                                alert(JSON.stringify(x));
-                                var value = (parseInt(Login.getData().TIME_TRAVA) * 1000).toString();
+                                /*var value = (parseInt(Login.getData().TIME_TRAVA) * 1000).toString();
                                 var array = new Uint8Array(value.length);
                                 for (var i = 0, l = value.length; i < l; i++)
                                     array[i] = value.charCodeAt(i);
@@ -51,7 +51,8 @@ var bluetooth = {
                                     'ffe1',
                                     array.buffer,
                                     function (e) {
-                                        Factory.$rootScope.location('#!/command/18+/destravar/BEB_ALC', 0, 1);
+                                        if (window.location.hash != '#!/command/18+/destravar/BEB_ALC')
+                                            Factory.$rootScope.location('#!/command/18+/destravar/BEB_ALC', 0, 1);
                                         setTimeout(function () {
                                             bluetooth.disconnect();
                                         }, 1000);
@@ -59,9 +60,12 @@ var bluetooth = {
                                     function (e) {
 
                                     }
-                                );
+                                );*/
                             },
-                            bluetooth.disconnect
+                            function(e){
+                                alert(e);
+                            }
+                            //bluetooth.disconnect
                         );
                     }
                 },
