@@ -6,6 +6,7 @@ var bluetooth = {
     callback_ativado: false,
     writeWithoutResponse: null,
     detravar: function (set) {
+        alert('detravar');
         bluetooth.disconnect();
         if (bluetooth.ativado) {
             bluetooth.callback_ativado = false;
@@ -44,16 +45,6 @@ var bluetooth = {
                                     var array = new Uint8Array(value.length);
                                     for (var i = 0, l = value.length; i < l; i++)
                                         array[i] = value.charCodeAt(i);
-
-                                    ble.startStateNotifications(
-                                        function (e) {
-                                            alert('x: '+e);
-                                        },
-                                        function (e) {
-                                            alert('y: '+e);
-                                        }
-                                    );
-
                                     ble.writeWithoutResponse(
                                         bluetooth.deviceId,
                                         'ffe0',
@@ -62,6 +53,7 @@ var bluetooth = {
                                         function (e) {
                                             Factory.$rootScope.location('#!/command/18+/destravar/BEB_ALC', 0, 1);
                                             setTimeout(function () {
+                                                alert('disconnect: 3');
                                                 bluetooth.disconnect();
                                             }, 1000);
                                         },
@@ -73,11 +65,17 @@ var bluetooth = {
                                     alert('ERROR: ' + e);
                                 }
                             },
-                            bluetooth.disconnect
+                            function(){
+                                alert('disconnect: 2');
+                                bluetooth.disconnect();
+                            }
                         );
                     }
                 },
-                bluetooth.disconnect
+                function(){
+                    alert('disconnect: 1');
+                    bluetooth.disconnect();
+                }
             );
         } else {
             if (set == 1)
@@ -92,7 +90,7 @@ var bluetooth = {
             }
         }
     },
-    disconnect: function (e) {
+    disconnect: function () {
         clearTimeout(bluetooth.timeout);
         try {
             ble.stopScan(
