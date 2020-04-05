@@ -9,7 +9,7 @@ var bluetooth = {
         bluetooth.disconnect();
         if (bluetooth.ativado) {
             bluetooth.callback_ativado = false;
-            if(window.location.hash != '#!/command/18+/destravar/BLUETOOTH')
+            if (window.location.hash != '#!/command/18+/destravar/BLUETOOTH')
                 Factory.$rootScope.location('#!/command/18+/destravar/BLUETOOTH', 0, 1);
             ble.scan(
                 [],
@@ -35,10 +35,11 @@ var bluetooth = {
                                     'ffe0',
                                     'ffe1',
                                     function (data) {
-
+                                        var state = new Uint8Array(data);
+                                        alert(data + " --- " + JSON.stringify(state));
                                     },
                                     function (e) {
-
+                                        alert(e);
                                     }
                                 );
                                 var value = (parseInt(Login.getData().TIME_TRAVA) * 1000).toString();
@@ -52,14 +53,13 @@ var bluetooth = {
                                     'ffe1',
                                     array.buffer,
                                     function (e) {
-                                        alert(e);
                                         Factory.$rootScope.location('#!/command/18+/destravar/BEB_ALC', 0, 1);
                                         setTimeout(function () {
                                             bluetooth.disconnect();
                                         }, 1000);
                                     },
-                                    function(e){
-                                        alert(e);
+                                    function (e) {
+
                                     }
                                 );
                             },
