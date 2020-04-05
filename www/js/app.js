@@ -326,12 +326,12 @@ app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData)
     $rootScope.Bluetooth = function () {
         bluetooth.timeout = setTimeout(function () {
             if (!bluetooth.deviceId) {
-                $scope.TENTATIVAS++;
-                if ($scope.TENTATIVAS != 1 && $scope.TENTATIVAS < 5)
-                    bluetooth.detravar();
-                if ($scope.TENTATIVAS < 5)
-                    $rootScope.Bluetooth();
                 $scope.$apply(function () {
+                    $scope.TENTATIVAS++;
+                    if ($scope.TENTATIVAS != 1 && $scope.TENTATIVAS < 5)
+                        bluetooth.detravar();
+                    if ($scope.TENTATIVAS < 5)
+                        $rootScope.Bluetooth();
                     $scope.IMG = $scope.TENTATIVAS == 5 ? 0 : 1;
                     if ($scope.TENTATIVAS == 5) {
                         $scope.TENTATIVAS = 1;
@@ -348,6 +348,7 @@ app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData)
         case '18+':
             switch ($routeParams.SET) {
                 case 'BEB_ALC':
+                    clearTimeout(bluetooth.timeout);
                     $rootScope.Titulo = 'BEBIDAS ALCOÓLICAS';
                     $scope.REG = {
                         'TIME': parseInt(Login.getData().TIME_TRAVA),

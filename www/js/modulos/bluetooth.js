@@ -51,14 +51,15 @@ var bluetooth = {
                                     'ffe0',
                                     'ffe1',
                                     array.buffer,
-                                    function () {
+                                    function (e) {
+                                        alert(e);
                                         Factory.$rootScope.location('#!/command/18+/destravar/BEB_ALC', 0, 1);
                                         setTimeout(function () {
                                             bluetooth.disconnect();
                                         }, 1000);
                                     },
-                                    function(){
-
+                                    function(e){
+                                        alert(e);
                                     }
                                 );
                             },
