@@ -321,28 +321,28 @@ app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData)
     $rootScope.REDIRECT = '';
     $rootScope.MenuBottom = 1;
 
-    $scope.TENTATIVAS = 0;
     $scope.TEXTO_BLUETOOTH = 'Conectando com o dispositivo...';
+    bluetooth.tentativas = 0;
     $rootScope.Bluetooth = function () {
         bluetooth.timeout = setTimeout(function () {
             if (!bluetooth.deviceId) {
                 $scope.$apply(function () {
-                    $scope.TENTATIVAS++;
-                    alert($scope.TENTATIVAS);
-                    if (!($scope.TENTATIVAS == 0 || $scope.TENTATIVAS == 1) && $scope.TENTATIVAS < 7)
+                    bluetooth.tentativas++;
+                    alert(bluetooth.tentativas);
+                    if (!(bluetooth.tentativas == 0 || bluetooth.tentativas == 1) && bluetooth.tentativas < 7)
                         bluetooth.detravar();
-                    if ($scope.TENTATIVAS < 7)
+                    if (bluetooth.tentativas < 7)
                         $rootScope.Bluetooth();
-                    $scope.IMG = $scope.TENTATIVAS == 7 ? 0 : 1;
-                    if ($scope.TENTATIVAS == 7) {
-                        $scope.TENTATIVAS = 1;
+                    $scope.IMG = bluetooth.tentativas == 7 ? 0 : 1;
+                    if (bluetooth.tentativas == 7) {
+                        bluetooth.tentativas = 1;
                         $scope.REG = {'TEXTO': 'Nenhum dispositivo encontrado.<br><br><br><a style="text-decoration: underline" onclick="Factory.$rootScope.Bluetooth()">Tentar novamente</a>'};
                     } else {
                         $scope.REG = {'TEXTO': $scope.TEXTO_BLUETOOTH};
                     }
                 });
             }
-        }, $scope.TENTATIVAS == 0 || $scope.TENTATIVAS == 1 ? 0 : 3000);
+        }, bluetooth.tentativas == 0 || bluetooth.tentativas == 1 ? 0 : 3000);
     };
 
     switch ($routeParams.TYPE) {
