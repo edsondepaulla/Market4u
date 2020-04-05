@@ -45,6 +45,15 @@ var bluetooth = {
                                     for (var i = 0, l = value.length; i < l; i++)
                                         array[i] = value.charCodeAt(i);
 
+                                    ble.startStateNotifications(
+                                        function (e) {
+                                            alert('x: '+e);
+                                        },
+                                        function (e) {
+                                            alert('y: '+e);
+                                        }
+                                    );
+
                                     ble.writeWithoutResponse(
                                         bluetooth.deviceId,
                                         'ffe0',
