@@ -270,33 +270,14 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                         case 'BLUETOOTH':
                         case 'VENDA_BEBIDA_PROIBIDA':
                         case 'BEB_ALC':
-                            if (!Page.active) {
+                            if (!Page.active && false) {
                                 window.history.go(-1);
                                 return [];
                             } else {
                                 switch ($route.current.params.SET) {
                                     case 'BLUETOOTH':
-                                        return {
-                                            'TEXTO': '<div style="text-align: center;">Conectando com o dispositivo...<br><a style="text-decoration: underline;" ng-click="clickMenu(\'destravar\')">Tente novamente!</a></div>',
-                                            'TITULO': '<i class="mdi mdi-action-settings-bluetooth"></i> BLUETOOTH'
-                                        };
-                                        break;
                                     case 'BEB_ALC':
-                                        clearTimeout(Factory.timeout);
-                                        Factory.timeout = setTimeout(function(){
-                                            Factory.ajax(
-                                                {
-                                                    action: 'options/command',
-                                                    data: $route.current.params
-                                                }
-                                            );
-                                        }, 2000);
-                                        return {
-                                            'TIME': parseInt(Login.getData().TIME_TRAVA),
-                                            'TEXTO': '<i class="mdi mdi-action-lock-open"></i> Portas destravadas<span><i class="mdi mdi-av-timer"></i> Fechando em...</span>',
-                                            'TITULO': 'BEBIDAS ALCOÓLICAS',
-                                            'TEXTO1': 'Portas travadas'
-                                        };
+                                        return {};
                                         break;
                                     default:
                                         get = 1;
@@ -336,35 +317,71 @@ app.controller('SemInternet', function($rootScope, $scope, $routeParams) {
 
 app.controller('Command', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.border_top = 1;
-    $rootScope.Titulo = ReturnData.TITULO;
     $scope.PARAMS = $routeParams;
-    $scope.REG = ReturnData;
     $rootScope.REDIRECT = '';
     $rootScope.MenuBottom = 1;
 
+    $scope.TENTATIVAS = 0;
+    $scope.TEXTO_BLUETOOTH = 'Conectando com o dispositivo...';
+    $rootScope.Bluetooth = function () {
+        bluetooth.timeout = setTimeout(function () {
+            if (!bluetooth.deviceId) {
+                $scope.TENTATIVAS++;
+                if ($scope.TENTATIVAS != 1 && $scope.TENTATIVAS < 5)
+                    bluetooth.detravar();
+                if ($scope.TENTATIVAS < 5)
+                    $rootScope.Bluetooth();
+                $scope.$apply(function () {
+                    $scope.IMG = $scope.TENTATIVAS == 5 ? 0 : 1;
+                    if ($scope.TENTATIVAS == 5) {
+                        $scope.TENTATIVAS = 1;
+                        $scope.REG = {'TEXTO': 'Nenhum dispositivo encontrado.<br><br><br><a style="text-decoration: underline" onclick="Factory.$rootScope.Bluetooth()">Tentar novamente</a>'};
+                    } else {
+                        $scope.REG = {'TEXTO': $scope.TEXTO_BLUETOOTH};
+                    }
+                });
+            }
+        }, $scope.TENTATIVAS == 0 || $scope.TENTATIVAS == 1 ? 0 : 5000);
+    };
+
     switch ($routeParams.TYPE) {
         case '18+':
-            if ($routeParams.SET == 'BEB_ALC') {
-                var seTime = ReturnData.TIME;
-                $scope.TIME = '00:' + (seTime < 10 ? '0' : '') + seTime;
-                $scope.PERCENTUAL = Math.ceil(100 / seTime);
-                var time = seTime;
-                var percentual = 0;
-                var timeoutTime = setInterval(function () {
-                    time--;
-                    percentual += 100 / seTime;
-                    if (time <= 0 || percentual >= 100)
-                        percentual = 100;
-                    $scope.$apply(function () {
-                        $scope.TIME = '00:' + (time < 10 ? '0' : '') + time;
-                        $scope.PERCENTUAL = Math.ceil(percentual);
-                        if (percentual == 100)
-                            $scope.REG.TEXTO = $scope.REG.TEXTO1;
-                    });
-                    if (time <= 0)
-                        clearInterval(timeoutTime);
-                }, seTime ? 1000 : 0);
+            switch ($routeParams.SET) {
+                case 'BEB_ALC':
+                    $rootScope.Titulo = 'BEBIDAS ALCOÓLICAS';
+                    $scope.REG = {
+                        'TIME': parseInt(Login.getData().TIME_TRAVA),
+                        'TEXTO': '<i class="mdi mdi-action-lock-open"></i> Portas destravadas<span><i class="mdi mdi-av-timer"></i> Fechando em...</span>'
+                    };
+                    var seTime = $scope.REG.TIME;
+                    $scope.TIME = '00:' + (seTime < 10 ? '0' : '') + seTime;
+                    $scope.PERCENTUAL = Math.ceil(100 / seTime);
+                    var time = seTime;
+                    var percentual = 0;
+                    var timeoutTime = setInterval(function () {
+                        time--;
+                        percentual += 100 / seTime;
+                        if (time <= 0 || percentual >= 100)
+                            percentual = 100;
+                        $scope.$apply(function () {
+                            $scope.TIME = '00:' + (time < 10 ? '0' : '') + time;
+                            $scope.PERCENTUAL = Math.ceil(percentual);
+                            if (percentual == 100) {
+                                $scope.REG.TEXTO = 'Portas travadas';
+                                clearInterval(timeoutTime);
+                            }
+                        });
+                    }, seTime ? 1000 : 0);
+                    break;
+                case 'BLUETOOTH':
+                    $rootScope.Titulo = '<i class="mdi mdi-action-settings-bluetooth"></i> BLUETOOTH';
+                    $rootScope.Bluetooth();
+                    break;
             }
+            break;
+        default:
+            $scope.REG = ReturnData;
+            $rootScope.Titulo = ReturnData.TITULO;
             break;
     }
 });

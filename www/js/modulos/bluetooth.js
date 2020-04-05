@@ -28,12 +28,7 @@ var bluetooth = {
                         }
                         ble.connect(
                             bluetooth.deviceId,
-                            function (peripheral) {
-                                var characteristic = peripheral.characteristics.filter(function (element) {
-                                    if (element.characteristic.toLowerCase() === 'ffe1')
-                                        return element;
-                                })[0];
-                                bluetooth.writeWithoutResponse = characteristic.properties.indexOf('WriteWithoutResponse') > -1 ? true : false;
+                            function () {
                                 ble.startNotification(
                                     bluetooth.deviceId,
                                     'ffe0',
@@ -49,39 +44,23 @@ var bluetooth = {
                                 var array = new Uint8Array(value.length);
                                 for (var i = 0, l = value.length; i < l; i++)
                                     array[i] = value.charCodeAt(i);
-                                if (bluetooth.writeWithoutResponse) {
-                                    ble.writeWithoutResponse(
-                                        bluetooth.deviceId,
-                                        'ffe0',
-                                        'ffe1',
-                                        array.buffer,
-                                        function () {
-                                            Factory.$rootScope.location('#!/command/18+/destravar/BEB_ALC', 0, 1);
-                                            setTimeout(function () {
-                                                bluetooth.disconnect();
-                                            }, 1000);
-                                        },
-                                        function(){
 
-                                        }
-                                    );
-                                } else {
-                                    ble.write(
-                                        bluetooth.deviceId,
-                                        'ffe0',
-                                        'ffe1',
-                                        array.buffer,
-                                        function () {
-                                            Factory.$rootScope.location('#!/command/18+/destravar/BEB_ALC', 0, 1);
-                                            setTimeout(function () {
-                                                bluetooth.disconnect();
-                                            }, 1000);
-                                        },
-                                        function(){
+                                Factory.$rootScope.location('#!/command/18+/destravar/BEB_ALC', 0, 1);
+                                ble.writeWithoutResponse(
+                                    bluetooth.deviceId,
+                                    'ffe0',
+                                    'ffe1',
+                                    array.buffer,
+                                    function () {
 
-                                        }
-                                    );
-                                }
+                                    },
+                                    function(){
+
+                                    }
+                                );
+                                setTimeout(function () {
+                                    bluetooth.disconnect();
+                                }, 2000);
                             },
                             bluetooth.disconnect
                         );
@@ -89,12 +68,6 @@ var bluetooth = {
                 },
                 bluetooth.disconnect
             );
-            bluetooth.timeout = setTimeout(function () {
-                if (!bluetooth.deviceId) {
-                    bluetooth.disconnect();
-                    bluetooth.detravar(set);
-                }
-            }, 5000);
         } else {
             if (set == 1)
                 bluetooth.callback_ativado = true;

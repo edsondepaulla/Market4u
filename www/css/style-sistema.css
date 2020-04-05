@@ -3686,7 +3686,8 @@ margin-top: 3em;
   height: 100%;
   border-radius: 50%;
   -webkit-animation: colorload 2s;
-  animation: colorload 2s; }
+  animation: colorload 2s;
+}
 
 .progress-circle span {
   font-size: 1.5rem;
