@@ -102,11 +102,13 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                 Payment.timeoutBanner[TYPE] = setTimeout(function () {
                     var banner = $('.banners[type="' + TYPE + '"] > li.active');
                     if (banner.length) {
-                        if (banner.next('li').length)
-                            banner.next('li').addClass('active');
-                        else
-                            $('.banners[type="' + TYPE + '"] > li:first-child').addClass('active');
-                        banner.removeClass('active');
+                        if($('.banners[type="' + TYPE + '"]').visible()) {
+                            if (banner.next('li').length)
+                                banner.next('li').addClass('active');
+                            else
+                                $('.banners[type="' + TYPE + '"] > li:first-child').addClass('active');
+                            banner.removeClass('active');
+                        }
                         $scope.banner(TYPE, TIME);
                     }
                 }, TIME);
