@@ -1,6 +1,6 @@
 var config = {
     versao_app_mobile: "1.0.21",
-    ambiente: "producao",
+    ambiente: "dev",
     idApp: "market4uapp",
     url_api: {
         dev: "https://m.market4u.com.br/",
