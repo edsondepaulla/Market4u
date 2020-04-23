@@ -17,7 +17,7 @@
         <div class="clearBoth"></div>
 
         <div style="margin: 15px 0 0 -15px">Selecione o <b>método de pagamento</b> que você deseja usar:</div>
-        <div id="boxPg" ng-include src="'https://m.market4u.com.br/Mobile/www/view/payment/formas_pg.html'"></div>
+        <div id="boxPg" ng-include src="$root.BASE+'view/payment/formas_pg.html?v='+$root.versao_app_mobile"></div>
     </form>
 </md-content>
 <button class="btnConfirme" ng-click="$root.confirmPayment('saldo')">Finalizar <i class="mdi mdi-navigation-arrow-forward"></i></button>

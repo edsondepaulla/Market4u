@@ -45,7 +45,7 @@
                 </ul>
             </div>
             <ul class="produtos_lst">
-                <li type="{{ITEM.TYPE}}" clear_both="{{ITEM.CLEAR_BOTH?1:0}}" ng-repeat="ITEM in $root.PRODUTOS_CATEGORIAS_BUSCA.ITENS" ng-include src="'https://m.market4u.com.br/Mobile/www/view/index/produto.html'"></li>
+                    <li type="{{ITEM.TYPE}}" clear_both="{{ITEM.CLEAR_BOTH?1:0}}" ng-repeat="ITEM in $root.PRODUTOS_CATEGORIAS_BUSCA.ITENS" ng-include src="$root.BASE+'view/index/produto.html?v='+$root.versao_app_mobile"></li>
                 <li ng-if="!$root.scrollLiberado && $root.PRODUTOS_CATEGORIAS_BUSCA.SCROLL.ATIVO" type="LOADING">
                     <img src="img/loader.gif" border="0">
                     Carregando...
@@ -69,7 +69,7 @@
                     <div class="clearBoth"></div>
                 </div>
                 <ul class="produtos_lst scrollable-content flex" scroll md-scroll-x>
-                    <li type="{{ITEM.TYPE}}" clear_both="{{ITEM.CLEAR_BOTH?1:0}}" ng-repeat="ITEM in SUBCAT.ITENS" ng-include src="'https://m.market4u.com.br/Mobile/www/view/index/produto.html'"></li>
+                    <li type="{{ITEM.TYPE}}" clear_both="{{ITEM.CLEAR_BOTH?1:0}}" ng-repeat="ITEM in SUBCAT.ITENS" ng-include src="$root.BASE+'view/index/produto.html?v='+$root.versao_app_mobile"></li>
                     <li ng-if="!$root.scrollLiberado && $root.PRODUTOS_COMPRAS.SCROLL.ATIVO" type="LOADING">
                         <img src="img/loader.gif" border="0">
                         Carregando...
@@ -212,7 +212,7 @@
                     </ul>
                 </div>
 
-                <div id="boxPg" ng-include src="'https://m.market4u.com.br/Mobile/www/view/payment/formas_pg.html'"></div>
+                <div id="boxPg" ng-include src="$root.BASE+'view/payment/formas_pg.html?v='+$root.versao_app_mobile"></div>
             </div>
         </li>
     </ul>

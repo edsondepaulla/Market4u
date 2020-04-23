@@ -1,0 +1,119 @@
+<div id="carregando">
+  <img src="img/loader.gif" border="0">
+  Carregando...
+</div>
+
+<div mn-touch swipe-right="swipeRight()" ng-if="toolbar" id="toolbar">
+  <i mn-touch swipe-right="swipeRight()" ng-if="controller == 'Index'" class="btn_maps mdi mdi-action-view-headline" ng-click="menuOpen()"></i>
+  <div id="top" ng-if="controller == 'Index'">
+    <div ng-if="usuario.MEUSALDO_ATIVADO" ng-click="location('#!/minha-carteira')" style="display: inline-block;">
+      Meu saldo
+      <b>{{usuario.MEUSALDO_FORMAT}}</b>
+    </div>
+    <div id="sem_saldo" ng-if="!usuario.MEUSALDO && usuario.MEUSALDO_ATIVADO" ng-click="location('#!/minha-carteira')">
+      Adicionar saldo <i class="mdi mdi-content-add-circle"></i>
+    </div>
+  </div>
+  <div class="topTitulo" ng-if="controller != 'Index'">
+    <a class="open-left" ng-if="Titulo" ng-click="backpageTop()">
+      <i class="mdi mdi-navigation-chevron-left"></i>
+    </a>
+    <div class="textoTitulo" ng-bind-html="Titulo"></div>
+  </div>
+  <img ng-if="controller != 'Index'" ng-click="location('#!/')" src="img/logo.png" border="0">
+  <div ng-click="$root.clickItem('busca_locais')" ng-if="controller == 'Index'" encontrou="{{$root.LOCAL.TEXTO?1:0}}" id="local">
+    <i class="mdi mdi-maps-place"></i> LOCAL
+    <span>{{$root.LOCAL.TEXTO}}</span>
+  </div>
+</div>
+
+<div class="app" ng-controller="Main">
+  <a ng-if="usuario.WHATSAPP.ATIVO && $root.NO_WHATSAPP" id="whatsapp" ng-click="whatsapp()">
+    <img src="img/whatsapp.png">
+  </a>
+
+  <div class="app-body" top_0="{{top_0}}">
+    <div class="app-content">
+      <div class="scrollable ng-scope" border-top="{{$root.BARRA_SALDO?0:border_top}}" ng-view></div>
+    </div>
+  </div>
+</div>
+
+<ul tour="{{$root.TOUR}}" id="boxTour" ng-if="$root.TOUR && controller == 'Index'" ng-include src="$root.BASE+'view/pages/tour.html?v='+$root.versao_app_mobile"></ul>
+
+<div id="banner_modal" ng-click="$root.BANNERS_MODAL=[];" ng-if="$root.BANNERS_MODAL.length && !$root.TOUR && controller == 'Index'">
+  <ul>
+    <li class="{{BANNER.ACTIVE?'active':''}}" ng-repeat="BANNER in $root.BANNERS_MODAL">
+      <i ng-click="$root.BANNERS_MODAL=[];" class="mdi mdi-navigation-close"></i>
+      <a ng-click="$root.clickBanner(BANNER)"><img src="{{BANNER.IMAGE}}" /></a>
+    </li>
+  </ul>
+</div>
+
+<ul ng-show="$root.MenuBottom" id="menu-bottom" step="{{STEP}}" tour="{{$root.TOUR}}">
+  <li class="{{controller == 'Index'?'active':''}}" ng-click="clickMenu('inicio')">
+    <i class="mdi mdi-action-store"></i> Produtos
+  </li>
+  <li ng-click="clickMenu('carteira')">
+    <i class="mdi mdi-action-credit-card"></i> Carteira
+  </li>
+  <li id="pagar_escanear" ng-click="clickMenu('pagar_escanear')">
+    <img src="img/barcodeQrCode.png">
+    <label>Escanear</label>
+  </li>
+  <li class="{{controller == 'Cadastro'?'active':''}}" style="float: right" ng-click="clickMenu('ajustes')">
+    <i class="mdi mdi-social-person"></i> {{usuario.PRIMEIRONOME?usuario.PRIMEIRONOME:'Perfil'}}
+  </li>
+  <li style="float: right" ng-click="clickMenu('destravar')">
+    <i class="mdi mdi-action-lock-open"></i> Destravar <span>18+</span>
+  </li>
+</ul>
+
+<div id="boxPago">
+  <i class="mdi mdi-navigation-check"></i>
+  Compra realizada com sucesso
+</div>
+
+<div id="fundo_transparente" ng-click="menuClose()" mn-touch swipe-left="swipeLeft()" swipe-right="swipeRight()" ui-prevent-touchmove-defaults></div>
+
+<div id="menuLeft" class="Menuleft " mn-touch swipe-left="swipeLeft()" swipe-right="swipeRight()">
+  <div id="contentLeft" ui-prevent-touchmove-defaults>
+    <div id="userLeft">
+      <img ng-if="!usuario.ID" border="0" src="" ng-click="location('#!/conecte-se')" onerror="onErrorUser(this)">
+      <img ng-if="usuario.ID" border="0" src="" ng-click="location('#!/cadastro')" onerror="onErrorUser(this)">
+      <div ng-if="!usuario.ID" ng-click="location('#!/conecte-se')">
+        <b>Olá</b>
+        <label>Conecte-se</label>
+      </div>
+      <div ng-if="usuario.ID" ng-click="location('#!/cadastro')">
+        <b>{{usuario.NOME}}</b>
+        <label>{{usuario.EMAIL}}</label>
+        <a>Perfil</a>
+      </div>
+    </div>
+    <ul>
+      <li class="{{controller == menu.controller?'active':''}}" ng-repeat="menu in MenuLeft" ng-if="usuario.ID || menu.logado">
+        <a ng-click="location(menu.url, menu.external, menu.pageStart?1:0)">
+          <i ng-if="menu.icon" class="mdi {{menu.icon}}"></i>
+          {{menu.titulo}}
+        </a>
+      </li>
+      <li class="{{controller == 'AreaRestrita'?'active':''}}" ng-if="usuario.RESTRITO">
+        <a ng-click="location('#!/area-restrita')">
+          <i class="mdi mdi-action-lock"></i>
+          Área restrita
+        </a>
+      </li>
+      <li ng-if="usuario.ID">
+        <a style="color: #e94847" ng-click="logout()">
+          <i class="mdi mdi-content-clear"></i>
+          Sair da conta
+        </a>
+      </li>
+    </ul>
+    <div id="bottom">
+      <img ng-if="usuario.FACEBOOK.ATIVO" ng-click="AppBrowser(usuario.FACEBOOK)" id="icon_facebook" width="25" src="img/icon-facebook.png" border="0">
+      <img ng-if="usuario.INSTAGRAM.ATIVO" ng-click="AppBrowser(usuario.INSTAGRAM)" id="icon_instagram" style="float: left" width="37" src="img/icon-instagram.png" border="0">
+    </div>
+  </div>
+</div>

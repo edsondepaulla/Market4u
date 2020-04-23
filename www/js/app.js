@@ -1,27 +1,45 @@
+'use strict';
+var app = angular.module(
+    'App', [
+        'ngRoute',
+        'mobile-angular-ui',
+        'mobile-angular-ui.gestures',
+        'mn',
+        'ngAnimate',
+        'ngMaterial',
+        'ngSanitize',
+        'ng.deviceDetector',
+        'monospaced.elastic'
+    ]
+);
+
 app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $httpProvider, $compileProvider, $sceDelegateProvider) {
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(geo):/);
     $mdThemingProvider.generateThemesOnDemand(true);
     $httpProvider.defaults.withCredentials = true;
 
+    var base = config.url_api[config.ambiente];
+    var versao = Login.getData().VERSAO?Login.getData().VERSAO:config.versao_app_mobile;
+
     $sceDelegateProvider.resourceUrlWhitelist([
         'self',
-        'https://m.market4u.com.br/**',
+        base + '**',
     ]);
-
+    
     /*
      * Route
      */
     $routeProvider
         .when("/", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/index/index.html",
+            templateUrl: base + "Mobile/www/view/index/index.html?v="+versao,
             controller: 'Index'
         })
         .when("/area-restrita", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/pages/area-restrita.html",
+            templateUrl: base + "Mobile/www/view/pages/area-restrita.html?v="+versao,
             controller: 'AreaRestrita'
         })
         .when("/index/:STEP", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/index/index.html",
+            templateUrl: base + "Mobile/www/view/index/index.html?v="+versao,
             controller: 'Index',
             resolve: {
                 ReturnData: function ($route, $rootScope) {
@@ -37,7 +55,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             }
         })
         .when("/conecte-se", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/conecte-se/conecte-se.html",
+            templateUrl: base + "Mobile/www/view/conecte-se/conecte-se.html?v="+versao,
             controller: 'ConecteSe',
             resolve: {
                 ReturnData: function ($route, $rootScope) {
@@ -50,7 +68,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             }
         })
         .when("/cadastro", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/conecte-se/form.html",
+            templateUrl: base + "Mobile/www/view/conecte-se/form.html?v="+versao,
             controller: 'Cadastro',
             resolve: {
                 ReturnData: function ($route, $rootScope) {
@@ -59,7 +77,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             }
         })
         .when("/boas-vindas", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/conecte-se/boas-vindas.html",
+            templateUrl: base + "Mobile/www/view/conecte-se/boas-vindas.html?v="+versao,
             controller: 'BoasVindas',
             resolve: {
                 ReturnData: function ($route) {
@@ -75,11 +93,11 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             }
         })
         .when("/conecte-se-codigo", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/conecte-se/codigo.html",
+            templateUrl: base + "Mobile/www/view/conecte-se/codigo.html?v="+versao,
             controller: 'ConecteSeCodigo'
         })
         .when("/card", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/conecte-se/card.html",
+            templateUrl: base + "Mobile/www/view/conecte-se/card.html?v="+versao,
             controller: 'Card',
             resolve: {
                 ReturnData: function ($route) {
@@ -92,11 +110,11 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             }
         })
         .when("/add-card", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/conecte-se/addcard.html",
+            templateUrl: base + "Mobile/www/view/conecte-se/addcard.html?v="+versao,
             controller: 'AddCard'
         })
         .when("/minha-carteira", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/conecte-se/carteira.html",
+            templateUrl: base + "Mobile/www/view/conecte-se/carteira.html?v="+versao,
             controller: 'MinhaCarteira',
             resolve: {
                 ReturnData: function ($route) {
@@ -109,7 +127,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             }
         })
         .when("/voucher", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/conecte-se/voucher.html",
+            templateUrl: base + "Mobile/www/view/conecte-se/voucher.html?v="+versao,
             controller: 'VoucherLst',
             resolve: {
                 ReturnData: function ($route) {
@@ -122,7 +140,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             }
         })
         .when("/atualizar-app", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/pages/atualizar-app.html",
+            templateUrl: base + "Mobile/www/view/pages/atualizar-app.html?v="+versao,
             controller: 'AtualizarApp',
             resolve: {
                 ReturnData: function ($route) {
@@ -138,7 +156,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             }
         })
         .when("/token/:TOKEN", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/pages/token.html",
+            templateUrl: base + "Mobile/www/view/pages/token.html?v="+versao,
             controller: 'Token',
             resolve: {
                 ReturnData: function ($route, $rootScope) {
@@ -174,7 +192,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             }
         })
         .when("/voucher/:ID", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/conecte-se/voucher-detalhes.html",
+            templateUrl: base + "Mobile/www/view/conecte-se/voucher-detalhes.html?v="+versao,
             controller: 'VoucherGet',
             resolve: {
                 ReturnData: function ($route) {
@@ -190,7 +208,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             }
         })
         .when("/historico-transacoes", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/conecte-se/historico-transacoes.html",
+            templateUrl: base + "Mobile/www/view/conecte-se/historico-transacoes.html?v="+versao,
             controller: 'HistoricoTransacoesLst',
             resolve: {
                 ReturnData: function ($route) {
@@ -203,7 +221,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             }
         })
         .when("/historico-transacoes/:ID", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/conecte-se/historico-transacoes-detalhes.html",
+            templateUrl: base + "Mobile/www/view/conecte-se/historico-transacoes-detalhes.html?v="+versao,
             controller: 'HistoricoTransacoesGet',
             resolve: {
                 ReturnData: function ($route) {
@@ -219,7 +237,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             }
         })
         .when("/notificacoes", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/conecte-se/notificacoes.html",
+            templateUrl: base + "Mobile/www/view/conecte-se/notificacoes.html?v="+versao,
             controller: 'NotificacoesLst',
             resolve: {
                 ReturnData: function ($route) {
@@ -232,7 +250,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             }
         })
         .when("/notificacoes/:ID", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/conecte-se/notificacoes-detalhes.html",
+            templateUrl: base + "Mobile/www/view/conecte-se/notificacoes-detalhes.html?v="+versao,
             controller: 'NotificacoesGet',
             resolve: {
                 ReturnData: function ($route) {
@@ -248,11 +266,11 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             }
         })
         .when("/suporte", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/pages/suporte.html",
+            templateUrl: base + "Mobile/www/view/pages/suporte.html?v="+versao,
             controller: 'Suporte'
         })
         .when("/faq", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/pages/faq.html",
+            templateUrl: base + "Mobile/www/view/pages/faq.html?v="+versao,
             controller: 'Faq',
             resolve: {
                 ReturnData: function ($route) {
@@ -265,7 +283,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             }
         })
         .when("/command/:TYPE/:KEY/:SET", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/pages/command.html",
+            templateUrl: base + "Mobile/www/view/pages/command.html?v="+versao,
             controller: 'Command',
             resolve: {
                 ReturnData: function ($route) {
@@ -306,11 +324,11 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             }
         })
         .when("/ajuda", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/ajuda/index.html",
+            templateUrl: base + "Mobile/www/view/ajuda/index.html?v="+versao,
             controller: 'Ajuda'
         })
         .when("/sem-internet", {
-            templateUrl: "https://m.market4u.com.br/Mobile/www/view/sem-internet/index.html",
+            templateUrl: base + "Mobile/www/view/sem-internet/index.html?v="+versao,
             controller: 'SemInternet'
         });
 });
@@ -439,8 +457,9 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     Factory.prepare();
 
     $rootScope.device = deviceDetector.os;
+    $rootScope.BASE = config.url_api[config.ambiente] + 'Mobile/www/';
 
-    $rootScope.versao_app_mobile = config.versao_app_mobile;
+    $rootScope.versao_app_mobile = $rootScope.usuario.VERSAO?$rootScope.usuario.VERSAO:config.versao_app_mobile;
     $rootScope.REDIRECT = '';
     Factory.$http = $http;
     Factory.$rootScope = $rootScope;
@@ -1091,6 +1110,12 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
         $rootScope.transacaoIdCarrinho = false;
         BarCodeScanner.scan(type);
     };
+});
+
+app.directive('body', function() {
+    return {
+        templateUrl: config.url_api[config.ambiente] + 'Mobile/www/body.html?v=' + (Login.getData().VERSAO ? Login.getData().VERSAO : config.versao_app_mobile)
+    }
 });
 
 app.directive('onErrorSrc', function() {
