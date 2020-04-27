@@ -1,4 +1,4 @@
-<div class="boxSubTotal" ng-include src="$root.BASE+'view/payment/total.html?v='+$root.versao_app_mobile" ng-if="!$root.FORMAS_PG['VOUCHER'] && $root.FORMAS_PG && TOTAL_POR && transacaoId"></div>
+<div class="boxSubTotal" ng-include src="$root.BASE+'view/payment/total.html'" ng-if="!$root.FORMAS_PG['VOUCHER'] && $root.FORMAS_PG && TOTAL_POR && transacaoId"></div>
 <h4 class="pague_com" ng-if="!$root.FORMAS_PG['VOUCHER'] && $root.FORMAS_PG && TOTAL_POR">Pagamento</h4>
 <ul>
     <li ng-if="VALOR_PG>=PG.VALOR_MIN && (PG.TIPO=='SALDO'||PG.TIPO=='VOUCHER'?true:VALOR_PG)" class="{{PG.ACTIVE?'active':''}} {{PG.ACTIVE_SALDO?'active_checkbox':''}}" tipo="{{PG.TIPO}}" ng-repeat="PG in $root.FORMAS_PG" ng-click="$root.selectFormaPg(PG)">
@@ -21,7 +21,7 @@
                 <div class="clearBoth"></div>
             </li>
         </ul>
-        <div class="boxSubTotal" ng-include src="$root.BASE+'view/payment/total.html?v='+$root.versao_app_mobile" ng-if="PG.TIPO=='VOUCHER' && ($root.FORMAS_PG['SALDO'] || VALOR_PG) && transacaoId"></div>
+        <div class="boxSubTotal" ng-include src="$root.BASE+'view/payment/total.html'" ng-if="PG.TIPO=='VOUCHER' && ($root.FORMAS_PG['SALDO'] || VALOR_PG) && transacaoId"></div>
         <h4 class="pague_com" ng-if="PG.TIPO=='VOUCHER' && ($root.FORMAS_PG['SALDO'] || VALOR_PG)">Pagamento</h4>
         <h4 class="valor_restante" ng-if="((PG.TIPO=='VOUCHER' && !$root.FORMAS_PG['SALDO']) || PG.TIPO=='SALDO') && ACTIVE_SALDO && VALOR_PG && transacaoId">Valor restante <b>R$ {{VALOR_PG_FORMAT}}</b></h4>
         <h4 class="valor_cashback" ng-if="((PG.TIPO=='VOUCHER' && !$root.FORMAS_PG['SALDO']) || PG.TIPO=='SALDO') && VALOR_CASHBACK && transacaoId">

@@ -1,376 +1,3 @@
-var Page = {
-    active: 0,
-    start: function () {
-        Page.active = 1;
-        setTimeout(function () {
-            Page.active = 0;
-        }, 2000);
-    }
-};
-var Factory = {
-    $http: null,
-    $scope: [],
-    $rootScope: [],
-    $swipeLeftPageBefore: false,
-    PAGINACAO_INFINITO: {
-        QUERY: '',
-        ATIVO: 0,
-        PESQUISA: 0,
-        LIMIT: 10,
-        OFFSET: 0
-    },
-    alert: function (msg) {
-        if (msg) {
-            try {
-                navigator.notification.alert(
-                    msg,
-                    function () {
-
-                    },
-                    'Atenção!'
-                );
-            } catch (err) {
-                alert(msg);
-            }
-        }
-    },
-    timeoutCarregando: null,
-    updatePage: function () {
-
-    },
-    submit: function (_this, successCallback) {
-        Factory.ajax(
-            {
-                action: _this.attr('action'),
-                form: _this,
-                data: _this.serializeArray()
-            },
-            successCallback
-        );
-    },
-    diffCarregando: function (action) {
-        switch (action) {
-            case 'login/get':
-            case 'cadastro/setgeolocation':
-            case 'maquinas/getpoints':
-            case 'options/command':
-            case 'payment/verify':
-            case 'payment/pagseguro':
-            case 'payment/cancel':
-            case 'cadastro/verify':
-            case 'payment/carrinho':
-            case 'payment/addremoveqtde':
-            case 'payment/bannercount':
-                return false;
-                break;
-        }
-        return true;
-    },
-    ajax: function (params, successCallback, functionError) {
-        if (params.action) {
-            // Loading
-            var diffCarregando = (params.data ? params.data['LOADER_CARREGANDO'] === false : false) ? false : ((params.data ? params.data['LOADER_CARREGANDO'] === true : false) ? true : this.diffCarregando(params.action));
-            if (diffCarregando) {
-                clearTimeout(Factory.timeoutCarregando);
-                $('#carregando').show().css('opacity', 1);
-            }
-
-            // Form
-            var _form = params.form;
-
-            // Data
-            var data = new FormData();
-
-            // Data (parametros)
-            data.append('type-post', 'ajax');
-
-            // Device
-            data.append('device', Factory.$rootScope.device);
-
-            // Parametro versao app mobile
-            if (config.versao_app_mobile)
-                data.append('versao_app_mobile', config.versao_app_mobile);
-
-            // Ambiente
-            data.append('ambiente', config.ambiente);
-
-            // Set data
-            if (params.data) {
-                $.each(params.data, function (index, val) {
-                    try {
-                        if (val.name && val.value)
-                            data.append(val.name, val.value);
-                        else if (val) {
-                            if (typeof val === 'object' && index != 'IMAGEM') {
-                                $.each(val, function (index2, val2) {
-                                    data.append(index + '[' + index2 + ']', val2);
-                                });
-                            } else
-                                data.append(index, val);
-                        }
-                    } catch (err) {
-                        data.append(index, val);
-                    }
-                });
-            }
-
-            if (_form)
-                $('.btn-salvar').attr('disabled', true);
-
-            /*
-             * Paginacao infinito
-             */
-            $('.loadingLst').hide();
-            if (parseInt(Factory.PAGINACAO_INFINITO.ATIVO) && parseInt(Factory.PAGINACAO_INFINITO.LIMIT)) {
-                if (Factory.PAGINACAO_INFINITO.OFFSET) {
-                    if (!$('.scrollable-content .loadingLst').length)
-                        $('.scrollable-content').append('<span class="loadingLst"></span>');
-
-                    $('.loadingLst').show();
-                }
-
-                data.append('PAG_LIMIT', Factory.PAGINACAO_INFINITO.LIMIT);
-                data.append('PAG_OFFSET', Factory.PAGINACAO_INFINITO.OFFSET);
-            }
-
-            /*
-             * Pesquisar - Query
-             */
-            Factory.$rootScope.criterio = Factory.$rootScope.criterio ? Factory.$rootScope.criterio : '';
-            if (Factory.$rootScope.criterio != '')
-                data.append('PAG_QUERY', Factory.$rootScope.criterio);
-
-            /*
-             * Get Login - cookie
-             */
-            if (params.action != 'cadastro/novo')
-                data.append('getLogin', 1);
-
-            if (localStorage.getItem("PHPSESSID"))
-                data.append('PHPSESSID', localStorage.getItem("PHPSESSID"));
-
-            // Request ajax
-            return Factory.$http({
-                method: params.method ? params.method : 'POST',
-                url: config.url_api[config.ambiente] + params.action,
-                data: data,
-                cache: false,
-                withCredentials: true,
-                processData: false,
-                headers: {
-                    'Content-Type': undefined
-                }
-            })
-                .then(function (response) {
-                    switch (params.dataType) {
-                        case 'html':
-                            return response;
-                            break;
-                        default:
-                            Factory.timeoutCarregando = setTimeout(function () {
-                                if (diffCarregando) {
-                                    $('#carregando').hide().css('opacity', 0);
-                                    $('.loadingLst').hide();
-                                }
-                            }, 100);
-                            try {
-                                // Notificacoes
-                                if (response.data.NOTIFICACOES) {
-                                    $.each(response.data.NOTIFICACOES, function (idx_each, val_each) {
-                                        try {
-                                            cordova.plugins.notification.local.schedule(val_each);
-                                        } catch (err) {
-                                        }
-                                    });
-                                }
-                            } catch (e) {
-                            }
-                            try {
-                                if (Factory.$rootScope)
-                                    Factory.$rootScope.loading = false;
-
-                                // Login
-                                if (response.data.Login) {
-                                    Login.set(response.data.Login);
-
-                                    // PHPSESSID
-                                    if (response.data.Login.PHPSESSID)
-                                        localStorage.setItem("PHPSESSID", response.data.Login.PHPSESSID);
-                                }
-
-                                // Versao nova
-                                if (response.data.VERSAO_NOVA && params.action != 'options/atualizarapp') {
-                                    Page.start();
-                                    window.location = '#!/atualizar-app';
-                                }
-
-                                if (successCallback)
-                                    eval(successCallback)(response.data);
-
-                                if (response.data.callback) {
-                                    var callback = response.data.callback.split(';');
-                                    $.each(callback, function (idx_each, val_each) {
-                                        if (val_each) {
-                                            try {
-                                                eval(val_each)(name);
-                                            } catch (err) {
-                                            }
-                                        }
-                                    });
-                                    response.data.callback = null;
-                                }
-
-                                // Focus
-                                if (response.data.focus)
-                                    $(response.data.focus).focus();
-
-                                // Msg
-                                Factory.alert(response.data.msg);
-
-                                // WhatsApp
-                                if (params.action != 'login/get')
-                                    Factory.$rootScope.TEXT_WHATSAPP = response.data.TEXT_WHATSAPP ? response.data.TEXT_WHATSAPP : '';
-
-                                // Window open
-                                if (response.data.redirect)
-                                    Factory.$rootScope.location(response.data.redirect, 0, response.data.redirect == '#!/cadastro' ? 1 : 0);
-
-                                var open_browser = response.data.open_browser;
-                                if (open_browser) {
-                                    Factory.AppBrowser(
-                                        open_browser.url,
-                                        open_browser
-                                    );
-                                }
-
-                                if (_form)
-                                    $('.btn-salvar').attr('disabled', false);
-
-                                return response.data;
-                            } catch (err) {
-                                Factory.error(_form, err, functionError);
-                            }
-                            break;
-                    }
-                }, function (data) {
-                    $('#carregando').hide().css('opacity', 0);
-                    $('.loadingLst').hide();
-                    if (params.action != 'payment/verify')
-                        Factory.error(_form, data, functionError);
-                });
-        }
-    },
-    AppBrowser: function (url, open_browser) {
-        if (!open_browser.window_open) {
-            try {
-                SafariViewController.isAvailable(function (available) {
-                    if (available) {
-                        SafariViewController.show(
-                            {
-                                url: url,
-                                hidden: open_browser.hidden ? open_browser.hidden : false,
-                                animated: open_browser.animated ? open_browser.animated : false,
-                                transition: open_browser.transition ? open_browser.transition : 'curl',
-                                enterReaderModeIfAvailable: open_browser.enterReaderModeIfAvailable ? open_browser.enterReaderModeIfAvailable : false,
-                                tintColor: "#043d22",
-                                barColor: "#00ab46",
-                                controlTintColor: "#ffffff"
-                            }
-                        );
-                    } else
-                        open_browser.window_open = true;
-                });
-            } catch (e) {
-                open_browser.window_open = true;
-            }
-        }
-        if (open_browser.window_open) {
-            try {
-                window.device = {platform: 'Browser'};
-                switch (open_browser.type) {
-                    case 'load_url':
-                        navigator.app.loadUrl(url, {openExternal: true});
-                        break;
-                    default:
-                        window.open(
-                            url,
-                            open_browser.target ? open_browser.target : '_system',
-                            open_browser.options ? open_browser.options : 'location=yes'
-                        );
-                        break;
-                }
-            }catch (e) {
-                window.open(
-                    url,
-                    open_browser.target ? open_browser.target : '_system',
-                    open_browser.options ? open_browser.options : 'location=yes'
-                );
-            }
-        }
-    },
-    error: function (_form, data, functionError) {
-        if (Factory.$rootScope)
-            Factory.$rootScope.loading = false;
-
-        if (functionError)
-            eval(functionError);
-
-        console.log(data);
-
-        $('.btnConfirme').attr('disabled', false);
-
-        if (data.status == '-1')
-            window.location = '#!/sem-internet';
-    },
-    prepare: function () {
-        document.addEventListener("deviceready", function () {
-            cordova.plugins.BluetoothStatus.initPlugin();
-            window.addEventListener('BluetoothStatus.enabled', function() {
-                bluetooth.ativado = true;
-                if(bluetooth.callback_ativado)
-                    bluetooth.detravar();
-            });
-            window.addEventListener('BluetoothStatus.disabled', function() {
-                bluetooth.ativado = false;
-            });
-
-            cordova.plugins.notification.local.requestPermission(function (granted) {
-
-            });
-            cordova.plugins.notification.local.on("click", function (notification, state) {
-                switch (notification.type) {
-                    case 'redirect':
-                        if (notification.url)
-                            Factory.$rootScope.location(notification.url);
-                        break;
-                    default:
-                        Factory.$rootScope.location('#!/notificacoes/' + notification.id);
-                        break;
-                }
-            });
-
-            /*
-            // Android customization
-            cordova.plugins.backgroundMode.setDefaults({ text:'Doing heavy tasks.'});
-            // Enable background mode
-            cordova.plugins.backgroundMode.enable();
-
-            // Called when background mode has been activated
-            cordova.plugins.backgroundMode.onactivate = function () {
-                setTimeout(function () {
-                    // Modify the currently displayed notification
-                    cordova.plugins.backgroundMode.configure({
-                        text:'Running in background for more than 5s now.'
-                    });
-                    alert('ddd');
-                }, 5000);
-            }*/
-        }, false);
-        if(!parseInt(Login.getData().ID))
-            window.location = '#!/conecte-se';
-    }
-};
-
 window.handleOpenURL = function(url) {
     setTimeout(function () {
         try {
@@ -408,3 +35,309 @@ function onErrorUser(_this){
 function onErrorProd(_this){
     _this.src = 'img/market4u.png';
 }
+
+function showPassword() {
+    $('#showPassword').toggleClass('mdi-action-visibility').toggleClass('mdi-action-visibility-off');
+    $('#senha').attr('type', $('#showPassword').hasClass('mdi-action-visibility') ? 'password' : 'text').focus();
+}
+
+var setTimeoutClearKeyPress = null;
+function inputEvents(_this, _bind) {
+    var _this = $(_this);
+    clearTimeout(setTimeoutClearKeyPress);
+    setTimeoutClearKeyPress = setTimeout(function () {
+        var _value = _this.val();
+        var _invalid = 0;
+        var _type = 1;
+        var _verify = 1;
+        switch (_this.attr('id')) {
+            case 'senha':
+                if (_value.length < 8 && _value.length)
+                    _invalid = 1;
+                break;
+            case 'postalcode':
+                if (_value.length == 9 && _value.length && _this.attr('value-old') != _value) {
+                    $.ajax({
+                        url: 'https://viacep.com.br/ws/' + _value.replace('-', '') + '/json/',
+                        cache: false,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            _this.blur();
+                            _this.attr('value-old', _value);
+                            if (!data.erro) {
+                                $('#street').val(data.logradouro);
+                                Factory.$rootScope.usuario.STREET = data.logradouro;
+                                $('#district').val(data.bairro);
+                                Factory.$rootScope.usuario.DISTRICT = data.bairro;
+                                $('#city').val(data.localidade);
+                                Factory.$rootScope.usuario.CITY = data.localidade;
+                                $('#state').val(data.uf);
+                                Factory.$rootScope.usuario.STATE = data.uf;
+                            }
+                            $('#boxEnderecoCompleto').show();
+                        },
+                        beforeSend: function () {
+                            $('#carregando').show().css('opacity', 1);
+                        },
+                        complete: function () {
+                            $('#carregando').hide().css('opacity', 0);
+                        },
+                        error: function () {
+                            $('#carregando').hide().css('opacity', 0);
+                            $('#boxEnderecoCompleto').show();
+                        }
+                    });
+                }
+                break;
+            case 'data_nascimento':
+                if (_value.length) {
+                    if (!isValidDate(_value))
+                        _invalid = 1;
+                    else if (_value.length < 10)
+                        _invalid = 1;
+                }
+                break;
+            case 'cpf':
+                if (!validaCpf(_value.substring(0, 14)) && _value.length) {
+                    verifyMsg(_verify, 0, _this, 2);
+                    _invalid = 1;
+                    $('#boxDadosPessoaisCompleto').hide();
+                    _this.attr('value-old', _value);
+                } else if (_value.length == 14 && _this.attr('value-old') != _value) {
+                    Factory.ajax(
+                        {
+                            action: 'cadastro/cpf',
+                            data: {
+                                VALUE: _value
+                            }
+                        },
+                        function (data) {
+                            _this.blur();
+                            _this.attr('value-old', _value);
+                            verifyMsg(_verify, data.ja_utilizado ? 1 : 0, _this, 2);
+                            if (!data.ja_utilizado) {
+                                $('#cpf').val(_value);
+                                Factory.$rootScope.usuario.CPF = _value;
+                                if (data.NOME) {
+                                    $('#nome_completo').val(data.NOME);
+                                    Factory.$rootScope.usuario.NOME = data.NOME;
+                                }
+                                if (data.MAE) {
+                                    $('#nome_mae').val(data.MAE);
+                                    Factory.$rootScope.usuario.MAE = data.MAE;
+                                }
+                                if (data.GENERO) {
+                                    $('#genero_' + data.GENERO).attr('checked', true);
+                                    Factory.$rootScope.usuario.GENERO = data.GENERO;
+                                }
+                                if (data.DATA_NASCIMENTO) {
+                                    $('#data_nascimento').attr('disabled', true).val(data.DATA_NASCIMENTO);
+                                    Factory.$rootScope.usuario.DATA_NASCIMENTO_FORMAT = data.DATA_NASCIMENTO;
+                                }
+                                $('#boxDadosPessoaisCompleto').show();
+                            }
+                        }
+                    );
+                }
+                break;
+            case 'expirationMonthYear':
+                var length = _value.length;
+                if (_value.length) {
+                    _value = _value.split('/');
+                    _value[1] = '20' + _value[1];
+                    if (parseInt(_value[0]) > 12 || parseInt(_value[0]) < 1)
+                        _invalid = 1;
+                    else if (parseInt(_value[1]) < (new Date()).getFullYear())
+                        _invalid = 1;
+                }
+                break;
+            case 'numero_celular':
+                if (_value.length < 14 && _value.length)
+                    _invalid = 1;
+                break;
+            case 'cardNumber':
+                _value = _value.replace(/ /g, '');
+                if (_value.length >= 6) {
+                    if (Factory.$rootScope.PAGSEGURO_SESSIONID) {
+                        PagSeguroDirectPayment.getBrand({
+                            cardBin: _value.substring(0, 6),
+                            success: function (data) {
+                                if (data.brand.name) {
+                                    _invalid = 0;
+                                    $('#cardBandeira').val(data.brand.name);
+                                    $('#imgBandeira').show().attr('src', 'img/bandeira_cc/' + data.brand.name + '.png');
+                                } else {
+                                    $('#cardBandeira').val('');
+                                    $('#imgBandeira').hide();
+                                    _invalid = 1;
+                                }
+                                verifyMsg(_verify, _invalid, _this);
+                            },
+                            error: function () {
+                                verifyMsg(_verify, 1, _this);
+                            }
+                        });
+                    }
+                } else {
+                    $('#cardBandeira').val('');
+                    $('#imgBandeira').hide();
+                    _invalid = 0;
+                }
+                break;
+            case 'nome_completo':
+                _value = _value.split(' ');
+                if (!((_value[0] && _value[1]) || !_value[0]) && _value[0])
+                    _invalid = 1;
+                break;
+            case 'email':
+                if (_value.length) {
+                    var email = _value.split('@');
+                    if (email[0] && email[1]) {
+                        Factory.ajax(
+                            {
+                                action: 'cadastro/verify',
+                                data: {
+                                    TYPE: 'EMAIL',
+                                    VALUE: _value
+                                }
+                            },
+                            function (data) {
+                                verifyMsg(_verify, data.ja_utilizado ? 1 : 0, _this, 2);
+                            }
+                        );
+                    }
+                } else
+                    _type = 2;
+                break;
+            case 'u_n':
+                if (_value.length) {
+                    _value = replaceSpecialChars(_value.toLowerCase());
+                    _this.val(_value);
+                    Factory.ajax(
+                        {
+                            action: 'cadastro/verify',
+                            data: {
+                                TYPE: 'USERNAME',
+                                VALUE: _value
+                            }
+                        },
+                        function (data) {
+                            verifyMsg(_verify, data.ja_utilizado ? 1 : 0, _this, 2);
+                        }
+                    );
+                } else
+                    _type = 2;
+                break;
+            default:
+                _verify = 0;
+                break;
+        }
+        verifyMsg(_verify, _invalid, _this, _type);
+    }, _bind == 'blur' ? 0 : 500);
+}
+
+function verifyMsg(_verify, _invalid, _this, type) {
+    if (_verify) {
+        if (_invalid)
+            _this.addClass('ng-invalid' + (type == 2 ? '2' : ''));
+        else
+            _this.removeClass('ng-invalid' + (type == 2 ? '2' : ''));
+
+        _this.closest('form').attr('invalid', _this.closest('form').find('input.ng-invalid').length || _this.closest('form').find('input.ng-invalid2').length ? 1 : 0);
+    }
+}
+
+function replaceSpecialChars(str) {
+    var $spaceSymbol = '';
+    var regex;
+    var returnString = str;
+    var specialChars = [
+        {val:"a",let:"áàãâä"},
+        {val:"e",let:"éèêë"},
+        {val:"i",let:"íìîï"},
+        {val:"o",let:"óòõôö"},
+        {val:"u",let:"úùûü"},
+        {val:"c",let:"ç"},
+        {val:"A",let:"ÁÀÃÂÄ"},
+        {val:"E",let:"ÉÈÊË"},
+        {val:"I",let:"ÍÌÎÏ"},
+        {val:"O",let:"ÓÒÕÔÖ"},
+        {val:"U",let:"ÚÙÛÜ"},
+        {val:"C",let:"Ç"},
+        {val:"",let:"?!()"}
+    ]
+    for (var i = 0; i < specialChars.length; i++) {
+        regex = new RegExp("["+specialChars[i].let+"]", "g");
+        returnString = returnString.replace(regex, specialChars[i].val);
+        regex = null;
+    }
+
+    var sourceString = returnString.replace(/\s/g,$spaceSymbol);
+
+    return sourceString.replace(/[` ´~!@#$%^&*()|_+\-=?;:¨'",.<>\{\}\[\]\\\/]/gi, '');
+};
+
+function isValidDate(data) {
+    var regex = "\\d{2}/\\d{2}/\\d{4}";
+    var dtArray = data.split("/");
+
+    if (dtArray == null)
+        return false;
+
+    // Checks for dd/mm/yyyy format.
+    var dtDay = dtArray[0];
+    var dtMonth = dtArray[1];
+    var dtYear = dtArray[2];
+
+    if (dtMonth < 1 || dtMonth > 12)
+        return false;
+    else if (dtDay < 1 || dtDay > 31)
+        return false;
+    else if (dtYear > (new Date()).getFullYear() || dtYear <= ((new Date()).getFullYear() - 100))
+        return false;
+    else if ((dtMonth == 4 || dtMonth == 6 || dtMonth == 9 || dtMonth == 11) && dtDay == 31)
+        return false;
+    else if (dtMonth == 2) {
+        var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
+        if (dtDay > 29 || (dtDay == 29 && !isleap))
+            return false;
+    }
+    return true;
+}
+
+function validaCpf(cpf) {
+    cpf = cpf.replace(/\D/g, '');
+    if (cpf.toString().length != 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+    var result = true;
+    [9, 10].forEach(function (j) {
+        var soma = 0, r;
+        cpf.split(/(?=)/).splice(0, j).forEach(function (e, i) {
+            soma += parseInt(e) * ((j + 2) - (i + 1));
+        });
+        r = soma % 11;
+        r = (r < 2) ? 0 : 11 - r;
+        if (r != cpf.substring(j, j + 1)) result = false;
+    });
+    return result;
+}
+
+var mask = function(element, mask, length) {
+    try {
+        function inputHandler(masks, max, event) {
+            var c = event.target;
+            var v = c.value.replace(/\D/g, '');
+            var m = c.value.length > max ? 1 : 0;
+            VMasker(c).unMask();
+            VMasker(c).maskPattern(masks[m]);
+            c.value = VMasker.toPattern(v, masks[m]);
+        }
+
+        var element = document.querySelector(element);
+        VMasker(element).maskPattern(mask[0]);
+        if (mask[1])
+            element.addEventListener('input', inputHandler.bind(undefined, mask, length), false);
+    } catch (e) {
+
+    }
+};

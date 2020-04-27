@@ -353,29 +353,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
         };
 
         $scope.fecharCompra = function () {
-            var msg =  "Local de compra: " + $rootScope.LOCAL.TEXTO;
-            try {
-                navigator.notification.confirm(
-                    msg,
-                    function (buttonIndex) {
-                        if (buttonIndex == 1)
-                            $rootScope.location('#!/token/fecharcompra', 0, 1);
-                        else {
-                            $rootScope.clickItem('busca_locais');
-                            setTimeout(function () {
-                                $rootScope.clickItem('busca_locais');
-                            }, 500);
-                        }
-                    },
-                    'Confirmar',
-                    'Sim,Não'
-                );
-            } catch (e) {
-                if (confirm(msg))
-                    $rootScope.location('#!/token/fecharcompra', 0, 1);
-                else
-                    $rootScope.clickItem('busca_locais');
-            }
+            $rootScope.location('#!/token/fecharcompra', 0, 1);
         };
 
         $scope.clearPesquisa = function () {

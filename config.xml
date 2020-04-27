@@ -19,7 +19,7 @@
     <preference name="ShowSplashScreenSpinner" value="0" />
     <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="StatusBarStyle" value="lightcontent" />
-    <preference name="StatusBarBackgroundColor" value="#00ab46" />
+    <preference name="StatusBarBackgroundColor" value="#00CB00" />
     <preference name="FadeSplashScreen" value="false" />
     <preference name="FadeSplashScreenDuration" value="0" />
     <preference name="DisallowOverscroll" value="false" />
