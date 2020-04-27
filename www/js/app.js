@@ -1112,12 +1112,6 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
     };
 });
 
-app.directive('body', function() {
-    return {
-        templateUrl: config.url_api[config.ambiente] + 'Mobile/www/body.html?v=' + (Login.getData().VERSAO ? Login.getData().VERSAO : config.versao_app_mobile)
-    }
-});
-
 app.directive('onErrorSrc', function() {
     return {
         link: function (scope, element, attrs) {

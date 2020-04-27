@@ -11,7 +11,6 @@
     <meta content="yes" name="apple-touch-fullscreen">
 
     <link href="favicon.png" rel="shortcut icon" >
-    <link href="https://m.market4u.com.br/Mobile/www/css/style-sistema.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2Cregular%2Citalic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;ver=5.3.2#038;subset=latin,latin-ext" rel="stylesheet" type="text/css">
     <link href="css/keyframes.css" rel="stylesheet" type="text/css">
     <link href="css/materialize.min.css" rel="stylesheet" type="text/css">
@@ -33,16 +32,14 @@
     <script src="plugins/device-detector/re-tree.min.js"></script>
 
     <script src="cordova.js"></script>
+    <link href="https://m.market4u.com.br/Mobile/www/css/style-sistema.css" rel="stylesheet" type="text/css">
     <script src="https://m.market4u.com.br/Mobile/www/js/config.js"></script>
     <script src="https://m.market4u.com.br/Mobile/www/js/functions.js"></script>
-
     <script src="https://m.market4u.com.br/Mobile/www/js/app.js"></script>
-
     <script src="https://m.market4u.com.br/Mobile/www/js/modulos/login.js"></script>
     <script src="https://m.market4u.com.br/Mobile/www/js/modulos/bar-code-scanner.js"></script>
     <script src="https://m.market4u.com.br/Mobile/www/js/modulos/bluetooth.js"></script>
     <script src="https://m.market4u.com.br/Mobile/www/js/modulos/index.js"></script>
-
 
     <link rel="stylesheet" href="css/angular-material.min.css">
     <script src="plugins/angular-aria.js"></script>
@@ -52,5 +49,39 @@
 
     <script src="plugins/elastic.js"></script>
   </head>
-  <body addsaldo="{{!usuario.MEUSALDO && usuario.MEUSALDO_ATIVADO?1:0}}" device="{{device}}" controller="{{controller}}" ng-app="App"></body>
+  <body addsaldo="{{!usuario.MEUSALDO && usuario.MEUSALDO_ATIVADO?1:0}}" device="{{device}}" controller="{{controller}}" ng-app="App">
+    <div id="carregando">
+      <img src="img/loader.gif" border="0">
+      Carregando...
+    </div>
+
+    <div mn-touch swipe-right="swipeRight()" ng-if="toolbar" id="toolbar" ng-include src="$root.BASE+'view/pages/toolbar.html?v='+$root.versao_app_mobile"></div>
+
+    <div class="app" ng-controller="Main">
+      <a ng-if="usuario.WHATSAPP.ATIVO && $root.NO_WHATSAPP" id="whatsapp" ng-click="whatsapp()">
+        <img src="img/whatsapp.png">
+      </a>
+
+      <div class="app-body" top_0="{{top_0}}">
+        <div class="app-content">
+          <div class="scrollable ng-scope" border-top="{{$root.BARRA_SALDO?0:border_top}}" ng-view></div>
+        </div>
+      </div>
+    </div>
+
+    <ul tour="{{$root.TOUR}}" id="boxTour" ng-if="$root.TOUR && controller == 'Index'" ng-include src="$root.BASE+'view/pages/tour.html?v='+$root.versao_app_mobile"></ul>
+
+    <div id="banner_modal" ng-click="$root.BANNERS_MODAL=[];" ng-if="$root.BANNERS_MODAL.length && !$root.TOUR && controller == 'Index'" ng-include src="$root.BASE+'view/pages/banners-modal.html?v='+$root.versao_app_mobile"></div>
+
+    <ul ng-show="$root.MenuBottom" id="menu-bottom" step="{{STEP}}" tour="{{$root.TOUR}}" ng-include src="$root.BASE+'view/pages/menu-bottom.html?v='+$root.versao_app_mobile"></ul>
+
+    <div id="boxPago">
+      <i class="mdi mdi-navigation-check"></i>
+      Compra realizada com sucesso
+    </div>
+
+    <div id="fundo_transparente" ng-click="menuClose()" mn-touch swipe-left="swipeLeft()" swipe-right="swipeRight()" ui-prevent-touchmove-defaults></div>
+
+    <div id="menuLeft" class="Menuleft " mn-touch swipe-left="swipeLeft()" swipe-right="swipeRight()" ng-include src="$root.BASE+'view/pages/menu.html?v='+$root.versao_app_mobile"></div>
+  </body>
 </html>

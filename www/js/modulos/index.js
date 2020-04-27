@@ -231,6 +231,11 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                         },
                         function () {
                             $scope.getCompras({ID: ID_CATEGORIA}, -1);
+                        },
+                        {
+                            enableHighAccuracy: true,
+                            timeout: 5000,
+                            maximumAge: 0
                         }
                     );
                 } else
