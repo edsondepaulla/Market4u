@@ -459,7 +459,7 @@ app.controller('VoucherGet', function($rootScope, $scope, $routeParams, ReturnDa
 
 app.controller('HistoricoTransacoesLst', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.border_top = 1;
-    $rootScope.Titulo = "Hist. de transações";
+    $rootScope.Titulo = "Compras";
     $scope.LST = ReturnData.LST;
 
     $scope.click = function(reg) {
@@ -469,7 +469,7 @@ app.controller('HistoricoTransacoesLst', function($rootScope, $scope, $routePara
 
 app.controller('HistoricoTransacoesGet', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.border_top = 1;
-    $rootScope.Titulo = "Hist. de transações";
+    $rootScope.Titulo = "Compras";
     $scope.REG = ReturnData;
 });
 
