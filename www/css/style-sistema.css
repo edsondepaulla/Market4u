@@ -32,18 +32,6 @@ body *{
 /*------------------------------------------------------------------
 3. Typography
 -------------------------------------------------------------------*/
-html{
-  height: 100%;
-  background: transparent !important;
-}
-
-body {
-  background: transparent !important;
-  overflow-x: hidden;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-}
-
 body > div#container {
   margin: 0;
   position: relative;
@@ -1134,6 +1122,7 @@ body > .app[open="1"]{
 
 body[device="ios"]{
   border-top: 23px solid #00CB00;
+  background-position-y: calc(50% - 12px);
 }
 
 body[device="ios"] .pace .pace-activity {
@@ -2439,6 +2428,12 @@ body[controller="ConecteSe"] .topTitulo{
 .boxPopup .topTitulo .textoTitulo{
   font-weight: 500;
 }
+.boxPopup .topTitulo img[src="img/logo.png"]{
+  position: absolute;
+  top: 10px;
+  right: 7px;
+  height: 25px;
+}
 .boxPopup[box="produto"] .topTitulo .textoTitulo,
 .boxPopup[box="produto"] .topTitulo .textoTitulo{
   text-transform: unset;
@@ -2506,11 +2501,13 @@ text-align: left;
 padding-left: 10px;
 }
 .topTitulo .open-left i.mdi-navigation-close,
-.topTitulo .open-left i.mdi-navigation-chevron-left {
+.topTitulo .open-left i.mdi-navigation-chevron-left,
+.topTitulo .open-left i.mdi-maps-place{
   font-size: 34px;
   line-height: 45px;
   color: #00CB00;
 }
+
 #formCadastroCodigo a{
 text-decoration: underline;
 text-align: center;
@@ -5681,7 +5678,8 @@ body[controller="Index"] > #toolbar #local{
   padding-bottom: 130px;
 }
 .boxPopup[box="locais"]{
-  z-index: 3;
+  z-index: 8;
+  display: none;
 }
 .boxPopup[box="locais"] ul li.active{
   font-weight: 500;

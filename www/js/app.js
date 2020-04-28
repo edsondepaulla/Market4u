@@ -327,7 +327,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             controller: 'Ajuda'
         })
         .when("/sem-internet", {
-            templateUrl: base + "Mobile/www/view/sem-internet/index.html",
+            templateUrl: "view/sem-internet/index.html",
             controller: 'SemInternet'
         });
 });

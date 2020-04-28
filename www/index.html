@@ -10,8 +10,7 @@
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="yes" name="apple-touch-fullscreen">
 
-    <link href="favicon.png" rel="shortcut icon" >
-    <link href="https://m.market4u.com.br/Mobile/www/css/style-sistema.css" rel="stylesheet" type="text/css">
+    <link href="favicon.png" rel="shortcut icon">
     <link href="https://fonts.googleapis.com/css?family=Montserrat%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2Cregular%2Citalic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;ver=5.3.2#038;subset=latin,latin-ext" rel="stylesheet" type="text/css">
     <link href="css/keyframes.css" rel="stylesheet" type="text/css">
     <link href="css/materialize.min.css" rel="stylesheet" type="text/css">
@@ -35,6 +34,8 @@
     <script src="plugins/elastic.js"></script>
 
     <script src="cordova.js"></script>
+
+    <link href="https://m.market4u.com.br/Mobile/www/css/style-sistema.css" rel="stylesheet" type="text/css">
     <script src="https://m.market4u.com.br/Mobile/www/js/config.js"></script>
     <script src="https://m.market4u.com.br/Mobile/www/js/app.js"></script>
     <script src="https://m.market4u.com.br/Mobile/www/js/functions.js"></script>
@@ -43,9 +44,74 @@
     <script src="https://m.market4u.com.br/Mobile/www/js/modulos/login.js"></script>
     <script src="https://m.market4u.com.br/Mobile/www/js/modulos/bar-code-scanner.js"></script>
     <script src="https://m.market4u.com.br/Mobile/www/js/modulos/bluetooth.js"></script>
+    <style>
+      html{
+        background-image: url("img/market4u.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: transparent !important;
+        height: 100%;
+      }
+      body{
+        background-image: url("img/market4u.png");
+        background-color: transparent !important;
+        background-repeat: no-repeat;
+        background-position: center;
+        overflow-x: hidden;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+      }
+      body > .app{
+        display: none;
+      }
+      #sem_internet{
+        display: none;
+        text-align: center;
+        background: #FFF;
+        padding-bottom: 150px;
+      }
+      #sem_internet a{
+        display: block;
+        margin-top: 20px;
+        text-decoration: underline;
+        color: #00CB00;
+      }
+      #sem_internet img{
+        width: 140px;
+        display: block;
+        margin: 140px auto 100px;
+      }
+      #boxPago{
+        display: none;
+      }
+    </style>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        setTimeout(function(){
+          $.ajax({
+            type: 'GET',
+            url: 'https://m.market4u.com.br/Mobile/www/js/config.js',
+            cache: false,
+            success: function () {
+
+            },
+            error: function (result) {
+              $('#sem_internet').show();
+            }
+          });
+        }, 3000);
+      });
+    </script>
   </head>
   <body addsaldo="{{!usuario.MEUSALDO && usuario.MEUSALDO_ATIVADO?1:0}}" device="{{device}}" controller="{{controller}}" ng-app="App">
-    <div id="carregando">
+    <div id="sem_internet">
+      <img src="img/market4u.png" border="0">
+      Não existe conexão com a internet.
+      <a onclick="location.reload()">Clique aqui e tente novamente</a>
+    </div>
+
+    <div id="carregando" style="display: none">
       <img src="img/loader.gif" border="0">
       Carregando...
     </div>
@@ -63,6 +129,8 @@
         </div>
       </div>
     </div>
+
+    <div class="boxPopup" box="locais" ng-include src="$root.BASE+'view/pages/locais.html'"></div>
 
     <ul tour="{{$root.TOUR}}" id="boxTour" ng-if="$root.TOUR && controller == 'Index'" ng-include src="$root.BASE+'view/pages/tour.html'"></ul>
 

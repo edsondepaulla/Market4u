@@ -88,7 +88,8 @@ app.controller('Main', function($rootScope, $scope, $http, $routeParams, $route,
 
     $rootScope.controller = 'Index';
     $rootScope.$on('$routeChangeSuccess', function () {
-        $('a#whatsapp').removeAttr('style');
+        $('body > .app').show();
+        $('a#whatsapp, #carregando').removeAttr('style');
         $rootScope.NO_WHATSAPP = true;
         $rootScope.border_top = 0;
         $rootScope.toolbar = true;

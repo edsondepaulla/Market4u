@@ -219,27 +219,118 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
             }
         };
 
+        $rootScope.clickItem = function (ORIGEM, VALS) {
+            switch (ORIGEM) {
+                case 'locaisVoltar':
+                    $rootScope.toolbar = $rootScope.CARRINHO ? false : true;
+                    $rootScope.MenuBottom = true;
+                    $('.boxPopup[box="locais"]').hide();
+                    break;
+                case 'naoEncontrou':
+                    $rootScope.toolbar = false;
+                    $rootScope.MenuBottom = false;
+                    $rootScope.NAO_ENCONTROU = true;
+                    break;
+                case 'naoEncontrouVoltar':
+                    $rootScope.toolbar = $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ATIVO ? false : true;
+                    $rootScope.MenuBottom = $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ATIVO ? false : true;
+                    $rootScope.NAO_ENCONTROU = false;
+                    break;
+                case 'produtoVoltar':
+                    $rootScope.PESQUISA = '';
+                    if ($rootScope.PROD_DETALHES.ORIGEM == 'BUSCA_CATEGORIAS') {
+                        $rootScope.toolbar = false;
+                        $rootScope.MenuBottom = false;
+                    } else {
+                        $rootScope.MenuBottom = true;
+                        $rootScope.toolbar = $rootScope.PROD_DETALHES.ORIGEM == 'COMPRAS' ? true : false;
+                    }
+                    $rootScope.PROD_DETALHES = false;
+                    break;
+                case 'busca_locais':
+                    var show = true;
+                    if(VALS.VERIFICA)
+                        show = parseInt(Login.getData().SHOW_MAQUINAS)?true:false;
+
+                    if(show)
+                        $('.boxPopup[box="locais"]').show();
+                    break;
+                case 'verProdutos':
+                case 'busca':
+                    $rootScope.toolbar = false;
+                    $rootScope.MenuBottom = false;
+                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ATIVO = true;
+                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ITENS = [];
+                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL = [];
+                    if (ORIGEM == 'verProdutos') {
+                        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.BUSCA = false;
+                        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.PLACEHOLDER = VALS.CAT_DESCRICAO + VALS.DESCRICAO;
+                        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.CATEGORIA = parseInt(VALS.CATEGORIA);
+                        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SUBCATEGORIA = parseInt(VALS.SUBCATEGORIA);
+                        Factory.ajax(
+                            {
+                                action: 'payment/compras',
+                                data: {
+                                    ID: parseInt(VALS.CATEGORIA),
+                                    SUBCATEGORIA: parseInt(VALS.SUBCATEGORIA)
+                                }
+                            },
+                            function (data) {
+                                if (data.COMPRAS.SUBCATEGORIAS[0]) {
+                                    $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
+                                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL = data.COMPRAS.SCROLL;
+                                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ITENS = data.COMPRAS.SUBCATEGORIAS[0]['ITENS'];
+                                } else {
+                                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ITENS = [];
+                                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL.ATIVO = 0;
+                                }
+                            }
+                        );
+                    } else {
+                        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.BUSCA = true;
+                        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.PLACEHOLDER = 'Digite o que você procura';
+                        $scope.buscaProdutos();
+                    }
+                    break;
+                case 'index':
+                    $rootScope.PESQUISA = '';
+                    $rootScope.toolbar = true;
+                    $rootScope.MenuBottom = true;
+                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA = [];
+                    $('.boxPopup[box="locais"]').hide();
+                    break;
+                case 'carrinho':
+                    $rootScope.PESQUISA = '';
+                    $rootScope.CARRINHO = false;
+                    $rootScope.toolbar = true;
+                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA = [];
+                    break;
+            }
+        };
 
         if (!parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']) || Payment.ATUALIZAR) {
             Payment.ATUALIZAR = false;
             var ID_CATEGORIA = parseInt($('ul#boxCategorias li.active').data('id')) || 0;
             var getLocation = function () {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(
-                        function (position) {
-                            $scope.getCompras({ID: ID_CATEGORIA}, position.coords ? position.coords : -1);
-                        },
-                        function () {
-                            $scope.getCompras({ID: ID_CATEGORIA}, -1);
-                        },
-                        {
-                            enableHighAccuracy: true,
-                            timeout: 5000,
-                            maximumAge: 0
-                        }
-                    );
+                if (parseInt(Login.getData().CHECK_MAQUINAS) || true) {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(
+                            function (position) {
+                                $scope.getCompras({ID: ID_CATEGORIA}, position.coords ? position.coords : -1);
+                            },
+                            function () {
+                                $scope.getCompras({ID: ID_CATEGORIA}, -1);
+                            },
+                            {
+                                enableHighAccuracy: true,
+                                timeout: 5000,
+                                maximumAge: 0
+                            }
+                        );
+                    } else
+                        $scope.getCompras({ID: ID_CATEGORIA}, -1);
                 } else
-                    $scope.getCompras({ID: ID_CATEGORIA}, -1);
+                    $rootScope.clickItem('busca_locais', {});
             };
             if ("cordova" in window) {
                 document.addEventListener("deviceready", function () {
@@ -361,93 +452,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
             $scope.buscaProdutos();
         };
 
-        $rootScope.clickItem = function (ORIGEM, VALS) {
-            switch (ORIGEM) {
-                case 'locaisVoltar':
-                    $rootScope.toolbar = $rootScope.CARRINHO ? false : true;
-                    $rootScope.MenuBottom = true;
-                    $rootScope.LOCAL.ATIVO = false;
-                    break;
-                case 'naoEncontrou':
-                    $rootScope.toolbar = false;
-                    $rootScope.MenuBottom = false;
-                    $rootScope.NAO_ENCONTROU = true;
-                    break;
-                case 'naoEncontrouVoltar':
-                    $rootScope.toolbar = $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ATIVO ? false : true;
-                    $rootScope.MenuBottom = $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ATIVO ? false : true;
-                    $rootScope.NAO_ENCONTROU = false;
-                    break;
-                case 'produtoVoltar':
-                    $rootScope.PESQUISA = '';
-                    if ($rootScope.PROD_DETALHES.ORIGEM == 'BUSCA_CATEGORIAS') {
-                        $rootScope.toolbar = false;
-                        $rootScope.MenuBottom = false;
-                    } else {
-                        $rootScope.MenuBottom = true;
-                        $rootScope.toolbar = $rootScope.PROD_DETALHES.ORIGEM == 'COMPRAS' ? true : false;
-                    }
-                    $rootScope.PROD_DETALHES = false;
-                    break;
-                case 'busca_locais':
-                    $rootScope.toolbar = false;
-                    $rootScope.MenuBottom = true;
-                    $rootScope.LOCAL.ATIVO = true;
-                    break;
-                case 'verProdutos':
-                case 'busca':
-                    $rootScope.toolbar = false;
-                    $rootScope.MenuBottom = false;
-                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ATIVO = true;
-                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ITENS = [];
-                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL = [];
-                    if (ORIGEM == 'verProdutos') {
-                        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.BUSCA = false;
-                        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.PLACEHOLDER = VALS.CAT_DESCRICAO + VALS.DESCRICAO;
-                        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.CATEGORIA = parseInt(VALS.CATEGORIA);
-                        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SUBCATEGORIA = parseInt(VALS.SUBCATEGORIA);
-                        Factory.ajax(
-                            {
-                                action: 'payment/compras',
-                                data: {
-                                    ID: parseInt(VALS.CATEGORIA),
-                                    SUBCATEGORIA: parseInt(VALS.SUBCATEGORIA)
-                                }
-                            },
-                            function (data) {
-                                if (data.COMPRAS.SUBCATEGORIAS[0]) {
-                                    $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
-                                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL = data.COMPRAS.SCROLL;
-                                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ITENS = data.COMPRAS.SUBCATEGORIAS[0]['ITENS'];
-                                } else {
-                                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ITENS = [];
-                                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL.ATIVO = 0;
-                                }
-                            }
-                        );
-                    } else {
-                        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.BUSCA = true;
-                        $rootScope.PRODUTOS_CATEGORIAS_BUSCA.PLACEHOLDER = 'Digite o que você procura';
-                        $scope.buscaProdutos();
-                    }
-                    break;
-                case 'index':
-                    $rootScope.PESQUISA = '';
-                    $rootScope.toolbar = true;
-                    $rootScope.MenuBottom = true;
-                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA = [];
-                    $rootScope.LOCAL.ATIVO = false;
-                    break;
-                case 'carrinho':
-                    $rootScope.PESQUISA = '';
-                    $rootScope.CARRINHO = false;
-                    $rootScope.toolbar = true;
-                    $rootScope.PRODUTOS_CATEGORIAS_BUSCA = [];
-                    break;
-            }
-        };
-
-        $scope.setLocal = function (ITEM) {
+        $rootScope.setLocal = function (ITEM) {
             $rootScope.LOCAL.TEXTO = ITEM.NOME_ABV;
             $rootScope.clickItem('locaisVoltar');
             $scope.getCompras({ID: 0}, parseInt(ITEM.ID));
