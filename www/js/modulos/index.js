@@ -577,7 +577,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                 {
                     'STEP': 3,
                     'STEP_TEXTO': 2,
-                    'TEXTO': 'Modo de pagamento'
+                    'TEXTO': '<b>4u</b>pagamento'
                 }
             ];
 

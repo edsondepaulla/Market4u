@@ -123,7 +123,7 @@
         </div>
         <div ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR" id="subTotalCarrinho">
             Subtotal estimado: <span ng-if="$root.CARRINHO_COMPRAS.TOTAL_DE">R$ {{$root.CARRINHO_COMPRAS.TOTAL_DE}}</span><b>R$ {{$root.CARRINHO_COMPRAS.TOTAL_POR}}</b>
-            <br><a id="fechar_compra" ng-click="fecharCompra()"><i class="mdi mdi-editor-attach-money"></i> Modo de pagamento</a>
+            <br><a id="fechar_compra" ng-click="fecharCompra()"><i class="mdi mdi-editor-attach-money"></i> <b>4u</b>pagamento</a>
         </div>
     </div>
 
@@ -165,7 +165,7 @@
     <ul ng-if="$root.STEPS">
         <li step="{{ITEM.STEP}}" ng-repeat="ITEM in $root.STEPS" class="{{STEP>=ITEM.STEP?'active':''}}">
             <p>
-                {{ITEM.TEXTO}}
+                <label ng-bind-html="ITEM.TEXTO"></label>
                 <br><a id="ver-carrinho" ng-if="$root.PRODUTOS.length" ng-click="verCarrinho()">{{$root.transacaoIdCarrinho?'Voltar para o Carrinho':'Ver carrinho'}}</a>
                 <a id="cancelar-compra" ng-click="location('#!/')" ng-if="!$root.transacaoIdCarrinho&&STEP==3&&$root.PRODUTOS.length">Cancelar</a>
             </p>
