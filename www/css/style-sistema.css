@@ -3262,7 +3262,7 @@ body[controller="Index"] #boxCarrinhoFloat{
   font-size: 15px;
   z-index: 1;
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26), 0 2px 10px 0 rgba(0,0,0,0.22);
-  transition: 1s;
+  transition: 0.5s;
 }
 body[controller="Index"] .scrollable-content#boxPagamento h3.total,
 #boxPg h4.pague_com{
@@ -4365,7 +4365,7 @@ ul#menu-bottom{
   z-index: 2;
   border-top: 1px solid rgba(11, 99, 64, 0.1);
   background: #eeeeee;
-  transition: 1s;
+  transition: 0.5s;
 }
 
 body[scroll="1"] ul#menu-bottom{
@@ -5522,7 +5522,7 @@ ul#boxCategorias{
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   padding-left: 40px;
-  transition: 1s;
+  transition: 0.5s;
 }
 body[scroll="1"] ul#boxCategorias{
   margin-top: -63px;

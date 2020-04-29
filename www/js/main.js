@@ -800,6 +800,7 @@ try {
                         var scrollTop = parseFloat(_this.scrollTop());
                         $('body').attr('scroll', getScrollValue > scrollTop ? 0 : 1);
                         _this.attr('scroll-value', scrollTop);
+                        $('body[controller="Index"] > #toolbar #top').html(scrollTop);
                     }
                     if (parseInt(_this.attr('scroll')) && Factory.$rootScope.scrollLiberado) {
                         if ((_this.find('> ul').height() - _this.height() - _this.scrollTop()) <= 400) {
