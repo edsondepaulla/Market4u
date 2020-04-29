@@ -98,6 +98,10 @@
     <plugin name="cordova-plugin-keyboard" spec="^1.1.5" />
     <plugin name="cordova-plugin-splashscreen" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
+    <plugin name="cordova-plugin-request-location-accuracy" spec="*" />
+    <plugin name="cordova.plugins.diagnostic" spec="*" />
+    <engine name="ios" spec="latest" />
+    <engine name="android" spec="latest" />
     <plugin name="cordova-plugin-x-toast" spec="^2.6.0" />
     <plugin name="cordova-plugin-statusbar" spec="~2.2.3" />
     <plugin name="cordova-plugin-safariviewcontroller" spec="~1.6.0" />

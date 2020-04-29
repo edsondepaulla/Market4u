@@ -790,17 +790,22 @@ try {
         }
     });
 
+    var TimeOutScroll = null;
     app.directive('scroll', function ($routeParams) {
         return {
             link: function (scope, element, attrs) {
                 angular.element(element).bind("scroll", function () {
                     var _this = $(this);
                     if (_this.attr('type') == 'produtos') {
-                        var getScrollValue = parseFloat(_this.attr('scroll-value'));
                         var scrollTop = parseFloat(_this.scrollTop());
-                        $('body').attr('scroll', getScrollValue > scrollTop ? 0 : 1);
-                        _this.attr('scroll-value', scrollTop);
-                        $('body[controller="Index"] > #toolbar #top').html(scrollTop);
+                        if (scrollTop > 1) {
+                            clearTimeout(TimeOutScroll);
+                            TimeOutScroll = setTimeout(function () {
+                                var getScrollValue = parseFloat(_this.attr('scroll-value'));
+                                $('body').attr('scroll', getScrollValue > scrollTop ? 0 : 1);
+                                _this.attr('scroll-value', scrollTop);
+                            }, 100);
+                        }
                     }
                     if (parseInt(_this.attr('scroll')) && Factory.$rootScope.scrollLiberado) {
                         if ((_this.find('> ul').height() - _this.height() - _this.scrollTop()) <= 400) {
