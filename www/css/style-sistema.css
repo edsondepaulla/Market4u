@@ -4368,6 +4368,7 @@ ul#menu-bottom{
   transition: 0.5s;
 }
 
+ul#menu-bottom[show="0"],
 body[scroll="1"] ul#menu-bottom{
   bottom: -75px;
 }

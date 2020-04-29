@@ -100,7 +100,7 @@
                     <span>{{$root.LOCAL.ITEM.ENDERECO}}, {{$root.LOCAL.ITEM.NUMERO}} {{$root.LOCAL.ITEM.BAIRRO}} - {{$root.LOCAL.ITEM.CIDADE}}{{$root.LOCAL.ITEM.ESTADO?' - '+$root.LOCAL.ITEM.ESTADO:''}}</span>
                 </li>
                 <li ng-repeat="PROD in $root.CARRINHO_COMPRAS.PRODUTOS">
-                    <div class="b" ng-click="$root.MenuBottom=true; $root.PROD_DETALHES = PROD;">
+                    <div class="b" ng-click="$root.clickItem('produto', PROD)">
                         <img data-src="{{PROD.IMAGEM}}" src="img/market4u.png" alt="">
                         <h4>{{PROD.NOME}}</h4>
                         <label class="total_de" ng-if="PROD.DE_PRECO_FORMAT"><span class="v">{{PROD.DE_PRECO_FORMAT}}</span></label>
@@ -156,7 +156,7 @@
         </div>
     </div>
 
-    <a bottom="{{$root.PRODUTOS_CATEGORIAS_BUSCA.ATIVO?1:0}}" ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR && $root.TIPO_PG != 'PAGAMENTO'" id="boxCarrinhoFloat" style="z-index: {{$root.PROD_DETALHES||$root.PRODUTOS_CATEGORIAS_BUSCA.ATIVO?2:1}}" ng-click="$root.clickItem('carrinho2')">
+    <a bottom="{{$root.BTN_CARRINHO_BOTTOM?1:0}}" ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR && $root.TIPO_PG != 'PAGAMENTO'" id="boxCarrinhoFloat" style="z-index: {{$root.PROD_DETALHES||$root.BTN_CARRINHO_BOTTOM?2:1}}" ng-click="$root.clickItem('carrinho2')">
         <i class="mdi mdi-action-shopping-cart"></i> R$ {{$root.CARRINHO_COMPRAS.TOTAL_POR}}
     </a>
 </div>

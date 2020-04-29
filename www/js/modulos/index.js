@@ -221,6 +221,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
         };
 
         $('body').attr('scroll', 0);
+        $rootScope.BTN_CARRINHO_BOTTOM = false;
         $rootScope.clickItem = function (ORIGEM, VALS) {
             switch (ORIGEM) {
                 case 'locaisVoltar':
@@ -240,20 +241,24 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                     break;
                 case 'produtoVoltar':
                     $rootScope.PESQUISA = '';
+                    $rootScope.BTN_CARRINHO_BOTTOM = false;
                     if ($rootScope.PROD_DETALHES.ORIGEM == 'BUSCA_CATEGORIAS') {
                         $rootScope.toolbar = false;
                         $rootScope.MenuBottom = false;
+                        $rootScope.BTN_CARRINHO_BOTTOM = true;
                     } else {
                         $rootScope.MenuBottom = true;
                         $rootScope.toolbar = $rootScope.PROD_DETALHES.ORIGEM == 'COMPRAS' ? true : false;
                     }
                     $rootScope.PROD_DETALHES = false;
                     break;
+                case 'voltaLocais':
+                    $('.boxPopup[box="locais"]').hide();
+                    break;
                 case 'busca_locais':
                     var show = true;
                     if (VALS.VERIFICA)
                         show = parseInt(Login.getData().SHOW_MAQUINAS) ? true : false;
-
                     if (show)
                         $('.boxPopup[box="locais"]').show();
                     break;
@@ -261,6 +266,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                 case 'busca':
                     $('body').attr('scroll', 0);
                     $rootScope.toolbar = false;
+                    $rootScope.BTN_CARRINHO_BOTTOM = true;
                     $rootScope.MenuBottom = false;
                     $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ATIVO = true;
                     $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ITENS = [];
@@ -301,6 +307,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                     $rootScope.MenuBottom = true;
                     $rootScope.PRODUTOS_CATEGORIAS_BUSCA = [];
                     $('.boxPopup[box="locais"]').hide();
+                    $rootScope.BTN_CARRINHO_BOTTOM = false;
                     break;
                 case 'carrinho':
                     $rootScope.PESQUISA = '';
@@ -320,6 +327,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                     $rootScope.toolbar = false;
                     $rootScope.MenuBottom = true;
                     $rootScope.PROD_DETALHES = VALS;
+                    $rootScope.BTN_CARRINHO_BOTTOM = false;
                     break;
             }
         };

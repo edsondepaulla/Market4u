@@ -134,7 +134,7 @@
 
     <div id="banner_modal" ng-click="$root.BANNERS_MODAL=[];" ng-if="$root.BANNERS_MODAL.length && !$root.TOUR && controller == 'Index'" ng-include src="$root.BASE+'view/pages/banners-modal.html'"></div>
 
-    <ul ng-show="$root.MenuBottom" id="menu-bottom" step="{{STEP}}" tour="{{$root.TOUR}}" ng-include src="$root.BASE+'view/pages/menu-bottom.html'"></ul>
+    <ul show="{{$root.MenuBottom?1:0}}" id="menu-bottom" step="{{STEP}}" tour="{{$root.TOUR}}" ng-include src="$root.BASE+'view/pages/menu-bottom.html'"></ul>
 
     <div id="boxPago">
       <i class="mdi mdi-navigation-check"></i>
