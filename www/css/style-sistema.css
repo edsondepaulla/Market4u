@@ -3246,6 +3246,11 @@ body[controller="Index"] #boxCarrinhoFloat[bottom="1"]{
   align-items: center;
   justify-content: space-between;
 }
+
+body[controller="Index"][scroll="1"] #boxCarrinhoFloat{
+  bottom: 10px;
+}
+
 body[controller="Index"] #boxCarrinhoFloat{
   background: #00CB00;
   position: fixed;
@@ -3257,6 +3262,7 @@ body[controller="Index"] #boxCarrinhoFloat{
   font-size: 15px;
   z-index: 1;
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26), 0 2px 10px 0 rgba(0,0,0,0.22);
+  transition: 1s;
 }
 body[controller="Index"] .scrollable-content#boxPagamento h3.total,
 #boxPg h4.pague_com{
@@ -4359,6 +4365,11 @@ ul#menu-bottom{
   z-index: 2;
   border-top: 1px solid rgba(11, 99, 64, 0.1);
   background: #eeeeee;
+  transition: 1s;
+}
+
+body[scroll="1"] ul#menu-bottom{
+  bottom: -75px;
 }
 
 ul#menu-bottom[tour="2"],
@@ -5309,7 +5320,7 @@ body[addsaldo="1"] #boxCompras{
   margin-top: 20px;
 }
 md-content#boxProdutos{
-  padding-bottom: 190px !important;
+  padding-bottom: 100px !important;
   display: block;
   width: 100%;
   height: 100%;
@@ -5511,6 +5522,10 @@ ul#boxCategorias{
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   padding-left: 40px;
+  transition: 1s;
+}
+body[scroll="1"] ul#boxCategorias{
+  margin-top: -63px;
 }
 ul#boxCategorias::-webkit-scrollbar {
   display: none;
@@ -5596,10 +5611,6 @@ body[controller="Index"] > #toolbar #local span{
   text-overflow: ellipsis;
   overflow: hidden;
   text-decoration: underline;
-}
-body[controller="Index"] > #toolbar #local[encontrou="0"]{
-  top: 14px;
-  right: 6px;
 }
 body[controller="Index"] > #toolbar #local{
   position: absolute;

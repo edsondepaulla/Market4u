@@ -38,6 +38,7 @@ var Payment = {
 
 app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetector) {
     if(parseInt(Login.getData().ID)) {
+        $rootScope.LOCAIS = $routeParams.STEP == 'LOCAIS' ? 1 : 0;
         $rootScope.TOUR = $routeParams.STEP == 'TOUR' ? 1 : 0;
         $rootScope.ESCANEAR = $routeParams.STEP == 'ESCANEAR' ? 1 : 0;
         $rootScope.CARRINHO = $routeParams.STEP == 'CARRINHO' ? 1 : 0;
@@ -115,7 +116,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
             }
         };
         $rootScope.BANNERS_MODAL = $rootScope.BANNERS_MODAL ? $rootScope.BANNERS_MODAL : [];
-        $scope.getCompras = function (CAT, COORDS) {
+        $scope.getCompras = function (CAT) {
             if (!parseInt(CAT.ACTIVE)) {
                 clearTimeout(Payment.timeoutBanner['COMPRAS']);
                 $rootScope.scrollLiberado = false;
@@ -125,11 +126,11 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                         data: {
                             ID: parseInt(CAT.ID),
                             PRODUTO: parseInt(CAT.PRODUTO) || 0,
-                            COORDS: COORDS ? COORDS : null,
                             LOADER_CARREGANDO: $('#boxPago:visible').length ? false : true
                         }
                     },
                     function (data) {
+                        $('body').attr('scroll', 0);
                         if (data.LOCAL)
                             $rootScope.LOCAL = data.LOCAL;
                         if (data.COMPRAS) {
@@ -219,6 +220,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
             }
         };
 
+        $('body').attr('scroll', 0);
         $rootScope.clickItem = function (ORIGEM, VALS) {
             switch (ORIGEM) {
                 case 'locaisVoltar':
@@ -249,14 +251,15 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                     break;
                 case 'busca_locais':
                     var show = true;
-                    if(VALS.VERIFICA)
-                        show = parseInt(Login.getData().SHOW_MAQUINAS)?true:false;
+                    if (VALS.VERIFICA)
+                        show = parseInt(Login.getData().SHOW_MAQUINAS) ? true : false;
 
-                    if(show)
+                    if (show)
                         $('.boxPopup[box="locais"]').show();
                     break;
                 case 'verProdutos':
                 case 'busca':
+                    $('body').attr('scroll', 0);
                     $rootScope.toolbar = false;
                     $rootScope.MenuBottom = false;
                     $rootScope.PRODUTOS_CATEGORIAS_BUSCA.ATIVO = true;
@@ -305,41 +308,32 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                     $rootScope.toolbar = true;
                     $rootScope.PRODUTOS_CATEGORIAS_BUSCA = [];
                     break;
+                case 'carrinho2':
+                    $('body').attr('scroll', 0);
+                    $rootScope.MenuBottom = true;
+                    $rootScope.toolbar = false;
+                    $rootScope.CARRINHO = true;
+                    $rootScope.PROD_DETALHES = false;
+                    break;
+                case 'produto':
+                    $('body').attr('scroll', 0);
+                    $rootScope.toolbar = false;
+                    $rootScope.MenuBottom = true;
+                    $rootScope.PROD_DETALHES = VALS;
+                    break;
             }
         };
 
-        if (!parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']) || Payment.ATUALIZAR) {
-            Payment.ATUALIZAR = false;
-            var ID_CATEGORIA = parseInt($('ul#boxCategorias li.active').data('id')) || 0;
-            var getLocation = function () {
-                if (parseInt(Login.getData().CHECK_MAQUINAS) || true) {
-                    if (navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(
-                            function (position) {
-                                $scope.getCompras({ID: ID_CATEGORIA}, position.coords ? position.coords : -1);
-                            },
-                            function () {
-                                $scope.getCompras({ID: ID_CATEGORIA}, -1);
-                            },
-                            {
-                                enableHighAccuracy: true,
-                                timeout: 5000,
-                                maximumAge: 0
-                            }
-                        );
-                    } else
-                        $scope.getCompras({ID: ID_CATEGORIA}, -1);
-                } else
-                    $rootScope.clickItem('busca_locais', {});
-            };
-            if ("cordova" in window) {
-                document.addEventListener("deviceready", function () {
-                    getLocation();
-                }, false);
+        // Get produtos
+        if(parseInt(Login.getData().CHECK_MAQUINAS) || true){
+            if (!parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']) || Payment.ATUALIZAR) {
+                Payment.ATUALIZAR = false;
+                $scope.getCompras({ID: parseInt($('ul#boxCategorias li.active').data('id')) || 0});
             } else
-                getLocation();
-        } else
-            $scope.scrollLeft();
+                $scope.scrollLeft();
+        }else{
+
+        }
 
         $rootScope.TIPO_PG = 'COMPRAR';
         $rootScope.MenuBottom = 1;
@@ -444,7 +438,19 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
         };
 
         $scope.fecharCompra = function () {
-            $rootScope.location('#!/token/fecharcompra', 0, 1);
+            Factory.ajax(
+                {
+                    action: 'options/token',
+                    data: {
+                        TOKEN: 'fecharcompra'
+                    }
+                }, function (data) {
+                    $rootScope.transacaoIdCarrinho = true;
+                    $rootScope.transacaoId = parseInt(data.TRANSACAO_ID);
+                    if (data.url)
+                        $rootScope.location(data.url);
+                }
+            );
         };
 
         $scope.clearPesquisa = function () {
@@ -455,7 +461,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
         $rootScope.setLocal = function (ITEM) {
             $rootScope.LOCAL.TEXTO = ITEM.NOME_ABV;
             $rootScope.clickItem('locaisVoltar');
-            $scope.getCompras({ID: 0}, parseInt(ITEM.ID));
+            //$scope.getCompras({ID: 0});
         };
 
         $rootScope.SetAddRemoveQtdeProd = function (PROD, QTDE, LOADER_CARREGANDO) {
@@ -490,11 +496,11 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                 navigator.notification.confirm(
                     msg,
                     function (buttonIndex) {
-                        if (buttonIndex == 1)
+                        if (buttonIndex == 2)
                             $rootScope.SetAddRemoveQtdeProd(-1, 0, true);
                     },
                     'Confirmar',
-                    'Sim,Não'
+                    'Não,Sim'
                 );
             } catch (e) {
                 if (confirm(msg))
@@ -519,7 +525,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                                 navigator.notification.confirm(
                                     'Tem certeza que deseja remover este item da sua lista de compra?',
                                     function (buttonIndex) {
-                                        if (buttonIndex == 1)
+                                        if (buttonIndex == 2)
                                             $rootScope.SetAddRemoveQtdeProd(PROD, 0, LOADER_CARREGANDO);
                                         else {
                                             PROD.QTDE = PROD.QTDE_ORIGINAL;
@@ -527,7 +533,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                                         }
                                     },
                                     'Confirmar',
-                                    'Sim,Não'
+                                    'Não,Sim'
                                 );
                             } catch (e) {
                                 if (confirm('Tem certeza que deseja remover este item da sua lista de compra?'))

@@ -15,7 +15,7 @@
     <div class="textoTitulo" ng-bind-html="Titulo"></div>
 </div>
 <img ng-if="controller != 'Index'" ng-click="location('#!/')" src="img/logo.png" border="0">
-<div ng-click="$root.clickItem('busca_locais', {VERIFICA:1})" ng-if="controller == 'Index'" encontrou="{{$root.LOCAL.TEXTO?1:0}}" id="local">
+<div ng-click="$root.clickItem('busca_locais', {VERIFICA:1})" ng-if="controller == 'Index' && $root.LOCAL.TEXTO" id="local">
     <i class="mdi mdi-maps-place"></i> LOCAL
     <span>{{$root.LOCAL.TEXTO}}</span>
 </div>

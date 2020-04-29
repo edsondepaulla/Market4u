@@ -11,39 +11,7 @@
     <meta content="yes" name="apple-touch-fullscreen">
 
     <link href="favicon.png" rel="shortcut icon">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2Cregular%2Citalic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;ver=5.3.2#038;subset=latin,latin-ext" rel="stylesheet" type="text/css">
-    <link href="css/keyframes.css" rel="stylesheet" type="text/css">
-    <link href="css/materialize.min.css" rel="stylesheet" type="text/css">
-    <link href="plugins/angular/css/mobile-angular-ui-base.css" rel="stylesheet" />
-    <script src="plugins/jquery-3.3.1.min.js"></script>
-    <script src="plugins/jquery-migrate-1.4.1.min.js"></script>
-    <script src="plugins/angular.min.js"></script>
-    <script src="plugins/angular-route.min.js"></script>
-    <script src="plugins/angular-animate.min.js"></script>
-    <script src="plugins/angular/js/mobile-angular-ui.min.js"></script>
-    <script src="plugins/angular/js/mobile-angular-ui.gestures.min.js"></script>
-    <script src="plugins/jquery.visible.js"></script>
-    <script src="plugins/mn-touch/mn-touch.min.js"></script>
-    <script src="plugins/device-detector/ng-device-detector.min.js"></script>
-    <script src="plugins/device-detector/re-tree.min.js"></script>
-    <link rel="stylesheet" href="css/angular-material.min.css">
-    <script src="plugins/angular-aria.js"></script>
-    <script src="plugins/angular-material.min.js"></script>
-    <script src="plugins/angular-sanitize.js"></script>
-    <script src="plugins/vanilla-masker.min.js"></script>
-    <script src="plugins/elastic.js"></script>
 
-    <script src="cordova.js"></script>
-
-    <link href="https://m.market4u.com.br/Mobile/www/css/style-sistema.css" rel="stylesheet" type="text/css">
-    <script src="https://m.market4u.com.br/Mobile/www/js/config.js"></script>
-    <script src="https://m.market4u.com.br/Mobile/www/js/app.js"></script>
-    <script src="https://m.market4u.com.br/Mobile/www/js/functions.js"></script>
-    <script src="https://m.market4u.com.br/Mobile/www/js/main.js"></script>
-    <script src="https://m.market4u.com.br/Mobile/www/js/modulos/index.js"></script>
-    <script src="https://m.market4u.com.br/Mobile/www/js/modulos/login.js"></script>
-    <script src="https://m.market4u.com.br/Mobile/www/js/modulos/bar-code-scanner.js"></script>
-    <script src="https://m.market4u.com.br/Mobile/www/js/modulos/bluetooth.js"></script>
     <style>
       html{
         background-image: url("img/logo.png");
@@ -67,7 +35,6 @@
         display: none;
       }
       #sem_internet{
-        display: none;
         text-align: center;
         background: #FFF;
         padding-bottom: 150px;
@@ -86,33 +53,62 @@
       #boxPago{
         display: none;
       }
+      #banner_modal{
+        display: none;
+      }
     </style>
+    <link href="css/keyframes.css" rel="stylesheet" type="text/css">
+    <link href="css/materialize.min.css" rel="stylesheet" type="text/css">
+    <link href="plugins/angular/css/mobile-angular-ui-base.css" rel="stylesheet" />
+    <script src="plugins/jquery-3.3.1.min.js"></script>
+    <script src="plugins/jquery-migrate-1.4.1.min.js"></script>
+    <script src="plugins/angular.min.js"></script>
+    <script src="plugins/angular-route.min.js"></script>
+    <script src="plugins/angular-animate.min.js"></script>
+    <script src="plugins/angular/js/mobile-angular-ui.min.js"></script>
+    <script src="plugins/angular/js/mobile-angular-ui.gestures.min.js"></script>
+    <script src="plugins/jquery.visible.js"></script>
+    <script src="plugins/mn-touch/mn-touch.min.js"></script>
+    <script src="plugins/device-detector/ng-device-detector.min.js"></script>
+    <script src="plugins/device-detector/re-tree.min.js"></script>
+    <link rel="stylesheet" href="css/angular-material.min.css">
+    <script src="plugins/angular-aria.js"></script>
+    <script src="plugins/angular-material.min.js"></script>
+    <script src="plugins/angular-sanitize.js"></script>
+    <script src="plugins/vanilla-masker.min.js"></script>
+    <script src="plugins/elastic.js"></script>
+
+    <script src="cordova.js"></script>
 
     <script type="text/javascript">
-      $(document).ready(function(){
-        setTimeout(function(){
-          $.ajax({
-            type: 'GET',
-            url: 'https://m.market4u.com.br/Mobile/www/js/config.js',
-            cache: false,
-            success: function () {
-
-            },
-            error: function (result) {
-              $('#sem_internet').show();
-            }
+      var semInternetTime = null;
+      function semInternet() {
+        clearTimeout(semInternetTime);
+        semInternetTime = setTimeout(function () {
+          $(document).ready(function () {
+            $('body *').remove();
+            $('body').append('<div id="sem_internet">\n' +
+                    '      <img src="img/logo.png" border="0">\n' +
+                    '      Não existe conexão com a internet.\n' +
+                    '      <a onclick="location.reload()">Clique aqui e tente novamente</a>\n' +
+                    '    </div>');
           });
         }, 3000);
-      });
+      }
     </script>
+
+    <link onerror="semInternet()" href="https://fonts.googleapis.com/css?family=Montserrat%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2Cregular%2Citalic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;ver=5.3.2#038;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link onerror="semInternet()" href="https://m.market4u.com.br/Mobile/www/css/style-sistema.css" rel="stylesheet" type="text/css">
+    <script onerror="semInternet()" src="https://m.market4u.com.br/Mobile/www/js/config.js"></script>
+    <script onerror="semInternet()" src="https://m.market4u.com.br/Mobile/www/js/app.js"></script>
+    <script onerror="semInternet()" src="https://m.market4u.com.br/Mobile/www/js/functions.js"></script>
+    <script onerror="semInternet()" src="https://m.market4u.com.br/Mobile/www/js/main.js"></script>
+    <script onerror="semInternet()" src="https://m.market4u.com.br/Mobile/www/js/modulos/index.js"></script>
+    <script onerror="semInternet()" src="https://m.market4u.com.br/Mobile/www/js/modulos/login.js"></script>
+    <script onerror="semInternet()" src="https://m.market4u.com.br/Mobile/www/js/modulos/bar-code-scanner.js"></script>
+    <script onerror="semInternet()" src="https://m.market4u.com.br/Mobile/www/js/modulos/bluetooth.js"></script>
   </head>
   <body addsaldo="{{!usuario.MEUSALDO && usuario.MEUSALDO_ATIVADO?1:0}}" device="{{device}}" controller="{{controller}}" ng-app="App">
-    <div id="sem_internet">
-      <img src="img/logo.png" border="0">
-      Não existe conexão com a internet.
-      <a onclick="location.reload()">Clique aqui e tente novamente</a>
-    </div>
-
     <div id="carregando" style="display: none">
       <img src="img/loader.gif" border="0">
       Carregando...

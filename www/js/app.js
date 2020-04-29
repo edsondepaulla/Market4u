@@ -45,6 +45,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                     switch ($route.current.params.STEP) {
                         case '3':
                         case 'TOUR':
+                        case 'LOCAIS':
                             if (!Page.active)
                                 $rootScope.location('#!/');
                             break;
@@ -159,14 +160,6 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             controller: 'Token',
             resolve: {
                 ReturnData: function ($route, $rootScope) {
-                    switch ($route.current.params.TOKEN) {
-                        case 'fecharcompra':
-                            if (!Page.active) {
-                                $rootScope.location('#!/index/CARRINHO');
-                                return;
-                            }
-                            break;
-                    }
                     return Factory.ajax(
                         {
                             action: 'options/token',
@@ -175,11 +168,6 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                             }
                         }, function (data) {
                             switch ($route.current.params.TOKEN) {
-                                case 'fecharcompra':
-                                    $rootScope.transacaoIdCarrinho = true;
-                                    $rootScope.transacaoId = parseInt(data.TRANSACAO_ID);
-                                    $rootScope.location(data.url);
-                                    break;
                                 case 'checkoutteste':
                                     $rootScope.transacaoId = parseInt(data.TRANSACAO_ID);
                                     $rootScope.location(data.url);

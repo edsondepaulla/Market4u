@@ -555,7 +555,7 @@ try {
                     navigator.notification.confirm(
                         msg,
                         function (buttonIndex) {
-                            if (buttonIndex == 1)
+                            if (buttonIndex == 2)
                                 submitPayment();
                             else {
                                 $('.btnConfirme').attr('disabled', false);
@@ -563,7 +563,7 @@ try {
                             }
                         },
                         'Confirmar',
-                        'Sim,Não'
+                        'Não,Sim'
                     );
                 } catch (e) {
                     if (confirm(msg))
@@ -795,6 +795,12 @@ try {
             link: function (scope, element, attrs) {
                 angular.element(element).bind("scroll", function () {
                     var _this = $(this);
+                    if (_this.attr('type') == 'produtos') {
+                        var getScrollValue = parseFloat(_this.attr('scroll-value'));
+                        var scrollTop = parseFloat(_this.scrollTop());
+                        $('body').attr('scroll', getScrollValue > scrollTop ? 0 : 1);
+                        _this.attr('scroll-value', scrollTop);
+                    }
                     if (parseInt(_this.attr('scroll')) && Factory.$rootScope.scrollLiberado) {
                         if ((_this.find('> ul').height() - _this.height() - _this.scrollTop()) <= 400) {
                             Factory.$rootScope.scrollLiberado = false;

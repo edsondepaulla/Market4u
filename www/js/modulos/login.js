@@ -247,11 +247,11 @@ app.controller('ConecteSeCodigo', function($rootScope, $scope, $routeParams) {
                 navigator.notification.confirm(
                     'Reenviar código para SMS?',
                     function (buttonIndex) {
-                        if (buttonIndex == 1)
+                        if (buttonIndex == 2)
                             _function();
                     },
                     'Confirmar',
-                    'Sim,Não'
+                    'Não,Sim'
                 );
             } catch (e) {
                 if (confirm('Enviar código para SMS?'))
@@ -308,11 +308,11 @@ app.controller('Card', function($rootScope, $scope, $routeParams, ReturnData) {
             navigator.notification.confirm(
                 'Remover cartão de crédito?',
                 function (buttonIndex) {
-                    if (buttonIndex == 1)
+                    if (buttonIndex == 2)
                         _function();
                 },
                 'Confirmar',
-                'Sim,Não'
+                'Não,Sim'
             );
         } catch (e) {
             if (confirm('Remover cartão de crédito?'))
