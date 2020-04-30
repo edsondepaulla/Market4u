@@ -93,9 +93,9 @@
         </div>
         <div class="scrollable-content" scroll md-scroll-y>
             <ul>
-                <li ng-click="$root.clickItem('busca_locais', {VERIFICA:1})" id="local_item" ng-if="$root.LOCAL.ITEM && $root.CARRINHO_COMPRAS.PRODUTOS">
-                    <i class="mdi mdi-maps-place"></i> {{$root.LOCAL.ITEM.NOME_ABV}}
-                    <a ng-if="$root.usuario.SHOW_MAQUINAS">Alterar</a>
+                <li ng-click="$root.clickItem('busca_locais')" id="local_item" ng-if="$root.LOCAL.ITEM && $root.CARRINHO_COMPRAS.PRODUTOS">
+                    <i class="mdi mdi-maps-place"></i> <b>Local</b> {{$root.LOCAL.ITEM.NOME_ABV}}
+                    <a>Alterar</a>
                     <label ng-if="$root.LOCAL.ITEM.MAPS.DISTANCE">{{$root.LOCAL.ITEM.MAPS.DISTANCE}}</label>
                     <span>{{$root.LOCAL.ITEM.ENDERECO}}, {{$root.LOCAL.ITEM.NUMERO}} {{$root.LOCAL.ITEM.BAIRRO}} - {{$root.LOCAL.ITEM.CIDADE}}{{$root.LOCAL.ITEM.ESTADO?' - '+$root.LOCAL.ITEM.ESTADO:''}}</span>
                 </li>
@@ -103,8 +103,8 @@
                     <div class="b" ng-click="$root.clickItem('produto', PROD)">
                         <img data-src="{{PROD.IMAGEM}}" src="img/market4u.png" alt="">
                         <h4>{{PROD.NOME}}</h4>
-                        <label class="total_de" ng-if="PROD.DE_PRECO_FORMAT"><span class="v">{{PROD.DE_PRECO_FORMAT}}</span></label>
-                        <label><span class="v">{{PROD.PRECO_FORMAT}}</span></label>
+                        <label class="total_de" ng-if="PROD.DE_PRECO_FORMAT && $root.LOCAL.ITEM.MAPS.PROXIMO"><span class="v">{{PROD.DE_PRECO_FORMAT}}</span></label>
+                        <label ng-if="$root.LOCAL.ITEM.MAPS.PROXIMO"><span class="v">{{PROD.PRECO_FORMAT}}</span></label>
                     </div>
                     <div class="addRemoveQtdeProduto" unidade_medida="{{PROD.UNIDADE_MEDIDA}}">
                         <i ng-click="addRemoveQtdeProd(PROD, '+', true)" class="mdi mdi-content-add-circle"></i>
@@ -121,9 +121,12 @@
                 </li>
             </ul>
         </div>
-        <div ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR" id="subTotalCarrinho">
+        <div ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR && $root.LOCAL.ITEM.MAPS.PROXIMO" id="subTotalCarrinho">
             Subtotal estimado: <span ng-if="$root.CARRINHO_COMPRAS.TOTAL_DE">R$ {{$root.CARRINHO_COMPRAS.TOTAL_DE}}</span><b>R$ {{$root.CARRINHO_COMPRAS.TOTAL_POR}}</b>
             <br><a id="fechar_compra" ng-click="fecharCompra()"><i class="mdi mdi-editor-attach-money"></i> pag<b>4u</b></a>
+        </div>
+        <div ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR && !$root.LOCAL.ITEM.MAPS.PROXIMO" id="subTotalCarrinho">
+            <a id="fechar_compra" ng-click="fecharCompra()"><i class="mdi mdi-editor-attach-money"></i> pag<b>4u</b></a>
         </div>
     </div>
 
@@ -144,7 +147,7 @@
             <img data-src="{{$root.PROD_DETALHES.IMAGEM}}" src="img/market4u.png" alt="">
             <h4>{{$root.PROD_DETALHES.NOME}}</h4>
 
-            <p class="preco">
+            <p class="preco" ng-if="$root.LOCAL.ITEM.MAPS.PROXIMO">
                 <label class="de" ng-if="$root.PROD_DETALHES.DE_PRECO_FORMAT">{{$root.PROD_DETALHES.DE_PRECO_FORMAT}}</label>
                 <label>{{$root.PROD_DETALHES.PRECO_FORMAT}}</label>
                 <label class="kg" ng-if="$root.PROD_DETALHES.UNIDADE_MEDIDA=='KG'">KG</label>
@@ -157,7 +160,7 @@
     </div>
 
     <a bottom="{{$root.BTN_CARRINHO_BOTTOM?1:0}}" ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR && $root.TIPO_PG != 'PAGAMENTO'" id="boxCarrinhoFloat" style="z-index: {{$root.PROD_DETALHES||$root.BTN_CARRINHO_BOTTOM?2:1}}" ng-click="$root.clickItem('carrinho2')">
-        <i class="mdi mdi-action-shopping-cart"></i> R$ {{$root.CARRINHO_COMPRAS.TOTAL_POR}}
+        <i class="mdi mdi-action-shopping-cart"></i> {{$root.LOCAL.ITEM.MAPS.PROXIMO?'R$ '+$root.CARRINHO_COMPRAS.TOTAL_POR:''}}
     </a>
 </div>
 

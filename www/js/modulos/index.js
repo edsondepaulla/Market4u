@@ -116,8 +116,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
             }
         };
         $rootScope.BANNERS_MODAL = $rootScope.BANNERS_MODAL ? $rootScope.BANNERS_MODAL : [];
-        $scope.getCompras = function (CAT) {
-            Location.checkState();
+        $scope.getCompras = function (CAT, COORDS) {
             if (!parseInt(CAT.ACTIVE)) {
                 clearTimeout(Payment.timeoutBanner['COMPRAS']);
                 $rootScope.scrollLiberado = false;
@@ -127,6 +126,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                         data: {
                             ID: parseInt(CAT.ID),
                             PRODUTO: parseInt(CAT.PRODUTO) || 0,
+                            COORDS: COORDS ? COORDS : null,
                             LOADER_CARREGANDO: $('#boxPago:visible').length ? false : true
                         }
                     },
@@ -257,11 +257,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                     $('.boxPopup[box="locais"]').hide();
                     break;
                 case 'busca_locais':
-                    var show = true;
-                    if (VALS.VERIFICA)
-                        show = parseInt(Login.getData().SHOW_MAQUINAS) ? true : false;
-                    if (show)
-                        $('.boxPopup[box="locais"]').show();
+                    $('.boxPopup[box="locais"]').show();
                     break;
                 case 'verProdutos':
                 case 'busca':
@@ -334,15 +330,35 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
         };
 
         // Get produtos
-        if(parseInt(Login.getData().CHECK_MAQUINAS) || true){
-            if (!parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']) || Payment.ATUALIZAR) {
-                Payment.ATUALIZAR = false;
-                $scope.getCompras({ID: parseInt($('ul#boxCategorias li.active').data('id')) || 0});
+        if (!parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']) || Payment.ATUALIZAR) {
+            Payment.ATUALIZAR = false;
+            var ID_CATEGORIA = parseInt($('ul#boxCategorias li.active').data('id')) || 0;
+            var getLocation = function () {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        function (position) {
+                            $scope.getCompras({ID: ID_CATEGORIA}, position.coords ? position.coords : -1);
+                        },
+                        function () {
+                            $scope.getCompras({ID: ID_CATEGORIA}, -1);
+                        },
+                        {
+                            enableHighAccuracy: true,
+                            timeout: 5000,
+                            maximumAge: 0
+                        }
+                    );
+                } else
+                    $scope.getCompras({ID: ID_CATEGORIA}, -1);
+            };
+            if ("cordova" in window) {
+                document.addEventListener("deviceready", function () {
+                    getLocation();
+                }, false);
             } else
-                $scope.scrollLeft();
-        }else{
-
-        }
+                getLocation();
+        } else
+            $scope.scrollLeft();
 
         $rootScope.TIPO_PG = 'COMPRAR';
         $rootScope.MenuBottom = 1;
@@ -447,19 +463,49 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
         };
 
         $scope.fecharCompra = function () {
-            Factory.ajax(
-                {
-                    action: 'options/token',
-                    data: {
-                        TOKEN: 'fecharcompra'
-                    }
-                }, function (data) {
-                    $rootScope.transacaoIdCarrinho = true;
-                    $rootScope.transacaoId = parseInt(data.TRANSACAO_ID);
-                    if (data.url)
-                        $rootScope.location(data.url);
+            try {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        function (position) {
+                            Factory.ajax(
+                                {
+                                    action: 'options/token',
+                                    data: {
+                                        TOKEN: 'fecharcompra',
+                                        COORDS: position.coords
+                                    }
+                                }, function (data) {
+                                    $rootScope.transacaoIdCarrinho = true;
+                                    $rootScope.transacaoId = parseInt(data.TRANSACAO_ID);
+                                    if (data.url)
+                                        $rootScope.location(data.url);
+                                }
+                            );
+                        },
+                        function () {
+                            if ("cordova" in window)
+                                Location.checkState();
+                            else
+                                Factory.alert(Location.msg);
+                        },
+                        {
+                            enableHighAccuracy: true,
+                            timeout: 5000,
+                            maximumAge: 0
+                        }
+                    );
+                } else {
+                    if ("cordova" in window)
+                        Location.checkState();
+                    else
+                        Factory.alert(Location.msg);
                 }
-            );
+            } catch (e) {
+                if ("cordova" in window)
+                    Location.checkState();
+                else
+                    Factory.alert(Location.msg);
+            }
         };
 
         $scope.clearPesquisa = function () {
@@ -470,7 +516,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
         $rootScope.setLocal = function (ITEM) {
             $rootScope.LOCAL.TEXTO = ITEM.NOME_ABV;
             $rootScope.clickItem('locaisVoltar');
-            //$scope.getCompras({ID: 0});
+            $scope.getCompras({ID: 0}, parseInt(ITEM.ID));
         };
 
         $rootScope.SetAddRemoveQtdeProd = function (PROD, QTDE, LOADER_CARREGANDO) {

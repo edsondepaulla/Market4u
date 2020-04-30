@@ -5743,6 +5743,10 @@ body[device="ios"] .boxPopup[box="locais"]{
   color: #00CB00;
   z-index: 1;
 }
+.boxPopup[box="carrinho"] ul li#local_item b{
+  color: #000;
+  font-weight: 500;
+}
 .boxPopup[box="locais"] ul li a{
   right: 0;
 }
@@ -5775,6 +5779,7 @@ body[device="ios"] .boxPopup[box="locais"]{
   margin: 0 0 -11px;
   border-bottom: 1px solid rgba(11, 99, 64, 0.1);
   z-index: 1;
+  background: rgba(238, 238, 238, 0.4);
 }
 
 .banners{
@@ -5820,6 +5825,23 @@ body[device="ios"] .boxPopup[box="locais"]{
 }
 #gps > div{
   background: #FFF;
+  padding: 15px;
+  width: 90%;
+  text-align: center;
+  border-radius: 5px;
+}
+#gps > div > div h3{
+  font-size: 20px;
+  font-weight: 500;
+}
+#gps > div a{
+  background-image: linear-gradient(90deg,#009145 0%,#8BC53F 100%)!important;
+  color: #FFF;
+  display: inline-block;
+  padding: 5px 10px;
+  font-size: 19px;
+  border-radius: 5px;
+  margin-top: 19px;
 }
 #banner_modal > ul > li.active{
   display: block;

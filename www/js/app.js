@@ -167,12 +167,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                                 TOKEN: $route.current.params.TOKEN
                             }
                         }, function (data) {
-                            switch ($route.current.params.TOKEN) {
-                                case 'checkoutteste':
-                                    $rootScope.transacaoId = parseInt(data.TRANSACAO_ID);
-                                    $rootScope.location(data.url);
-                                    break;
-                            }
+
                         }
                     );
                 }

@@ -93,6 +93,8 @@ app.controller('Cadastro', function($rootScope, $scope) {
         $rootScope.MenuBottom = true;
 
     $scope.pref = function (ID) {
+        if(!$rootScope.usuario.PREFERENCIAS)
+            $rootScope.usuario.PREFERENCIAS = [];
         $rootScope.usuario.PREFERENCIAS[ID] = $rootScope.usuario.PREFERENCIAS[ID] ? 0 : ID;
     };
 

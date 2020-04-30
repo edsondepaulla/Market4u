@@ -89,7 +89,6 @@ try {
 
         $rootScope.controller = 'Index';
         $rootScope.$on('$routeChangeSuccess', function () {
-            Location.checkState();
             $('body > .app').show();
             $('a#whatsapp, #carregando').removeAttr('style');
             $rootScope.NO_WHATSAPP = true;
