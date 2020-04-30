@@ -117,6 +117,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
         };
         $rootScope.BANNERS_MODAL = $rootScope.BANNERS_MODAL ? $rootScope.BANNERS_MODAL : [];
         $scope.getCompras = function (CAT) {
+            Location.checkState();
             if (!parseInt(CAT.ACTIVE)) {
                 clearTimeout(Payment.timeoutBanner['COMPRAS']);
                 $rootScope.scrollLiberado = false;
@@ -577,7 +578,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                 {
                     'STEP': 3,
                     'STEP_TEXTO': 2,
-                    'TEXTO': '<b>4u</b>pagamento'
+                    'TEXTO': 'pag<b>4u</b>'
                 }
             ];
 

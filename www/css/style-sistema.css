@@ -2998,7 +2998,6 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li.active{
 #boxPg > ul > li i.mdi-action-done{
   display: none;
   color: #FFF;
-  background: #00CB00;
   padding: 0 3px;
   text-decoration: unset !important;
   font-weight: 500;
@@ -3012,8 +3011,8 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li.active{
 }
 
 #boxPg > ul > li.active{
-  background: #00CB00;
   color: #FFF;
+  background-image: linear-gradient(90deg,#009145 0%,#8BC53F 100%)!important;
 }
 
 #bandeiras li{
@@ -5341,7 +5340,7 @@ body[addsaldo="1"] #boxCompras{
   margin-top: 20px;
 }
 md-content#boxProdutos{
-  padding-bottom: 100px !important;
+  padding-bottom: 150px !important;
   display: block;
   width: 100%;
   height: 100%;
@@ -5805,6 +5804,22 @@ body[device="ios"] .boxPopup[box="locais"]{
   display: flex;
   align-items: center;
   justify-content: center;
+}
+#gps{
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.28);
+  width: 100%;
+  height: 100%;
+  padding: 0 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#gps > div{
+  background: #FFF;
 }
 #banner_modal > ul > li.active{
   display: block;

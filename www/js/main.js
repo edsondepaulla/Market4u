@@ -89,6 +89,7 @@ try {
 
         $rootScope.controller = 'Index';
         $rootScope.$on('$routeChangeSuccess', function () {
+            Location.checkState();
             $('body > .app').show();
             $('a#whatsapp, #carregando').removeAttr('style');
             $rootScope.NO_WHATSAPP = true;
@@ -796,7 +797,7 @@ try {
             link: function (scope, element, attrs) {
                 angular.element(element).bind("scroll", function () {
                     var _this = $(this);
-                    if (_this.attr('type') == 'produtos') {
+                    if (_this.attr('type') == 'produtos' && !$('.boxPopup:visible').length) {
                         var scrollTop = parseFloat(_this.scrollTop());
                         if (scrollTop > 1) {
                             clearTimeout(TimeOutScroll);

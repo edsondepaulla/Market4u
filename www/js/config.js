@@ -439,6 +439,7 @@ var Factory = {
     },
     prepare: function () {
         document.addEventListener("deviceready", function () {
+            Location.onDeviceReady();
             cordova.plugins.BluetoothStatus.initPlugin();
             window.addEventListener('BluetoothStatus.enabled', function() {
                 bluetooth.ativado = true;
