@@ -8,14 +8,14 @@ var Location = {
         else
             cordova.plugins.diagnostic.switchToSettings();
     },
-    msg: 'GPS Desativado, pressione ok e ative a localização para utilizar o App!',
+    msg: 'GPS Desativado, pressione ok e ative a localização para que você consiga navegar no meu App e visualizar os produtos :)',
     requestLocationAccuracy: function () {
         cordova.plugins.diagnostic.requestLocationAuthorization(
             function (result) {
-
+                Location.checkState();
             },
             function (result) {
-
+                Location.checkState();
             },
             cordova.plugins.diagnostic.locationAuthorizationMode.WHEN_IN_USE
         );
