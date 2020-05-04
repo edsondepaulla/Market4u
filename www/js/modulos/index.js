@@ -463,49 +463,56 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
         };
 
         $scope.fecharCompra = function () {
-            try {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(
-                        function (position) {
-                            Factory.ajax(
-                                {
-                                    action: 'options/token',
-                                    data: {
-                                        TOKEN: 'fecharcompra',
-                                        COORDS: position.coords
+            var tentativas = 0;
+            $('#carregando').show().css('opacity', 1);
+            var fecharCompra = function () {
+                tentativas++;
+                try {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(
+                            function (position) {
+                                Factory.ajax(
+                                    {
+                                        action: 'options/token',
+                                        data: {
+                                            TOKEN: 'fecharcompra',
+                                            COORDS: position.coords
+                                        }
+                                    }, function (data) {
+                                        $rootScope.transacaoIdCarrinho = true;
+                                        $rootScope.transacaoId = parseInt(data.TRANSACAO_ID);
+                                        if (data.url)
+                                            $rootScope.location(data.url);
                                     }
-                                }, function (data) {
-                                    $rootScope.transacaoIdCarrinho = true;
-                                    $rootScope.transacaoId = parseInt(data.TRANSACAO_ID);
-                                    if (data.url)
-                                        $rootScope.location(data.url);
-                                }
-                            );
-                        },
-                        function () {
-                            if ("cordova" in window)
-                                Location.checkState();
-                            else
-                                Factory.alert(Location.msg);
-                        },
-                        {
-                            enableHighAccuracy: true,
-                            timeout: 5000,
-                            maximumAge: 0
-                        }
-                    );
-                } else {
+                                );
+                            },
+                            function () {
+                                fecharCompraError();
+                            },
+                            {
+                                enableHighAccuracy: true,
+                                timeout: 5000,
+                                maximumAge: 0
+                            }
+                        );
+                    } else {
+                        fecharCompraError();
+                    }
+                } catch (e) {
+                    fecharCompraError();
+                }
+            };
+            var fecharCompraError = function () {
+                if (tentativas <= 10)
+                    fecharCompra();
+                else {
+                    $('#carregando').css('opacity', 0).hide();
+                    Factory.alert(Location.msg);
                     if ("cordova" in window)
                         Location.checkState();
-                    else
-                        Factory.alert(Location.msg);
                 }
-            } catch (e) {
-                if ("cordova" in window)
-                    Location.checkState();
-                else
-                    Factory.alert(Location.msg);
-            }
+            };
+            fecharCompra();
         };
 
         $scope.clearPesquisa = function () {

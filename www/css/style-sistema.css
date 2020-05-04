@@ -2648,6 +2648,10 @@ position: relative;
 #contentLeft > ul li:last-child{
 border-bottom: 0;
 }
+#contentLeft > ul li[data-id="PS"] a{
+  color: #287233;
+  font-weight: 600;
+}
 
 #carregando img{
 width: 80px;
@@ -5715,7 +5719,7 @@ body[controller="Index"] > #toolbar #local{
   padding-top: 10px;
 }
 .boxPopup[box="locais"] .scrollable-content{
-  padding-bottom: 130px;
+  padding-bottom: 45px !important;
 }
 .boxPopup[box="locais"]{
   z-index: 8;

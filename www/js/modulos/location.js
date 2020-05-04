@@ -1,6 +1,7 @@
 var Location = {
     onDeviceReady: function () {
         $(document).on("resume", Location.checkState);
+        Location.checkState();
     },
     openSettings: function () {
         if (cordova.platformId === "android")
@@ -8,7 +9,7 @@ var Location = {
         else
             cordova.plugins.diagnostic.switchToSettings();
     },
-    msg: 'GPS Desativado, pressione ok e ative a localização para que você consiga navegar no meu App e visualizar os produtos :)',
+    msg: 'Favor verifique o GPS do seu dispositivo, pressione ok e ative a localização para que você consiga navegar no meu app e visualizar os produtos :)',
     requestLocationAccuracy: function () {
         cordova.plugins.diagnostic.requestLocationAuthorization(
             function (result) {
@@ -50,6 +51,23 @@ var Location = {
                 }, 100);
             }
         );
+        setTimeout(function () {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function (position) {
+                        Location.checkState();
+                    },
+                    function () {
+                        Location.checkState();
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 5000,
+                        maximumAge: 0
+                    }
+                );
+            }
+        }, 3000);
     },
     time: null,
     status: null,

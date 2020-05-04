@@ -268,6 +268,18 @@ try {
                 logado: 1
             },
             {
+                id: 'PS',
+                titulo: 'Pesquisa de Satisfação',
+                external: 1,
+                url: {
+                    url: 'https://docs.google.com/forms/d/e/1FAIpQLSf2oEEwGaFyyIq55rcDTXzwc4OsFVX-dow-xgKiTxG5c0TcGA/viewform',
+                    ype: 'load_url',
+                    window_open: Factory.$rootScope.device == 'ios' ? false : true
+                },
+                icon: 'mdi-action-grade',
+                logado: 0
+            },
+            {
                 titulo: 'Compras',
                 controller: 'HistoricoTransacoesLst',
                 url: '#!/historico-transacoes',
