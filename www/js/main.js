@@ -153,6 +153,7 @@ try {
                     function (data) {
                         if (data.HASH) {
                             params = params ? params : {};
+                            params['PHPSESSID'] = localStorage.getItem("PHPSESSID");
                             params['HASH'] = btoa(
                                 JSON.stringify(
                                     {
@@ -162,7 +163,7 @@ try {
                                 )
                             );
                             Factory.AppBrowser(
-                                data.BROWSER.url + url + '?' + $.param(params),
+                                data.BROWSER.url + (url != '/' ? url : '') + '?' + $.param(params),
                                 data.BROWSER
                             );
                         }
@@ -273,7 +274,7 @@ try {
                 external: 1,
                 url: {
                     url: 'https://docs.google.com/forms/d/e/1FAIpQLSf2oEEwGaFyyIq55rcDTXzwc4OsFVX-dow-xgKiTxG5c0TcGA/viewform',
-                    ype: 'load_url',
+                    type: 'load_url',
                     window_open: Factory.$rootScope.device == 'ios' ? false : true
                 },
                 icon: 'mdi-action-grade',

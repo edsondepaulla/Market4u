@@ -20,7 +20,7 @@
             </a>
         </li>
         <li class="{{controller == 'AreaRestrita'?'active':''}}" ng-if="usuario.RESTRITO">
-            <a ng-click="location('#!/area-restrita')">
+            <a ng-click="swipeLeft();AcessoRestrito('/');">
                 <i class="mdi mdi-action-lock"></i>
                 Área restrita
             </a>
