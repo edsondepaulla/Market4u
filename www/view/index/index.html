@@ -123,10 +123,10 @@
         </div>
         <div ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR && $root.LOCAL.ITEM.MAPS.PROXIMO" id="subTotalCarrinho">
             Subtotal estimado: <span ng-if="$root.CARRINHO_COMPRAS.TOTAL_DE">R$ {{$root.CARRINHO_COMPRAS.TOTAL_DE}}</span><b>R$ {{$root.CARRINHO_COMPRAS.TOTAL_POR}}</b>
-            <br><a id="fechar_compra" ng-click="fecharCompra()"><i class="mdi mdi-editor-attach-money"></i> pag<b>4u</b></a>
+            <br><a id="fechar_compra" ng-click="fecharCompra()"><i class="mdi mdi-editor-attach-money"></i> Pagamento</a>
         </div>
         <div ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR && !$root.LOCAL.ITEM.MAPS.PROXIMO" id="subTotalCarrinho">
-            <a id="fechar_compra" ng-click="fecharCompra()"><i class="mdi mdi-editor-attach-money"></i> pag<b>4u</b></a>
+            <a id="fechar_compra" ng-click="fecharCompra()"><i class="mdi mdi-editor-attach-money"></i> Pagamento</a>
         </div>
     </div>
 
