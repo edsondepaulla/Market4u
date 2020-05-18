@@ -79,18 +79,22 @@ app.controller('Cadastro', function($rootScope, $scope) {
     }, 500);
 
     $rootScope.ITENS = [];
-    $rootScope.ITENS.push({'ACTIVE': 1, 'SRC': 'view/conecte-se/level-dados-pessoais.html'});
-    $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': 'view/conecte-se/level-dados-acesso.html'});
-    $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': 'view/conecte-se/level-endereco.html'});
-    $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': 'view/conecte-se/level-preferencias.html', 'ITENS': $rootScope.usuario.ITENS_PREFERENCIAS});
+    var base = config.url_api[config.ambiente];
+    $rootScope.ITENS.push({'ACTIVE': 1, 'SRC': base + 'Mobile/www/view/conecte-se/level-dados-pessoais.html'});
+    $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': base + 'Mobile/www/view/conecte-se/level-dados-acesso.html'});
+    $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': base + 'Mobile/www/view/conecte-se/level-endereco.html'});
+    $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': base + 'Mobile/www/view/conecte-se/level-preferencias.html', 'ITENS': $rootScope.usuario.ITENS_PREFERENCIAS});
     if (!parseInt($rootScope.usuario.ID)) {
         $rootScope.pagseguro();
-        $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': 'view/conecte-se/level-cc.html'});
+        $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': base + 'Mobile/www/view/conecte-se/level-cc.html'});
     }
     if(!$scope.AJUSTES)
-        $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': 'view/conecte-se/level-confirmar.html'});
-    else
+        $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': base + 'Mobile/www/view/conecte-se/level-confirmar.html'});
+    else {
+        if (parseInt($rootScope.usuario.ID))
+            $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': base + 'Mobile/www/view/conecte-se/level-termos-politica.html'});
         $rootScope.MenuBottom = true;
+    }
 
     $scope.pref = function (ID) {
         if(!$rootScope.usuario.PREFERENCIAS)

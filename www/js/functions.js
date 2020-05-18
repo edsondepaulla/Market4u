@@ -123,10 +123,6 @@ function inputEvents(_this, _bind) {
                                     $('#nome_completo').val(data.NOME);
                                     Factory.$rootScope.usuario.NOME = data.NOME;
                                 }
-                                if (data.MAE) {
-                                    $('#nome_mae').val(data.MAE);
-                                    Factory.$rootScope.usuario.MAE = data.MAE;
-                                }
                                 if (data.GENERO) {
                                     $('#genero_' + data.GENERO).attr('checked', true);
                                     Factory.$rootScope.usuario.GENERO = data.GENERO;
