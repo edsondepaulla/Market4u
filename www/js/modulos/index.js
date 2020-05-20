@@ -116,38 +116,60 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
             }
         };
         $rootScope.BANNERS_MODAL = $rootScope.BANNERS_MODAL ? $rootScope.BANNERS_MODAL : [];
-        $scope.getCompras = function (CAT, COORDS) {
-            if (!parseInt(CAT.ACTIVE)) {
+        $scope.getCompras = function (ITEM, START) {
+            if (!parseInt(ITEM.ACTIVE)) {
                 clearTimeout(Payment.timeoutBanner['COMPRAS']);
                 $rootScope.scrollLiberado = false;
-                Factory.ajax(
-                    {
-                        action: 'payment/compras',
-                        data: {
-                            ID: parseInt(CAT.ID),
-                            PRODUTO: parseInt(CAT.PRODUTO) || 0,
-                            COORDS: COORDS ? COORDS : null,
-                            LOADER_CARREGANDO: $('#boxPago:visible').length ? false : true
-                        }
-                    },
-                    function (data) {
-                        $('body').attr('scroll', 0);
-                        if (data.LOCAL)
-                            $rootScope.LOCAL = data.LOCAL;
-                        if (data.COMPRAS) {
-                            $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS = data.COMPRAS;
-                            $rootScope.BANNERS_MODAL = data.COMPRAS.BANNERS_MODAL;
-                            if (data.COMPRAS.BANNERS.length) {
-                                setTimeout(function () {
-                                    $scope.banner('COMPRAS', data.COMPRAS.BANNERS_TIME);
-                                }, 1000);
+                var getComprasAjax = function (COORDS){
+                    Factory.ajax(
+                        {
+                            action: 'payment/compras',
+                            data: {
+                                ID: parseInt(ITEM.ID),
+                                NOVO: 1,
+                                LOCAL: parseInt(ITEM.LOCAL),
+                                PRODUTO: parseInt(ITEM.PRODUTO) || 0,
+                                COORDS: COORDS ? COORDS : null,
+                                START: parseInt(START) ? 1 : 0,
+                                LOADER_CARREGANDO: $('#boxPago:visible').length ? false : true
                             }
+                        },
+                        function (data) {
+                            $('body').attr('scroll', 0);
+                            if (data.LOCAL)
+                                $rootScope.LOCAL = data.LOCAL;
+                            if (data.COMPRAS) {
+                                $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS = data.COMPRAS;
+                                $rootScope.BANNERS_MODAL = data.COMPRAS.BANNERS_MODAL;
+                                if (data.COMPRAS.BANNERS.length) {
+                                    setTimeout(function () {
+                                        $scope.banner('COMPRAS', data.COMPRAS.BANNERS_TIME);
+                                    }, 1000);
+                                }
+                            }
+                            $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
+                            $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS = data.CARRINHO;
+                            $scope.scrollLeft();
                         }
-                        $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
-                        $rootScope.CARRINHO_COMPRAS = Payment.CARRINHO_COMPRAS = data.CARRINHO;
-                        $scope.scrollLeft();
-                    }
-                );
+                    );
+                };
+
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        function (position) {
+                            getComprasAjax(position.coords ? position.coords : -1);
+                        },
+                        function () {
+                            getComprasAjax(-1);
+                        },
+                        {
+                            enableHighAccuracy: true,
+                            timeout: 5000,
+                            maximumAge: 0
+                        }
+                    );
+                } else
+                    getComprasAjax(-1);
             }
         };
 
@@ -334,22 +356,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
             Payment.ATUALIZAR = false;
             var ID_CATEGORIA = parseInt($('ul#boxCategorias li.active').data('id')) || 0;
             var getLocation = function () {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(
-                        function (position) {
-                            $scope.getCompras({ID: ID_CATEGORIA}, position.coords ? position.coords : -1);
-                        },
-                        function () {
-                            $scope.getCompras({ID: ID_CATEGORIA}, -1);
-                        },
-                        {
-                            enableHighAccuracy: true,
-                            timeout: 5000,
-                            maximumAge: 0
-                        }
-                    );
-                } else
-                    $scope.getCompras({ID: ID_CATEGORIA}, -1);
+                $scope.getCompras({ID: ID_CATEGORIA}, 1);
             };
             if ("cordova" in window) {
                 document.addEventListener("deviceready", function () {
@@ -381,10 +388,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
             $rootScope.toolbar = false;
 
         $scope.verCarrinho = function () {
-            if ($rootScope.transacaoIdCarrinho)
-                $rootScope.location('#!/index/CARRINHO');
-            else
-                $('#Produtos').show();
+            $rootScope.location('#!/index/CARRINHO');
         };
 
         $rootScope.clickBanner = function (BANNER) {
@@ -523,7 +527,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
         $rootScope.setLocal = function (ITEM) {
             $rootScope.LOCAL.TEXTO = ITEM.NOME_ABV;
             $rootScope.clickItem('locaisVoltar');
-            $scope.getCompras({ID: 0}, parseInt(ITEM.ID));
+            $scope.getCompras({ID: 0, LOCAL: parseInt(ITEM.ID)});
         };
 
         $rootScope.SetAddRemoveQtdeProd = function (PROD, QTDE, LOADER_CARREGANDO) {
@@ -556,13 +560,13 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
             var msg = 'Tem certeza que deseja limpar sua lista de compra?';
             try {
                 navigator.notification.confirm(
-                    msg,
+                    '',
                     function (buttonIndex) {
-                        if (buttonIndex == 2)
+                        if (buttonIndex == (Factory.$rootScope.device == 'ios' ? 2 : 1))
                             $rootScope.SetAddRemoveQtdeProd(-1, 0, true);
                     },
-                    'Confirmar',
-                    'Não,Sim'
+                    msg,
+                    Factory.$rootScope.device == 'ios' ? 'Não,Sim' : 'Sim,Não'
                 );
             } catch (e) {
                 if (confirm(msg))
@@ -585,17 +589,17 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                         if (parseInt(PROD.QTDE) == 1 || PROD.UNIDADE_MEDIDA == 'KG') {
                             try {
                                 navigator.notification.confirm(
-                                    'Tem certeza que deseja remover este item da sua lista de compra?',
+                                    '',
                                     function (buttonIndex) {
-                                        if (buttonIndex == 2)
+                                        if (buttonIndex == (Factory.$rootScope.device == 'ios' ? 2 : 1))
                                             $rootScope.SetAddRemoveQtdeProd(PROD, 0, LOADER_CARREGANDO);
                                         else {
                                             PROD.QTDE = PROD.QTDE_ORIGINAL;
                                             $rootScope.QTDE_PRODUTOS[PROD.PROD_ID] = PROD.QTDE;
                                         }
                                     },
-                                    'Confirmar',
-                                    'Não,Sim'
+                                    'Tem certeza que deseja remover este item da sua lista de compra?',
+                                    Factory.$rootScope.device == 'ios' ? 'Não,Sim' : 'Sim,Não'
                                 );
                             } catch (e) {
                                 if (confirm('Tem certeza que deseja remover este item da sua lista de compra?'))

@@ -430,7 +430,6 @@ var Factory = {
         if (functionError)
             eval(functionError);
 
-        console.log(data);
 
         $('.btnConfirme').attr('disabled', false);
 

@@ -440,13 +440,14 @@ try {
                     $.each($rootScope.FORMAS_PG, function (idx, item_each) {
                         item_each.ACTIVE = 0;
                     });
-                    if (PG.TIPO == 'CC') {
-                        if (PG.LST) {
+                    if (PG.TIPO == 'CC' || PG.TIPO == 'MCC') {
+                        if (PG.LST.length) {
                             $.each(PG.LST, function (idx_cc, item_each_cc) {
                                 if (item_each_cc.ACTIVE)
                                     $rootScope.CARD = item_each_cc.VALS;
                             });
-                        }
+                        }else
+                            $rootScope.CARD = null;
                     }
                     PG.ACTIVE = 1;
                     $rootScope.FORMA_PAGAMENTO = PG;
@@ -530,53 +531,75 @@ try {
                             );
                             break;
                         case 'compra':
-                            Factory.ajax(
-                                {
-                                    action: 'payment/confirm',
-                                    data: {
-                                        UTILIZADO_SALDO: $rootScope.ACTIVE_SALDO,
-                                        VOUCHER: $rootScope.VOUCHER || 0,
-                                        FORMA_PAGAMENTO: $rootScope.FORMA_PAGAMENTO,
-                                        TRANSACAO_ID: $rootScope.transacaoId,
-                                        EXTRA: extra
-                                    }
-                                },
-                                function (data) {
-                                    $('.btnConfirme').attr('disabled', false);
+                            var compra = function (CPF_NA_NFE) {
+                                Factory.ajax(
+                                    {
+                                        action: 'payment/confirm',
+                                        data: {
+                                            UTILIZADO_SALDO: $rootScope.ACTIVE_SALDO,
+                                            VOUCHER: $rootScope.VOUCHER || 0,
+                                            CPF_NA_NFE: CPF_NA_NFE,
+                                            FORMA_PAGAMENTO: $rootScope.FORMA_PAGAMENTO,
+                                            TRANSACAO_ID: $rootScope.transacaoId,
+                                            EXTRA: extra
+                                        }
+                                    },
+                                    function (data) {
+                                        $('.btnConfirme').attr('disabled', false);
 
-                                    switch (parseInt(data.status)) {
-                                        case 1:
-                                            $rootScope.verify();
-                                            break;
-                                        case 2:
+                                        switch (parseInt(data.status)) {
+                                            case 1:
+                                                $rootScope.verify();
+                                                break;
+                                            case 2:
 
-                                            break;
-                                        default:
-                                            Payment.cancel();
-                                            break;
+                                                break;
+                                            default:
+                                                Payment.cancel();
+                                                break;
+                                        }
+                                    },
+                                    function () {
+                                        $('.btnConfirme').attr('disabled', false);
                                     }
-                                },
-                                function () {
-                                    $('.btnConfirme').attr('disabled', false);
+                                );
+                            };
+                            try {
+                                navigator.notification.confirm(
+                                    '',
+                                    function (buttonIndex) {
+                                        if (buttonIndex == (Factory.$rootScope.device == 'ios' ? 2 : 1))
+                                            compra(1);
+                                        else
+                                            compra(0);
+                                    },
+                                    'CPF na nota fiscal?',
+                                    Factory.$rootScope.device == 'ios' ? 'Não,Sim' : 'Sim,Não'
+                                );
+                            } catch (e) {
+                                if (confirm('CPF na nota fiscal?'))
+                                    compra(1);
+                                else {
+                                    compra(0);
                                 }
-                            );
+                            }
                             break;
                     }
                 };
                 var msg = 'Tem certeza que deseja realizar ' + (origem == 'saldo' ? 'a compra de saldo de R$ ' + $rootScope.VALOR_PG + ' para sua carteira' : 'esta compra') + '?';
                 try {
                     navigator.notification.confirm(
-                        msg,
+                        '',
                         function (buttonIndex) {
-                            if (buttonIndex == 2)
+                            if (buttonIndex == (Factory.$rootScope.device == 'ios' ? 2 : 1))
                                 submitPayment();
                             else {
                                 $('.btnConfirme').attr('disabled', false);
                                 $('#carregando').hide().css('opacity', 0);
                             }
                         },
-                        'Confirmar',
-                        'Não,Sim'
+                        msg,
+                        Factory.$rootScope.device == 'ios' ? 'Não,Sim' : 'Sim,Não'
                     );
                 } catch (e) {
                     if (confirm(msg))

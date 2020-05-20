@@ -7,7 +7,7 @@
     </p>
     <h4>{{ITEM.NOME}}</h4>
 </div>
-<div ng-if="ITEM.TYPE=='PROD'" unidade_medida="{{ITEM.UNIDADE_MEDIDA}}" class="addRemoveProd" qtde="{{$root.QTDE_PRODUTOS[ITEM.PROD_ID]?$root.QTDE_PRODUTOS[ITEM.PROD_ID]:0}}">
+<div ng-if="ITEM.TYPE=='PROD' && $root.LOCAL.ITEM.MAPS.PROXIMO" unidade_medida="{{ITEM.UNIDADE_MEDIDA}}" class="addRemoveProd" qtde="{{$root.QTDE_PRODUTOS[ITEM.PROD_ID]?$root.QTDE_PRODUTOS[ITEM.PROD_ID]:0}}">
     <i ng-click="addRemoveQtdeProd(ITEM, '-')" class="mdi mdi-content-remove"></i>
     <span>{{$root.QTDE_PRODUTOS[ITEM.PROD_ID]?$root.QTDE_PRODUTOS[ITEM.PROD_ID]:0}}</span>
     <i ng-click="addRemoveQtdeProd(ITEM, '+')" class="mdi mdi-content-add"></i>

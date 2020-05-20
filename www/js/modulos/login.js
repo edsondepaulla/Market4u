@@ -245,19 +245,19 @@ app.controller('ConecteSeCodigo', function($rootScope, $scope, $routeParams) {
                         data: DATA
                     },
                     function (data) {
-                        Factory.alert("Verifique suas mensagens no seu celular!")
+                        Factory.alert("Verifique suas mensagens no seu celular!");
                     }
                 );
             };
             try {
                 navigator.notification.confirm(
-                    'Reenviar código para SMS?',
+                    '',
                     function (buttonIndex) {
-                        if (buttonIndex == 2)
+                        if (buttonIndex == (Factory.$rootScope.device == 'ios' ? 2 : 1))
                             _function();
                     },
-                    'Confirmar',
-                    'Não,Sim'
+                    'Reenviar código para SMS?',
+                    Factory.$rootScope.device == 'ios' ? 'Não,Sim' : 'Sim,Não'
                 );
             } catch (e) {
                 if (confirm('Enviar código para SMS?'))
@@ -312,13 +312,13 @@ app.controller('Card', function($rootScope, $scope, $routeParams, ReturnData) {
         };
         try {
             navigator.notification.confirm(
-                'Remover cartão de crédito?',
+                '',
                 function (buttonIndex) {
-                    if (buttonIndex == 2)
+                    if (buttonIndex == (Factory.$rootScope.device == 'ios' ? 2 : 1))
                         _function();
                 },
-                'Confirmar',
-                'Não,Sim'
+                'Remover cartão de crédito?',
+                Factory.$rootScope.device == 'ios' ? 'Não,Sim' : 'Sim,Não'
             );
         } catch (e) {
             if (confirm('Remover cartão de crédito?'))

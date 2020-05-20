@@ -33,7 +33,7 @@
         <div id="boxDescricao" ng-if="PG.DESCRICAO&&PG.ACTIVE" ng-bind-html="PG.DESCRICAO"></div>
         <div id="boxCC" ng-if="PG.CC==1&&PG.ACTIVE">
             <ul id="boxCard" ng-if="PG.LST.length">
-                <li id="MC"><label>Meus cartões</label></li>
+                <li id="MC"><label>{{PG.GATEWAY=='PLUGPAG'?'Tipo de cartão':'Meus cartões'}}</label></li>
                 <li id="{{CC.ID}}" ng-repeat="CC in PG.LST">
                     <h4 class="{{CC.ACTIVE?'active_checkbox':''}}">
                         <label ng-click="selectCard(PG.LST, CC)" class="checkbox_custom"><img ng-if="CC.IMG" src="{{CC.IMG}}"> {{CC.TEXT}} <span class="checkmark"></span></label>
