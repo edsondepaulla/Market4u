@@ -141,6 +141,10 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                             if (data.COMPRAS) {
                                 $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS = data.COMPRAS;
                                 $rootScope.BANNERS_MODAL = data.COMPRAS.BANNERS_MODAL;
+                                setTimeout(function () {
+                                    if (data.COMPRAS.BANNERS_MODAL.length)
+                                        $('div#banner_modal').css('display', 'flex');
+                                }, 1000);
                                 if (data.COMPRAS.BANNERS.length) {
                                     setTimeout(function () {
                                         $scope.banner('COMPRAS', data.COMPRAS.BANNERS_TIME);

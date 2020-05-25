@@ -18,6 +18,11 @@
     </div>
     <div class="clearBoth"></div>
 
+    <div style="z-index: 9999" ng-if="REG.QR_CODE" ng-click="$root.AppBrowser(REG.QR_CODE)">
+        <br><b>Nota fiscal</b><br>
+        <a style="text-decoration: underline; padding: 0 10px; margin: 0; display: block; color: #00CB00; font-size: 18px">Clique aqui</a>
+    </div>
+
     <div ng-if="REG.M_ID">
         <br><b>LOCAL</b><br>
         {{REG.M_NOME?REG.M_NOME+' - ':''}}{{REG.M_ENDERECO}}, {{REG.M_NUMERO}} - {{REG.M_BAIRRO}} - {{REG.M_ESTADO}}
