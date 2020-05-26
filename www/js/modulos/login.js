@@ -364,18 +364,157 @@ app.controller('AddCard', function($rootScope, $scope) {
     $rootScope.pagseguro();
 });
 
+app.controller('CardNew', function($rootScope, $scope, $routeParams) {
+    $rootScope.Titulo = "Meus cartões";
+    var cc = JSON.parse(localStorage.getItem("CC"));
+    cc = cc ? cc : {};
+    $scope.LST = {};
+    $.each(cc, function (ID_CC, VALS_CC) {
+        VALS_CC.IMG = 'https://m.market4u.com.br/skin/default/images/bandeira_cc/' + VALS_CC.BANDEIRA + '.png';
+        $scope.LST[ID_CC] = VALS_CC;
+    });
+
+    $rootScope.MenuBottom = true;
+    $rootScope.NO_WHATSAPP = false;
+
+    $scope.remove = function (ID) {
+        var _function = function () {
+            var cc_new = {};
+            $.each(cc, function (ID_CC, VALS_CC) {
+                if (parseInt(ID_CC) != parseInt(ID))
+                    cc_new[ID_CC] = VALS_CC;
+            });
+            $scope.LST = cc = cc_new;
+            localStorage.setItem("CC", JSON.stringify(cc));
+        };
+        try {
+            navigator.notification.confirm(
+                '',
+                function (buttonIndex) {
+                    if (buttonIndex == (Factory.$rootScope.device == 'ios' ? 2 : 1))
+                        _function();
+                },
+                'Remover cartão de crédito?',
+                Factory.$rootScope.device == 'ios' ? 'Não,Sim' : 'Sim,Não'
+            );
+        } catch (e) {
+            if (confirm('Remover cartão de crédito?'))
+                _function();
+        }
+    };
+});
+
+app.controller('AddCardNew', function($rootScope, $scope) {
+    $rootScope.Titulo = "Adicionar";
+    $rootScope.MenuBottom = true;
+    $rootScope.NO_WHATSAPP = false;
+
+    $scope.salvar = function () {
+        if (!$('#cardName').val().length)
+            $('#cardName').focus();
+        else if (!$('#cardNumber').val().length)
+            $('#cardNumber').focus();
+        else if (!$('#expirationMonthYear').val().length)
+            $('#expirationMonthYear').focus();
+        else if (!$('#cvv').val().length)
+            $('#cvv').focus();
+        else if (!parseInt($('#formCadastro').attr('invalid'))) {
+            var expirationMonthYear = $('#expirationMonthYear').val().toString().split('/');
+            var checkout = new DirectCheckout('3D4CC1C21200C1C2BBA745B6BE2353B2E0DB3569F0151222A756501B189AD9C8', false);
+            var cardData = {
+                cardNumber: $('#cardNumber').val().toString().replace(/ /g, ''),
+                holderName: $('#cardName').val().toString(),
+                securityCode: $('#cvv').val().toString(),
+                expirationMonth: expirationMonthYear[0],
+                expirationYear: '20' + expirationMonthYear[1]
+            };
+            if (checkout.isValidCardNumber(cardData.cardNumber)) {
+                if (checkout.isValidExpireDate(cardData.expirationMonth, cardData.expirationYear)) {
+                    if (checkout.isValidSecurityCode(cardData.cardNumber, cardData.securityCode)) {
+                        var cc = JSON.parse(localStorage.getItem("CC"));
+                        cc = cc ? cc : {};
+                        var ID = 0;
+                        $.each(cc, function (idx, vals) {
+                            ID++;
+                        });
+                        ID++;
+                        cc[ID] = {
+                            'ID': ID,
+                            'NAME': $('#cardName').val(),
+                            'BANDEIRA': checkout.getCardType(cardData.cardNumber),
+                            'TEXT': '**** **** **** ' + ($('#cardNumber').val().split(' ')[3]),
+                            'HASH': btoa(
+                                JSON.stringify(
+                                    {
+                                        CC_NAME: $('#cardName').val(),
+                                        CC_NUMBER: $('#cardNumber').val().toString().replace(/ /g, ''),
+                                        CC_MONTHYEAR: $('#expirationMonthYear').val(),
+                                        CC_CVV: $('#cvv').val(),
+                                        CC_BANDEIRA: $('#cardBandeira').val()
+                                    }
+                                )
+                            )
+                        };
+                        localStorage.setItem("CC", JSON.stringify(cc));
+                        $rootScope.location('#!/card-new');
+                    } else {
+                        $('#cvv').focus();
+                        $rootScope.dadosInvalidosCC('Cód. de segurança inválido');
+                    }
+                } else {
+                    $('#expirationMonthYear').focus();
+                    $rootScope.dadosInvalidosCC('Validade inválido');
+                }
+            } else {
+                $('#cardNumber').focus();
+                $rootScope.dadosInvalidosCC('Número do cartão inválido');
+            }
+        } else
+            $rootScope.dadosInvalidosCC();
+    };
+
+    // PagSeguro
+    $rootScope.pagseguro();
+});
+
 app.controller('MinhaCarteira', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.BARRA_SALDO = false;
     $rootScope.Titulo = "Minha Carteira";
     $rootScope.NO_WHATSAPP = false;
     $rootScope.FORMA_PAGAMENTO = null;
-    $rootScope.FORMAS_PG = ReturnData.FORMAS_PG;
 
     // PagSeguro
     $.each(ReturnData.FORMAS_PG, function (idx, f_pg) {
-        if (f_pg.GATEWAY == 'PAGSEGURO')
-            $rootScope.pagseguro(0, null, 1000);
+        switch (f_pg.GATEWAY) {
+            case 'PAGSEGURO':
+                $rootScope.pagseguro(0, null, 1000);
+                break;
+            case 'JUNO':
+                ReturnData.FORMAS_PG[idx]['LST'] = [];
+
+                var cc = JSON.parse(localStorage.getItem("CC"));
+                cc = cc ? cc : {};
+                var active = 1;
+                $.each(cc, function (ID, vals) {
+                    ReturnData.FORMAS_PG[idx]['LST'].push({
+                        ACTIVE: active,
+                        ID: ID,
+                        IMG: "https://m.market4u.com.br/skin/default/images/bandeira_cc/" + vals.BANDEIRA + ".png",
+                        TEXT: vals.TEXT,
+                        VALS: {1: vals.HASH}
+                    });
+                    active = 0;
+                });
+                ReturnData.FORMAS_PG[idx]['LST'].push({
+                    'ID': 0,
+                    'ACTIVE': 0,
+                    'TEXT': 'Novo cartão'
+                });
+                break;
+        }
     });
+
+    $rootScope.FORMAS_PG = ReturnData.FORMAS_PG;
 
     $rootScope.VALOR_PG = 50;
     $scope.itens = [

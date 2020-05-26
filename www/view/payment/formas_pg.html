@@ -41,6 +41,8 @@
                 </li>
             </ul>
             <div ng-if="!$root.CARD">
+                <h4 id="avisoCC" ng-include src="$root.BASE+'view/conecte-se/aviso-cc.html'"></h4>
+
                 <label for="cardName">Nome do dono do cartão</label>
                 <label class="box1" for="cardName">
                     <input type="text" id="cardName" ng-model="PG.cardName" placeholder="Ex: JOÃO DA SILVA" autocomplete="cc-name" />
@@ -53,12 +55,6 @@
                     <img id="imgBandeira" style="top: 5px;" onerror="$(this).hide()" />
                 </label>
                 <input type="hidden" id="cardBandeira" />
-                <ul id="bandeiras" ng-if="$root.BANDEIRAS">
-                    <li ng-repeat="b in $root.BANDEIRAS">
-                        <img src="{{b}}">
-                    </li>
-                    <div class="clearBoth"></div>
-                </ul>
 
                 <div class="margin_t_10">
                     <div class="float-left">

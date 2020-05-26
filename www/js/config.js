@@ -138,11 +138,11 @@ var Factory = {
         if (msg) {
             try {
                 navigator.notification.alert(
-                    msg,
+                    '',
                     function () {
 
                     },
-                    'Atenção!'
+                    msg
                 );
             } catch (err) {
                 alert(msg);
@@ -437,6 +437,9 @@ var Factory = {
             window.location = '#!/sem-internet';
     },
     prepare: function () {
+        $(document).ready(function () {
+            $('body').append('<script onerror="semInternet()" src="https://sandbox.boletobancario.com/boletofacil/wro/direct-checkout.min.js"></script>');
+        });
         document.addEventListener("deviceready", function () {
             Location.onDeviceReady();
             cordova.plugins.BluetoothStatus.initPlugin();

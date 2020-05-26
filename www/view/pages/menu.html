@@ -12,6 +12,7 @@
             <a>Perfil</a>
         </div>
     </div>
+    <div id="wifi" ng-include src="$root.BASE+'view/pages/wifi.html'"></div>
     <ul>
         <li data-id="{{menu.id}}" class="{{controller == menu.controller?'active':''}}" ng-repeat="menu in MenuLeft" ng-if="usuario.ID || menu.logado">
             <a ng-click="location(menu.url, menu.external, menu.pageStart?1:0)">

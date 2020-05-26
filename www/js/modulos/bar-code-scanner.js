@@ -28,21 +28,21 @@ var BarCodeScanner = {
             }
         );
     },
-    prompt: function(msg, type){
+    prompt: function(msg, type) {
         try {
             navigator.notification.prompt(
-                msg,
+                '',
                 function (results) {
-                    if (results.buttonIndex == 1) {
+                    if (results.buttonIndex == (Factory.$rootScope.device == 'ios' ? 2 : 1)) {
                         if (results.input1.length)
                             BarCodeScanner.getScan(results.input1, type);
                         else
                             $('#carregando').hide().css('opacity', 0);
-                    }else
+                    } else
                         $('#carregando').hide().css('opacity', 0);
                 },
-                'Atenção',
-                ['Continue', 'Cancelar'],
+                msg,
+                Factory.$rootScope.device == 'ios' ? ['Cancelar', 'Continuar'] : ['Continuar', 'Cancelar'],
                 ''
             );
         } catch (err) {
@@ -62,6 +62,7 @@ var BarCodeScanner = {
                     if (result.text)
                         BarCodeScanner.getScan(result.text, type);
                     else if(type != 'destravar')
+
                         BarCodeScanner.prompt("Não conseguiu escanear?\nDigite o código de barras:", type);
                     else
                         $('#carregando').hide().css('opacity', 0);

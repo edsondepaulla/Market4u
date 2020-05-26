@@ -9,10 +9,10 @@ Header set Access-Control-Allow-Methods "GET"
     Header set Cache-Control "max-age=0, public"
     </filesMatch>
     <filesMatch "\\.(js)$">
-    Header set Cache-Control "max-age=0, private"
+    Header set Cache-Control "max-age=0, public"
     </filesMatch>
     <filesMatch "\\.(html)$">
-    Header set Cache-Control "max-age=0, private, must-revalidate"
+    Header set Cache-Control "max-age=0, public, must-revalidate"
     </filesMatch>
 </ifModule>
 

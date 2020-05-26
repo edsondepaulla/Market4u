@@ -12,10 +12,11 @@
         <i class="mdi mdi-action-list"></i>
         <a>Termos de Uso</a>
     </li>
-    <li style="border-bottom: 0;" ng-click="AppBrowser($root.usuario.POLITICA_DE_PRIVACIDADE)">
+    <li ng-click="AppBrowser($root.usuario.POLITICA_DE_PRIVACIDADE)">
         <i class="mdi mdi-action-list"></i>
         <a>Termos de Privacidade</a>
     </li>
+    <li style="border-bottom: 0;" id="wifi" ng-include src="$root.BASE+'view/pages/wifi.html'"></li>
     <li style="position: fixed; left: 0; bottom: 0; width: 100%">
         Versão - {{versao_app_mobile}}
     </li>

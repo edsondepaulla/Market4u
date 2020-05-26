@@ -24,7 +24,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
         'self',
         base + '**',
     ]);
-    
+
     /*
      * Route
      */
@@ -85,7 +85,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                         {
                             action: 'cadastro/boasvindas'
                         },
-                        function(){
+                        function () {
                             Login.get();
                         }
                     );
@@ -112,6 +112,14 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
         .when("/add-card", {
             templateUrl: base + "Mobile/www/view/conecte-se/addcard.html",
             controller: 'AddCard'
+        })
+        .when("/card-new", {
+            templateUrl: base + "Mobile/www/view/conecte-se/card-new.html",
+            controller: 'CardNew'
+        })
+        .when("/add-card-new", {
+            templateUrl: base + "Mobile/www/view/conecte-se/addcard-new.html",
+            controller: 'AddCardNew'
         })
         .when("/minha-carteira", {
             templateUrl: base + "Mobile/www/view/conecte-se/carteira.html",
@@ -310,7 +318,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             controller: 'Ajuda'
         })
         .when("/sem-internet", {
-            templateUrl: "view/sem-internet/index.html",
+            templateUrl: base + "Mobile/www/view/sem-internet/index.html",
             controller: 'SemInternet'
         });
 });

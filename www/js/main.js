@@ -269,18 +269,6 @@ try {
                 logado: 1
             },
             {
-                id: 'PS',
-                titulo: 'Pesquisa de Satisfação',
-                external: 1,
-                url: {
-                    url: 'https://docs.google.com/forms/d/e/1FAIpQLSf2oEEwGaFyyIq55rcDTXzwc4OsFVX-dow-xgKiTxG5c0TcGA/viewform',
-                    type: 'load_url',
-                    window_open: Factory.$rootScope.device == 'ios' ? false : true
-                },
-                icon: 'mdi-action-grade',
-                logado: 0
-            },
-            {
                 titulo: 'Compras',
                 controller: 'HistoricoTransacoesLst',
                 url: '#!/historico-transacoes',
@@ -304,7 +292,7 @@ try {
             {
                 titulo: 'Meus cartões',
                 controller: 'Card',
-                url: '#!/card',
+                url: '#!/card' + (parseInt(Login.getData().ID) == 475?'-new':''),
                 icon: 'mdi-action-credit-card',
                 logado: 0
             },
@@ -321,6 +309,16 @@ try {
                 icon: 'mdi-image-remove-red-eye',
                 logado: 0,
                 pageStart: 1
+            },
+            {
+                id: 'PS',
+                titulo: 'Pesquisa de Satisfação',
+                external: 1,
+                url: {
+                    url: 'https://docs.google.com/forms/d/e/1FAIpQLSf2oEEwGaFyyIq55rcDTXzwc4OsFVX-dow-xgKiTxG5c0TcGA/viewform'
+                },
+                icon: 'mdi-action-grade',
+                logado: 0
             },
             {
                 titulo: 'Suporte',
@@ -351,8 +349,8 @@ try {
         /*
          * Payment
          */
-        $rootScope.dadosInvalidosCC = function () {
-            Factory.alert('Dados de cartão de créditos inválidos!');
+        $rootScope.dadosInvalidosCC = function (msg) {
+            Factory.alert(msg ? msg : 'Dados de cartão de créditos inválidos!');
             $('#carregando').hide().css('opacity', 0);
             $('.btnConfirme').attr('disabled', false);
         };
@@ -360,7 +358,7 @@ try {
             time = time ? time : 0;
             if (!$('#api_pagseguro').length) {
                 time = 3000;
-                $('body').append('<script id="api_pagseguro" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>');
+                $('body').append('<script id="api_pagseguro" onerror="semInternet()" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>');
             }
             $(document).ready(function () {
                 clearTimeout(Factory.timeout);
@@ -377,19 +375,6 @@ try {
                                     PagSeguroDirectPayment.setSessionId($rootScope.PAGSEGURO_SESSIONID);
                                     if (parseInt(paymentPagSeguro))
                                         $rootScope.paymentPagSeguro(origem);
-
-                                    PagSeguroDirectPayment.getPaymentMethods({
-                                        success: function (data) {
-                                            if (data.paymentMethods) {
-                                                var seq = 0;
-                                                $rootScope.BANDEIRAS = {};
-                                                $.each(data.paymentMethods.CREDIT_CARD.options, function (idx, item) {
-                                                    $rootScope.BANDEIRAS[seq] = 'img/bandeira_cc/' + item.name.toLowerCase() + '.png';
-                                                    seq++;
-                                                });
-                                            }
-                                        }
-                                    });
                                 }
                             }
                         );
@@ -440,7 +425,7 @@ try {
                     $.each($rootScope.FORMAS_PG, function (idx, item_each) {
                         item_each.ACTIVE = 0;
                     });
-                    if (PG.TIPO == 'CC' || PG.TIPO == 'MCC') {
+                    if (PG.TIPO == 'CC' || PG.TIPO == 'MCC' || PG.TIPO == 'JCC') {
                         if (PG.LST.length) {
                             $.each(PG.LST, function (idx_cc, item_each_cc) {
                                 if (item_each_cc.ACTIVE)
@@ -505,6 +490,49 @@ try {
                     }
                 );
             }
+        };
+        $rootScope.paymentJuno = function (origem) {
+            if (parseInt($rootScope.FORMA_PAGAMENTO.CC)) {
+                try {
+                    var expirationMonthYear = $rootScope.FORMA_PAGAMENTO.expirationMonthYear.toString().split('/');
+                    var checkout = new DirectCheckout('3D4CC1C21200C1C2BBA745B6BE2353B2E0DB3569F0151222A756501B189AD9C8', false);
+                    var cardData = {
+                        cardNumber: $rootScope.FORMA_PAGAMENTO.cardNumber.toString().replace(/ /g, ''),
+                        holderName: $rootScope.FORMA_PAGAMENTO.cardName.toString(),
+                        securityCode: $rootScope.FORMA_PAGAMENTO.cvv.toString(),
+                        expirationMonth: expirationMonthYear[0],
+                        expirationYear: '20' + expirationMonthYear[1]
+                    };
+                    if (checkout.isValidCardNumber(cardData.cardNumber)) {
+                        if (checkout.isValidExpireDate(cardData.expirationMonth, cardData.expirationYear)) {
+                            if (checkout.isValidSecurityCode(cardData.cardNumber, cardData.securityCode)) {
+                                checkout.getCardHash(
+                                    cardData,
+                                    function (cardHash) {
+                                        console.log(cardHash);
+                                        $rootScope.dadosInvalidosCC('OK');
+                                    },
+                                    function (error) {
+                                        $rootScope.dadosInvalidosCC();
+                                    }
+                                );
+                            } else {
+                                $('#cvv').focus();
+                                $rootScope.dadosInvalidosCC('Cód. de segurança inválido');
+                            }
+                        } else {
+                            $('#expirationMonthYear').focus();
+                            $rootScope.dadosInvalidosCC('Validade inválido');
+                        }
+                    } else {
+                        $('#cardNumber').focus();
+                        $rootScope.dadosInvalidosCC('Número do cartão inválido');
+                    }
+                } catch (e) {
+                    $rootScope.dadosInvalidosCC('Ocorreu um erro inesperado. Tente novamente ou favor entrar em contato conosco!');
+                }
+            } else
+                $rootScope.processPayment(origem);
         };
         var clearTimeoutProcessPayment = null;
         $rootScope.processPayment = function (origem, extra) {
@@ -622,10 +650,21 @@ try {
                 });
                 if (parseInt($rootScope.FORMA_PAGAMENTO.CC)) {
                     if ($rootScope.CARD) {
-                        $rootScope.FORMA_PAGAMENTO.cardNumber = $rootScope.CARD[1];
-                        $rootScope.FORMA_PAGAMENTO.expirationMonthYear = $rootScope.CARD[2];
-                        $rootScope.FORMA_PAGAMENTO.cvv = $rootScope.CARD[3];
-                        $rootScope.FORMA_PAGAMENTO.cardName = $rootScope.CARD[5];
+                        switch ($rootScope.FORMA_PAGAMENTO.TIPO) {
+                            case 'JCC':
+                                var card_juno = JSON.parse(atob($rootScope.CARD[1]));
+                                $rootScope.FORMA_PAGAMENTO.cardNumber = card_juno.CC_NUMBER;
+                                $rootScope.FORMA_PAGAMENTO.expirationMonthYear = card_juno.CC_MONTHYEAR;
+                                $rootScope.FORMA_PAGAMENTO.cvv = card_juno.CC_CVV;
+                                $rootScope.FORMA_PAGAMENTO.cardName = card_juno.CC_NAME;
+                                break;
+                            default:
+                                $rootScope.FORMA_PAGAMENTO.cardNumber = $rootScope.CARD[1];
+                                $rootScope.FORMA_PAGAMENTO.expirationMonthYear = $rootScope.CARD[2];
+                                $rootScope.FORMA_PAGAMENTO.cvv = $rootScope.CARD[3];
+                                $rootScope.FORMA_PAGAMENTO.cardName = $rootScope.CARD[5];
+                                break;
+                        }
                         valido = true;
                     } else {
                         $rootScope.FORMA_PAGAMENTO.CC_BANDEIRA = $('#cardBandeira').val();
@@ -660,6 +699,9 @@ try {
                                 $rootScope.paymentPagSeguro(origem);
                             else
                                 $rootScope.pagseguro(1, origem);
+                            break;
+                        case 'JUNO':
+                            $rootScope.paymentJuno(origem);
                             break;
                         default:
                             $rootScope.processPayment(origem);
