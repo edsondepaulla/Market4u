@@ -261,6 +261,16 @@ try {
 
         // Menu
         $rootScope.MenuLeft = [
+            /*{
+                id: 'DVCM',
+                titulo: 'Denuncie violência contra mulher',
+                external: 1,
+                url: {
+                    url: 'tel:180'
+                },
+                icon: 'mdi-communication-call',
+                logado: 0
+            },*/
             {
                 titulo: 'Produtos',
                 controller: 'Index',
@@ -495,7 +505,7 @@ try {
             if (parseInt($rootScope.FORMA_PAGAMENTO.CC)) {
                 try {
                     var expirationMonthYear = $rootScope.FORMA_PAGAMENTO.expirationMonthYear.toString().split('/');
-                    var checkout = new DirectCheckout('3D4CC1C21200C1C2BBA745B6BE2353B2E0DB3569F0151222A756501B189AD9C8', false);
+                    var checkout = new DirectCheckout(Login.getData().JUNO.public, Login.getData().JUNO.production);
                     var cardData = {
                         cardNumber: $rootScope.FORMA_PAGAMENTO.cardNumber.toString().replace(/ /g, ''),
                         holderName: $rootScope.FORMA_PAGAMENTO.cardName.toString(),
@@ -509,8 +519,17 @@ try {
                                 checkout.getCardHash(
                                     cardData,
                                     function (cardHash) {
-                                        console.log(cardHash);
-                                        $rootScope.dadosInvalidosCC('OK');
+                                        if (cardHash) {
+                                            $rootScope.processPayment(
+                                                origem,
+                                                {
+                                                    HASH: cardHash
+                                                },
+                                                cardData,
+                                                checkout.getCardType(cardData.cardNumber)
+                                            );
+                                        } else
+                                            $rootScope.dadosInvalidosCC();
                                     },
                                     function (error) {
                                         $rootScope.dadosInvalidosCC();
@@ -529,15 +548,25 @@ try {
                         $rootScope.dadosInvalidosCC('Número do cartão inválido');
                     }
                 } catch (e) {
+                    console.log(e);
                     $rootScope.dadosInvalidosCC('Ocorreu um erro inesperado. Tente novamente ou favor entrar em contato conosco!');
                 }
             } else
                 $rootScope.processPayment(origem);
         };
         var clearTimeoutProcessPayment = null;
-        $rootScope.processPayment = function (origem, extra) {
+        $rootScope.processPayment = function (origem, extra, cardData, bandeira) {
             clearTimeout(clearTimeoutProcessPayment);
             clearTimeoutProcessPayment = setTimeout(function () {
+                var forma_pagamento = Object.assign({}, $rootScope.FORMA_PAGAMENTO);
+                forma_pagamento.LST = null;
+                forma_pagamento.$$hashKey = null;
+                if (parseInt(forma_pagamento.CC) && forma_pagamento.GATEWAY == 'JUNO') {
+                    forma_pagamento.cardNumber = null;
+                    forma_pagamento.expirationMonthYear = null;
+                    forma_pagamento.cvv = null;
+                    forma_pagamento.cardName = null;
+                }
                 var submitPayment = function () {
                     switch (origem) {
                         case 'saldo':
@@ -545,13 +574,21 @@ try {
                                 {
                                     action: 'cadastro/addsaldo',
                                     data: {
-                                        FORMA_PAGAMENTO: $rootScope.FORMA_PAGAMENTO,
+                                        FORMA_PAGAMENTO: forma_pagamento,
                                         VALOR_PG: $rootScope.VALOR_PG,
                                         EXTRA: extra
                                     }
                                 },
-                                function () {
+                                function (data) {
                                     $('.btnConfirme').attr('disabled', false);
+
+                                    /*
+                                     * Salvar cartao
+                                     */
+                                    if (parseInt(data.status) == 1) {
+                                        if (parseInt(forma_pagamento.SALVAR_CC) && parseInt(forma_pagamento.CC))
+                                            CC.add(cardData, bandeira);
+                                    }
                                 },
                                 function () {
                                     $('.btnConfirme').attr('disabled', false);
@@ -567,7 +604,7 @@ try {
                                             UTILIZADO_SALDO: $rootScope.ACTIVE_SALDO,
                                             VOUCHER: $rootScope.VOUCHER || 0,
                                             CPF_NA_NFE: CPF_NA_NFE,
-                                            FORMA_PAGAMENTO: $rootScope.FORMA_PAGAMENTO,
+                                            FORMA_PAGAMENTO: forma_pagamento,
                                             TRANSACAO_ID: $rootScope.transacaoId,
                                             EXTRA: extra
                                         }
@@ -652,11 +689,11 @@ try {
                     if ($rootScope.CARD) {
                         switch ($rootScope.FORMA_PAGAMENTO.TIPO) {
                             case 'JCC':
-                                var card_juno = JSON.parse(atob($rootScope.CARD[1]));
-                                $rootScope.FORMA_PAGAMENTO.cardNumber = card_juno.CC_NUMBER;
-                                $rootScope.FORMA_PAGAMENTO.expirationMonthYear = card_juno.CC_MONTHYEAR;
-                                $rootScope.FORMA_PAGAMENTO.cvv = card_juno.CC_CVV;
-                                $rootScope.FORMA_PAGAMENTO.cardName = card_juno.CC_NAME;
+                                var card_juno = CC.decrypt($rootScope.CARD[1]);
+                                $rootScope.FORMA_PAGAMENTO.cardNumber = card_juno.cardNumber;
+                                $rootScope.FORMA_PAGAMENTO.expirationMonthYear = card_juno.expirationMonth + '/' + card_juno.expirationYear;
+                                $rootScope.FORMA_PAGAMENTO.cvv = card_juno.securityCode;
+                                $rootScope.FORMA_PAGAMENTO.cardName = card_juno.holderName;
                                 break;
                             default:
                                 $rootScope.FORMA_PAGAMENTO.cardNumber = $rootScope.CARD[1];

@@ -2671,6 +2671,13 @@ border-bottom: 0;
   color: #287233;
   font-weight: 600;
 }
+#contentLeft > ul li[data-id="DVCM"] a{
+    color: red;
+    font-weight: 600;
+    text-align: center;
+    line-height: 24px;
+    font-size: 18px;
+}
 
 #carregando img{
 width: 80px;
@@ -3085,6 +3092,9 @@ body[controller="MinhaCarteira"] #formMinhaCarteira > ul li.active{
   font-size: 17px;
 }
 
+#boxPg > ul > li #boxCC > div h4#avisoCC{
+  margin: 5px 0 10px !important;
+}
 #boxCard > li[id="MC"]{
   margin-bottom: 5px;
 }

@@ -14,6 +14,12 @@
     </div>
     <div id="wifi" ng-include src="$root.BASE+'view/pages/wifi.html'"></div>
     <ul>
+        <li data-id="DVCM">
+            <a href="tel:180">
+                <i class="mdi mdi-communication-call"></i>
+                Denuncie violência contra mulher
+            </a>
+        </li>
         <li data-id="{{menu.id}}" class="{{controller == menu.controller?'active':''}}" ng-repeat="menu in MenuLeft" ng-if="usuario.ID || menu.logado">
             <a ng-click="location(menu.url, menu.external, menu.pageStart?1:0)">
                 <i ng-if="menu.icon" class="mdi {{menu.icon}}"></i>

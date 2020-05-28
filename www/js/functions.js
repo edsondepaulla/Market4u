@@ -230,7 +230,7 @@ function inputEvents(_this, _bind) {
                 break;
         }
         verifyMsg(_verify, _invalid, _this, _type);
-    }, _bind == 'blur' ? 0 : 500);
+    }, _bind == 'blur' ? 0 : 1000);
 }
 
 function verifyMsg(_verify, _invalid, _this, type) {

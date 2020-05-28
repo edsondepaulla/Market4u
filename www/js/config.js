@@ -112,6 +112,43 @@ var Login = {
     }
 };
 
+var CC = {
+    get: function () {
+        var cc = localStorage.getItem("CC+" + Login.getData().ID);
+        if (cc) {
+            var cc = JSON.parse(CryptoJS.AES.decrypt(cc, Login.getData().KEY).toString(CryptoJS.enc.Utf8));
+            return cc ? cc : {};
+        } else
+            return {};
+    },
+    add: function (cardData, bandeira) {
+        try {
+            var cc = this.get();
+            var ID = 0;
+            $.each(cc, function (idx, vals) {
+                ID++;
+            });
+            ID++;
+            cc[ID] = {
+                'ID': ID,
+                'NAME': cardData.holderName,
+                'BANDEIRA': bandeira,
+                'TEXT': '**** **** **** ' + cardData.cardNumber.toString().replace(/ /g, '').substr(12, 4),
+                'HASH': CryptoJS.AES.encrypt(btoa(JSON.stringify(cardData)), Login.getData().KEY).toString()
+            };
+            this.set(cc);
+        } catch (e) {
+
+        }
+    },
+    decrypt: function (vals) {
+        return JSON.parse(atob(CryptoJS.AES.decrypt(vals, Login.getData().KEY).toString(CryptoJS.enc.Utf8)));
+    },
+    set: function (cc) {
+        localStorage.setItem("CC+" + Login.getData().ID, CryptoJS.AES.encrypt(JSON.stringify(cc), Login.getData().KEY).toString());
+    }
+};
+
 var Page = {
     active: 0,
     start: function () {

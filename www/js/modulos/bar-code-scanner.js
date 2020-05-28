@@ -73,8 +73,8 @@ var BarCodeScanner = {
                 {
                     preferFrontCamera: false,
                     showFlipCameraButton: false,
-                    showTorchButton: false,
-                    torchOn: false,
+                    showTorchButton: true,
+                    torchOn: true,
                     saveHistory: false,
                     prompt: "",
                     formats: "UPC_A,UPC_E,EAN_8,EAN_13,CODE_39,CODE_93,CODE_128,CODABAR,ITF",

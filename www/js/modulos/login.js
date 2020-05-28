@@ -366,8 +366,7 @@ app.controller('AddCard', function($rootScope, $scope) {
 
 app.controller('CardNew', function($rootScope, $scope, $routeParams) {
     $rootScope.Titulo = "Meus cartões";
-    var cc = JSON.parse(localStorage.getItem("CC"));
-    cc = cc ? cc : {};
+    var cc = CC.get();
     $scope.LST = {};
     $.each(cc, function (ID_CC, VALS_CC) {
         VALS_CC.IMG = 'https://m.market4u.com.br/skin/default/images/bandeira_cc/' + VALS_CC.BANDEIRA + '.png';
@@ -385,7 +384,7 @@ app.controller('CardNew', function($rootScope, $scope, $routeParams) {
                     cc_new[ID_CC] = VALS_CC;
             });
             $scope.LST = cc = cc_new;
-            localStorage.setItem("CC", JSON.stringify(cc));
+            CC.set(cc_new);
         };
         try {
             navigator.notification.confirm(
@@ -420,42 +419,18 @@ app.controller('AddCardNew', function($rootScope, $scope) {
             $('#cvv').focus();
         else if (!parseInt($('#formCadastro').attr('invalid'))) {
             var expirationMonthYear = $('#expirationMonthYear').val().toString().split('/');
-            var checkout = new DirectCheckout('3D4CC1C21200C1C2BBA745B6BE2353B2E0DB3569F0151222A756501B189AD9C8', false);
             var cardData = {
                 cardNumber: $('#cardNumber').val().toString().replace(/ /g, ''),
                 holderName: $('#cardName').val().toString(),
                 securityCode: $('#cvv').val().toString(),
                 expirationMonth: expirationMonthYear[0],
-                expirationYear: '20' + expirationMonthYear[1]
+                expirationYear: expirationMonthYear[1]
             };
+            var checkout = new DirectCheckout(Login.getData().JUNO.public, Login.getData().JUNO.production);
             if (checkout.isValidCardNumber(cardData.cardNumber)) {
-                if (checkout.isValidExpireDate(cardData.expirationMonth, cardData.expirationYear)) {
+                if (checkout.isValidExpireDate(cardData.expirationMonth, '20' + cardData.expirationYear)) {
                     if (checkout.isValidSecurityCode(cardData.cardNumber, cardData.securityCode)) {
-                        var cc = JSON.parse(localStorage.getItem("CC"));
-                        cc = cc ? cc : {};
-                        var ID = 0;
-                        $.each(cc, function (idx, vals) {
-                            ID++;
-                        });
-                        ID++;
-                        cc[ID] = {
-                            'ID': ID,
-                            'NAME': $('#cardName').val(),
-                            'BANDEIRA': checkout.getCardType(cardData.cardNumber),
-                            'TEXT': '**** **** **** ' + ($('#cardNumber').val().split(' ')[3]),
-                            'HASH': btoa(
-                                JSON.stringify(
-                                    {
-                                        CC_NAME: $('#cardName').val(),
-                                        CC_NUMBER: $('#cardNumber').val().toString().replace(/ /g, ''),
-                                        CC_MONTHYEAR: $('#expirationMonthYear').val(),
-                                        CC_CVV: $('#cvv').val(),
-                                        CC_BANDEIRA: $('#cardBandeira').val()
-                                    }
-                                )
-                            )
-                        };
-                        localStorage.setItem("CC", JSON.stringify(cc));
+                        CC.add(cardData, checkout.getCardType(cardData.cardNumber));
                         $rootScope.location('#!/card-new');
                     } else {
                         $('#cvv').focus();
@@ -490,11 +465,10 @@ app.controller('MinhaCarteira', function($rootScope, $scope, $routeParams, Retur
                 $rootScope.pagseguro(0, null, 1000);
                 break;
             case 'JUNO':
-                ReturnData.FORMAS_PG[idx]['LST'] = [];
-
-                var cc = JSON.parse(localStorage.getItem("CC"));
-                cc = cc ? cc : {};
+                var cc = CC.get();
                 var active = 1;
+                var count = 0;
+                ReturnData.FORMAS_PG[idx]['LST'] = [];
                 $.each(cc, function (ID, vals) {
                     ReturnData.FORMAS_PG[idx]['LST'].push({
                         ACTIVE: active,
@@ -504,12 +478,15 @@ app.controller('MinhaCarteira', function($rootScope, $scope, $routeParams, Retur
                         VALS: {1: vals.HASH}
                     });
                     active = 0;
+                    count++;
                 });
-                ReturnData.FORMAS_PG[idx]['LST'].push({
-                    'ID': 0,
-                    'ACTIVE': 0,
-                    'TEXT': 'Novo cartão'
-                });
+                if (count) {
+                    ReturnData.FORMAS_PG[idx]['LST'].push({
+                        'ID': 0,
+                        'ACTIVE': 0,
+                        'TEXT': 'Novo cartão'
+                    });
+                }
                 break;
         }
     });
