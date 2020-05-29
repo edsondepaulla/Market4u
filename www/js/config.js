@@ -1,5 +1,5 @@
 var config = {
-    versao_app_mobile: "1.0.22.2",
+    versao_app_mobile: "1.0.22.6",
     ambiente: "producao",
     idApp: "market4uapp",
     url_api: {
@@ -123,6 +123,10 @@ var CC = {
     },
     add: function (cardData, bandeira) {
         try {
+            // Ajusta year
+            if(cardData.expirationYear.toString().length == 4)
+                cardData.expirationYear = cardData.expirationYear.toString().substr(2, 2);
+
             var cc = this.get();
             var ID = 0;
             $.each(cc, function (idx, vals) {
@@ -350,6 +354,10 @@ var Factory = {
                                         localStorage.setItem("PHPSESSID", response.data.Login.PHPSESSID);
                                 }
 
+                                // Juno
+                                if (!$('#api_juno').length)
+                                    $('body').append('<script id="api_juno" onerror="semInternet()" src="' + (response.data.Login.JUNO.production ? 'https://www.boletobancario.com/boletofacil/wro/direct-checkout.min.js' : 'https://sandbox.boletobancario.com/boletofacil/wro/direct-checkout.min.js') + '"></script>');
+
                                 // Versao nova
                                 if (response.data.VERSAO_NOVA && params.action != 'options/atualizarapp') {
                                     Page.start();
@@ -474,9 +482,6 @@ var Factory = {
             window.location = '#!/sem-internet';
     },
     prepare: function () {
-        $(document).ready(function () {
-            $('body').append('<script onerror="semInternet()" src="https://sandbox.boletobancario.com/boletofacil/wro/direct-checkout.min.js"></script>');
-        });
         document.addEventListener("deviceready", function () {
             Location.onDeviceReady();
             cordova.plugins.BluetoothStatus.initPlugin();

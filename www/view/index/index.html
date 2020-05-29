@@ -26,7 +26,7 @@
                 </ul>
             </div>
             <ul class="produtos_lst">
-                    <li type="{{ITEM.TYPE}}" clear_both="{{ITEM.CLEAR_BOTH?1:0}}" ng-repeat="ITEM in $root.PRODUTOS_CATEGORIAS_BUSCA.ITENS" ng-include src="$root.BASE+'view/index/produto.html'"></li>
+                <li type="{{ITEM.TYPE}}" clear_both="{{ITEM.CLEAR_BOTH?1:0}}" ng-repeat="ITEM in $root.PRODUTOS_CATEGORIAS_BUSCA.ITENS" ng-include src="$root.BASE+'view/index/produto.html'"></li>
                 <li ng-if="!$root.scrollLiberado && $root.PRODUTOS_CATEGORIAS_BUSCA.SCROLL.ATIVO" type="LOADING">
                     <img src="img/loader.gif" border="0">
                     Carregando...
@@ -138,7 +138,7 @@
             <div class="textoTitulo">PRODUTO</div>
         </div>
         <div class="scrollable-content" scroll md-scroll-y>
-            <div ng-if="$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]&&$root.PROD_DETALHES.UNIDADE_MEDIDA=='U'&&$root.LOCAL.ITEM.MAPS.PROXIMO" class="addRemoveQtdeProduto" unidade_medida="{{$root.PROD_DETALHES.UNIDADE_MEDIDA}}">
+            <div ng-if="$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]&&($root.PROD_DETALHES.UNIDADE_MEDIDA=='U'||$root.PROD_DETALHES.UNIDADE_MEDIDA=='COMBO')&&$root.LOCAL.ITEM.MAPS.PROXIMO" class="addRemoveQtdeProduto" unidade_medida="{{$root.PROD_DETALHES.UNIDADE_MEDIDA}}">
                 <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '+')" class="mdi mdi-content-add-circle"></i>
                 <span>{{$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]?$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]:0}}</span>
                 <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '-')" class="mdi mdi-content-remove-circle"></i>

@@ -615,6 +615,12 @@ try {
                                         switch (parseInt(data.status)) {
                                             case 1:
                                                 $rootScope.verify();
+
+                                                /*
+                                                 * Salvar cartao
+                                                 */
+                                                if (parseInt(forma_pagamento.SALVAR_CC) && parseInt(forma_pagamento.CC))
+                                                    CC.add(cardData, bandeira);
                                                 break;
                                             case 2:
 

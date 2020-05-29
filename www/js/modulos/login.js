@@ -84,10 +84,6 @@ app.controller('Cadastro', function($rootScope, $scope) {
     $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': base + 'Mobile/www/view/conecte-se/level-dados-acesso.html'});
     $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': base + 'Mobile/www/view/conecte-se/level-endereco.html'});
     $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': base + 'Mobile/www/view/conecte-se/level-preferencias.html', 'ITENS': $rootScope.usuario.ITENS_PREFERENCIAS});
-    if (!parseInt($rootScope.usuario.ID)) {
-        $rootScope.pagseguro();
-        $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': base + 'Mobile/www/view/conecte-se/level-cc.html'});
-    }
     if(!$scope.AJUSTES)
         $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': base + 'Mobile/www/view/conecte-se/level-confirmar.html'});
     else {

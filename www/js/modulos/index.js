@@ -158,22 +158,31 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                     );
                 };
 
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(
-                        function (position) {
-                            getComprasAjax(position.coords ? position.coords : -1);
-                        },
-                        function () {
-                            getComprasAjax(-1);
-                        },
-                        {
-                            enableHighAccuracy: true,
-                            timeout: 5000,
-                            maximumAge: 0
-                        }
-                    );
+                var getLocation = function () {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(
+                            function (position) {
+                                getComprasAjax(position.coords ? position.coords : -1);
+                            },
+                            function () {
+                                getComprasAjax(-1);
+                            },
+                            {
+                                enableHighAccuracy: true,
+                                timeout: 5000,
+                                maximumAge: 0
+                            }
+                        );
+                    } else
+                        getComprasAjax(-1);
+                };
+
+                if ("cordova" in window) {
+                    document.addEventListener("deviceready", function () {
+                        getLocation();
+                    }, false);
                 } else
-                    getComprasAjax(-1);
+                    getLocation();
             }
         };
 
@@ -359,15 +368,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
         if (!parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']) || Payment.ATUALIZAR) {
             Payment.ATUALIZAR = false;
             var ID_CATEGORIA = parseInt($('ul#boxCategorias li.active').data('id')) || 0;
-            var getLocation = function () {
-                $scope.getCompras({ID: ID_CATEGORIA}, 1);
-            };
-            if ("cordova" in window) {
-                document.addEventListener("deviceready", function () {
-                    getLocation();
-                }, false);
-            } else
-                getLocation();
+            $scope.getCompras({ID: ID_CATEGORIA}, 1);
         } else
             $scope.scrollLeft();
 
@@ -790,8 +791,37 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                                             $rootScope.BTN_TYPE = data.BTN_TYPE;
                                         if (typeof data.TEXTO_BTN !== 'undefined')
                                             $rootScope.TEXTO_BTN = data.TEXTO_BTN;
-                                        if (typeof data.FORMAS_PG !== 'undefined')
+                                        if (typeof data.FORMAS_PG !== 'undefined') {
+                                            $.each(data.FORMAS_PG, function (idx, f_pg) {
+                                                switch (f_pg.GATEWAY) {
+                                                    case 'JUNO':
+                                                        var cc = CC.get();
+                                                        var active = 1;
+                                                        var count = 0;
+                                                        data.FORMAS_PG[idx]['LST'] = [];
+                                                        $.each(cc, function (ID, vals) {
+                                                            data.FORMAS_PG[idx]['LST'].push({
+                                                                ACTIVE: active,
+                                                                ID: ID,
+                                                                IMG: "https://m.market4u.com.br/skin/default/images/bandeira_cc/" + vals.BANDEIRA + ".png",
+                                                                TEXT: vals.TEXT,
+                                                                VALS: {1: vals.HASH}
+                                                            });
+                                                            active = 0;
+                                                            count++;
+                                                        });
+                                                        if (count) {
+                                                            data.FORMAS_PG[idx]['LST'].push({
+                                                                'ID': 0,
+                                                                'ACTIVE': 0,
+                                                                'TEXT': 'Novo cartão'
+                                                            });
+                                                        }
+                                                        break;
+                                                }
+                                            });
                                             $rootScope.FORMAS_PG = data.FORMAS_PG;
+                                        }
                                         if (typeof data.PRODUTOS !== 'undefined')
                                             $rootScope.PRODUTOS = data.PRODUTOS;
                                         if (typeof data.STEP !== 'undefined')
