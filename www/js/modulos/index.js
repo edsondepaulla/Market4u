@@ -834,6 +834,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                                             case 'pg_autorizado':
                                                 if (!$rootScope.PAGO) {
                                                     $rootScope.PAGO = 1;
+                                                    $('#boxPago span').html('Compra realizada com sucesso');
                                                     $('#boxPago').css('opacity', 1).show();
                                                     var audio = new Audio('audio/song.mp4');
                                                     audio.play();

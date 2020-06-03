@@ -302,7 +302,7 @@ try {
             {
                 titulo: 'Meus cartões',
                 controller: 'Card',
-                url: '#!/card' + (parseInt(Login.getData().ID) == 475?'-new':''),
+                url: '#!/card-new',
                 icon: 'mdi-action-credit-card',
                 logado: 0
             },
@@ -586,6 +586,15 @@ try {
                                      * Salvar cartao
                                      */
                                     if (parseInt(data.status) == 1) {
+                                        if(parseInt(data.pago)){
+                                            $('#boxPago span').html('Depósito realizado com sucesso');
+                                            $('#boxPago').css('opacity', 1).show();
+                                            var audio = new Audio('audio/song.mp4');
+                                            audio.play();
+                                            setTimeout(function () {
+                                                $('#boxPago').css('opacity', 0).hide();
+                                            }, 3000);
+                                        }
                                         if (parseInt(forma_pagamento.SALVAR_CC) && parseInt(forma_pagamento.CC))
                                             CC.add(cardData, bandeira);
                                     }

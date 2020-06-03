@@ -96,23 +96,6 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             templateUrl: base + "Mobile/www/view/conecte-se/codigo.html",
             controller: 'ConecteSeCodigo'
         })
-        .when("/card", {
-            templateUrl: base + "Mobile/www/view/conecte-se/card.html",
-            controller: 'Card',
-            resolve: {
-                ReturnData: function ($route) {
-                    return Factory.ajax(
-                        {
-                            action: 'cadastro/card'
-                        }
-                    );
-                }
-            }
-        })
-        .when("/add-card", {
-            templateUrl: base + "Mobile/www/view/conecte-se/addcard.html",
-            controller: 'AddCard'
-        })
         .when("/card-new", {
             templateUrl: base + "Mobile/www/view/conecte-se/card-new.html",
             controller: 'CardNew'

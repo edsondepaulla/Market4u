@@ -1,5 +1,5 @@
 var config = {
-    versao_app_mobile: "1.0.22.6",
+    versao_app_mobile: "1.0.22.7",
     ambiente: "producao",
     idApp: "market4uapp",
     url_api: {
@@ -124,13 +124,13 @@ var CC = {
     add: function (cardData, bandeira) {
         try {
             // Ajusta year
-            if(cardData.expirationYear.toString().length == 4)
+            if (cardData.expirationYear.toString().length == 4)
                 cardData.expirationYear = cardData.expirationYear.toString().substr(2, 2);
 
             var cc = this.get();
             var ID = 0;
             $.each(cc, function (idx, vals) {
-                ID++;
+                ID = idx;
             });
             ID++;
             cc[ID] = {

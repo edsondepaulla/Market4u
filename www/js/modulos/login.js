@@ -285,81 +285,6 @@ app.controller('ConecteSeCodigo', function($rootScope, $scope, $routeParams) {
         window.history.go(-1);
 });
 
-app.controller('Card', function($rootScope, $scope, $routeParams, ReturnData) {
-    $rootScope.Titulo = "Meus cartões";
-    $scope.LST = ReturnData.LST;
-    $rootScope.MenuBottom = true;
-    $rootScope.NO_WHATSAPP = false;
-
-    $scope.remove = function (ID) {
-        var _function = function () {
-            Factory.ajax(
-                {
-                    action: 'cadastro/cardremove',
-                    data: {
-                        ID: ID
-                    }
-                },
-                function (data) {
-                    if (typeof data.LST != 'undefined')
-                        $scope.LST = data.LST;
-                }
-            );
-        };
-        try {
-            navigator.notification.confirm(
-                '',
-                function (buttonIndex) {
-                    if (buttonIndex == (Factory.$rootScope.device == 'ios' ? 2 : 1))
-                        _function();
-                },
-                'Remover cartão de crédito?',
-                Factory.$rootScope.device == 'ios' ? 'Não,Sim' : 'Sim,Não'
-            );
-        } catch (e) {
-            if (confirm('Remover cartão de crédito?'))
-                _function();
-        }
-    };
-});
-
-app.controller('AddCard', function($rootScope, $scope) {
-    $rootScope.Titulo = "Adicionar";
-    $rootScope.MenuBottom = true;
-    $rootScope.NO_WHATSAPP = false;
-
-    $scope.salvar = function () {
-        if (!$('#cardName').val().length)
-            $('#cardName').focus();
-        else if (!$('#cardNumber').val().length)
-            $('#cardNumber').focus();
-        else if (!$('#expirationMonthYear').val().length)
-            $('#expirationMonthYear').focus();
-        else if (!$('#cvv').val().length)
-            $('#cvv').focus();
-        else if(!parseInt($('#formCadastro').attr('invalid'))) {
-            Factory.ajax(
-                {
-                    action: 'cadastro/addcard',
-                    data: {
-                        CC_NAME: $('#cardName').val(),
-                        CC_NUMBER: $('#cardNumber').val(),
-                        CC_MONTHYEAR: $('#expirationMonthYear').val(),
-                        CC_CVV: $('#cvv').val(),
-                        CC_BANDEIRA: $('#cardBandeira').val()
-                    }
-                },
-                function (data) {
-                    $rootScope.location('#!/card');
-                }
-            );
-        }
-    };
-
-    // PagSeguro
-    $rootScope.pagseguro();
-});
-
 app.controller('CardNew', function($rootScope, $scope, $routeParams) {
     $rootScope.Titulo = "Meus cartões";
     var cc = CC.get();
@@ -443,9 +368,6 @@ app.controller('AddCardNew', function($rootScope, $scope) {
         } else
             $rootScope.dadosInvalidosCC();
     };
-
-    // PagSeguro
-    $rootScope.pagseguro();
 });
 
 app.controller('MinhaCarteira', function($rootScope, $scope, $routeParams, ReturnData) {
