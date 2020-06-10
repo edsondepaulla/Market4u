@@ -103,11 +103,26 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                 Payment.timeoutBanner[TYPE] = setTimeout(function () {
                     var banner = $('.banners[type="' + TYPE + '"] > li.active');
                     if (banner.length) {
-                        if($('.banners[type="' + TYPE + '"]').visible()) {
-                            if (banner.next('li').length)
+                        if ($('.banners[type="' + TYPE + '"]').visible()) {
+                            var id = 0;
+                            if (banner.next('li').length) {
                                 banner.next('li').addClass('active');
-                            else
+                                id = banner.next('li').data('id');
+                            } else {
                                 $('.banners[type="' + TYPE + '"] > li:first-child').addClass('active');
+                                id = $('.banners[type="' + TYPE + '"] > li:first-child').data('id');
+                            }
+                            if (parseInt(id)) {
+                                Factory.ajax(
+                                    {
+                                        action: 'payment/bannercount',
+                                        data: {
+                                            ID: parseInt(id),
+                                            TYPE: 'VIEWS'
+                                        }
+                                    }
+                                );
+                            }
                             banner.removeClass('active');
                         }
                         $scope.banner(TYPE, TIME);
@@ -141,10 +156,12 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                             if (data.COMPRAS) {
                                 $rootScope.PRODUTOS_COMPRAS = Payment.PRODUTOS_COMPRAS = data.COMPRAS;
                                 $rootScope.BANNERS_MODAL = data.COMPRAS.BANNERS_MODAL;
-                                setTimeout(function () {
-                                    if (data.COMPRAS.BANNERS_MODAL.length)
+                                if (data.COMPRAS.BANNERS_MODAL.length) {
+                                    setTimeout(function () {
                                         $('div#banner_modal').css('display', 'flex');
-                                }, 1000);
+                                        $scope.banner('MODAL', data.COMPRAS.BANNERS_TIME);
+                                    }, 1000);
+                                }
                                 if (data.COMPRAS.BANNERS.length) {
                                     setTimeout(function () {
                                         $scope.banner('COMPRAS', data.COMPRAS.BANNERS_TIME);
@@ -415,14 +432,16 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                     $rootScope.PESQUISA = BANNER.VALUE;
                     break;
                 case 'REDIRECT':
-                    $rootScope.location(BANNER.VALUE, BANNER.EXTERNAL ? 1 : 0, 1);
+                    if (BANNER.VALUE)
+                        $rootScope.location(BANNER.VALUE, BANNER.EXTERNAL ? 1 : 0, 1);
                     break;
             }
             Factory.ajax(
                 {
                     action: 'payment/bannercount',
                     data: {
-                        ID: BANNER.ID
+                        ID: BANNER.ID,
+                        TYPE: 'CLICKS'
                     }
                 }
             );
@@ -454,6 +473,12 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                                 $rootScope.QTDE_PRODUTOS = Payment.QTDE_PRODUTOS = data.QTDE_PRODUTOS;
                                 $rootScope.PRODUTOS_CATEGORIAS_BUSCA.BANNERS = data.COMPRAS.BANNERS;
                                 $rootScope.BANNERS_MODAL = data.COMPRAS.BANNERS_MODAL;
+                                if (data.COMPRAS.BANNERS_MODAL.length) {
+                                    setTimeout(function () {
+                                        $('div#banner_modal').css('display', 'flex');
+                                        $scope.banner('MODAL', data.COMPRAS.BANNERS_TIME);
+                                    }, 1000);
+                                }
                                 if (data.COMPRAS.BANNERS.length) {
                                     setTimeout(function () {
                                         $scope.banner('BUSCA', data.COMPRAS.BANNERS_TIME);
@@ -803,7 +828,7 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                                                             data.FORMAS_PG[idx]['LST'].push({
                                                                 ACTIVE: active,
                                                                 ID: ID,
-                                                                IMG: "https://m.market4u.com.br/skin/default/images/bandeira_cc/" + vals.BANDEIRA + ".png",
+                                                                IMG: "https://m-dev2.market4u.com.br/skin/default/images/bandeira_cc/" + vals.BANDEIRA + ".png",
                                                                 TEXT: vals.TEXT,
                                                                 VALS: {1: vals.HASH}
                                                             });

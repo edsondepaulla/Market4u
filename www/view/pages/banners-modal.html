@@ -1,5 +1,5 @@
-<ul>
-    <li class="{{BANNER.ACTIVE?'active':''}}" ng-repeat="BANNER in $root.BANNERS_MODAL">
+<ul type="MODAL" class="banners">
+    <li class="{{BANNER.ACTIVE?'active':''}}" data-id="{{BANNER.ID}}" ng-repeat="BANNER in $root.BANNERS_MODAL">
         <i ng-click="$root.BANNERS_MODAL=[];" class="mdi mdi-navigation-close"></i>
         <a ng-click="$root.clickBanner(BANNER)"><img src="{{BANNER.IMAGE}}" /></a>
     </li>
