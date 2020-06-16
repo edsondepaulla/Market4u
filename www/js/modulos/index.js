@@ -746,7 +746,6 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                 V.ACTIVE = 1;
                 $rootScope.VOUCHER = V.ID;
                 $rootScope.VOUCHER_VALOR = V.VALOR_FORMAT;
-                $rootScope.VOUCHER_SOBRE_PROMOCAO = parseInt(V.SOBRE_PROMOCAO);
             }
             $rootScope.verifyLimitFormasPg();
         };
@@ -757,7 +756,6 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                     if (voucher.ACTIVE) {
                         $rootScope.VOUCHER = voucher.ID;
                         $rootScope.VOUCHER_VALOR = voucher.VALOR_FORMAT;
-                        $rootScope.VOUCHER_SOBRE_PROMOCAO = parseInt(voucher.SOBRE_PROMOCAO);
                     }
                 });
             }

@@ -13,7 +13,8 @@
         <div class="clearBoth"></div>
         <ul ng-if="PG.TIPO=='VOUCHER'">
             <li class="{{V.ACTIVE?'active':''}} itens" ng-repeat="V in PG.ITENS" ng-click="selectVoucher(PG.ITENS, V)">
-                <span ng-if="V.CODIGO"><i class="mdi mdi-action-done"></i> </span><i>{{V.NOME}}</i>
+                <span ng-if="V.CODIGO"><i class="mdi mdi-action-done"></i> </span><b>{{V.CODIGO}}</b> <i>{{V.NOME}}</i>
+                <label ng-if="V.ACTIVE && V.DESCRICAO" ng-bind-html="V.DESCRICAO"></label>
             </li>
             <li class="c">
                 <input id="ADD_VOUCHER" placeholder="Insira um cód. promocional" maxlength="50" ng-model="$root.ADD_VOUCHER">
