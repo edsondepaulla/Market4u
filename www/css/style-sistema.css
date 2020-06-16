@@ -5287,6 +5287,24 @@ img[src="img/market4u.png"]{
   color: #CCC;
   margin-right: 5px;
 }
+.boxPopup[box="carrinho"] ul li > div.b label.total_desconto{
+  display: block;
+  color: rgba(0, 203, 0, 0.53);
+  line-height: 15px;
+}
+.boxPopup[box="carrinho"] ul li > div.b label.total_desconto .v{
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.boxPopup[box="carrinho"] ul li > div.b label.total{
+  display: block;
+  line-height: 10px;
+}
+.boxPopup[box="carrinho"] ul li > div.b label.total .v{
+  font-size: 12px;
+  text-decoration: none;
+}
 .boxPopup[box="carrinho"] ul li > div.b label.total_de .v{
   text-decoration: line-through;
   font-size: 12px;

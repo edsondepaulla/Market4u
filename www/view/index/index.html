@@ -105,6 +105,8 @@
                         <h4>{{PROD.NOME}}</h4>
                         <label class="total_de" ng-if="PROD.DE_PRECO_FORMAT && $root.LOCAL.ITEM.MAPS.PROXIMO"><span class="v">{{PROD.DE_PRECO_FORMAT}}</span></label>
                         <label ng-if="$root.LOCAL.ITEM.MAPS.PROXIMO"><span class="v">{{PROD.PRECO_FORMAT}}</span></label>
+                        <label class="total_desconto" ng-if="PROD.TOTAL_DESCONTO_FORMAT && $root.LOCAL.ITEM.MAPS.PROXIMO"><span class="v">Desconto <b>{{PROD.TOTAL_DESCONTO_FORMAT}}</b></span></label>
+                        <label class="total" ng-if="PROD.TOTAL_FORMAT && $root.LOCAL.ITEM.MAPS.PROXIMO"><span class="v">Total <b>{{PROD.TOTAL_FORMAT}}</b></span></label>
                     </div>
                     <div ng-if="$root.LOCAL.ITEM.MAPS.PROXIMO" class="addRemoveQtdeProduto" unidade_medida="{{PROD.UNIDADE_MEDIDA}}">
                         <i ng-click="addRemoveQtdeProd(PROD, '+', true)" class="mdi mdi-content-add-circle"></i>
