@@ -5296,7 +5296,14 @@ img[src="img/market4u.png"]{
   font-size: 12px;
   text-decoration: none;
 }
-
+.boxPopup[box="carrinho"] ul li > div.b label.obs{
+  display: block;
+  line-height: 17px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #000;
+  width: 90%;
+}
 .boxPopup[box="carrinho"] ul li > div.b label.total{
   display: block;
   line-height: 10px;

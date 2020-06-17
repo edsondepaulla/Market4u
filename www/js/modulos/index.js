@@ -372,11 +372,13 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                     $rootScope.PROD_DETALHES = false;
                     break;
                 case 'produto':
-                    $('body').attr('scroll', 0);
-                    $rootScope.toolbar = false;
-                    $rootScope.MenuBottom = true;
-                    $rootScope.PROD_DETALHES = VALS;
-                    $rootScope.BTN_CARRINHO_BOTTOM = false;
+                    if(VALS.PROD_ID) {
+                        $('body').attr('scroll', 0);
+                        $rootScope.toolbar = false;
+                        $rootScope.MenuBottom = true;
+                        $rootScope.PROD_DETALHES = VALS;
+                        $rootScope.BTN_CARRINHO_BOTTOM = false;
+                    }
                     break;
             }
         };

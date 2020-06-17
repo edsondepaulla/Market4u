@@ -103,6 +103,7 @@
                     <div class="b" ng-click="$root.clickItem('produto', PROD)">
                         <img data-src="{{PROD.IMAGEM}}" src="img/market4u.png" alt="">
                         <h4>{{PROD.NOME}}</h4>
+                        <label class="obs" ng-if="PROD.OBS && $root.LOCAL.ITEM.MAPS.PROXIMO">{{PROD.OBS}}</label>
                         <label class="total_de" ng-if="PROD.DE_PRECO_FORMAT && $root.LOCAL.ITEM.MAPS.PROXIMO"><span class="v">{{PROD.DE_PRECO_FORMAT}}</span></label>
                         <label ng-if="$root.LOCAL.ITEM.MAPS.PROXIMO"><span class="v">{{PROD.PRECO_FORMAT}}</span></label>
                         <label class="total_desconto" ng-if="PROD.TOTAL_DESCONTO_FORMAT && $root.LOCAL.ITEM.MAPS.PROXIMO"><span class="v">Desconto <b>{{PROD.TOTAL_DESCONTO_FORMAT}}</b></span></label>
@@ -110,7 +111,7 @@
                     </div>
                     <div ng-if="$root.LOCAL.ITEM.MAPS.PROXIMO" class="addRemoveQtdeProduto" unidade_medida="{{PROD.UNIDADE_MEDIDA}}">
                         <i ng-click="addRemoveQtdeProd(PROD, '+', true)" class="mdi mdi-content-add-circle"></i>
-                        <span>{{$root.QTDE_PRODUTOS[PROD.PROD_ID]?(PROD.UNIDADE_MEDIDA=='KG'?$root.formatValor($root.QTDE_PRODUTOS[PROD.PROD_ID]):$root.QTDE_PRODUTOS[PROD.PROD_ID]):0}}{{PROD.UNIDADE_MEDIDA=='KG'?'kg':''}}</span>
+                        <span>{{$root.QTDE_PRODUTOS[PROD.PROD_ID]?(PROD.UNIDADE_MEDIDA=='KG'?$root.formatValor($root.QTDE_PRODUTOS[PROD.PROD_ID]):$root.QTDE_PRODUTOS[PROD.PROD_ID]):(PROD.QTDE?PROD.QTDE:0)}}{{PROD.UNIDADE_MEDIDA=='KG'?'kg':''}}</span>
                         <i ng-click="addRemoveQtdeProd(PROD, '-', true)" class="mdi mdi-content-remove-circle"></i>
                     </div>
                 </li>
