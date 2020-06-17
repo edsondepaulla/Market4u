@@ -728,6 +728,8 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                     Payment.clear(1);
                     clearTimeout(Factory.timeout);
                     Factory.timeout = setTimeout(function () {
+                        Payment.ATUALIZAR = true;
+                        Payment.PRODUTOS_COMPRAS = [];
                         $rootScope.location('#!/');
                     }, 500);
                     break;
