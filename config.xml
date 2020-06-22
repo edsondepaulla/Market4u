@@ -45,7 +45,6 @@
         <splash density="port-ldpi" src="res/screen/android/200.png" />
         <splash density="port-mdpi" src="res/screen/android/320.png" />
         <splash density="port-xhdpi" src="res/screen/android/720.png" />
-        <resource-file src="google-services.json" target="app/google-services.json" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
@@ -92,7 +91,6 @@
         <edit-config target="NSBluetoothAlwaysUsageDescription" file="*-Info.plist" mode="merge">
             <string>Permissões de acesso</string>
         </edit-config>
-        <resource-file src="GoogleService-Info.plist" />
     </platform>
     <engine name="ios" spec="^5.0.1" />
     <engine name="android" spec="~8.0.0" />
