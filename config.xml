@@ -97,7 +97,9 @@
     <engine name="ios" spec="^5.0.1" />
     <engine name="android" spec="~8.0.0" />
     <plugin name="cordova-plugin-ios-non-exempt-encryption" />
-    <plugin name="phonegap-plugin-push" spec="2.0.0" />
+    <plugin name="phonegap-plugin-push" spec="~2.2.0">
+        <variable name="FCM_VERSION" value="15.0.0" />
+    </plugin>
     <plugin name="cordova-plugin-keyboard" spec="^1.1.5" />
     <plugin name="cordova-plugin-splashscreen" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
