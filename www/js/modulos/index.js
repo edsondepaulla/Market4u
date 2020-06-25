@@ -498,59 +498,6 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
             }, PESQUISA ? 1000 : 0);
         };
 
-        $scope.fecharCompra = function () {
-            var tentativas = 0;
-            $('#carregando').show().css('opacity', 1);
-            var fecharCompra = function () {
-                tentativas++;
-                try {
-                    if (navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(
-                            function (position) {
-                                Factory.ajax(
-                                    {
-                                        action: 'options/token',
-                                        data: {
-                                            TOKEN: 'fecharcompra',
-                                            COORDS: position.coords
-                                        }
-                                    }, function (data) {
-                                        $rootScope.transacaoIdCarrinho = true;
-                                        $rootScope.transacaoId = parseInt(data.TRANSACAO_ID);
-                                        if (data.url)
-                                            $rootScope.location(data.url);
-                                    }
-                                );
-                            },
-                            function () {
-                                fecharCompraError();
-                            },
-                            {
-                                enableHighAccuracy: true,
-                                timeout: 5000,
-                                maximumAge: 0
-                            }
-                        );
-                    } else {
-                        fecharCompraError();
-                    }
-                } catch (e) {
-                    fecharCompraError();
-                }
-            };
-            var fecharCompraError = function () {
-                if (tentativas <= 10)
-                    fecharCompra();
-                else {
-                    $('#carregando').css('opacity', 0).hide();
-                    Factory.alert(Location.msg);
-                    if ("cordova" in window)
-                        Location.checkState();
-                }
-            };
-            fecharCompra();
-        };
-
         $scope.clearPesquisa = function () {
             $rootScope.PESQUISA = '';
             $scope.buscaProdutos();

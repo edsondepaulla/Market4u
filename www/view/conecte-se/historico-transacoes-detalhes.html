@@ -2,6 +2,8 @@
     <i style="font-size: 26px;vertical-align: sub;" class="mdi mdi-editor-attach-money"></i> <span ng-bind-html="REG.TIPO_DESCRICAO"></span>
     <div class="clearBoth"></div>
 
+    <a ng-if="REG.TIPO=='CA'" id="fechar_compra" ng-click="fecharCompra()"><i class="mdi mdi-editor-attach-money"></i> Finalizar compra</a>
+
     <div class="float-left margin-r-15" ng-if="REG.TOTAL">
         <br><b>{{REG.TIPO=='C'?'TOTAL':'VALOR'}}</b><br>
         {{REG.TOTAL}}
