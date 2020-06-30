@@ -387,7 +387,9 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
         if (!parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']) || Payment.ATUALIZAR) {
             Payment.ATUALIZAR = false;
             var ID_CATEGORIA = parseInt($('ul#boxCategorias li.active').data('id')) || 0;
-            $scope.getCompras({ID: ID_CATEGORIA}, 1);
+            setTimeout(function(){
+                 $scope.getCompras({ID: ID_CATEGORIA}, 1);
+            }, 1000);
         } else
             $scope.scrollLeft();
 
