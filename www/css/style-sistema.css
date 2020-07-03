@@ -401,6 +401,10 @@ body[controller="Index"][device="ios"][new_iphone="1"] #btn-home{
     padding-bottom: 30px;
 }
 
+body[device="ios"][new_iphone="1"] .boxPopup[box="carrinho"] .scrollable-content{
+    padding-bottom: 222px !important;
+}
+
 body[device="ios"][new_iphone="1"] #userLeft{
     border-top: 40px solid #fcfcfc;
 }
