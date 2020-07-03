@@ -5,6 +5,11 @@ body *{
     outline:0;
 }
 
+body{
+    padding-top: constant(safe-area-inset-top);
+    padding-top: env(safe-area-inset-top);
+}
+
 .clr {
     clear: both !important;
 }
