@@ -3,12 +3,15 @@ try {
         $rootScope.usuario = Login.getData();
         Factory.prepare();
 
-        $rootScope.new_iphone = 1;
+        $rootScope.new_iphone = 0;
         if(deviceDetector.os == 'ios') {
             document.addEventListener("deviceready", function () {
                 $rootScope.new_iphone = parseFloat(device.model.replace('iPhone', '').replace(',', '.')) > 10 ? 1 : 0;
             });
         }
+        setTimeout(function(){
+            $('#carregando').attr('ok', 1);
+        }, 2000);
 
         $rootScope.device = deviceDetector.os;
         $rootScope.BASE = config.url_api[config.ambiente] + 'Mobile/www/';

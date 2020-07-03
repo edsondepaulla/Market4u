@@ -370,6 +370,9 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                     $rootScope.toolbar = false;
                     $rootScope.CARRINHO = true;
                     $rootScope.PROD_DETALHES = false;
+                    setTimeout(function(){
+                        $rootScope.BTN_CARRINHO_BOTTOM = false;
+                    }, 500);
                     break;
                 case 'produto':
                     if(VALS.PROD_ID) {

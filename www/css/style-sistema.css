@@ -358,6 +358,18 @@ body[device="ios"] #toolbar {
     margin-top: 23px;
 }
 
+body[device="ios"][new_iphone="1"] ul#boxTour li i.mdi.mdi-hardware-keyboard-backspace{
+    bottom: 80px;
+}
+
+body[device="ios"][new_iphone="1"] ul#boxTour > i{
+    top: 30px;
+}
+
+body[device="ios"][new_iphone="1"] ul#boxTour li[idx="4"] i.mdi.mdi-hardware-keyboard-backspace{
+    bottom: 90px;
+}
+
 body[device="ios"][new_iphone="1"] #toolbar {
     margin-top: 40px;
 }
@@ -383,6 +395,22 @@ body[controller="Index"][device="ios"][new_iphone="1"] #boxCarrinhoFloat[bottom=
 
 body[device="ios"][new_iphone="1"] .boxPopup[box="carrinho"] #subTotalCarrinho{
     bottom: 80px;
+}
+
+body[controller="Index"][device="ios"][new_iphone="1"] #btn-home{
+    padding-bottom: 30px;
+}
+
+body[device="ios"][new_iphone="1"] #userLeft{
+    border-top: 40px solid #fcfcfc;
+}
+
+body[device="ios"][new_iphone="1"] .boxPopup[box="locais"]{
+    top: 40px;
+}
+
+body[device="ios"][new_iphone="1"] .boxPopup[box="locais"] .scrollable-content{
+    padding-bottom: 105px !important;
 }
 
 body[device="ios"]{
@@ -2724,8 +2752,13 @@ body[device="ios"] #userLeft{
     text-align: center;
     padding-top: 65%;
     font-size: 16px;
-    opacity: 0;
+    opacity: 1;
     transition: 0.5s;
+    display: block;
+}
+
+#carregando[ok="1"]{
+    opacity: 0;
     display: none;
 }
 
@@ -4313,7 +4346,6 @@ body[controller="Index"] .scrollable-content#boxPagamento > ul > li{
 }
 
 body[controller="Index"] .scrollable-content#boxPagamento[step="3"] > ul > li{
-    padding-top: 60px;
     padding-bottom: 50px;
 }
 
@@ -4331,7 +4363,6 @@ body[controller="Index"] .scrollable-content#boxPagamento[step="3"] > ul > li > 
     font-weight: 500;
     color: #00CB00;
     font-size: 21px;
-    position: fixed;
     top: 0;
     left: 0;
     background: #FFF;
