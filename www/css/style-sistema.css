@@ -5,11 +5,6 @@ body *{
     outline:0;
 }
 
-html{
-    padding-top: constant(safe-area-inset-top);
-    padding-top: env(safe-area-inset-top);
-}
-
 .clr {
     clear: both !important;
 }
@@ -361,6 +356,15 @@ body[controller="Index"] > #toolbar{
 
 body[device="ios"] #toolbar {
     margin-top: 23px;
+}
+
+body[device="ios"]{
+    border-top: 23px solid #00CB00;
+    background-position-y: calc(50% - 12px);
+}
+
+body[device="ios"] .pace .pace-activity {
+    top: 53px;
 }
 
 .t-delay {
@@ -1123,15 +1127,6 @@ body > .app[open="1"]{
     position: absolute;
     height: 80%;
     margin-top: 18%;
-}
-
-body[device="ios"]{
-    border-top: 23px solid #00CB00;
-    background-position-y: calc(50% - 12px);
-}
-
-body[device="ios"] .pace .pace-activity {
-    top: 53px;
 }
 
 body[controller="Index"] > #toolbar #top #sem_saldo{
