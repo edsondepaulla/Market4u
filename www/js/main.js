@@ -3,7 +3,7 @@ try {
         $rootScope.usuario = Login.getData();
         Factory.prepare();
 
-        $rootScope.new_iphone = 0;
+        $rootScope.new_iphone = 1;
         if(deviceDetector.os == 'ios') {
             document.addEventListener("deviceready", function () {
                 $rootScope.new_iphone = parseFloat(device.model.replace('iPhone', '').replace(',', '.')) > 10 ? 1 : 0;

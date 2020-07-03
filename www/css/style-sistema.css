@@ -358,6 +358,33 @@ body[device="ios"] #toolbar {
     margin-top: 23px;
 }
 
+body[device="ios"][new_iphone="1"] #toolbar {
+    margin-top: 40px;
+}
+body[device="ios"][new_iphone="1"] {
+    border-top: 40px solid #00CB00;
+}
+
+body[device="ios"][new_iphone="1"] ul#menu-bottom{
+    padding-bottom: 20px;
+}
+
+body[controller="Index"][device="ios"][new_iphone="1"] #boxCarrinhoFloat{
+    bottom: 92px;
+}
+
+body[controller="Index"][device="ios"][new_iphone="1"][scroll="1"] #boxCarrinhoFloat {
+    bottom: 30px;
+}
+
+body[controller="Index"][device="ios"][new_iphone="1"] #boxCarrinhoFloat[bottom="1"] {
+    bottom: 30px;
+}
+
+body[device="ios"][new_iphone="1"] .boxPopup[box="carrinho"] #subTotalCarrinho{
+    bottom: 80px;
+}
+
 body[device="ios"]{
     border-top: 23px solid #00CB00;
     background-position-y: calc(50% - 12px);
@@ -4421,7 +4448,7 @@ ul#menu-bottom{
 
 ul#menu-bottom[show="0"],
 body[scroll="1"] ul#menu-bottom{
-    bottom: -75px;
+    bottom: -95px;
 }
 
 ul#menu-bottom[tour="2"],
