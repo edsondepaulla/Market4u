@@ -45,7 +45,7 @@
         <splash density="port-ldpi" src="res/screen/android/200.png" />
         <splash density="port-mdpi" src="res/screen/android/320.png" />
         <splash density="port-xhdpi" src="res/screen/android/720.png" />
-        <resource-file src="google-services.json" target="google-services.json" />
+        <!--<resource-file src="google-services.json" target="google-services.json" />-->
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
@@ -97,9 +97,9 @@
     <engine name="ios" spec="^5.0.1" />
     <engine name="android" spec="~8.0.0" />
     <plugin name="cordova-plugin-ios-non-exempt-encryption" />
-    <plugin name="phonegap-plugin-push" spec="~2.2.0">
+    <!--<plugin name="phonegap-plugin-push" spec="~2.2.0">
         <variable name="FCM_VERSION" value="15.0.0" />
-    </plugin>
+    </plugin>-->
     <plugin name="cordova-plugin-keyboard" spec="^1.1.5" />
     <plugin name="cordova-plugin-splashscreen" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
