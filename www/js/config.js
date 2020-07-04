@@ -525,6 +525,33 @@ var Factory = {
                     alert('ddd');
                 }, 5000);
             }*/
+
+
+            try {
+                var push = PushNotification.init({
+                    android: {},
+                    ios: {
+                        alert: "true",
+                        badge: "true",
+                        sound: "true"
+                    },
+                    windows: {}
+                });
+                push.on('registration', function (data) {
+                    console.dir(data)
+                    alert('Event=registration, registrationId=' + data.registrationId);
+                });
+                push.on('notification', function (data) {
+                    console.log(data)
+                    alert('Event=notification, message=' + data.message);
+                });
+                push.on('error', function (err) {
+                    console.log(err)
+                    alert('Event=error, message=' + err.message);
+                });
+            }catch (e) {
+
+            }
         }, false);
         if(!parseInt(Login.getData().ID))
             window.location = '#!/conecte-se';
