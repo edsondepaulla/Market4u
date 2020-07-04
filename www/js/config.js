@@ -529,13 +529,14 @@ var Factory = {
 
             try {
                 var push = PushNotification.init({
-                    android: {},
+                    android: {
+                        senderID: 344238321654
+                    },
                     ios: {
                         alert: "true",
                         badge: "true",
                         sound: "true"
-                    },
-                    windows: {}
+                    }
                 });
                 push.on('registration', function (data) {
                     console.dir(data)
