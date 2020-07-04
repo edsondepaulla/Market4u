@@ -417,6 +417,10 @@ body[device="ios"][new_iphone="1"] .boxPopup[box="locais"] .scrollable-content{
     padding-bottom: 105px !important;
 }
 
+body[controller="MinhaCarteira"][device="ios"][new_iphone="1"] .btnConfirme{
+    padding-bottom: 30px;
+}
+
 body[device="ios"]{
     border-top: 23px solid #00CB00;
     background-position-y: calc(50% - 12px);

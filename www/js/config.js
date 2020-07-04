@@ -485,12 +485,12 @@ var Factory = {
         document.addEventListener("deviceready", function () {
             Location.onDeviceReady();
             cordova.plugins.BluetoothStatus.initPlugin();
-            window.addEventListener('BluetoothStatus.enabled', function() {
+            window.addEventListener('BluetoothStatus.enabled', function () {
                 bluetooth.ativado = true;
-                if(bluetooth.callback_ativado)
+                if (bluetooth.callback_ativado)
                     bluetooth.detravar();
             });
-            window.addEventListener('BluetoothStatus.disabled', function() {
+            window.addEventListener('BluetoothStatus.disabled', function () {
                 bluetooth.ativado = false;
             });
 
@@ -498,6 +498,7 @@ var Factory = {
 
             });
             cordova.plugins.notification.local.on("click", function (notification, state) {
+                alert('fds');
                 switch (notification.type) {
                     case 'redirect':
                         if (notification.url)
@@ -508,24 +509,6 @@ var Factory = {
                         break;
                 }
             });
-
-            /*
-            // Android customization
-            cordova.plugins.backgroundMode.setDefaults({ text:'Doing heavy tasks.'});
-            // Enable background mode
-            cordova.plugins.backgroundMode.enable();
-
-            // Called when background mode has been activated
-            cordova.plugins.backgroundMode.onactivate = function () {
-                setTimeout(function () {
-                    // Modify the currently displayed notification
-                    cordova.plugins.backgroundMode.configure({
-                        text:'Running in background for more than 5s now.'
-                    });
-                    alert('ddd');
-                }, 5000);
-            }*/
-
 
             try {
                 var push = PushNotification.init({
@@ -539,18 +522,24 @@ var Factory = {
                     }
                 });
                 push.on('registration', function (data) {
-                    console.dir(data)
-                    alert('Event=registration, registrationId=' + data.registrationId);
+                    Factory.ajax(
+                        {
+                            action: 'options/push',
+                            data: {
+                                ID: data.registrationId
+                            }
+                        }
+                    );
                 });
-                push.on('notification', function (data) {
+                /*push.on('notification', function (data) {
                     console.log(data)
                     alert('Event=notification, message=' + data.message);
                 });
                 push.on('error', function (err) {
                     console.log(err)
                     alert('Event=error, message=' + err.message);
-                });
-            }catch (e) {
+                });*/
+            } catch (e) {
 
             }
         }, false);
