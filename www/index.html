@@ -14,19 +14,19 @@
 
     <style>
       html{
-        /*background-image: url("img/logo.png");
+        background-image: url("img/logo.png");
         background-repeat: no-repeat;
         background-position: center;
-        background-color: transparent !important;*/
+        background-color: transparent !important;
         height: 100%;
         background-size: 80%;
       }
       body{
-        /*background-size: 80%;
+        background-size: 80%;
         background-image: url("img/logo.png");
         background-color: transparent !important;
         background-repeat: no-repeat;
-        background-position: center;*/
+        background-position: center;
         overflow-x: hidden;
         -moz-user-select: none;
         -webkit-user-select: none;
@@ -112,8 +112,10 @@
   </head>
   <body addsaldo="{{!usuario.MEUSALDO && usuario.MEUSALDO_ATIVADO?1:0}}" device="{{device}}" new_iphone="{{new_iphone}}" controller="{{controller}}" ng-app="App">
     <div id="carregando" style="display: none">
-      <img src="img/loader.gif" border="0">
-      Carregando...
+      <div>
+        <img src="img/loader.gif" border="0">
+        Carregando...
+      </div>
     </div>
 
     <div mn-touch swipe-right="swipeRight()" ng-if="toolbar" id="toolbar" ng-include src="$root.BASE+'view/pages/toolbar.html'"></div>
