@@ -55,7 +55,7 @@ var BarCodeScanner = {
         }
     },
     scan: function (type) {
-        $('#carregando').show().css('opacity', 1);
+        $('#carregando').css('display', 'flex').css('opacity', 1);
         try {
             cordova.plugins.barcodeScanner.scan(
                 function (result) {

@@ -229,7 +229,7 @@ var Factory = {
             var diffCarregando = (params.data ? params.data['LOADER_CARREGANDO'] === false : false) ? false : ((params.data ? params.data['LOADER_CARREGANDO'] === true : false) ? true : this.diffCarregando(params.action));
             if (diffCarregando) {
                 clearTimeout(Factory.timeoutCarregando);
-                $('#carregando').show().css('opacity', 1);
+                $('#carregando').css('display', 'flex').css('opacity', 1);
             }
 
             // Form

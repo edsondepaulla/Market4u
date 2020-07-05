@@ -78,7 +78,7 @@ function inputEvents(_this, _bind) {
                             $('#boxEnderecoCompleto').show();
                         },
                         beforeSend: function () {
-                            $('#carregando').show().css('opacity', 1);
+                            $('#carregando').css('display', 'flex').css('opacity', 1);
                         },
                         complete: function () {
                             $('#carregando').hide().css('opacity', 0);

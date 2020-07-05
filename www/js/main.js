@@ -27,7 +27,7 @@ try {
         // Finalizar compra
         $scope.fecharCompra = function () {
             var tentativas = 0;
-            $('#carregando').show().css('opacity', 1);
+            $('#carregando').css('display', 'flex').css('opacity', 1);
             var fecharCompra = function () {
                 tentativas++;
                 try {
@@ -756,7 +756,7 @@ try {
             }, 100);
         };
         $rootScope.confirmPayment = function (origem) {
-            $('#carregando').show().css('opacity', 1);
+            $('#carregando').css('display', 'flex').css('opacity', 1);
             $('.btnConfirme').attr('disabled', true);
             var valido = false;
             if ($rootScope.FORMA_PAGAMENTO && $('#boxPg > ul > li.active').length) {
