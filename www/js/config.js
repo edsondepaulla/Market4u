@@ -164,6 +164,7 @@ var Page = {
 };
 
 var Factory = {
+    DEVICE_ID: null,
     $http: null,
     $scope: [],
     $rootScope: [],
@@ -242,6 +243,8 @@ var Factory = {
 
             // Device
             data.append('device', Factory.$rootScope.device);
+            if(Factory.DEVICE_ID)
+                data.append('DEVICE_ID', Factory.DEVICE_ID);
 
             // Parametro versao app mobile
             if (config.versao_app_mobile)
@@ -475,7 +478,6 @@ var Factory = {
         if (functionError)
             eval(functionError);
 
-
         $('.btnConfirme').attr('disabled', false);
 
         if (data.status == '-1')
@@ -494,7 +496,7 @@ var Factory = {
                 bluetooth.ativado = false;
             });
 
-            cordova.plugins.notification.local.requestPermission(function (granted) {
+            /*cordova.plugins.notification.local.requestPermission(function (granted) {
 
             });
             cordova.plugins.notification.local.on("click", function (notification, state) {
@@ -508,7 +510,7 @@ var Factory = {
                         Factory.$rootScope.location('#!/notificacoes/' + notification.id);
                         break;
                 }
-            });
+            });*/
 
             try {
                 var push = PushNotification.init({
@@ -522,22 +524,11 @@ var Factory = {
                     }
                 });
                 push.on('registration', function (data) {
-                    Factory.ajax(
-                        {
-                            action: 'options/push',
-                            data: {
-                                ID: data.registrationId
-                            }
-                        }
-                    );
+                    Factory.DEVICE_ID = data.registrationId;
                 });
                 /*push.on('notification', function (data) {
-                    console.log(data)
+                    console.log(data);
                     alert('Event=notification, message=' + data.message);
-                });
-                push.on('error', function (err) {
-                    console.log(err)
-                    alert('Event=error, message=' + err.message);
                 });*/
             } catch (e) {
 
