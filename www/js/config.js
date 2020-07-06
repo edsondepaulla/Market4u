@@ -531,8 +531,7 @@ var Factory = {
                         sound: "true"
                     },
                     ios: {
-                        sound: "true",
-                        voip: "true"
+                        sound: "true"
                     }
                 });
                 push.on('registration', function (data) {
