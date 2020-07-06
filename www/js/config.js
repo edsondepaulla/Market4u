@@ -532,13 +532,14 @@ var Factory = {
                     if (data.additionalData.foreground) {
                         if(data.message) {
                             alert('x');
-                            cordova.plugins.notification.local.schedule({
-                                title: data.title,
-                                text: data.message,
-                                type: data.additionalData.type,
-                                url: data.additionalData.url,
-                                foreground: true
-                            });
+                            try {
+                                cordova.plugins.notification.local.schedule({
+                                    text: "This is the text.",
+                                    at: new Date(new Date().getTime() + 5000)
+                                });
+                            } catch (e) {
+                                alert("Fail " + e);
+                            }
                         }
                     } else {
                         switch (data.additionalData.type) {
