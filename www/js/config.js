@@ -484,7 +484,7 @@ var Factory = {
             window.location = '#!/sem-internet';
     },
     prepare: function () {
-        /*document.addEventListener("resume", function () {
+        document.addEventListener("resume", function () {
             if(Login.getData().ID == 475){
                 alert('x2222');
                 cordova.plugins.notification.local.schedule({
@@ -493,7 +493,7 @@ var Factory = {
                     foreground: false
                 });
             }
-        });*/
+        });
 
         document.addEventListener("deviceready", function () {
             if(Factory.$rootScope.device == 'ios')
@@ -532,7 +532,8 @@ var Factory = {
                     },
                     ios: {
                         sound: "true",
-                        voip: "true"
+                        alert: "true",
+                        badge: "true"
                     }
                 });
                 push.on('registration', function (data) {
@@ -547,7 +548,7 @@ var Factory = {
                                 text: data.message,
                                 type: data.additionalData.type,
                                 url: data.additionalData.url,
-                                foreground: false
+                                foreground: true
                             });
                         }
                     } else {
