@@ -485,10 +485,8 @@ var Factory = {
     },
     prepare: function () {
         document.addEventListener("deviceready", function () {
-            if(Factory.$rootScope.device == 'ios') {
-                //Factory.$rootScope.new_iphone = parseFloat(device.model.replace('iPhone', '').replace(',', '.')) > 10 ? 1 : 0;
-                alert(device);
-            }
+            if(Factory.$rootScope.device == 'ios')
+                Factory.$rootScope.new_iphone = parseFloat(device.model.replace('iPhone', '').replace(',', '.')) > 10 ? 1 : 0;
 
             Location.onDeviceReady();
             cordova.plugins.BluetoothStatus.initPlugin();
@@ -532,12 +530,17 @@ var Factory = {
                     Factory.DEVICE_ID = data.registrationId;
                 });
                 push.on('notification', function (data) {
+                    cordova.plugins.notification.local.schedule({
+                        title: 'My first notification',
+                        text: 'Thats pretty easy...',
+                        foreground: true
+                    });
+
                     //alert(data.additionalData.url);
                     //alert('Event=notification, message=' + data.message);
                     switch (data.additionalData.type) {
                         case 'redirect':
                             if (data.additionalData.url) {
-                                alert(data.additionalData.url);
                                 Factory.$rootScope.location(data.additionalData.url);
                             }
                             break;
