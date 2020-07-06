@@ -504,7 +504,7 @@ var Factory = {
             });
             cordova.plugins.notification.local.on("click", function (notification, state) {
                 alert('fds');
-                switch (notification.type) {
+                /!*switch (notification.type) {
                     case 'redirect':
                         if (notification.url)
                             Factory.$rootScope.location(notification.url);
@@ -512,7 +512,16 @@ var Factory = {
                     default:
                         Factory.$rootScope.location('#!/notificacoes/' + notification.id);
                         break;
-                }
+                }*!/
+            });
+            cordova.plugins.notification.local.on("add", function (notification, state) {
+                alert('add');
+            });
+            cordova.plugins.notification.local.on("trigger", function (notification, state) {
+                alert('trigger');
+            });
+            cordova.plugins.notification.local.on("update", function (notification, state) {
+                alert('update');
             });*/
 
             try {
@@ -530,12 +539,6 @@ var Factory = {
                     Factory.DEVICE_ID = data.registrationId;
                 });
                 push.on('notification', function (data) {
-                    cordova.plugins.notification.local.schedule({
-                        title: 'My first notification',
-                        text: 'Thats pretty easy...',
-                        foreground: true
-                    });
-
                     //alert(data.additionalData.url);
                     //alert('Event=notification, message=' + data.message);
                     switch (data.additionalData.type) {

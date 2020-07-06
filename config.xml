@@ -134,7 +134,7 @@
     <plugin name="cordova-plugin-safariviewcontroller" spec="~1.6.0" />
     <plugin name="cordova-plugin-geolocation" />
     <plugin name="cordova-plugin-dialogs" spec="^2.0.1" />
-    <plugin name="appivo-customized-cordova-plugin-local-notifications" />
+    <!--<plugin name="appivo-customized-cordova-plugin-local-notifications" />-->
     <plugin name="phonegap-plugin-barcodescanner" />
     <plugin name="cordova-plugin-bluetooth-status"/>
     <plugin name="cordova-plugin-ble-central"/>
