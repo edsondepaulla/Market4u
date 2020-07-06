@@ -510,10 +510,10 @@ var Factory = {
                 bluetooth.ativado = false;
             });
 
-            /*cordova.plugins.notification.local.requestPermission(function (granted) {
+            cordova.plugins.notification.local.requestPermission(function (granted) {
 
-            });*/
-            /*cordova.plugins.notification.local.on("click", function (notification, state) {
+            });
+            cordova.plugins.notification.local.on("click", function (notification, state) {
                 switch (notification.type) {
                     case 'redirect':
                         if (notification.url)
@@ -523,27 +523,16 @@ var Factory = {
                         Factory.$rootScope.location('#!/notificacoes/' + notification.id);
                         break;
                 }
-            });*/
-            /*cordova.plugins.notification.local.on("add", function (notification, state) {
-                alert('add');
             });
-            cordova.plugins.notification.local.on("trigger", function (notification, state) {
-                alert('trigger');
-            });
-            cordova.plugins.notification.local.on("update", function (notification, state) {
-                alert('update');
-            });*/
-
             try {
                 var push = PushNotification.init({
                     android: {
-                        senderID: 344238321654
+                        senderID: 344238321654,
+                        sound: "true"
                     },
                     ios: {
-                        //alert: "true",
-                        //badge: "true",
                         sound: "true",
-                        //voip: true
+                        voip: "true"
                     }
                 });
                 push.on('registration', function (data) {
@@ -552,24 +541,14 @@ var Factory = {
                 push.on('notification', function (data) {
                     if (data.additionalData.foreground) {
                         if(data.message) {
-                            alert('x');
                             cordova.plugins.notification.local.schedule({
                                 title: data.title,
                                 text: data.message,
+                                type: data.additionalData.type,
+                                url: data.additionalData.url,
                                 foreground: false
                             });
-
-                            /*cordova.plugins.notification.local.schedule({
-                                title: 'My first notification',
-                                text: 'Thats pretty easy...',
-                                //foreground: true
-                            });*/
-                            /*cordova.plugins.notification.local.on("click", function (evt) {
-                                alert('x');
-                                console.dir(evt);
-                            }, data);*/
                         }
-                        return;
                     } else {
                         switch (data.additionalData.type) {
                             case 'redirect':

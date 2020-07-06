@@ -114,11 +114,11 @@
         <edit-config target="NSBluetoothAlwaysUsageDescription" file="*-Info.plist" mode="merge">
             <string>Permissões de acesso</string>
         </edit-config>
-        <!--<edit-config file="*-Info.plist" parent="UIBackgroundModes" mode="merge">
+        <edit-config file="*-Info.plist" parent="UIBackgroundModes">
             <array>
                 <string>voip</string>
             </array>
-        </edit-config>-->
+        </edit-config>
     </platform>
     <engine name="ios" spec="^5.0.1" />
     <engine name="android" spec="~8.0.0" />
