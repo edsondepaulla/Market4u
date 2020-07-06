@@ -484,7 +484,7 @@ var Factory = {
             window.location = '#!/sem-internet';
     },
     prepare: function () {
-        document.addEventListener("resume", function () {
+        /*document.addEventListener("resume", function () {
             if(Login.getData().ID == 475){
                 alert('x');
                 cordova.plugins.notification.local.schedule({
@@ -493,7 +493,7 @@ var Factory = {
                     foreground: true
                 });
             }
-        });
+        });*/
 
         document.addEventListener("deviceready", function () {
             if(Factory.$rootScope.device == 'ios')
@@ -543,7 +543,7 @@ var Factory = {
                         //alert: "true",
                         //badge: "true",
                         sound: "true",
-                       // voip: true
+                        //voip: true
                     }
                 });
                 push.on('registration', function (data) {
@@ -551,12 +551,19 @@ var Factory = {
                 });
                 push.on('notification', function (data) {
                     if (data.additionalData.foreground) {
+                        alert('fdsfa');
                         if(data.message) {
+                            cordova.plugins.notification.local.schedule({
+                                title: 'My first notification',
+                                text: 'Thats pretty easy...',
+                                foreground: true
+                            });
+                            /*
                             cordova.plugins.notification.local.schedule({
                                 title: data.title,
                                 text: data.message,
                                 foreground: true
-                            });
+                            });*/
                             cordova.plugins.notification.local.on("click", function (evt) {
                                 alert('x');
                                 console.dir(evt);
