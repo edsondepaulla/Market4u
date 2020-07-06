@@ -125,6 +125,7 @@
     <plugin name="cordova-plugin-ios-non-exempt-encryption" />
     <plugin name="phonegap-plugin-push" spec="~2.3.0">
         <variable name="FCM_VERSION" value="15.0.0" />
+        <variable name="SENDER_ID" value="344238321654" />
     </plugin>
     <plugin name="cordova-plugin-keyboard" spec="^1.1.5" />
     <plugin name="cordova-plugin-splashscreen" />

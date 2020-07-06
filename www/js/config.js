@@ -550,18 +550,18 @@ var Factory = {
                     Factory.DEVICE_ID = data.registrationId;
                 });
                 push.on('notification', function (data) {
-                    if(data.additionalData.foreground ){
+                    if (data.additionalData.foreground) {
                         cordova.plugins.notification.local.schedule({
                             title: data.title,
                             text: data.message,
                             foreground: true
                         });
-                        cordova.plugins.notification.local.on("click", function(evt){
+                        cordova.plugins.notification.local.on("click", function (evt) {
                             alert('x');
                             console.dir(evt);
                         }, data);
                         return;
-                    }else {
+                    } else {
                         //alert(data.additionalData.url);
                         //alert('Event=notification, message=' + data.message);
                         switch (data.additionalData.type) {
