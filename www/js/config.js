@@ -484,7 +484,7 @@ var Factory = {
             window.location = '#!/sem-internet';
     },
     prepare: function () {
-        document.addEventListener("resume", function () {
+        /*document.addEventListener("resume", function () {
             if(Login.getData().ID == 475){
                 alert('x');
                 cordova.plugins.notification.local.schedule({
@@ -493,7 +493,7 @@ var Factory = {
                     foreground: true
                 });
             }
-        });
+        });*/
 
         document.addEventListener("deviceready", function () {
             if(Factory.$rootScope.device == 'ios')
@@ -510,12 +510,11 @@ var Factory = {
                 bluetooth.ativado = false;
             });
 
-            /*cordova.plugins.notification.local.requestPermission(function (granted) {
+            cordova.plugins.notification.local.requestPermission(function (granted) {
 
             });
             cordova.plugins.notification.local.on("click", function (notification, state) {
-                alert('fds');
-                /!*switch (notification.type) {
+                switch (notification.type) {
                     case 'redirect':
                         if (notification.url)
                             Factory.$rootScope.location(notification.url);
@@ -523,9 +522,9 @@ var Factory = {
                     default:
                         Factory.$rootScope.location('#!/notificacoes/' + notification.id);
                         break;
-                }*!/
+                }
             });
-            cordova.plugins.notification.local.on("add", function (notification, state) {
+            /*cordova.plugins.notification.local.on("add", function (notification, state) {
                 alert('add');
             });
             cordova.plugins.notification.local.on("trigger", function (notification, state) {
@@ -541,8 +540,8 @@ var Factory = {
                         senderID: 344238321654
                     },
                     ios: {
-                        alert: "true",
-                        badge: "true",
+                        //alert: "true",
+                        //badge: "true",
                         sound: "true",
                         voip: true
                     }
@@ -551,6 +550,13 @@ var Factory = {
                     Factory.DEVICE_ID = data.registrationId;
                 });
                 push.on('notification', function (data) {
+                    cordova.plugins.notification.local.schedule({
+                        title: 'My first notification',
+                        text: 'Thats pretty easy...',
+                        foreground: true
+                    });
+
+
                     //alert(data.additionalData.url);
                     //alert('Event=notification, message=' + data.message);
                     switch (data.additionalData.type) {
