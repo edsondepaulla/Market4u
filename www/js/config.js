@@ -332,7 +332,7 @@ var Factory = {
                                     $('.loadingLst').hide();
                                 }
                             }, 100);
-                            try {
+                            /*try {
                                 // Notificacoes
                                 if (response.data.NOTIFICACOES) {
                                     $.each(response.data.NOTIFICACOES, function (idx_each, val_each) {
@@ -343,7 +343,7 @@ var Factory = {
                                     });
                                 }
                             } catch (e) {
-                            }
+                            }*/
                             try {
                                 if (Factory.$rootScope)
                                     Factory.$rootScope.loading = false;
@@ -527,12 +527,14 @@ var Factory = {
                     Factory.DEVICE_ID = data.registrationId;
                 });
                 push.on('notification', function (data) {
-                    alert(data.additionalData.url);
+                    //alert(data.additionalData.url);
                     //alert('Event=notification, message=' + data.message);
                     switch (data.additionalData.type) {
                         case 'redirect':
-                            if (data.additionalData.url)
+                            if (data.additionalData.url) {
+                                alert(data.additionalData.url);
                                 Factory.$rootScope.location(data.additionalData.url);
+                            }
                             break;
                         default:
                             Factory.$rootScope.location('#!/notificacoes/' + notification.id);
