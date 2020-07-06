@@ -526,10 +526,19 @@ var Factory = {
                 push.on('registration', function (data) {
                     Factory.DEVICE_ID = data.registrationId;
                 });
-                /*push.on('notification', function (data) {
-                    console.log(data);
-                    alert('Event=notification, message=' + data.message);
-                });*/
+                push.on('notification', function (data) {
+                    alert(data.additionalData.url);
+                    //alert('Event=notification, message=' + data.message);
+                    switch (data.additionalData.type) {
+                        case 'redirect':
+                            if (data.additionalData.url)
+                                Factory.$rootScope.location(data.additionalData.url);
+                            break;
+                        default:
+                            Factory.$rootScope.location('#!/notificacoes/' + notification.id);
+                            break;
+                    }
+                });
             } catch (e) {
 
             }
