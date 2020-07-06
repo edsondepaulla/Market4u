@@ -531,7 +531,8 @@ var Factory = {
                         sound: "true"
                     },
                     ios: {
-                        sound: "true"
+                        sound: "true",
+                        voip: "true"
                     }
                 });
                 push.on('registration', function (data) {
@@ -540,6 +541,7 @@ var Factory = {
                 push.on('notification', function (data) {
                     if (data.additionalData.foreground) {
                         if(data.message) {
+                            alert('x');
                             cordova.plugins.notification.local.schedule({
                                 title: data.title,
                                 text: data.message,
