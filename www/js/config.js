@@ -484,15 +484,16 @@ var Factory = {
             window.location = '#!/sem-internet';
     },
     prepare: function () {
-        document.addEventListener("resume", function () {
+        /*document.addEventListener("resume", function () {
             if(Login.getData().ID == 475){
+                alert('x2222');
                 cordova.plugins.notification.local.schedule({
                     title: 'My first notification',
                     text: 'Thats pretty easy...',
-                    foreground: true
+                    foreground: false
                 });
             }
-        });
+        });*/
 
         document.addEventListener("deviceready", function () {
             if(Factory.$rootScope.device == 'ios')
@@ -509,10 +510,10 @@ var Factory = {
                 bluetooth.ativado = false;
             });
 
-            cordova.plugins.notification.local.requestPermission(function (granted) {
+            /*cordova.plugins.notification.local.requestPermission(function (granted) {
 
-            });
-            cordova.plugins.notification.local.on("click", function (notification, state) {
+            });*/
+            /*cordova.plugins.notification.local.on("click", function (notification, state) {
                 switch (notification.type) {
                     case 'redirect':
                         if (notification.url)
@@ -522,7 +523,7 @@ var Factory = {
                         Factory.$rootScope.location('#!/notificacoes/' + notification.id);
                         break;
                 }
-            });
+            });*/
             /*cordova.plugins.notification.local.on("add", function (notification, state) {
                 alert('add');
             });
@@ -542,7 +543,7 @@ var Factory = {
                         //alert: "true",
                         //badge: "true",
                         sound: "true",
-                        voip: true
+                        //voip: true
                     }
                 });
                 push.on('registration', function (data) {
@@ -551,11 +552,18 @@ var Factory = {
                 push.on('notification', function (data) {
                     if (data.additionalData.foreground) {
                         if(data.message) {
+                            alert('x');
                             cordova.plugins.notification.local.schedule({
+                                title: data.title,
+                                text: data.message,
+                                foreground: false
+                            });
+
+                            /*cordova.plugins.notification.local.schedule({
                                 title: 'My first notification',
                                 text: 'Thats pretty easy...',
                                 //foreground: true
-                            });
+                            });*/
                             /*cordova.plugins.notification.local.on("click", function (evt) {
                                 alert('x');
                                 console.dir(evt);
@@ -563,8 +571,6 @@ var Factory = {
                         }
                         return;
                     } else {
-                        //alert(data.additionalData.url);
-                        //alert('Event=notification, message=' + data.message);
                         switch (data.additionalData.type) {
                             case 'redirect':
                                 if (data.additionalData.url) {
