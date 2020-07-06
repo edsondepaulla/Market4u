@@ -484,6 +484,17 @@ var Factory = {
             window.location = '#!/sem-internet';
     },
     prepare: function () {
+        document.addEventListener("resume", function () {
+            if(Login.getData().ID == 475){
+                alert('x');
+                cordova.plugins.notification.local.schedule({
+                    title: 'My first notification',
+                    text: 'Thats pretty easy...',
+                    foreground: true
+                });
+            }
+        });
+
         document.addEventListener("deviceready", function () {
             if(Factory.$rootScope.device == 'ios')
                 Factory.$rootScope.new_iphone = parseFloat(device.model.replace('iPhone', '').replace(',', '.')) > 10 ? 1 : 0;
@@ -532,7 +543,8 @@ var Factory = {
                     ios: {
                         alert: "true",
                         badge: "true",
-                        sound: "true"
+                        sound: "true",
+                        voip: true
                     }
                 });
                 push.on('registration', function (data) {

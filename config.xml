@@ -114,6 +114,11 @@
         <edit-config target="NSBluetoothAlwaysUsageDescription" file="*-Info.plist" mode="merge">
             <string>Permissões de acesso</string>
         </edit-config>
+        <config-file target="*-Info.plist" parent="UIBackgroundModes">
+            <array>
+                <string>voip</string>
+            </array>
+        </config-file>
     </platform>
     <engine name="ios" spec="^5.0.1" />
     <engine name="android" spec="~8.0.0" />
@@ -134,7 +139,7 @@
     <plugin name="cordova-plugin-safariviewcontroller" spec="~1.6.0" />
     <plugin name="cordova-plugin-geolocation" />
     <plugin name="cordova-plugin-dialogs" spec="^2.0.1" />
-    <!--<plugin name="appivo-customized-cordova-plugin-local-notifications" />-->
+    <plugin name="appivo-customized-cordova-plugin-local-notifications" />
     <plugin name="phonegap-plugin-barcodescanner" />
     <plugin name="cordova-plugin-bluetooth-status"/>
     <plugin name="cordova-plugin-ble-central"/>
