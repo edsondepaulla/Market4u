@@ -550,24 +550,30 @@ var Factory = {
                     Factory.DEVICE_ID = data.registrationId;
                 });
                 push.on('notification', function (data) {
-                    cordova.plugins.notification.local.schedule({
-                        title: 'My first notification',
-                        text: 'Thats pretty easy...',
-                        foreground: true
-                    });
-
-
-                    //alert(data.additionalData.url);
-                    //alert('Event=notification, message=' + data.message);
-                    switch (data.additionalData.type) {
-                        case 'redirect':
-                            if (data.additionalData.url) {
-                                Factory.$rootScope.location(data.additionalData.url);
-                            }
-                            break;
-                        default:
-                            Factory.$rootScope.location('#!/notificacoes/' + notification.id);
-                            break;
+                    if(data.additionalData.foreground ){
+                        cordova.plugins.notification.local.schedule({
+                            title: data.title,
+                            text: data.message,
+                            foreground: true
+                        });
+                        cordova.plugins.notification.local.on("click", function(evt){
+                            alert('x');
+                            console.dir(evt);
+                        }, data);
+                        return;
+                    }else {
+                        //alert(data.additionalData.url);
+                        //alert('Event=notification, message=' + data.message);
+                        switch (data.additionalData.type) {
+                            case 'redirect':
+                                if (data.additionalData.url) {
+                                    Factory.$rootScope.location(data.additionalData.url);
+                                }
+                                break;
+                            default:
+                                Factory.$rootScope.location('#!/notificacoes/' + notification.id);
+                                break;
+                        }
                     }
                 });
             } catch (e) {
