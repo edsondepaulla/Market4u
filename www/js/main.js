@@ -1,14 +1,9 @@
 try {
     app.controller('Main', function ($rootScope, $scope, $http, $routeParams, $route, $mdSelect, $animate, $sce, deviceDetector) {
         $rootScope.usuario = Login.getData();
+        $rootScope.new_iphone = 0;
         Factory.prepare();
 
-        $rootScope.new_iphone = 0;
-        if(deviceDetector.os == 'ios') {
-            document.addEventListener("deviceready", function () {
-                $rootScope.new_iphone = parseFloat(device.model.replace('iPhone', '').replace(',', '.')) > 10 ? 1 : 0;
-            });
-        }
         setTimeout(function(){
             $('#carregando').attr('ok', 1);
         }, 2000);

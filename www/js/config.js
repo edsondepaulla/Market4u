@@ -485,6 +485,11 @@ var Factory = {
     },
     prepare: function () {
         document.addEventListener("deviceready", function () {
+            if(Factory.$rootScope.device == 'ios') {
+                //Factory.$rootScope.new_iphone = parseFloat(device.model.replace('iPhone', '').replace(',', '.')) > 10 ? 1 : 0;
+                alert(device);
+            }
+
             Location.onDeviceReady();
             cordova.plugins.BluetoothStatus.initPlugin();
             window.addEventListener('BluetoothStatus.enabled', function () {
