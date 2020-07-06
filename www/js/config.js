@@ -484,17 +484,6 @@ var Factory = {
             window.location = '#!/sem-internet';
     },
     prepare: function () {
-        document.addEventListener("resume", function () {
-            if(Login.getData().ID == 475){
-                alert('x2222');
-                cordova.plugins.notification.local.schedule({
-                    title: 'My first notification',
-                    text: 'Thats pretty easy...',
-                    foreground: false
-                });
-            }
-        });
-
         document.addEventListener("deviceready", function () {
             if(Factory.$rootScope.device == 'ios')
                 Factory.$rootScope.new_iphone = parseFloat(device.model.replace('iPhone', '').replace(',', '.')) > 10 ? 1 : 0;
