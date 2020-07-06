@@ -486,7 +486,6 @@ var Factory = {
     prepare: function () {
         document.addEventListener("resume", function () {
             if(Login.getData().ID == 475){
-                alert('x');
                 cordova.plugins.notification.local.schedule({
                     title: 'My first notification',
                     text: 'Thats pretty easy...',
@@ -543,7 +542,7 @@ var Factory = {
                         //alert: "true",
                         //badge: "true",
                         sound: "true",
-                        //voip: true
+                        voip: true
                     }
                 });
                 push.on('registration', function (data) {
