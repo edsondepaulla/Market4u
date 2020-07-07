@@ -504,7 +504,7 @@ var Factory = {
                 var push = PushNotification.init({
                     android: {
                         senderID: 344238321654,
-                        iconColor : 'blue'
+                        iconColor: '009145'
                     },
                     ios: {
                         sound: true,
@@ -536,7 +536,8 @@ var Factory = {
                                     type: data.additionalData.type,
                                     url: data.additionalData.url,
                                     id: data.additionalData.id,
-                                    foreground: true
+                                    foreground: true,
+                                    color: '009145'
                                 });
                             }
                         } else
