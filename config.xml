@@ -40,10 +40,8 @@
         <icon density="hdpi" src="res/android/icon72.png" />
         <icon density="xhdpi" src="res/android/icon96.png" />
         <icon density="xxhdpi" src="res/android/icon96.png" />
-        <icon density="xxhdpi" src="res/android/icon144.png" />
-        <icon density="xxxhdpi" src="res/android/icon196.png" />
         <preference name="android-minSdkVersion" value="23" />
-        <preference name="android-targetSdkVersion" value="29" />
+        <preference name="android-targetSdkVersion" value="28" />
         <splash density="port-hdpi" src="res/screen/android/480.png" />
         <splash density="port-ldpi" src="res/screen/android/200.png" />
         <splash density="port-mdpi" src="res/screen/android/320.png" />
