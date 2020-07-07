@@ -243,7 +243,7 @@ var Factory = {
 
             // Device
             data.append('device', Factory.$rootScope.device);
-            if(Factory.DEVICE_ID)
+            if (Factory.DEVICE_ID)
                 data.append('DEVICE_ID', Factory.DEVICE_ID);
 
             // Parametro versao app mobile
@@ -462,7 +462,7 @@ var Factory = {
                         );
                         break;
                 }
-            }catch (e) {
+            } catch (e) {
                 window.open(
                     url,
                     open_browser.target ? open_browser.target : '_system',
@@ -483,10 +483,66 @@ var Factory = {
         if (data.status == '-1')
             window.location = '#!/sem-internet';
     },
+    locationMobile: function (data) {
+        switch (data.type) {
+            case 'redirect':
+                if (data.url)
+                    Factory.$rootScope.location(data.url);
+                break;
+            default:
+                if (data.id)
+                    Factory.$rootScope.location('#!/notificacoes/' + data.id);
+                break;
+        }
+    },
     prepare: function () {
         document.addEventListener("deviceready", function () {
-            if(Factory.$rootScope.device == 'ios')
+            if (Factory.$rootScope.device == 'ios')
                 Factory.$rootScope.new_iphone = parseFloat(device.model.replace('iPhone', '').replace(',', '.')) > 10 ? 1 : 0;
+
+            try {
+                var push = PushNotification.init({
+                    android: {
+                        senderID: 344238321654
+                    },
+                    ios: {
+                        sound: true,
+                        alert: true,
+                        badge: true
+                    }
+                });
+                push.on('registration', function (data) {
+                    Factory.DEVICE_ID = data.registrationId;
+                });
+                push.on('notification', function (data) {
+                    push.finish(function () {
+                        if (data.additionalData.foreground) {
+                            if (data.message) {
+                                navigator.notification.confirm(
+                                    data.message,
+                                    function (buttonIndex) {
+                                        if (buttonIndex == (Factory.$rootScope.device == 'ios' ? 2 : 1))
+                                            Factory.locationMobile(data.additionalData);
+                                    },
+                                    'Nova notificação',
+                                    Factory.$rootScope.device == 'ios' ? 'Ignorar,Visualizar' : 'Visualizar,Ignorar'
+                                );
+                                cordova.plugins.notification.local.schedule({
+                                    title: 'title',
+                                    text: 'text',
+                                    foreground: true,
+                                    id: 1,
+                                    priority: 2,
+                                    silent: false
+                                });
+                            }
+                        } else
+                            Factory.locationMobile(data.additionalData);
+                    });
+                });
+            } catch (e) {
+
+            }
 
             Location.onDeviceReady();
             cordova.plugins.BluetoothStatus.initPlugin();
@@ -503,62 +559,10 @@ var Factory = {
 
             });
             cordova.plugins.notification.local.on("click", function (notification, state) {
-                switch (notification.type) {
-                    case 'redirect':
-                        if (notification.url)
-                            Factory.$rootScope.location(notification.url);
-                        break;
-                    default:
-                        Factory.$rootScope.location('#!/notificacoes/' + notification.id);
-                        break;
-                }
+                Factory.locationMobile(notification);
             });
-            try {
-                var push = PushNotification.init({
-                    android: {
-                        senderID: 344238321654,
-                        sound: "true"
-                    },
-                    ios: {
-                        sound: "true",
-                        alert: "true",
-                        badge: "true"
-                    }
-                });
-                push.on('registration', function (data) {
-                    Factory.DEVICE_ID = data.registrationId;
-                });
-                push.on('notification', function (data) {
-                    if (data.additionalData.foreground) {
-                        if(data.message) {
-                            alert('x');
-                            try {
-                                cordova.plugins.notification.local.schedule({
-                                    text: "This is the text.",
-                                    at: new Date(new Date().getTime() + 5000)
-                                });
-                            } catch (e) {
-                                alert("Fail " + e);
-                            }
-                        }
-                    } else {
-                        switch (data.additionalData.type) {
-                            case 'redirect':
-                                if (data.additionalData.url) {
-                                    Factory.$rootScope.location(data.additionalData.url);
-                                }
-                                break;
-                            default:
-                                Factory.$rootScope.location('#!/notificacoes/' + notification.id);
-                                break;
-                        }
-                    }
-                });
-            } catch (e) {
-
-            }
         }, false);
-        if(!parseInt(Login.getData().ID))
+        if (!parseInt(Login.getData().ID))
             window.location = '#!/conecte-se';
     }
 };

@@ -320,16 +320,6 @@ try {
 
         // Menu
         $rootScope.MenuLeft = [
-            /*{
-                id: 'DVCM',
-                titulo: 'Denuncie violência contra mulher',
-                external: 1,
-                url: {
-                    url: 'tel:180'
-                },
-                icon: 'mdi-communication-call',
-                logado: 0
-            },*/
             {
                 titulo: 'Produtos',
                 controller: 'Index',
