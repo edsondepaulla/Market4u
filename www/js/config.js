@@ -503,7 +503,8 @@ var Factory = {
             try {
                 var push = PushNotification.init({
                     android: {
-                        senderID: 344238321654
+                        senderID: 344238321654,
+                        icon: 'icon'
                     },
                     ios: {
                         sound: true,
@@ -518,22 +519,24 @@ var Factory = {
                     push.finish(function () {
                         if (data.additionalData.foreground) {
                             if (data.message) {
-                                navigator.notification.confirm(
-                                    data.message,
-                                    function (buttonIndex) {
-                                        if (buttonIndex == (Factory.$rootScope.device == 'ios' ? 2 : 1))
-                                            Factory.locationMobile(data.additionalData);
-                                    },
-                                    'Nova notificação',
-                                    Factory.$rootScope.device == 'ios' ? 'Ignorar,Visualizar' : 'Visualizar,Ignorar'
-                                );
+                                if(Factory.$rootScope.device == 'ios') {
+                                    navigator.notification.confirm(
+                                        data.message,
+                                        function (buttonIndex) {
+                                            if (buttonIndex == 2)
+                                                Factory.locationMobile(data.additionalData);
+                                        },
+                                        'Nova notificação',
+                                        'Ignorar,Visualizar'
+                                    );
+                                }
                                 cordova.plugins.notification.local.schedule({
-                                    title: 'title',
-                                    text: 'text',
-                                    foreground: true,
-                                    id: 1,
-                                    priority: 2,
-                                    silent: false
+                                    title: data.title,
+                                    text: data.message,
+                                    type: data.additionalData.type,
+                                    url: data.additionalData.url,
+                                    id: data.additionalData.id,
+                                    foreground: true
                                 });
                             }
                         } else
