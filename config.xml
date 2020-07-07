@@ -31,7 +31,7 @@
     <preference name="target-device" value="handset" />
     <preference name="phonegap-version" value="cli-9.0.0" />
     <preference name="ios-version" value="cli-10.0.0" />
-    <preference name="SwiftVersion" value="4.0" />
+    <preference name="SwiftVersion" value="3.0" />
     <preference name="android-build-tool" value="gradle" />
     <platform name="android">
         <allow-intent href="market:*" />
@@ -43,7 +43,7 @@
         <icon density="xxhdpi" src="res/android/icon144.png" />
         <icon density="xxxhdpi" src="res/android/icon196.png" />
         <preference name="android-minSdkVersion" value="23" />
-        <preference name="android-targetSdkVersion" value="29" />
+        <preference name="android-targetSdkVersion" value="28" />
         <splash density="port-hdpi" src="res/screen/android/480.png" />
         <splash density="port-ldpi" src="res/screen/android/200.png" />
         <splash density="port-mdpi" src="res/screen/android/320.png" />
