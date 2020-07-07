@@ -120,15 +120,15 @@
     <plugin name="cordova-plugin-ios-non-exempt-encryption" />
 
     <!--IOS-->
-    <!--<plugin name="phonegap-plugin-push" spec="~2.3.0">
+    <plugin name="phonegap-plugin-push" spec="2.3.0">
         <variable name="FCM_VERSION" value="15.0.0" />
-    </plugin>-->
+    </plugin>
     <!--IOS-->
 
     <!--ANDROID-->
-    <plugin name="phonegap-plugin-push" spec="2.2.3">
+    <!--<plugin name="phonegap-plugin-push" spec="2.2.3">
         <variable name="FCM_VERSION" value="15.0.0" />
-    </plugin>
+    </plugin>-->
     <!--ANDROID-->
 
     <plugin name="cordova-plugin-keyboard" spec="^1.1.5" />
