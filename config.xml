@@ -127,7 +127,7 @@
     <!--IOS-->
 
     <!--ANDROID-->
-    <plugin name="phonegap-plugin-push" spec="2.2.3">
+    <plugin name="phonegap-plugin-push" spec="2.3.0">
         <variable name="FCM_VERSION" value="15.0.0" />
     </plugin>
     <!--ANDROID-->
