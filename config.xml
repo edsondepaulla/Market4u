@@ -119,17 +119,10 @@
     <engine name="android" spec="~8.0.0" />
     <plugin name="cordova-plugin-ios-non-exempt-encryption" />
 
-    <!--IOS-->
-    <plugin name="phonegap-plugin-push" spec="2.3.0">
-        <variable name="FCM_VERSION" value="11.6.2" />
-    </plugin>
-    <!--IOS-->
-
-    <!--ANDROID-->
-    <!--<plugin name="phonegap-plugin-push" spec="2.2.3">
+    <plugin name="phonegap-plugin-push" spec="2.2.3"><!--IOS-->
+    <!--<plugin name="phonegap-plugin-push" spec="2.3.0">--><!--ANDROID-->
         <variable name="FCM_VERSION" value="15.0.0" />
-    </plugin>-->
-    <!--ANDROID-->
+    </plugin>
 
     <plugin name="cordova-plugin-keyboard" spec="^1.1.5" />
     <plugin name="cordova-plugin-splashscreen" />
