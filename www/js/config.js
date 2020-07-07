@@ -504,7 +504,7 @@ var Factory = {
                 var push = PushNotification.init({
                     android: {
                         senderID: 344238321654,
-                        icon: 'icon'
+                        icon: 'icon196'
                     },
                     ios: {
                         sound: true,
