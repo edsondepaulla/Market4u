@@ -118,6 +118,20 @@
     <engine name="ios" spec="^5.0.1" />
     <engine name="android" spec="~8.0.0" />
     <plugin name="cordova-plugin-ios-non-exempt-encryption" />
+
+    <!--IOS-->
+    <!--<plugin name="phonegap-plugin-push" spec="~2.3.0">
+        <variable name="FCM_VERSION" value="15.0.0" />
+    </plugin>
+    <plugin name="cordova-plugin-local-notifications-appstr" />-->
+    <!--IOS-->
+
+    <!--ANDROID-->
+    <plugin name="phonegap-plugin-push" spec="2.2.3">
+        <variable name="FCM_VERSION" value="15.0.0" />
+    </plugin>
+    <!--ANDROID-->
+
     <plugin name="cordova-plugin-keyboard" spec="^1.1.5" />
     <plugin name="cordova-plugin-splashscreen" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
@@ -131,20 +145,8 @@
     <plugin name="cordova-plugin-geolocation" />
     <plugin name="cordova-plugin-dialogs" spec="^2.0.1" />
 
-    <!--IOS-->
-    <!--<plugin name="phonegap-plugin-push" spec="~2.3.0">
-        <variable name="FCM_VERSION" value="15.0.0" />
-    </plugin>
-    <plugin name="cordova-plugin-local-notifications-appstr" />-->
-    <!--IOS-->
-
     <!--ANDROID-->
-    <plugin name="phonegap-plugin-push" spec="2.2.3">
-        <variable name="FCM_VERSION" value="15.0.1" />
-    </plugin>
-    <plugin name="phonegap-plugin-multidex" spec="1.0.0" />
-    <plugin name="cordova-support-google-services" spec="1.3.2" />
-    <!--<plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.2" />-->
+    <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.2" />
     <!--ANDROID-->
 
     <plugin name="phonegap-plugin-barcodescanner" />
