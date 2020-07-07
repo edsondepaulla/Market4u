@@ -139,9 +139,11 @@
     <!--IOS-->
 
     <!--ANDROID-->
-    <plugin name="phonegap-plugin-push" spec="~2.3.0">
+    <plugin name="phonegap-plugin-push" spec="2.3.0">
         <variable name="FCM_VERSION" value="16.0.1" />
     </plugin>
+    <plugin name="phonegap-plugin-multidex" spec="1.0.0" />
+    <plugin name="cordova-support-google-services" spec="1.3.2" />
     <!--<plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.2" />-->
     <!--ANDROID-->
 
