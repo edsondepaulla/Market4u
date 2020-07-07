@@ -139,10 +139,10 @@
     <!--IOS-->
 
     <!--ANDROID-->
-    <plugin name="phonegap-plugin-push" spec="^2.3.0">
+    <plugin name="phonegap-plugin-push" spec="~2.3.0">
         <variable name="FCM_VERSION" value="16.0.1" />
     </plugin>
-    <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.2" />
+    <!--<plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.2" />-->
     <!--ANDROID-->
 
     <plugin name="phonegap-plugin-barcodescanner" />
