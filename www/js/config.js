@@ -1,5 +1,5 @@
 var config = {
-    versao_app_mobile: "1.0.22.11",
+    versao_app_mobile: "1.0.23",
     ambiente: "producao",
     idApp: "market4uapp",
     url_api: {
@@ -218,6 +218,8 @@ var Factory = {
             case 'payment/carrinho':
             case 'payment/addremoveqtde':
             case 'payment/bannercount':
+            case 'options/push':
+            case 'options/pushvisualizado':
                 return false;
                 break;
         }
@@ -332,21 +334,12 @@ var Factory = {
                                     $('.loadingLst').hide();
                                 }
                             }, 100);
-                            /*try {
-                                // Notificacoes
-                                if (response.data.NOTIFICACOES) {
-                                    $.each(response.data.NOTIFICACOES, function (idx_each, val_each) {
-                                        try {
-                                            cordova.plugins.notification.local.schedule(val_each);
-                                        } catch (err) {
-                                        }
-                                    });
-                                }
-                            } catch (e) {
-                            }*/
                             try {
                                 if (Factory.$rootScope)
                                     Factory.$rootScope.loading = false;
+
+                                // Qtde push
+                                Factory.$rootScope.QTDE_PUSH = parseInt(response.data.QTDE_PUSH || 0);
 
                                 // Login
                                 if (response.data.Login) {
@@ -483,11 +476,19 @@ var Factory = {
         if (data.status == '-1')
             window.location = '#!/sem-internet';
     },
-    locationMobile: function (data) {
+    pushVisualizado: function (data) {
+        Factory.ajax(
+            {
+                action: 'options/pushvisualizado',
+                data: {
+                    ID: data.id
+                }
+            }
+        );
         switch (data.type) {
             case 'redirect':
                 if (data.url)
-                    Factory.$rootScope.location(data.url);
+                    Factory.$rootScope.location(data.url, 0, 1);
                 break;
             default:
                 if (data.id)
@@ -516,6 +517,11 @@ var Factory = {
                     Factory.DEVICE_ID = data.registrationId;
                 });
                 push.on('notification', function (data) {
+                    Factory.ajax(
+                        {
+                            action: 'options/push'
+                        }
+                    );
                     push.finish(function () {
                         if (data.additionalData.foreground) {
                             if (data.message) {
@@ -524,9 +530,9 @@ var Factory = {
                                         data.message,
                                         function (buttonIndex) {
                                             if (buttonIndex == 2)
-                                                Factory.locationMobile(data.additionalData);
+                                                Factory.pushVisualizado(data.additionalData);
                                         },
-                                        'Nova notificação',
+                                        data.title,
                                         'Ignorar,Visualizar'
                                     );
                                 }
@@ -541,7 +547,7 @@ var Factory = {
                                 });
                             }
                         } else
-                            Factory.locationMobile(data.additionalData);
+                            Factory.pushVisualizado(data.additionalData);
                     });
                 });
             } catch (e) {
@@ -563,7 +569,7 @@ var Factory = {
 
             });
             cordova.plugins.notification.local.on("click", function (notification, state) {
-                Factory.locationMobile(notification);
+                Factory.pushVisualizado(notification);
             });
         }, false);
         if (!parseInt(Login.getData().ID))

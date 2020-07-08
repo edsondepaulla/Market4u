@@ -1,6 +1,7 @@
 <script onerror="semInternet()" src="https://m.market4u.com.br/Mobile/www/plugins/crypto-js.js"></script>
 
 <i mn-touch swipe-right="swipeRight()" ng-if="controller == 'Index'" class="btn_maps mdi mdi-action-view-headline" ng-click="menuOpen()"></i>
+<span swipe-right="swipeRight()" ng-if="controller == 'Index' && $root.QTDE_PUSH" ng-click="menuOpen()" id="qtde_push">{{$root.QTDE_PUSH}}</span>
 <div id="top" ng-if="controller == 'Index'">
     <div ng-if="usuario.MEUSALDO_ATIVADO" ng-click="location('#!/minha-carteira')" style="display: inline-block;">
         Meu saldo

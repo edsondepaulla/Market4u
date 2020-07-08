@@ -2,6 +2,7 @@ try {
     app.controller('Main', function ($rootScope, $scope, $http, $routeParams, $route, $mdSelect, $animate, $sce, deviceDetector) {
         $rootScope.usuario = Login.getData();
         $rootScope.new_iphone = 0;
+        $rootScope.QTDE_PUSH = 0;
         Factory.prepare();
 
         setTimeout(function(){
@@ -335,6 +336,14 @@ try {
                 logado: 0
             },
             {
+                id: 'PUSH',
+                titulo: 'Notificações',
+                controller: 'NotificacoesLst',
+                url: '#!/notificacoes',
+                icon: 'mdi-social-notifications-none',
+                logado: 0
+            },
+            {
                 titulo: 'Cupons de desconto',
                 controller: 'VoucherLst',
                 url: '#!/voucher',
@@ -353,13 +362,6 @@ try {
                 controller: 'Card',
                 url: '#!/card-new',
                 icon: 'mdi-action-credit-card',
-                logado: 0
-            },
-            {
-                titulo: 'Notificações',
-                controller: 'NotificacoesLst',
-                url: '#!/notificacoes',
-                icon: 'mdi-social-notifications-none',
                 logado: 0
             },
             {

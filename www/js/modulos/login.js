@@ -519,20 +519,13 @@ app.controller('NotificacoesLst', function($rootScope, $scope, $routeParams, Ret
     $scope.LST = ReturnData.LST;
 
     $scope.click = function(reg) {
-        switch (reg.TYPE) {
-            case 'redirect':
-                $rootScope.location(reg.URL);
-                break;
-            default:
-                $rootScope.location('#!/notificacoes/' + reg.ID);
-                break;
-        }
+        $rootScope.location('#!/notificacoes/' + reg.ID);
     };
 });
 
 app.controller('NotificacoesGet', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.border_top = 1;
-    $rootScope.Titulo = "Notificação - Detalhes";
+    $rootScope.Titulo = ReturnData.TITULO;
     $scope.REG = ReturnData;
 });
 

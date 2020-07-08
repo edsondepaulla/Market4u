@@ -357,6 +357,10 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                     $rootScope.PRODUTOS_CATEGORIAS_BUSCA = [];
                     $('.boxPopup[box="locais"]').hide();
                     $rootScope.BTN_CARRINHO_BOTTOM = false;
+                    if(Payment.ATUALIZAR) {
+                        Payment.ATUALIZAR = false;
+                        $scope.getCompras({ID: 0}, 1);
+                    }
                     break;
                 case 'carrinho':
                     $rootScope.PESQUISA = '';
@@ -385,16 +389,6 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                     break;
             }
         };
-
-        // Get produtos
-        if (!parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']) || Payment.ATUALIZAR) {
-            Payment.ATUALIZAR = false;
-            var ID_CATEGORIA = parseInt($('ul#boxCategorias li.active').data('id')) || 0;
-            setTimeout(function(){
-                 $scope.getCompras({ID: ID_CATEGORIA}, 1);
-            }, 1000);
-        } else
-            $scope.scrollLeft();
 
         $rootScope.TIPO_PG = 'COMPRAR';
         $rootScope.MenuBottom = 1;
@@ -743,6 +737,49 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
         $rootScope.cancel = function () {
             Payment.cancel();
         };
+
+        // Get produtos
+        switch ($routeParams.STEP) {
+            case 'CAT':
+                $scope.getCompras({ID: $routeParams.VAL}, 1);
+                break;
+            case 'BUSCA':
+                Payment.ATUALIZAR = true;
+                $rootScope.PRODUTOS_CATEGORIAS = {};
+                $rootScope.PRODUTOS_CATEGORIAS_BUSCA = {};
+                $rootScope.STEP = 1;
+                $rootScope.TIPO_PG = 'COMPRAR';
+                $rootScope.clickItem('busca');
+                $rootScope.PESQUISA = $routeParams.VAL?$routeParams.VAL:'';
+                break;
+            default:
+                if (!parseInt(Payment.PRODUTOS_COMPRAS['CATEGORIA']) || Payment.ATUALIZAR || !Payment.PRODUTOS_COMPRAS.SUBCATEGORIAS.length) {
+                    Payment.ATUALIZAR = false;
+                    var ID_CATEGORIA = parseInt($('ul#boxCategorias li.active').data('id')) || 0;
+                    setTimeout(function(){
+                        $scope.getCompras({ID: ID_CATEGORIA}, 1);
+                    }, 1000);
+                } else
+                    $scope.scrollLeft();
+                break;
+        }
+
+        if($routeParams.STEP == 'PROD') {
+            setTimeout(function(){
+                Factory.ajax(
+                    {
+                        action: 'payment/produto',
+                        data: {
+                            ID: parseInt($routeParams.VAL)
+                        }
+                    }, function (data) {
+                        $rootScope.toolbar = false;
+                        $rootScope.MenuBottom = true;
+                        $rootScope.PROD_DETALHES = data.PROD;
+                    }
+                );
+            }, 1000);
+        }
 
         if ($rootScope.STEP == 3) {
             var verify_paymento = null;

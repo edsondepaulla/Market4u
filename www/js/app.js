@@ -54,6 +54,23 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                 }
             }
         })
+        .when("/index/:STEP/:VAL", {
+            templateUrl: base + "Mobile/www/view/index/index.html",
+            controller: 'Index',
+            resolve: {
+                ReturnData: function ($route, $rootScope) {
+                    switch ($route.current.params.STEP) {
+                        case 'CAT':
+                        case 'BUSCA':
+                        case 'PROD':
+                            if (!Page.active)
+                                $rootScope.location('#!/');
+                            break;
+                    }
+                    return;
+                }
+            }
+        })
         .when("/conecte-se", {
             templateUrl: base + "Mobile/www/view/conecte-se/conecte-se.html",
             controller: 'ConecteSe',

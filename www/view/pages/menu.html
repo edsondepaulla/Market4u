@@ -24,6 +24,7 @@
             <a ng-click="location(menu.url, menu.external, menu.pageStart?1:0)">
                 <i ng-if="menu.icon" class="mdi {{menu.icon}}"></i>
                 {{menu.titulo}}
+                <span ng-if="menu.id=='PUSH' && $root.QTDE_PUSH">{{$root.QTDE_PUSH}}</span>
             </a>
         </li>
         <li class="{{controller == 'AreaRestrita'?'active':''}}" ng-if="usuario.RESTRITO">
