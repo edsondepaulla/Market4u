@@ -119,8 +119,8 @@
         </feature>
         <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
     </platform>
-    <engine name="ios" spec="latest" />
-    <engine name="android" spec="latest" />
+    <engine name="ios" spec="^5.1.1" />
+    <engine name="android" spec="~8.0.0" />
     <plugin name="cordova-plugin-ios-non-exempt-encryption" />
 
     <!--<plugin name="phonegap-plugin-push" spec="2.2.3">--><!--ANDROID-->
