@@ -118,15 +118,19 @@
             <param name="ios-package" value="CDVWKWebViewEngine" />
         </feature>
         <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
+        <!--<resource-file src="GoogleService-Info.plist" />-->
     </platform>
-    <engine name="ios" spec="^5.1.1" />
+    <engine name="ios" spec="5.0.1" />
     <engine name="android" spec="~8.0.0" />
     <plugin name="cordova-plugin-ios-non-exempt-encryption" />
 
     <!--<plugin name="phonegap-plugin-push" spec="2.2.3">--><!--ANDROID-->
-    <plugin name="phonegap-plugin-push" spec="2.3.0"><!--IOS-->
+    <!--<plugin name="phonegap-plugin-push" spec="2.3.0">&lt;!&ndash;IOS&ndash;&gt;
         <variable name="FCM_VERSION" value="15.0.0" />
-    </plugin>
+    </plugin>-->
+
+    <plugin name="cordova-push-notifications" />
+
 
     <plugin name="cordova-plugin-keyboard" spec="^1.1.5" />
     <plugin name="cordova-plugin-splashscreen" />
@@ -143,7 +147,7 @@
     <plugin name="cordova-plugin-bluetooth-status"/>
     <plugin name="cordova-plugin-ble-central"/>
     <plugin name="cordova-plugin-wkwebview-engine"/>
-    <plugin name="cordova-plugin-customurlscheme" spec="5.0.0">
+    <plugin name="cordova-plugin-customurlscheme" spec="5.0.1">
         <param name="URL_SCHEME" value="market4uapp" />
     </plugin>
 </widget>

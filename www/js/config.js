@@ -502,54 +502,60 @@ var Factory = {
                 Factory.$rootScope.new_iphone = parseFloat(device.model.replace('iPhone', '').replace(',', '.')) > 10 ? 1 : 0;
 
             try {
-                var push = PushNotification.init({
-                    android: {
-                        senderID: 344238321654,
-                        iconColor: 'green'
-                    },
-                    ios: {
-                        sound: true,
-                        alert: true,
-                        badge: true
+                if(Factory.$rootScope.device == 'ios'){
+                    if(parseInt(Login.getData().ID) == 475){
+                        alert('x');
                     }
-                });
-                push.on('registration', function (data) {
-                    Factory.DEVICE_ID = data.registrationId;
-                });
-                push.on('notification', function (data) {
-                    Factory.ajax(
-                        {
-                            action: 'options/push'
+                }else{
+                    var push = PushNotification.init({
+                        android: {
+                            senderID: 344238321654,
+                            iconColor: 'green'
+                        },
+                        ios: {
+                            sound: true,
+                            alert: true,
+                            badge: true
                         }
-                    );
-                    push.finish(function () {
-                        if (data.additionalData.foreground) {
-                            if (data.message) {
-                                if(Factory.$rootScope.device == 'ios') {
-                                    navigator.notification.confirm(
-                                        data.message,
-                                        function (buttonIndex) {
-                                            if (buttonIndex == 2)
-                                                Factory.pushVisualizado(data.additionalData);
-                                        },
-                                        data.title,
-                                        'Ignorar,Visualizar'
-                                    );
-                                }
-                                cordova.plugins.notification.local.schedule({
-                                    title: data.title,
-                                    text: data.message,
-                                    type: data.additionalData.type,
-                                    url: data.additionalData.url,
-                                    id: data.additionalData.id,
-                                    foreground: true,
-                                    color: 'green'
-                                });
-                            }
-                        } else
-                            Factory.pushVisualizado(data.additionalData);
                     });
-                });
+                    push.on('registration', function (data) {
+                        Factory.DEVICE_ID = data.registrationId;
+                    });
+                    push.on('notification', function (data) {
+                        Factory.ajax(
+                            {
+                                action: 'options/push'
+                            }
+                        );
+                        push.finish(function () {
+                            if (data.additionalData.foreground) {
+                                if (data.message) {
+                                    if(Factory.$rootScope.device == 'ios') {
+                                        navigator.notification.confirm(
+                                            data.message,
+                                            function (buttonIndex) {
+                                                if (buttonIndex == 2)
+                                                    Factory.pushVisualizado(data.additionalData);
+                                            },
+                                            data.title,
+                                            'Ignorar,Visualizar'
+                                        );
+                                    }
+                                    cordova.plugins.notification.local.schedule({
+                                        title: data.title,
+                                        text: data.message,
+                                        type: data.additionalData.type,
+                                        url: data.additionalData.url,
+                                        id: data.additionalData.id,
+                                        foreground: true,
+                                        color: 'green'
+                                    });
+                                }
+                            } else
+                                Factory.pushVisualizado(data.additionalData);
+                        });
+                    });
+                }
             } catch (e) {
 
             }
