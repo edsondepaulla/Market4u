@@ -113,11 +113,11 @@
         <edit-config target="NSBluetoothAlwaysUsageDescription" file="*-Info.plist" mode="merge">
             <string>Permissões de acesso</string>
         </edit-config>
-        <preference name="WKWebViewOnly" value="true" />
+        <!--<preference name="WKWebViewOnly" value="true" />
         <feature name="CDVWKWebViewEngine">
             <param name="ios-package" value="CDVWKWebViewEngine" />
         </feature>
-        <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
+        <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />-->
         <!--<resource-file src="GoogleService-Info.plist" />-->
     </platform>
     <engine name="ios" spec="5.0.1" />

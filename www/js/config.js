@@ -503,9 +503,9 @@ var Factory = {
 
             try {
                 if(Factory.$rootScope.device == 'ios'){
-                    if(parseInt(Login.getData().ID) == 475){
+                    /*if(parseInt(Login.getData().ID) == 475){
                         alert('x');
-                    }
+                    }*/
                 }else{
                     var push = PushNotification.init({
                         android: {
