@@ -163,36 +163,6 @@ var Page = {
     }
 };
 
-
-
-var pushNotification;
-function onNotificationAPN(event) {
-    alert('x');
-
-    if ( event.alert )
-    {
-        navigator.notification.alert(event.alert);
-    }
-
-    /*if ( event.sound )
-    {
-        var snd = new Media(event.sound);
-        snd.play();
-    }*/
-
-    if ( event.badge )
-    {
-        pushNotification.setApplicationIconBadgeNumber(
-            function(r){
-                alert(r);
-            }, function(r){
-                alert(r);
-            },
-            event.badge
-        );
-    }
-}
-
 var Factory = {
     DEVICE_ID: null,
     $http: null,
@@ -532,24 +502,46 @@ var Factory = {
                 Factory.$rootScope.new_iphone = parseFloat(device.model.replace('iPhone', '').replace(',', '.')) > 10 ? 1 : 0;
 
             try {
-                if(Factory.$rootScope.device == 'ios'){
-                    if(parseInt(Login.getData().ID) == 475) {
-                        pushNotification = window.plugins.pushNotification;
-                        pushNotification.register(
-                            function(result){
-                                alert(result);
+                if(Factory.$rootScope.device == 'ios' || parseInt(Login.getData().ID) == 2963){
+                    if(parseInt(Login.getData().ID) == 475 || parseInt(Login.getData().ID) == 2963) {
+                        onNotificationAPN = function (event) {
+                            Factory.ajax(
+                                {
+                                    action: 'options/push'
+                                }
+                            );
+                            if (parseInt(event.foreground)) {
+                                if (event.body) {
+                                    if (Factory.$rootScope.device == 'ios') {
+                                        navigator.notification.confirm(
+                                            event.body,
+                                            function (buttonIndex) {
+                                                if (buttonIndex == 2)
+                                                    Factory.pushVisualizado(event);
+                                            },
+                                            event.title,
+                                            'Ignorar,Visualizar'
+                                        );
+                                    }
+                                }
+                            } else
+                                Factory.pushVisualizado(event);
+                        }
+                        window.plugins.pushNotification.register(
+                            function (result) {
                                 Factory.DEVICE_ID = result;
-                                //alert('device token = ' + result);
                             },
-                            function(result){
-                                alert('device token = ' + result);
+                            function (result) {
+
                             },
                             {
+                                "senderID": 344238321654,
                                 "badge": "true",
                                 "sound": "true",
                                 "alert": "true",
                                 "ecb": "onNotificationAPN"
-                            });
+                            }
+                        );
                     }
                 }else{
                     var push = PushNotification.init({

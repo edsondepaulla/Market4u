@@ -114,10 +114,6 @@
         <edit-config target="NSBluetoothAlwaysUsageDescription" file="*-Info.plist" mode="merge">
             <string>Permissões de acesso</string>
         </edit-config>
-
-
-        <preference name="showmessageinnotification" value="true" />
-        <preference name="defaultnotificationmessage" value="New message has arrived!" />
     </platform>
     <engine name="ios" spec="^5.0.1" />
     <engine name="android" spec="~8.0.0" />
@@ -127,7 +123,6 @@
     </plugin>-->
 
     <plugin name="cordova-push-notifications" />
-
     <plugin name="cordova-plugin-keyboard" spec="^1.1.5" />
     <plugin name="cordova-plugin-splashscreen" />
     <plugin name="cordova-plugin-device" />
