@@ -123,6 +123,7 @@
     </plugin>-->
 
     <plugin name="cordova-push-notifications" />
+
     <plugin name="cordova-plugin-keyboard" spec="^1.1.5" />
     <plugin name="cordova-plugin-splashscreen" />
     <plugin name="cordova-plugin-device" />
