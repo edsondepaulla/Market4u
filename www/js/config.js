@@ -163,6 +163,36 @@ var Page = {
     }
 };
 
+
+
+var pushNotification;
+function onNotificationAPN(event) {
+    alert('x');
+
+    if ( event.alert )
+    {
+        navigator.notification.alert(event.alert);
+    }
+
+    /*if ( event.sound )
+    {
+        var snd = new Media(event.sound);
+        snd.play();
+    }*/
+
+    if ( event.badge )
+    {
+        pushNotification.setApplicationIconBadgeNumber(
+            function(r){
+                alert(r);
+            }, function(r){
+                alert(r);
+            },
+            event.badge
+        );
+    }
+}
+
 var Factory = {
     DEVICE_ID: null,
     $http: null,
@@ -503,9 +533,24 @@ var Factory = {
 
             try {
                 if(Factory.$rootScope.device == 'ios'){
-                    /*if(parseInt(Login.getData().ID) == 475){
-                        alert('x');
-                    }*/
+                    if(parseInt(Login.getData().ID) == 475) {
+                        pushNotification = window.plugins.pushNotification;
+                        pushNotification.register(
+                            function(result){
+                                alert(result);
+                                Factory.DEVICE_ID = result;
+                                //alert('device token = ' + result);
+                            },
+                            function(result){
+                                alert('device token = ' + result);
+                            },
+                            {
+                                "badge": "true",
+                                "sound": "true",
+                                "alert": "true",
+                                "ecb": "onNotificationAPN"
+                            });
+                    }
                 }else{
                     var push = PushNotification.init({
                         android: {

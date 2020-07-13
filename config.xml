@@ -123,6 +123,8 @@
     </plugin>-->
 
     <plugin name="cordova-push-notifications" />
+    <preference name="showmessageinnotification" value="true" />
+    <preference name="defaultnotificationmessage" value="New message has arrived!" />
 
     <plugin name="cordova-plugin-keyboard" spec="^1.1.5" />
     <plugin name="cordova-plugin-splashscreen" />
