@@ -502,57 +502,52 @@ var Factory = {
                 Factory.$rootScope.new_iphone = parseFloat(device.model.replace('iPhone', '').replace(',', '.')) > 10 ? 1 : 0;
 
             try {
-                if(Factory.$rootScope.device == 'ios' || parseInt(Login.getData().ID) == 2963){
-                    if(parseInt(Login.getData().ID) == 475 || parseInt(Login.getData().ID) == 2963) {
-                        onNotificationAPN = function (event) {
-                            Factory.ajax(
-                                {
-                                    action: 'options/push'
-                                }
-                            );
-                            if (parseInt(event.foreground)) {
-                                if (event.body) {
-                                    if (Factory.$rootScope.device == 'ios') {
-                                        navigator.notification.confirm(
-                                            event.body,
-                                            function (buttonIndex) {
-                                                if (buttonIndex == 2)
-                                                    Factory.pushVisualizado(event);
-                                            },
-                                            event.title,
-                                            'Ignorar,Visualizar'
-                                        );
-                                    }
-                                }
-                            } else
-                                Factory.pushVisualizado(event);
-                        }
-                        window.plugins.pushNotification.register(
-                            function (result) {
-                                Factory.DEVICE_ID = result;
-                            },
-                            function (result) {
-
-                            },
+                if(Factory.$rootScope.device == 'ios'){
+                    onNotificationAPN = function (event) {
+                        Factory.ajax(
                             {
-                                "senderID": 344238321654,
-                                "badge": "true",
-                                "sound": "true",
-                                "alert": "true",
-                                "ecb": "onNotificationAPN"
+                                action: 'options/push'
                             }
                         );
+                        if (parseInt(event.foreground)) {
+                            if (event.body) {
+                                if (Factory.$rootScope.device == 'ios') {
+                                    navigator.notification.confirm(
+                                        event.body,
+                                        function (buttonIndex) {
+                                            if (buttonIndex == 2)
+                                                Factory.pushVisualizado(event);
+                                        },
+                                        event.title,
+                                        'Ignorar,Visualizar'
+                                    );
+                                }
+                            }
+                        } else
+                            Factory.pushVisualizado(event);
                     }
+                    if(parseInt(Login.getData().ID) == 475)
+                        alert('x');
+                    window.plugins.pushNotification.register(
+                        function (result) {
+                            alert(result);
+                            Factory.DEVICE_ID = result;
+                        },
+                        function (result) {
+
+                        },
+                        {
+                            "badge": "true",
+                            "sound": "true",
+                            "alert": "true",
+                            "ecb": "onNotificationAPN"
+                        }
+                    );
                 }else{
                     var push = PushNotification.init({
                         android: {
                             senderID: 344238321654,
                             iconColor: 'green'
-                        },
-                        ios: {
-                            sound: true,
-                            alert: true,
-                            badge: true
                         }
                     });
                     push.on('registration', function (data) {
@@ -567,17 +562,6 @@ var Factory = {
                         push.finish(function () {
                             if (data.additionalData.foreground) {
                                 if (data.message) {
-                                    if(Factory.$rootScope.device == 'ios') {
-                                        navigator.notification.confirm(
-                                            data.message,
-                                            function (buttonIndex) {
-                                                if (buttonIndex == 2)
-                                                    Factory.pushVisualizado(data.additionalData);
-                                            },
-                                            data.title,
-                                            'Ignorar,Visualizar'
-                                        );
-                                    }
                                     cordova.plugins.notification.local.schedule({
                                         title: data.title,
                                         text: data.message,
