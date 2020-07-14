@@ -526,8 +526,6 @@ var Factory = {
                         } else
                             Factory.pushVisualizado(event);
                     }
-                    if(parseInt(Login.getData().ID) == 475)
-                        alert('x');
                     window.plugins.pushNotification.register(
                         function (result) {
                             alert(result);
