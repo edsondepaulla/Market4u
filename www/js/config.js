@@ -1,9 +1,9 @@
 var config = {
     versao_app_mobile: "1.0.23",
-    ambiente: "producao",
+    ambiente: "dev",
     idApp: "market4uapp",
     url_api: {
-        producao: "https://m.market4u.com.br/"
+        dev: "https://m-dev4.market4u.com.br/"
     }
 };
 
@@ -220,6 +220,8 @@ var Factory = {
             case 'payment/bannercount':
             case 'options/push':
             case 'options/pushvisualizado':
+            case 'sac/getconversarion':
+            case 'sac/saveconversarion':
                 return false;
                 break;
         }
@@ -518,9 +520,10 @@ var Factory = {
                                             if (buttonIndex == 2)
                                                 Factory.pushVisualizado(event);
                                         },
-                                        event.title,
+                                        'Notificação\n\n'+event.title+'\n\n',
                                         'Ignorar,Visualizar'
                                     );
+                                    navigator.notification.beep(1);
                                 }
                             }
                         } else
@@ -528,7 +531,6 @@ var Factory = {
                     }
                     window.plugins.pushNotification.register(
                         function (result) {
-                            alert(result);
                             Factory.DEVICE_ID = result;
                         },
                         function (result) {

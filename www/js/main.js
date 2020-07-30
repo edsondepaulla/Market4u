@@ -387,6 +387,13 @@ try {
                 url: '#!/suporte',
                 icon: 'mdi-communication-live-help',
                 logado: 1
+            },
+            {
+                titulo: 'Posso ajudar?',
+                controller: 'Sac',
+                url: '#!/sac',
+                icon: 'mdi-hardware-headset',
+                logado: 1
             }
         ];
 

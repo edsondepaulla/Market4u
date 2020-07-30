@@ -259,6 +259,38 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             templateUrl: base + "Mobile/www/view/pages/suporte.html",
             controller: 'Suporte'
         })
+        .when("/sac", {
+            templateUrl: base + "Mobile/www/view/pages/sac.html",
+            controller: 'SacLst',
+            resolve: {
+                ReturnData: function ($route) {
+                    return Factory.ajax(
+                        {
+                            action: 'sac/getsacs',
+                            data:{
+                                CLIENTE: parseInt(Login.getData().ID),
+                            }
+                        }
+                    );
+                }
+            }
+        })
+        .when("/sac/:ID", {
+            templateUrl: base + "Mobile/www/view/pages/chat.html",
+            controller: 'ChatLst',
+            resolve: {
+                ReturnData: function ($route) {
+                    return Factory.ajax(
+                        {
+                            action: 'sac/getchat',
+                            data: {
+                                ID: $route.current.params.ID
+                            }
+                        }
+                    );
+                }
+            }
+        })
         .when("/faq", {
             templateUrl: base + "Mobile/www/view/pages/faq.html",
             controller: 'Faq',

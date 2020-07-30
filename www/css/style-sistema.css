@@ -6145,3 +6145,539 @@ body[device="ios"] .boxPopup[box="locais"]{
     width: 100%;
     margin: 0;
 }
+body[controller="SacLst"] .novoChamado{
+    background: #00CB00;
+    display: block;
+    top: 10px;
+    width: 40%;
+    color: #FFF;
+    text-align: center;
+    font-size: 15px;
+    padding: 10px 0;
+    border: 0;
+    font-family: 'Montserrat',sans-serif;
+    background-image: linear-gradient(90deg,#009145 0%,#8BC53F 100%) !important;
+}
+body[controller="SacLst"] .abas{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+body[controller="SacLst"] .inner_abas{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    color: #93b83e;
+}
+body[controller="SacLst"] .abs{
+    padding: 10px;
+    border: 1px;
+    width: 100%;
+}
+body[controller="SacLst"] .active{
+    border-bottom: 2px solid #93b83e;
+    position: relative;
+}
+body[controller="SacLst"] .borderAba{
+    width: 100%;
+}
+body[controller="SacLst"] .item_aba{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}
+body[controller="SacLst"] .button_row{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 10px;
+}
+body[controller="SacLst"] .panelItems{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 5%;
+    padding: 0 5% 0 5%;
+}
+body[controller="SacLst"] .chamado{
+    border-bottom: 1px solid #93b83e;
+    padding-bottom: 2%;
+    margin-bottom: 6%;
+}
+body[controller="SacLst"] .chamado span{
+    font-size: 14px;
+}
+body[controller="SacLst"] .chamado_title{
+    color: #93b83e;
+}
+body[controller="SacLst"] #fechados{
+    display: none;
+}
+body[controller="SacLst"] .aguardando{
+    font-weight: bold;
+}
+body[controller="ChatLst"] .baloon {
+    position: relative;
+    font-size: 14px;
+    line-height: 24px;
+    width: 60%;
+    background: #93b83e;
+    border-radius: 3px;
+    padding: 14px;
+    text-align: justify;
+    color: #fff;
+    word-wrap: break-word;
+}
+
+body[controller="ChatLst"] .baloon_left:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 24px solid #93b83e;
+    border-right: 12px solid transparent;
+    border-top: 12px solid #93b83e;
+    border-bottom: 20px solid transparent;
+    left: 32px;
+    bottom: -11px;
+    z-index: -1;
+}
+
+body[controller="ChatLst"] .baloon_right:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-right: 24px solid #4eb07d;
+    border-left: 12px solid transparent;
+    border-top: 12px solid #4eb07d;
+    border-bottom: 20px solid transparent;
+    right: 32px;
+    bottom: -11px;
+    z-index: -1;
+}
+
+body[controller="ChatLst"] .baloon_right {
+    float : right;
+    right: 19px;
+    margin-bottom: 8%;
+    background: #4eb07d;
+}
+body[controller="ChatLst"] .baloon_left {
+    float : left;
+    left: 19px;
+    margin-bottom: 8%;
+}
+body[controller="ChatLst"] #panelConversa {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+body[controller="ChatLst"] #panelInput {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 0;
+    margin-left: 2.5vw;
+    padding-top: 2%;
+    overflow-x: hidden;
+    position: absolute;
+    bottom: 14%;
+    background-color: #fff;
+}
+body[controller="ChatLst"] #rest {
+    display: flex;
+    width: 100%;
+    height: 6.5vh;
+    margin-left: 2.5vw;
+    padding-top: 2%;
+    margin-top: 22px;
+    position: fixed;
+    bottom: 9px;
+    background-color: #fff;
+}
+
+body[controller="ChatLst"] .senderButton {
+    border-radius: 50%;
+    background-color: #fff;
+    border: 1px solid #93b83e;
+    color: #93b83e;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 2%;
+}
+body[controller="ChatLst"] .senderButton i::before {
+    font-size: 1.3em;
+}
+body[controller="ChatLst"] #reponser{
+    border: none;
+    border-bottom: 1px solid #0a0000;
+    margin-right: 0;
+    word-break: break-all;
+    width: 65%;
+}
+body[controller="ChatLst"] #showImage img{
+    width: 50px;
+    border: 1px solid #000000;
+    height: 50px;
+}
+body[controller="ChatLst"] #showImage{
+    margin-left: 2.5vw;
+    height: 55px;
+    max-height: 55px;
+    display: flex;
+    padding-left: 3%;
+    width: 0;
+    margin: 0;
+}
+
+}
+body[controller="ChatLst"] .image_content{
+    margin-right: 2%;;
+
+}
+body[controller="ChatLst"] #reponser:focus{
+    border: none;
+}
+body[controller="ChatLst"]  #fileManager{
+    display: none;
+
+}
+body[controller="ChatLst"]  .removeImage::before{
+    color: #fff;
+}
+body[controller="ChatLst"]  .removeImage{
+    position: relative;
+    bottom: 3vh;
+    right: 3vw;
+    background-color: #ee162d;
+    border-radius: 100%;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+body[controller="ChatLst"] .baloon small {
+    font-size: 10px;
+}
+
+body[controller="ChatLst"] .responseMessage {
+    border: 1px solid #93b83e;
+    width: 65vw;
+    border-bottom: 0px;
+    padding: 13px;
+    border-top-left-radius: 3%;
+    border-top-right-radius: 3%;
+    background-color: rgba(147,184,62, 0.7);
+    color: #fff;
+    margin-left: 9px;
+    height: auto;
+    z-index: -11;
+    position: relative;
+    margin-top: 5%;
+}
+
+body[controller="ChatLst"] .responseMessage span {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+
+}
+body[controller="ChatLst"] .responseMessage span img {
+    width: 13vw;
+    position: absolute;
+    top: 0;
+    left: 52vw;
+    z-index: -2;
+    opacity: 0.5;
+    height: 100%;
+}
+}
+body[controller="ChatLst"] .responseMessage span::before {
+    content: "";
+    background-color: #93b83e;
+    padding: 10px;
+    margin-right: 12px;
+    padding-left: 0px;
+    padding-right: 5px;
+
+}
+body[controller="ChatLst"] .removeMessageResponse {
+    background-color: #fff;
+    color: #93b83e;
+    padding: 0px;
+    border-radius: 100%;
+    padding-left: 3px;
+    padding-right: 3px;
+    float: right;
+    position: relative;
+    bottom: 10px;
+    left: 10px;
+    border: 1px solid #93b83e;
+}
+body[controller="ChatLst"] .responsearrow {
+    float: right;
+    position: absolute;
+    transition: .25s linear;
+    right: 2vw;
+    top: .2vh;
+}
+body[controller="ChatLst"]  div.panel_choice {
+    background: #fff;
+    border: 1px solid;
+    float: right;
+    padding: 0 8% 0 8%;
+    position: absolute;
+    left: 45%;
+    top: 6vw;
+    box-shadow: 3px 3px 9px #3a3a3a;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.25s linear;
+}
+body[controller="ChatLst"]  div.panel_choice span i {
+    margin-right: 5%;
+}body[controller="ChatLst"]  div.panel_choice span {
+     display: flex;
+ }
+
+body[controller="ChatLst"] .responsearrow.activeR {
+    transform: rotate(180deg);
+}
+
+body[controller="ChatLst"] .reposta_vinda {
+    padding: 13px;
+    border-top-left-radius: 3%;
+    border-top-right-radius: 3%;
+    background-color: rgb(0 0 0 / 70%);
+    color: #fff;
+    margin-top: 7%;
+    margin-bottom: 4%;
+    display: flex;
+
+}
+body[controller="ChatLst"] .reposta_vinda::before {
+    content: "";
+    background-color: #93b83e;
+    padding: 10px;
+    margin-right: 12px;
+    padding-left: 0px;
+    padding-right: 5px;
+}
+body[controller="ChatLst"] .nome_user {
+    font-size: 10px;
+    font-weight: bold;
+}
+body[controller="ChatLst"] .limit_response{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    display: flex;
+}
+
+body[controller="ChatLst"] .content_img_baloon{
+    margin-top: 1vh;
+}
+
+body[controller="ChatLst"] .resposta_txt{
+    width: 100%;
+    margin-right: 12%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+body[controller="ChatLst"] #contentChatScreen{
+    display: flex;
+    flex-direction: column;
+}
+body[controller="SacLst"] #newSac{
+    background-color: #fff;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top:0;
+    display: none;
+}
+
+body[controller="SacLst"] #headerFormSac{
+    text-align: center;
+    width: 90%;
+    margin-top: 7%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body[controller="SacLst"] #headerFormSac span{
+    color: #93b83e;
+    font-size: 10px;
+}
+body[controller="SacLst"] .fromnew{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 22%;
+
+}
+body[controller="SacLst"] .cell-form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 6%;
+
+}
+body[controller="SacLst"] .cell-form input{
+    border: 1px solid rgb(169, 169, 169);
+    outline: 0;
+    padding-left: 7px;
+}
+
+body[controller="SacLst"] .cell-form input:focus{
+    outline: none;
+    border-bottom: 1px solid rgb(169, 169, 169)!important;
+    box-shadow: none!important;
+
+}
+body[controller="SacLst"] #saveSac{
+    border: 0;
+    color: #fff;
+    background-color: #93b83e;
+    padding: 4%;
+    width: 45%;
+}
+body[controller="SacLst"] .two-buttons{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+body[controller="SacLst"] .cell-form textarea{
+    padding-left: 7px;
+
+}
+body[controller="SacLst"] #cancelSac{
+    border: 1px solid #93b83e;
+    color: #93b83e;
+    background-color: #fff;
+    padding: 4%;
+    width: 45%;
+}
+body[controller="SacLst"] .finalForm{
+    position: relative;
+    top: 9vh;
+}
+body[controller="SacLst"] .area_ranking{
+    display: none;
+    position: relative;
+
+}
+body[controller="SacLst"] .area_ranking ul{
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    font-size: 3em;
+
+}
+body[controller="SacLst"] .area_ranking ul li{
+    color: #fff;
+}
+body[controller="SacLst"] .area_ranking ul li::before{
+    -webkit-text-stroke: 1px #93b83e;
+}
+
+body[controller="SacLst"] .comments {
+    width: 100%;
+    resize: none;
+}
+body[controller="SacLst"] .chamado.fechado {
+    overflow: hidden;
+}
+body[controller="SacLst"] .buttonRanking {
+    width: 100%;
+}
+body[controller="SacLst"] .buttonRanking button {
+    float: right;
+    border: 0;
+    padding: 4%;
+    margin-top: 4%;
+    color: #fff;
+    background-color: #93b83e;
+    font-size: 79%;
+}
+
+body[controller="SacLst"] .buttonfechados {
+    border: 0;
+    padding: 4%;
+    margin-top: 4%;
+    color: #fff;
+    background-color: #93b83e;
+    font-size: 79%;
+}
+
+body[controller="SacLst"] .buttonfechados.analise {
+    float: right;
+    width: 57%;
+}
+
+body[controller="SacLst"] div#headerFechados span {
+    color: #000;
+    font-size: 73%;
+}
+body[controller="SacLst"] div#headerFechados {
+    margin-bottom: 14%;
+}
+body[controller="SacLst"] .buttonsFechado{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+body[controller="SacLst"] .cancelRankingFechado{
+    color: #93b83e;
+    background-color: #fff;
+    border: 1px solid #93b83e;
+    width: 45%;
+}
+body[controller="SacLst"] .saveRankingFechado{
+    width: 45%;
+}
+body[controller="SacLst"] .aval_message{
+    color: #c10000;
+    opacity: 0.8;
+    margin-right: 3%;
+    font-size: 57%;
+
+}
+body[controller="SacLst"] .buttonsRanking{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+body[controller="SacLst"] .showRanking::before{
+    -webkit-text-stroke: 1px #93b83e;
+    font-size: 2em;
+}
+body[controller="SacLst"] .showRanking{
+    color:#fff;
+}
+body[controller="SacLst"] .showRankingS{
+   color: #93b83e;
+}
