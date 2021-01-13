@@ -1,16 +1,25 @@
 <li class="{{controller == 'Index'?'active':''}}" ng-click="clickMenu('inicio')">
-    <i class="mdi mdi-action-store"></i> Produtos
+    <i class="mdi mdi-action-store"></i> Início
 </li>
-<li ng-click="clickMenu('carteira')">
-    <i class="mdi mdi-action-credit-card"></i> Carteira
+<li class="{{controller == 'FeedSocial'?'active':''}}" ng-click="clickMenu('social')">
+    <i class="mdi mdi-social-public"></i> Social
 </li>
-<li id="pagar_escanear" ng-click="clickMenu('pagar_escanear')">
-    <img src="img/barcodeQrCode.png">
-    <label>Escanear</label>
+<li id="pagar_escanear" ng-if="!$root.MenuSocial" ng-click="clickMenu('pagar_escanear')">
+    <img src="{{$root.BASE}}img/barcode.png">
+    <label>Escanear produto</label>
 </li>
+
+<li id="pagar_escanear" ng-if="$root.MenuSocial" ng-click="Layers('feed-busca-transferir')" class="ng-scope" role="button" tabindex="0">
+    <i class="menuSocialIcon mdi-editor-attach-money"></i>
+    <label>Transferir</label>
+</li>
+
 <li class="{{controller == 'Cadastro'?'active':''}}" style="float: right" ng-click="clickMenu('ajustes')">
     <i class="mdi mdi-social-person"></i> {{usuario.PRIMEIRONOME?usuario.PRIMEIRONOME:'Perfil'}}
 </li>
-<li style="float: right" ng-click="clickMenu('destravar')">
-    <i class="mdi mdi-action-lock-open"></i> Destravar <span>18+</span>
+<li ng-if="!($root.LOCAL.ITEM && $root.LOCAL.ITEM.MULTI_DESTRAVAR_ITEM)" style="float: right" ng-click="Layers('feed-minha-carteira')">
+    <i class="mdi mdi-action-credit-card"></i> Carteira
+</li>
+<li ng-if="$root.LOCAL.ITEM && $root.LOCAL.ITEM.MULTI_DESTRAVAR_ITEM" style="float: right" ng-click="$root.LOCAL.ITEM.MULTI_DESTRAVAR?clickMenu('destravar_multi_destravar'):clickMenu('destravar'+($root.LOCAL.ITEM.MULTI_DESTRAVAR_NOVO?'_novo':''), $root.LOCAL.ITEM.MULTI_DESTRAVAR_NOVO?$root.LOCAL.ITEM.MULTI_DESTRAVAR_ITEM:$root.LOCAL.ITEM.MULTI_DESTRAVAR_ITEM.TIPO)">
+    <i class="mdi mdi-action-lock-open"></i> Destravar <span ng-if="!$root.LOCAL.ITEM.MULTI_DESTRAVAR && $root.LOCAL.ITEM.MULTI_DESTRAVAR_ITEM.BEBALC==1">18+</span>
 </li>

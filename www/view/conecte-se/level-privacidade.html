@@ -1,0 +1,20 @@
+<h2 ng-click="open($index)">Privacidade</h2>
+
+<div class="boxDados">
+    <div ng-click="checkAndSavePrivacidade('tipo_conta', $event.currentTarget)" class="check_privacidade">
+        <h3 class="{{$root.usuario.TIPO_CONTA == 'PRIVADO' ? 'active_checkbox' : ''}}">
+        <label class="checkbox_custom">Conta privada <span class="checkmark"></span></label>
+    </div>
+    <div id="obs_privacidade">
+        <small>Apenas seus seguidores podem ver seu feed</small>
+    </div>
+</div>
+<div class="boxDados">
+    <div ng-click="checkAndSavePrivacidade('privacidade', $event.currentTarget)" class="check_privacidade">
+        <h3 class="{{$root.usuario.PRIVACIDADE == 'PRIVADO' ? 'active_checkbox' : ''}}">
+        <label class="checkbox_custom">Privacidade total <span class="checkmark"></span></label>
+    </div>
+    <div id="obs_privacidade_total">
+        <small>Ninguém poderá ver seu feed</small>
+    </div>
+</div>

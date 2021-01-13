@@ -1,9 +1,22 @@
 var config = {
-    versao_app_mobile: "1.0.23",
-    ambiente: "dev",
+    versao_app_mobile: "1.0.25",
+    ambiente: function () {
+        var ambiente = 'prod';
+        if (Login.getData().DEV_AMBIENTE)
+            ambiente = Login.getData().DEV_AMBIENTE.toString();
+        if (!ambiente.length)
+            ambiente = localStorage.getItem("ambiente") ? localStorage.getItem("ambiente") : 'prod';
+        localStorage.setItem("ambiente", ambiente);
+        return ambiente;
+    },
     idApp: "market4uapp",
-    url_api: {
-        dev: "https://m-dev4.market4u.com.br/"
+    dominio: 'market4u.com.br',
+    url_api: function () {
+        var subdominio = 'm';
+        var ambiente = this.ambiente();
+        if (ambiente != 'prod')
+            subdominio += '-' + ambiente;
+        return 'https://' + subdominio + '.' + this.dominio + '/';
     }
 };
 
@@ -24,8 +37,8 @@ var Login = {
         // ID
         data.ID = data.ID ? data.ID : 0;
 
-        // Trava
-        data.TIME_TRAVA = parseInt(data.TIME_TRAVA) ? parseInt(data.TIME_TRAVA) : 30;
+        // DDI
+        data.DDI = parseInt(data.DDI) ? data.DDI : '55';
 
         // Genero
         data.GENERO = data.ID ? data.GENERO : 'M';
@@ -54,6 +67,12 @@ var Login = {
         Login.data = data;
         Factory.$rootScope.usuario = data;
         localStorage.setItem("CLIENTE", JSON.stringify(data));
+
+        // Ambiente
+        var ambiente = data.DEV_AMBIENTE.toString();
+        if (!ambiente.length)
+            ambiente = localStorage.getItem("ambiente") ? localStorage.getItem("ambiente") : 'prod';
+        localStorage.setItem("ambiente", ambiente);
 
         // Redirect conecte-se
         if (!parseInt(data.ID)) {
@@ -87,6 +106,8 @@ var Login = {
     },
     setTimeoutLoginGet: null,
     logout: function () {
+        foto_cadastro_novo = null;
+        documento_cadastro_novo = null;
         Factory.ajax(
             {
                 action: 'login/logout'
@@ -137,6 +158,7 @@ var CC = {
                 'ID': ID,
                 'NAME': cardData.holderName,
                 'BANDEIRA': bandeira,
+                'TIPO_CC': cardData.TIPO_CC,
                 'TEXT': '**** **** **** ' + cardData.cardNumber.toString().replace(/ /g, '').substr(12, 4),
                 'HASH': CryptoJS.AES.encrypt(btoa(JSON.stringify(cardData)), Login.getData().KEY).toString()
             };
@@ -169,6 +191,7 @@ var Factory = {
     $scope: [],
     $rootScope: [],
     $swipeLeftPageBefore: false,
+    nao_confirmar_pg: false,
     PAGINACAO_INFINITO: {
         QUERY: '',
         ATIVO: 0,
@@ -221,7 +244,14 @@ var Factory = {
             case 'options/push':
             case 'options/pushvisualizado':
             case 'sac/getconversarion':
+            case 'cadastro/ibge':
             case 'sac/saveconversarion':
+            case 'redesocial/curtir':
+            case 'options/log':
+            case 'cadastro/cc':
+            case 'redesocial/conexoes':
+            case 'redesocial/seguirusuario':
+            case 'redesocial/deixardeseguir':
                 return false;
                 break;
         }
@@ -231,6 +261,12 @@ var Factory = {
         if (params.action) {
             // Loading
             var diffCarregando = (params.data ? params.data['LOADER_CARREGANDO'] === false : false) ? false : ((params.data ? params.data['LOADER_CARREGANDO'] === true : false) ? true : this.diffCarregando(params.action));
+            if(params.method == 'GET')
+                diffCarregando = false;
+            if(params.loader)
+                diffCarregando = true;
+            if(params.loader === 0)
+                diffCarregando = false;
             if (diffCarregando) {
                 clearTimeout(Factory.timeoutCarregando);
                 $('#carregando').css('display', 'flex').css('opacity', 1);
@@ -255,7 +291,7 @@ var Factory = {
                 data.append('versao_app_mobile', config.versao_app_mobile);
 
             // Ambiente
-            data.append('ambiente', config.ambiente);
+            data.append('ambiente', config.ambiente());
 
             // Set data
             if (params.data) {
@@ -264,7 +300,7 @@ var Factory = {
                         if (val.name && val.value)
                             data.append(val.name, val.value);
                         else if (val) {
-                            if (typeof val === 'object' && index != 'IMAGEM') {
+                            if (typeof val === 'object' && index != 'IMAGEM' && index != 'DOCUMENTO') {
                                 $.each(val, function (index2, val2) {
                                     data.append(index + '[' + index2 + ']', val2);
                                 });
@@ -315,9 +351,9 @@ var Factory = {
             // Request ajax
             return Factory.$http({
                 method: params.method ? params.method : 'POST',
-                url: config.url_api[config.ambiente] + params.action,
+                url: config.url_api() + params.action,
                 data: data,
-                cache: false,
+                cache: params.cache ? true : false,
                 withCredentials: true,
                 processData: false,
                 headers: {
@@ -339,13 +375,18 @@ var Factory = {
                             try {
                                 if (Factory.$rootScope)
                                     Factory.$rootScope.loading = false;
-
                                 // Qtde push
                                 Factory.$rootScope.QTDE_PUSH = parseInt(response.data.QTDE_PUSH || 0);
+                                Factory.$rootScope.QTDE_SAC = parseInt(response.data.QTDE_SAC || 0);
+                                Factory.$rootScope.PESQUISA_ATIVA = parseInt(response.data.PESQUISA_ATIVA || 0);
 
                                 // Login
                                 if (response.data.Login) {
                                     Login.set(response.data.Login);
+
+                                    // Atualizar
+                                    if (!parseInt(Login.getData().DADOS_ATUALIZADO) && params.action != 'login/get')
+                                        Factory.$rootScope.location('#!/cadastro');
 
                                     // PHPSESSID
                                     if (response.data.Login.PHPSESSID)
@@ -353,7 +394,7 @@ var Factory = {
                                 }
 
                                 // Juno
-                                if (!$('#api_juno').length)
+                                if (!$('#api_juno').length && response.data.Login)
                                     $('body').append('<script id="api_juno" onerror="semInternet()" src="' + (response.data.Login.JUNO.production ? 'https://www.boletobancario.com/boletofacil/wro/direct-checkout.min.js' : 'https://sandbox.boletobancario.com/boletofacil/wro/direct-checkout.min.js') + '"></script>');
 
                                 // Versao nova
@@ -361,9 +402,6 @@ var Factory = {
                                     Page.start();
                                     window.location = '#!/atualizar-app';
                                 }
-
-                                if (successCallback)
-                                    eval(successCallback)(response.data);
 
                                 if (response.data.callback) {
                                     var callback = response.data.callback.split(';');
@@ -401,6 +439,9 @@ var Factory = {
                                     );
                                 }
 
+                                if (successCallback)
+                                    eval(successCallback)(response.data);
+
                                 if (_form)
                                     $('.btn-salvar').attr('disabled', false);
 
@@ -411,10 +452,10 @@ var Factory = {
                             break;
                     }
                 }, function (data) {
+                    Layers.back($('#layers > li:last'));
                     $('#carregando').hide().css('opacity', 0);
                     $('.loadingLst').hide();
-                    if (params.action != 'payment/verify')
-                        Factory.error(_form, data, functionError);
+                    Factory.error(_form, data, functionError);
                 });
         }
     },
@@ -470,8 +511,12 @@ var Factory = {
         if (Factory.$rootScope)
             Factory.$rootScope.loading = false;
 
-        if (functionError)
-            eval(functionError);
+        if (functionError){
+            try {
+                eval(functionError)(name);
+            } catch (err) {
+            }
+        }
 
         $('.btnConfirme').attr('disabled', false);
 
@@ -487,22 +532,110 @@ var Factory = {
                 }
             }
         );
-        switch (data.type) {
-            case 'redirect':
-                if (data.url)
-                    Factory.$rootScope.location(data.url, 0, 1);
-                break;
-            default:
-                if (data.id)
-                    Factory.$rootScope.location('#!/notificacoes/' + data.id);
-                break;
-        }
+        setTimeout(function () {
+            switch (data.type) {
+                case 'BP': // Busca de produtos
+                    Factory.$rootScope.STEP = 1;
+                    Factory.$rootScope.TIPO_PG = 'COMPRAR';
+                    Factory.$rootScope.Layers('produtos-busca');
+                    Factory.$rootScope.PESQUISA = data.url;
+                    break;
+                case 'L': // Layers
+                    switch (data.url) {
+                        case '[MINHA_CARTEIRA]':
+                            Factory.$rootScope.Layers('feed-minha-carteira');
+                            break;
+                        default:
+                            if (data.url.indexOf('[PESQUISA#') != -1) {
+                                Factory.$rootScope.Layers(
+                                    'pesquisa-satisfacao-form',
+                                    {
+                                        ID: parseInt(data.url.split('#')[1].replace(']', ''))
+                                    }
+                                );
+                            }
+                            break;
+                    }
+                    break;
+                case 'C': // Categorias
+                    Factory.$rootScope.clickItem('index');
+                    Factory.$rootScope.getCompras({ID: parseInt(data.url)});
+                    break;
+                case 'P': // Produto
+                    Factory.$rootScope.getProduto(data.url);
+                    break;
+                case 'redirect':
+                    if (data.url) {
+                        if (data.external) {
+                            data.url = {
+                                'url': data.url,
+                                'type': 'load_url',
+                                'window_open': Factory.$rootScope.device == 'ios' ? false : true
+                            };
+                        }
+                        Factory.$rootScope.location(data.url, data.external ? 1 : 0, 1);
+                    }
+                    break;
+                default:
+                    if (data.id)
+                        Factory.$rootScope.location('#!/notificacoes/' + data.id);
+                    break;
+            }
+        }, 3000);
     },
     prepare: function () {
-        document.addEventListener("deviceready", function () {
-            if (Factory.$rootScope.device == 'ios')
-                Factory.$rootScope.new_iphone = parseFloat(device.model.replace('iPhone', '').replace(',', '.')) > 10 ? 1 : 0;
+        var mouseEventTypes = {
+            touchstart : "mousedown",
+            touchmove : "mousemove",
+            touchend : "mouseup"
+        };
+        for (originalType in mouseEventTypes) {
+            document.addEventListener(originalType, function (originalEvent) {
+                event = document.createEvent("MouseEvents");
+                touch = originalEvent.changedTouches[0];
+                event.initMouseEvent(mouseEventTypes[originalEvent.type], true, true,
+                    window, 0, touch.screenX, touch.screenY, touch.clientX,
+                    touch.clientY, touch.ctrlKey, touch.altKey, touch.shiftKey,
+                    touch.metaKey, 0, null);
+                originalEvent.target.dispatchEvent(event);
+                event.preventDefault();
+            });
+        }
 
+        document.addEventListener("deviceready", function () {
+            if (parseInt(Login.getData().ID) == 475 && false) {
+                Factory.ajax(
+                    {
+                        action: 'options/log',
+                        data: {
+                            CODE: 'deviceready'
+                        }
+                    }
+                );
+                document.addEventListener("pause", function(){
+                    Factory.ajax(
+                        {
+                            action: 'options/log',
+                            data: {
+                                CODE: 'pause'
+                            }
+                        }
+                    );
+                }, false);
+                document.addEventListener("resume", function(){
+                    Factory.ajax(
+                        {
+                            action: 'options/log',
+                            data: {
+                                CODE: 'resume'
+                            }
+                        }
+                    );
+                }, false);
+            }
+
+            if (Factory.$rootScope.device == 'ios')
+                Factory.$rootScope.new_iphone = (parseFloat(device.model.replace('iPhone', '').replace(',', '.'))) > 10 ? 1 : 0;
             try {
                 if(Factory.$rootScope.device == 'ios'){
                     onNotificationAPN = function (event) {
@@ -528,7 +661,7 @@ var Factory = {
                             }
                         } else
                             Factory.pushVisualizado(event);
-                    }
+                    };
                     window.plugins.pushNotification.register(
                         function (result) {
                             Factory.DEVICE_ID = result;
@@ -567,6 +700,7 @@ var Factory = {
                                         text: data.message,
                                         type: data.additionalData.type,
                                         url: data.additionalData.url,
+                                        external: data.additionalData.external?1:0,
                                         id: data.additionalData.id,
                                         foreground: true,
                                         color: 'green'

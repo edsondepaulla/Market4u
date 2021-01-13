@@ -1,0 +1,156 @@
+<div class="content_all_social_feed_style">
+    <div class="follow_content">
+        <div class="upper_follow_content">
+            <div class="abas_follow abas_social">
+                <div class="single_aba left" data-modulo='seguindo' data-search="seguindo" ng-click="ChangeAbasSocial($event.currentTarget)">
+                    <div class="name_aba">Seguindo</div>
+                    <div class="border_aba active_aba_social"></div>
+                </div>
+                <div class="single_aba right" data-modulo='seguidores' data-search="seguidores" ng-click="ChangeAbasSocial($event.currentTarget)">
+                    <div class="name_aba">Seguidores</div>
+                    <div class="border_aba"></div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="list_social follow seguidores">
+            <li class="single_follow" ng-if="SEGUIDORES.length" ng-repeat="item in SEGUIDORES" ng-click="Layers('feed-perfil', item.ID)" >
+                <div class="content_limit_circle">
+                    <div class="img_single_follow">
+                        <img src="{{item.IMAGEM || default_image}}" style="min-height: 75px;" onerror="angular.element(this).scope().defaultImage(this);">
+                    </div>
+                </div>
+                <div class="name_follow">{{item.USERNAME ? '@' + item.USERNAME : item.NOME}}</div>
+            </li>
+            <li class="single_follow not_follow" ng-if="!SEGUIDORES.length">
+                <span>Você ainda não tem nenhum seguidor ☹</span>
+            </li>
+            <li class="single_follow" ng-if="SEGUIDORES.length" ng-click="Layers('feed-ver-todos', {type_:'follow', sub_type:'seguidores'})">
+                <div class="content_limit_circle">
+                    <div class="img_single_follow add_follow">
+                        <span class="mdi mdi-social-group"></span>
+                    </div>
+                </div>
+                <div class="name_follow add_follow_name">Ver todos</div>
+            </li>
+        </ul>
+
+        <ul class="list_social follow seguindo">
+            <li class="single_follow" ng-click="Layers('feed-busca-transferir', 'seguir')">
+                <div class="content_limit_circle">
+                    <div class="img_single_follow add_follow">
+                        <span class="mdi mdi-content-add"></span>
+                    </div>
+                </div>
+                <div class="name_follow add_follow_name">Adicionar</div>
+            </li>
+            <li class="single_follow not_follow" ng-if="!SEGUINDO.length">
+                <span>Você ainda não está seguindo ninguém</span>
+            </li>
+            <li class="single_follow"  ng-repeat="item in SEGUINDO" ng-click="Layers('feed-perfil', item.ID)">
+                <div class="content_limit_circle">
+                    <div class="img_single_follow">
+                        <img src="{{item.IMAGEM || default_image}}" alt="" style="min-height: 75px;" onerror="angular.element(this).scope().defaultImage(this);">
+                    </div>
+                </div>
+                <div class="name_follow">{{item.USERNAME ? '@' + item.USERNAME : item.NOME}}</div>
+            </li>
+
+
+            <li class="single_follow" ng-if="SEGUINDO.length" ng-click="Layers('feed-ver-todos', {type_:'follow', sub_type:'seguindo'})">
+                <div class="content_limit_circle">
+                    <div class="img_single_follow add_follow">
+                        <span class="mdi mdi-social-group"></span>
+                    </div>
+                </div>
+                <div class="name_follow add_follow_name">Ver todos</div>
+            </li>
+        </ul>
+
+    </div>
+    <div class="follow_requests" ng-click="Layers('feed-requests')">
+        <div class="text_content {{PENDING_REQUESTS.length ? 'has_requests':'' }}">
+            <span>Solicitações pendentes</span>
+            <div class="dot_of_requests"></div>
+        </div>
+    </div>
+    <div class="feed_content">
+        <div class="header_feed">
+            <span class="title_header_feed">Atividades</span>
+            <div class="abas_feed abas_social" style="flex-direction: row-reverse; margin-left: 0; margin-right: 7vw">
+                <div class="single_aba left" data-modulo='all_social' data-search="todas" ng-click="ChangeAbasSocial($event.currentTarget)">
+                    <div class="name_aba">Todas</div>
+                    <div class="border_aba active_aba_social"></div>
+                </div>
+                <div class="single_aba right" data-modulo='all_social' data-search="minhas" ng-click="ChangeAbasSocial($event.currentTarget)">
+                    <div class="name_aba">Minhas</div>
+                    <div class="border_aba"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <ul class="list_social feed all_social">
+            <li class="single_feed" ng-if="FEED"  ng-repeat="item in FEED"  data-feed="{{item.ID}}">
+                <div class="upper_single_feed">
+                    <div class="content_limit_circle feed">
+                        <div class="img_single_feed" ng-click="Layers('feed-perfil', UserID == item.CLIENTE_DESTINO_ID ? item.CLIENTE_DESTINO_ID : item.CLIENTE_ID)">
+                            <img src="{{UserID == item.CLIENTE_DESTINO_ID ? item.CLIENTE_DESTINO_IMAGEM : item.IMAGEM}}" onerror="angular.element(this).scope().defaultImage(this);">
+                        </div>
+                    </div>
+                    <div class="single_content_content_info" ng-if="item.TIPO == 'C'">
+                        <div class="name_feed" >
+                            <span ng-click="Layers('feed-perfil', item.CLIENTE_ID)"> {{UserID == item.CLIENTE_ID ? 'Você': '@'+ item.USERNAME}} </span>
+
+                            <div class="like_feed_button" ng-click="GiveLike($event.currentTarget)">
+                                <div class="show_likes_count {{item.CURTIDO == 1 ? 'liked_number':'' }}" ng-if="item.QTD_CURTIDAS > 0">{{item.QTD_CURTIDAS}}</div>
+                                <i class="mdi-action-favorite liked" ng-if="item.CURTIDO == 1"></i>
+                                <i class="mdi-action-favorite-outline no_like" ng-if="item.CURTIDO == 0"></i>
+                            </div>
+                        </div>
+                        <div class="info_feed">Comprou <span class="valor_info_feed" ng-if="UserID == item.CLIENTE_ID" >R${{item.TOTAL.replace('.',',')}}</span> em <b>{{item.NOME_ABV}}</b></div>
+                    </div>
+                    <div class="single_content_content_info" ng-if="item.TIPO == 'D'">
+                        <div class="name_feed" ng-click="Layers('feed-perfil', item.CLIENTE_ID)">{{UserID == item.CLIENTE_ID ? 'Você': '@'+ item.USERNAME}}</div>
+                        <div class="info_feed">Depositou <span class="valor_info_feed reciver_transfer" ng-if="UserID == item.CLIENTE_ID">R${{item.TOTAL.replace('.',',')}}</span> na sua <b>carteira</b></div>
+                    </div>
+                    <div class="single_content_content_info" ng-if="item.TIPO == 'T'">
+                        <div class="transfer_title_with_like">
+                            <div class="name_feed_t" ng-click="Layers('feed-perfil', UserID == item.CLIENTE_DESTINO_ID ? item.CLIENTE_DESTINO_ID : item.CLIENTE_ID)" >{{UserID == item.CLIENTE_ID || UserID == item.CLIENTE_DESTINO_ID ? 'Você': '@'+ item.USERNAME}}</div>
+                            <div class="like_feed_button" ng-click="GiveLike($event.currentTarget)">
+                                <div class="show_likes_count {{item.CURTIDO == 1 ? 'liked_number':'' }}" ng-if="item.QTD_CURTIDAS > 0">{{item.QTD_CURTIDAS}}</div>
+                                <i class="mdi-action-favorite liked" ng-if="item.CURTIDO == 1"></i>
+                                <i class="mdi-action-favorite-outline no_like" ng-if="item.CURTIDO == 0"></i>
+                            </div>
+                        </div>
+                        <div class="info_feed info_t">
+                            <span ng-if="UserID == item.CLIENTE_DESTINO_ID" >recebeu de
+                                <span class="name_feed_t" ng-click="Layers('feed-perfil', item.CLIENTE_ID)">
+                                    <b>@{{item.USERNAME}}</b>
+                                </span>
+                                 <span ng-if="UserID == item.CLIENTE_DESTINO_ID" class="valor_info_feed valor_t {{UserID == item.CLIENTE_DESTINO_ID ? 'reciver_transfer' :'' }}"> R${{item.TOTAL.replace('.',',')}}</span>
+                            </span>
+                            <span ng-if="UserID != item.CLIENTE_DESTINO_ID" >transferiu para
+                                <span class="name_feed_t"  ng-click="Layers('feed-perfil', item.CLIENTE_DESTINO_ID)">
+                                    <b>@{{item.CLIENTE_DESTINO_USERNAME}}</b>
+                                </span>
+                                 <span ng-if="UserID == item.CLIENTE_ID" class="valor_info_feed valor_t {{UserID == item.CLIENTE_DESTINO_ID ? 'reciver_transfer' :'' }}"> R${{item.TOTAL.replace('.',',')}}</span>
+                            </span>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="bottom_info_content_feed">
+                    <i class="typeOfFeed mdi-action-lock-outline" ng-if="item.CLIENTE_TIPO_CONTA =='PRIVADO' || item.CLIENTE_PRIVACIDADE =='PRIVADO'"></i>
+                    <i class="typeOfFeed mdi-social-group" ng-if="item.CLIENTE_TIPO_CONTA =='PUBLICO' && item.CLIENTE_PRIVACIDADE =='PUBLICO'"></i>
+                    <span class="datahora_feed_info"> | {{item.DATAHORA}}</span>
+                    <span class="show_transactions_feed_id" ng-if="item.CLIENTE_ID == UserID || item.CLIENTE_DESTINO_ID == UserID" ng-click="Layers('historico-transacoes-detalhes', item.ID)">Recibo</span>
+                </div>
+            </li>
+            <li id="loader_feed" class="single_feed not_feed">
+                <img src="{{$root.BASE}}img/loader.gif" alt="">
+            </li>
+        </ul>
+    </div>
+</div>

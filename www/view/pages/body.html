@@ -1,0 +1,14 @@
+<a bottom_full="{{$root.BTN_CARRINHO_BOTTOM?1:0}}" ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR && $root.TIPO_PG != 'PAGAMENTO' && !$root.CARRINHO" id="boxCarrinhoFloat" ng-click="$root.clickItem('carrinho2')">
+    <i class="mdi mdi-action-shopping-cart"></i> {{$root.LOCAL.ITEM.MAPS.PROXIMO?'R$ '+$root.CARRINHO_COMPRAS.TOTAL_POR:''}}
+</a>
+
+<div class="destravar_popup" ng-if="$root.PDV_MULTI_DESTRAVAR && $root.LOCAL.ITEM.MULTI_DESTRAVAR" ng-click="clickMenu('destravar_multi_destravar_fechar')">
+    <ul>
+        <h4><i class="mdi mdi-action-lock-open"></i> Destravar</h4>
+
+        <li ng-repeat="item in $root.LOCAL.ITEM.MULTI_DESTRAVAR_ITENS" ng-click="clickMenu('destravar'+($root.LOCAL.ITEM.MULTI_DESTRAVAR_NOVO?'_novo':''), $root.LOCAL.ITEM.MULTI_DESTRAVAR_NOVO?item:item.TIPO)">
+            <span ng-if="item.BEBALC==1">18+</span>
+            {{item.NOME}}
+        </li>
+    </ul>
+</div>

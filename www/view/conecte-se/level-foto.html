@@ -1,0 +1,16 @@
+<h2 ng-click="open($index)">Foto</h2>
+
+<div style="text-align: center">
+    <label id="boxImg" onclick="document.getElementById('fotoCadastro').click()">
+        <input style="display: none" type="file" id="fotoCadastro" name="fotoCadastro" ext="png,jpg,jpge" />
+        <img id="fotoCadastroImg" src="{{$root.usuario.url_avatar}}" onerror="onErrorUser(this)" alt="Enviar foto" width="35" height="35" border="0" />
+        <i class="mdi mdi-image-photo-camera"></i>
+    </label>
+    <div class="clearBoth"></div>
+</div>
+
+<script type="application/javascript">
+    setTimeout(function() {
+        fotoCadastroNovo();
+    }, 2000);
+</script>

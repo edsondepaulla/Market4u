@@ -1,0 +1,44 @@
+<div class="content_all_social_feed_style not_margin_ver_todos">
+    <div class="content_all_follow">
+        <div class="close_content_all_follow">
+        </div>
+        <div class="content_input" ng-if="!Perfil_id">
+            <i class="mdi-action-search icon_search_in_list_follow"></i>
+            <input type="text" class="search_in_list_follow" placeholder="Pesquise um usuário">
+        </div>
+        <ul class="list_all_follow">
+            <li class="single_all_follow" ng-if="FOLLOW" ng-repeat="item in FOLLOW" >
+                <div class="content_limit_circle" ng-click="Layers('feed-perfil', item.ID)">
+                    <div class="img_single_follow">
+                        <img src="{{item.IMAGEM || default_image}}" style="min-height: 75px;" onerror="angular.element(this).scope().defaultImage(this);">
+                    </div>
+                </div>
+                <div class="name_follow" ng-click="Layers('feed-perfil', item.ID)">{{item.USERNAME ? '@' + item.USERNAME : item.NOME}}</div>
+                <div class="button_follow_content" ng-if="!Perfil_id">
+                    <span class="button_follow remover_follow follow_states" data-type="remover" data-status="unfollow" ng-click="manageStateFollow(item.ID, $event.currentTarget, true)" ng-if="TYPEOF_.sub_type =='seguindo'">Remover</span>
+                    <span class="button_follow parar_seguir_follow follow_states" data-type="deixar_seguir" data-status="unfollow"  ng-click="manageStateFollow(item.ID, $event.currentTarget, false)" ng-if="TYPEOF_.sub_type =='seguidores' && item.SEGUINDO == 'S' ">Deixar de seguir</span>
+                    <span class="button_follow seguir_again_follow follow_states" data-type="seguir_denovo" data-status="follow"  ng-click="manageStateFollow(item.ID, $event.currentTarget, false)" ng-if="TYPEOF_.sub_type =='seguidores' && !item.SEGUINDO">Seguir de volta</span>
+                    <span class="button_follow seguir_again_follow follow_states" data-type="pendente" data-status="unfollow"    ng-click="manageStateFollow(item.ID, $event.currentTarget, false)" ng-if="TYPEOF_.sub_type =='seguidores' && (item.SEGUINDO == 'P' || item.SEGUINDO == 'N')">Pendente</span>
+                    <span class="just_letters_remover" data-type="remover_seguidor" data-status="unfollow" ng-click="manageStateFollow(item.ID, $event.currentTarget, true, false)" ng-if="TYPEOF_.sub_type =='seguidores'">Remover</span>
+                </div>
+                <div class="button_follow_content" ng-if="Perfil_id">
+                    <span class="button_follow parar_seguir_follow follow_states" data-type="deixar_seguir" data-status="unfollow"  ng-click="manageStateFollow(item.ID, $event.currentTarget, false)" ng-if="item.SEGUINDO == 'S' && item.ID != UserID">Deixar de seguir</span>
+                    <span class="button_follow seguir_again_follow follow_states" data-type="seguir_denovo" data-status="follow"  ng-click="manageStateFollow(item.ID, $event.currentTarget, false)" ng-if="!item.SEGUINDO && item.ID != UserID">Seguir</span>
+                    <span class="button_follow seguir_again_follow follow_states" data-type="pendente" data-status="unfollow"    ng-click="manageStateFollow(item.ID, $event.currentTarget, false)" ng-if="(item.SEGUINDO == 'P' || item.SEGUINDO == 'N') && item.ID != UserID">Pendente</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="confirm_action_social">
+    <div class="content_confirm_action_social">
+        <div class="confirm_action_upper">
+            <span>Você deseja remover </span>
+        </div>
+        <div class="confirm_action_down">
+            <button class="close_confirm_action button_confirmation" onclick="$(this).closest('#confirm_action_social').css('display','none')">Cancelar</button>
+            <button class="continue_confirm_action button_confirmation">Confirmar</button>
+        </div>
+    </div>
+
+</div>

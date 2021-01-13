@@ -2,22 +2,23 @@
     <form id="formCadastro" class="form" onsubmit="return false;" method="post">
         <ul id="passo-a-passo" ajustes="{{AJUSTES?1:0}}">
             <li class="ajustes img" ng-if="AJUSTES">
-                <div id="boxImg">
+                <label id="boxImg" onclick="document.getElementById('fotoCadastro').click()">
                     <input style="display: none" type="file" id="fotoCadastro" name="fotoCadastro" ext="png,jpg,jpge" />
-                    <img id="fotoCadastroImg" onclick="$('#fotoCadastro').click();" src="{{$root.usuario.url_avatar}}" onerror="onErrorUser(this)" alt="Enviar foto" width="35" height="35" border="0" />
-                    <i onclick="$('#fotoCadastro').click();" class="mdi mdi-image-photo-camera"></i>
-                </div>
+                    <img id="fotoCadastroImg" src="{{$root.usuario.url_avatar}}" onerror="onErrorUser(this)" alt="Enviar foto" width="35" height="35" border="0" />
+                    <i class="mdi mdi-image-photo-camera"></i>
+                </label>
                 <div class="clearBoth"></div>
+                <h1 ng-if="$root.usuario.USERNAME">@{{$root.usuario.USERNAME}}</h1>
                 <h2>{{$root.usuario.NOME}}</h2>
                 <script type="application/javascript">
                     setTimeout(function() {
-                        fotoCadastro();
+                        fotoCadastroAtualizar();
                     }, 2000);
                 </script>
             </li>
             <li class="ajustes t" ng-if="AJUSTES">
-                <div>
-                    <h2>MINHA CONTA</h2>
+                <div style="text-align: center">
+                    <h2><b>MINHA CONTA</b></h2>
                 </div>
             </li>
             <li class="{{item.ACTIVE || AJUSTES?'active':''}} {{item.ACTIVE_AJUSTES?'active_ajustes':''}}" level="{{$index}}" ng-repeat="item in ITENS">
@@ -25,7 +26,8 @@
                 <div class="boxBtns">
                     <button ng-if="$index > 0 && !AJUSTES" t="PREV" ng-click="btnLevel($index-1)" type="button">Voltar</button>
                     <button ng-if="!AJUSTES" ng-click="btnLevel($index+1, 'NEXT')" t="NEXT" level="{{$index+1}}" type="button">{{ITENS.length==$index+1?(usuario.ID?'Salvar':'Começar'):'Próximo'}}</button>
-                    <button style="background: #CCC !important;" ng-if="!AJUSTES" ng-click="logout()" type="button">Cancelar</button>
+                    <br>
+                    <button style="background: #444 !important;" ng-if="!AJUSTES" ng-click="logout()" type="button">Cancelar</button>
                     <button ng-if="AJUSTES" ng-click="salvar()" type="button">Salvar</button>
                 </div>
             </li>
@@ -40,8 +42,8 @@
                 </div>
             </li>-->
             <li ng-click="logout()" class="ajustes sair" ng-if="AJUSTES">
-                <div>
-                    <h2>Sair da conta</h2>
+                <div style="text-align: center">
+                    <h2 class="sair_in_perfil">Sair da conta</h2>
                 </div>
             </li>
         </ul>

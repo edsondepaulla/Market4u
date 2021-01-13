@@ -1,31 +1,85 @@
-<h2 ng-click="open($index)">Dados pessoais</h2>
+<h2 ng-click="open($index)" class="first_menu_perfil">Dados pessoais</h2>
 
 <div class="boxDados">
-    <label for="cpf" class="margin_t_10">CPF<span class="campo_obg">*</span></label>
-    <label class="box1" for="cpf">
+    <div ng-if="$root.usuario.DEV=='1'">
+        <label for="dev_ambiente" class="margin_t_10">Desenvolvedor - Ambiente</label>
+        <label class="box1" for="dev_ambiente">
+            <select id="dev_ambiente" ng-model="$root.usuario.DEV_AMBIENTE">
+                <option value="prod">Produção</option>
+                <option value="dev1">Dev1</option>
+                <option value="dev2">Dev2</option>
+                <option value="dev3">Dev3</option>
+                <option value="dev4">Dev4</option>
+                <option value="dev5">Dev5</option>
+                <option value="dev6">Dev6</option>
+            </select>
+        </label>
+    </div>
+
+    <label style="margin-right: 15px;">
+        <input type="radio" id="tipo_1" name="tipo" value="1" ng-model="$root.usuario.TIPO" />
+        CPF
+    </label>
+    <label style="margin-right: 15px;">
+        <input type="radio" id="tipo_2" name="tipo" value="2" ng-model="$root.usuario.TIPO" />
+        Passaporte <span class="campo_obg">*</span>
+    </label>
+    <div class="clearBoth"></div>
+    <br>
+
+    <label class="box1" for="cpf" ng-if="$root.usuario.TIPO==1">
         <input type="text" obg="1" id="cpf" placeholder="999.999.999-99" ng-model="$root.usuario.CPF" autocomplete="cpf" />
         <span class="msgValidator">CPF inválido</span>
         <span class="msgValidator2">CPF já utilizado</span>
     </label>
 
+    <label class="box1" for="passaporte" ng-if="$root.usuario.TIPO==2">
+        <input type="text" obg="1" id="passaporte" ng-model="$root.usuario.PASSAPORTE" autocomplete="passaporte" />
+        <span class="msgValidator">Número de Passaporte inválido</span>
+    </label>
+
     <div id="boxDadosPessoaisCompleto" style="display: {{$root.usuario.ID?'block':'none'}}">
-        <label for="nome_completo" class="margin_t_10">Seu nome completo</label>
+        <label for="documentoCadastro" class="margin_t_10">Documento</label>
+        <label id="boxDocCadastro" onclick="document.getElementById('documentoCadastro').click()">
+            <input style="display: none" type="file" id="documentoCadastro" name="documentoCadastro" ext="png,jpg,jpge" />
+            <img id="documentoCadastroImg" src="{{$root.usuario.DADOS_ATUALIZADO==1?$root.usuario.url_documento:''}}" onerror="onErrorUser(this)" alt="Enviar documento" width="35" height="35" border="0" />
+            <i class="mdi mdi-image-photo-camera"></i>
+        </label>
+        <div class="clearBoth"></div>
+        <script type="application/javascript">
+            setTimeout(function() {
+                documentoCadastroNovo();
+            }, 2000);
+        </script>
+
+        <label for="nome_completo" class="margin_t_10">Nome<span class="campo_obg">*</span></label>
         <label class="box1" for="nome_completo">
-            <input type="text" obg="1" id="nome_completo" placeholder="Insira seu nome completo" ng-model="$root.usuario.NOME" />
-            <span class="msgValidator">Insira seu nome completo</span>
+            <input type="text" obg="1" id="nome_completo" placeholder="Insira seu nome" ng-model="$root.usuario.NOME" />
+            <span class="msgValidator">Insira seu nome</span>
         </label>
 
-        <label for="nome_completo" class="margin_t_10">Gênero</label>
+        <label for="u_n" class="margin_t_10">Nome de usuário<span class="campo_obg">*</span></label>
+        <label class="box1" for="u_n">
+            <b>@</b>
+            <input type="text" obg="1" id="u_n" maxlength="32" placeholder="Insira nome de usuário" ng-model="$root.usuario.USERNAME" />
+            <span class="msgValidator2">Nome de usuário já utilizado</span>
+        </label>
+
+        <label for="nome_completo" class="margin_t_10">Sexo<span class="campo_obg">*</span></label>
         <label style="margin-right: 15px;">
             <input type="radio" id="genero_M" name="genero" value="M" ng-model="$root.usuario.GENERO" />
             Masculino
         </label>
-        <label>
+        <label style="margin-right: 15px;">
             <input type="radio" id="genero_F" name="genero" value="F" ng-model="$root.usuario.GENERO" />
             Feminino
         </label>
+        <label>
+            <input type="radio" id="genero_O" name="genero" value="O" ng-model="$root.usuario.GENERO" />
+            Outros
+        </label>
 
-        <label for="data_nascimento" class="margin_t_10">Data de nascimento</label>
+        <label for="data_nascimento" class="margin_t_10">Data de nascimento<span class="campo_obg">*</span></label>
         <label class="box1" for="data_nascimento">
             <input type="text" obg="1" id="data_nascimento" placeholder="99/99/9999" ng-model="$root.usuario.DATA_NASCIMENTO_FORMAT" />
             <span class="msgValidator">Data de nascimento inválido</span>

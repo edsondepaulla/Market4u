@@ -8,13 +8,26 @@
     </label>
 
     <label for="numero_celular" class="margin_t_10">Número de celular<span class="campo_obg">*</span></label>
-    <label class="box" for="numero_celular" id="boxTelefone">
-        <label>
-            <span>+55</span>
+    <label class="box" id="boxTelefone">
+        <label for="numero_ddi">
+            <select onchange="maskCelular(parseInt(this.value))" id="numero_ddi" ng-model="$root.usuario.DDI">
+                <option value="55">+55</option>
+                <option value="1">+1</option>
+                <option value="49">+49</option>
+                <option value="54">+54</option>
+                <option value="56">+56</option>
+                <option value="595">+595</option>
+            </select>
         </label>
-        <input id="numero_celular" placeholder="(99) 99999-9999" obg="1" type="text" ng-model="$root.usuario.CELULAR" />
+        <input id="numero_celular" obg="1" type="text" ng-model="$root.usuario.CELULAR" />
         <span class="msgValidator">Insira um número de celular válido</span>
     </label>
+
+    <script type="application/javascript">
+        setTimeout(function() {
+            maskCelular(parseInt($('#numero_ddi').val()), true);
+        }, 1000);
+    </script>
 
     <label for="senha" class="margin_t_10">{{usuario.ID?'Nova senha':'Senha'}}<span ng-if="!usuario.ID" class="campo_obg">*</span></label>
     <label class="box1" for="senha" id="boxSenha">
@@ -26,10 +39,4 @@
     <label class="campo_obg">
         <span class="campo_obg">*</span> Campos obrigatórios
     </label>
-
-    <script type="application/javascript">
-        setTimeout(function() {
-            mask('#numero_celular', [(($('#numero_celular').val() ? $('#numero_celular').val().length == 15 : false) ? '(99) 99999-9999' : '(99) 9999-99999'), '(99) 99999-9999'], 14);
-        }, 1000);
-    </script>
 </div>

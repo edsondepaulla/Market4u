@@ -1,23 +1,60 @@
-<md-content class="scrollable-content" scroll md-scroll-y>
-    <form id="formMinhaCarteira" class="form" onsubmit="return false;" method="post">
-        <h4 style="text-align: center">Funciona assim:</h4>
-        <span style="display: block;margin-bottom: 15px;text-align: center;color: #00CB00">Adicionando antecipadamente <b>saldo na carteira</b>, você fica com um valor <b>pré pago</b>, melhorando ainda mais sua experiência de compra em poucos cliques.</span>
+<div class="minha_carteira_layer">
+    <md-content class="scrollable-content" scroll md-scroll-y>
+        <form id="formMinhaCarteira" class="form" onsubmit="return false;" method="post">
+            <h4 style="text-align: left; font-size: 14px; font-weight: bold;">Como funciona?</h4>
+            <span ng-if="!PARAMS" style="display: block;margin-bottom: 15px;text-align: center;color: #00CB00">Adicionando antecipadamente <b>saldo na carteira</b>, você fica com um valor <b>pré pago</b>, melhorando ainda mais sua experiência de compra em poucos cliques.</span>
+            <span ng-if="PARAMS" style="display: block;margin-bottom: 15px;text-align: center;color: #00CB00; font-size: 13px;">Transfira saldo para quem quiser!</span>
 
-        Meu saldo:
-        <h4>{{usuario.MEUSALDO_FORMAT}}</h4>
+            <div ng-if="PARAMS">
+                <div class="content_text_transfer">
+                    <span style="font-size: 13px; font-weight: bold;">Transferir para:</span>
+                </div>
+                <div class="user_to_transfer_single" style="display: flex; margin-top: 5px;margin-bottom: 15px;;">
+                    <div class="limit_user_transfer_single" style="min-width: 75px; max-width: 75px;">
+                        <img src="{{$root.TRANSFERIR.IMAGEM}}" onerror="onErrorUser(this)" width="55" height="55" border="0" style="border: 1px solid; border-radius: 50%;">
+                    </div>
+                    <div class="info_user_profile_single">
+                        <div class="name_profile_single_transfer">
+                            <span style="color: #ccc;">{{$root.TRANSFERIR.NOME}}</span>
+                        </div>
+                        <div class="usernamename_profile_single_transfer">
+                            <span style="color: rgb(0,203,0);">@{{$root.TRANSFERIR.USERNAME}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        Escolha o valor:
+            Meu saldo:
+            <h4>{{usuario.MEUSALDO_FORMAT}}</h4>
 
-        <ul>
-            <li class="{{item.active?'active':''}}" ng-click="select(item)" ng-repeat="item in itens">
-                <label ng-if="item.popular">Popular</label>
-                R$ {{item.value}}
-            </li>
-        </ul>
-        <div class="clearBoth"></div>
+            <div ng-if="usuario.VOUCHER && !$root.TRANSFERIR">
+                Voucher disponível:
+                <h4 style="font-weight: 500;">{{usuario.VOUCHER_FORMAT}}</h4>
+            </div>
 
-        <div style="margin: 15px 0 0 -15px">Selecione o <b>método de pagamento</b> que você deseja usar:</div>
-        <div id="boxPg" ng-include src="$root.BASE+'view/payment/formas_pg.html'"></div>
-    </form>
-</md-content>
-<button class="btnConfirme" ng-click="$root.confirmPayment('saldo')">Finalizar <i class="mdi mdi-navigation-arrow-forward"></i></button>
+            Escolha o valor:
+            <ul style="margin-top: 10px">
+                <li class="{{item.active?'active':''}}" ng-click="select(item)" ng-repeat="item in itens">
+                    <label ng-if="item.popular">Popular</label>
+                    <label class="outro_valor" ng-if="item.outro_valor">Outro valor</label>
+                    R${{item.outro_valor?'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;':' '+item.value}} <input id="outro_valor" ng-if="item.outro_valor" maxlength="3" type="text" pattern="[0-9]*" ng-blur="outroValor(item)" value="{{item.value}}" />
+                </li>
+            </ul>
+            <div class="clearBoth"></div>
+
+            <div ng-if="GANHE.VALOR_GANHE && !PARAMS">
+                Ganhe:
+                <h4 style="font-weight: bold">{{GANHE.LABEL}}</h4>
+            </div>
+
+            <label ng-if="VALOR_PG" style="margin: 15px 0 0 -15px;display: block;">Selecione o <b>método de pagamento</b> que você deseja usar:</label>
+
+            <h3 id="usar_meu_saldo_transferir" ng-if="PARAMS && usuario.MEUSALDO" class="{{$root.USAR_MEU_SALDO_TRANSFERIR?'active_checkbox':''}}">
+                <label ng-click="$root.USAR_MEU_SALDO_TRANSFERIR = $root.USAR_MEU_SALDO_TRANSFERIR?0:1" class="checkbox_custom">Usar meu saldo de carteira <span class="checkmark"></span></label>
+            </h3>
+
+            <div id="boxPg" ng-if="PARAMS?($root.USAR_MEU_SALDO_TRANSFERIR?(VALOR_PG > usuario.MEUSALDO):true):true" ng-include src="$root.BASE+'view/payment/formas_pg.html'"></div>
+        </form>
+    </md-content>
+</div>
+<button class="btnConfirme" ng-click="$root.confirmPayment('saldo')">{{PARAMS?'Transferir':'Finalizar'}} <i class="mdi mdi-navigation-arrow-forward"></i></button>

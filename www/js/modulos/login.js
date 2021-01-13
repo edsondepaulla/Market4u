@@ -57,7 +57,7 @@ app.controller('Cadastro', function($rootScope, $scope) {
     $rootScope.LogoBody = 1;
     $rootScope.Titulo = parseInt($rootScope.usuario.ID) ? "PERFIL" : "CADASTRAR-SE";
     $rootScope.NO_WHATSAPP = false;
-    $scope.AJUSTES = ($rootScope.usuario.ID?$rootScope.usuario.DADOS_ATUALIZADO:false);
+    $scope.AJUSTES = ($rootScope.usuario.ID ? $rootScope.usuario.DADOS_ATUALIZADO : false);
 
     // Atualizar dados
     if (parseInt($rootScope.usuario.ID) && parseInt(Login.getData().ID) && !parseInt(Login.getData().DADOS_ATUALIZADO)) {
@@ -79,27 +79,35 @@ app.controller('Cadastro', function($rootScope, $scope) {
     }, 500);
 
     $rootScope.ITENS = [];
-    var base = config.url_api[config.ambiente];
+    var base = config.url_api();
+
     $rootScope.ITENS.push({'ACTIVE': 1, 'SRC': base + 'Mobile/www/view/conecte-se/level-dados-pessoais.html'});
     $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': base + 'Mobile/www/view/conecte-se/level-dados-acesso.html'});
+    $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': base + 'Mobile/www/view/conecte-se/level-privacidade.html'});
     $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': base + 'Mobile/www/view/conecte-se/level-endereco.html'});
-    $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': base + 'Mobile/www/view/conecte-se/level-preferencias.html', 'ITENS': $rootScope.usuario.ITENS_PREFERENCIAS});
-    if(!$scope.AJUSTES)
+    $rootScope.ITENS.push({
+        'ACTIVE': 0,
+        'SRC': base + 'Mobile/www/view/conecte-se/level-preferencias.html',
+        'ITENS': $rootScope.usuario.ITENS_PREFERENCIAS
+    });
+    if (!$scope.AJUSTES) {
+        $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': base + 'Mobile/www/view/conecte-se/level-foto.html'});
         $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': base + 'Mobile/www/view/conecte-se/level-confirmar.html'});
-    else {
+    } else {
         if (parseInt($rootScope.usuario.ID))
             $rootScope.ITENS.push({'ACTIVE': 0, 'SRC': base + 'Mobile/www/view/conecte-se/level-termos-politica.html'});
         $rootScope.MenuBottom = true;
     }
 
     $scope.pref = function (ID) {
-        if(!$rootScope.usuario.PREFERENCIAS)
+        if (!$rootScope.usuario.PREFERENCIAS)
             $rootScope.usuario.PREFERENCIAS = [];
         $rootScope.usuario.PREFERENCIAS[ID] = $rootScope.usuario.PREFERENCIAS[ID] ? 0 : ID;
     };
 
-    $scope.salvar = function () {
-        $rootScope.usuario.DDI = 55;
+    $scope.validar = function () {
+        $rootScope.usuario.DDI = $('#numero_ddi').val() ? $('#numero_ddi').val() : $rootScope.usuario.DDI;
+        $rootScope.usuario.CELULAR = $('#numero_celular').val() ? $('#numero_celular').val() : $rootScope.usuario.CELULAR;
         var USUARIO = $.extend({}, $rootScope.usuario);
         USUARIO.ESTADOS = null;
         USUARIO.STREET = $('#street').val();
@@ -110,12 +118,18 @@ app.controller('Cadastro', function($rootScope, $scope) {
         USUARIO.WHATSAPP = null;
         USUARIO.SET_PREFERENCIAS = [];
         $.each(USUARIO.PREFERENCIAS, function (idx, ID) {
-            if(parseInt(ID))
+            if (parseInt(ID))
                 USUARIO.SET_PREFERENCIAS.push(parseInt(ID));
         });
         USUARIO.PREFERENCIAS = null;
         USUARIO.TERMOS_DE_USO = null;
-        USUARIO.POLITICA_DE_PRIVACIDADE = null
+        USUARIO.POLITICA_DE_PRIVACIDADE = null;
+        USUARIO.DOC_NOVO = documento_cadastro_novo ? 1 : 0;
+        return USUARIO;
+    };
+
+    $scope.salvar = function () {
+        var USUARIO = $scope.validar();
         if (parseInt($rootScope.usuario.ID)) {
             var EMAIL = $rootScope.usuario.EMAIL;
             var SENHA = $rootScope.usuario.SENHA;
@@ -125,11 +139,13 @@ app.controller('Cadastro', function($rootScope, $scope) {
                     data: {
                         REDIRECT: $rootScope.REDIRECT || '',
                         usuario: USUARIO,
+                        DOCUMENTO: documento_cadastro_novo,
                         AJUSTES: $scope.AJUSTES ? 1 : 0
                     }
                 },
                 function (data) {
                     if (data.status == 1) {
+                        documento_cadastro_novo = null;
                         $rootScope.usuario.CONFIRME_DADOS = 1;
                         $rootScope.usuario.SENHA = SENHA;
                         $rootScope.usuario.EMAIL = EMAIL;
@@ -148,10 +164,14 @@ app.controller('Cadastro', function($rootScope, $scope) {
                 {
                     action: 'cadastro/novo',
                     data: {
-                        usuario: USUARIO
+                        usuario: USUARIO,
+                        IMAGEM: foto_cadastro_novo,
+                        DOCUMENTO: documento_cadastro_novo
                     }
                 }, function (data) {
                     if (data.status == 1) {
+                        foto_cadastro_novo = null;
+                        documento_cadastro_novo = null;
                         $rootScope.usuario.ENVIADO_PARA = data.ENVIADO_PARA;
                         if (data.redirect_system)
                             $rootScope.REDIRECT = '';
@@ -161,8 +181,20 @@ app.controller('Cadastro', function($rootScope, $scope) {
         }
     };
 
+    $scope.checkAndSavePrivacidade = function (type_, el) {
+        el = $(el).hasClass('check_Nprivacidade') ? el : $(el).closest('.check_privacidade');
+        var check_el = $(el).find('h3');
+        if ($(check_el).hasClass('active_checkbox')) {
+            $(check_el).removeClass('active_checkbox');
+            $rootScope.usuario[type_.toUpperCase()] = 'PUBLICO';
+        } else {
+            $(check_el).addClass('active_checkbox');
+            $rootScope.usuario[type_.toUpperCase()] = 'PRIVADO';
+        }
+    };
+
     $scope.open = function (LEVEL) {
-        if($scope.AJUSTES) {
+        if ($scope.AJUSTES) {
             var active_ajustes = 0;
             $.each($rootScope.ITENS, function (idx, ITEM_IDX) {
                 if (ITEM_IDX.ACTIVE_AJUSTES)
@@ -177,50 +209,60 @@ app.controller('Cadastro', function($rootScope, $scope) {
                 Login.get('#!/conecte-se', 1);
         }
     };
-
     $rootScope.btnLevel = function (LEVEL, TYPE) {
         if ($rootScope.ITENS.length == LEVEL)
             $scope.salvar();
         else {
-            var focus = false;
             if (TYPE == 'NEXT') {
-                $('body[controller="Cadastro"] #formCadastro.form #passo-a-passo > li.active input.ng-invalid').each(function () {
-                    if (!focus) {
-                        focus = true;
-                        $(this).focus();
+                Factory.ajax(
+                    {
+                        action: 'cadastro/validar',
+                        data: {
+                            usuario: $scope.validar()
+                        }
+                    }, function (data) {
+                        if (data.status == 1) {
+                            var focus = false;
+                            $('body[controller="Cadastro"] #formCadastro.form #passo-a-passo > li.active input.ng-invalid').each(function () {
+                                if (!focus) {
+                                    focus = true;
+                                    $(this).focus();
+                                }
+                            });
+                            $('body[controller="Cadastro"] #formCadastro.form #passo-a-passo > li.active input.ng-invalid2').each(function () {
+                                if (!focus) {
+                                    focus = true;
+                                    $(this).focus();
+                                }
+                            });
+                            $('body[controller="Cadastro"] #formCadastro.form #passo-a-passo > li.active input[obg="1"]').each(function () {
+                                if (!$(this).val() && !focus) {
+                                    focus = true;
+                                    $(this).focus();
+                                }
+                            });
+                            $('body[controller="Cadastro"] #formCadastro.form #passo-a-passo > li.active select[obg="1"]').each(function () {
+                                if (!$(this).val() && !focus) {
+                                    focus = true;
+                                    $(this).focus();
+                                }
+                            });
+                            if (!focus) {
+                                $.each($rootScope.ITENS, function (idx, ITEM_IDX) {
+                                    ITEM_IDX.ACTIVE = 0;
+                                    if (LEVEL == idx) {
+                                        ITEM_IDX.ACTIVE = 1;
+                                    }
+                                });
+                            }
+                        }
                     }
-                });
-                $('body[controller="Cadastro"] #formCadastro.form #passo-a-passo > li.active input.ng-invalid2').each(function () {
-                    if (!focus) {
-                        focus = true;
-                        $(this).focus();
-                    }
-                });
-                $('body[controller="Cadastro"] #formCadastro.form #passo-a-passo > li.active input[obg="1"]').each(function () {
-                    if (!$(this).val() && !focus) {
-                        focus = true;
-                        $(this).focus();
-                    }
-                });
-                $('body[controller="Cadastro"] #formCadastro.form #passo-a-passo > li.active select[obg="1"]').each(function () {
-                    if (!$(this).val() && !focus) {
-                        focus = true;
-                        $(this).focus();
-                    }
-                });
-            }
-            if (!focus) {
+                );
+            } else {
                 $.each($rootScope.ITENS, function (idx, ITEM_IDX) {
                     ITEM_IDX.ACTIVE = 0;
                     if (LEVEL == idx) {
                         ITEM_IDX.ACTIVE = 1;
-                        if ($('#cardName:visible').length) {
-                            $rootScope.usuario.CC_NAME = $('#cardName').val();
-                            $rootScope.usuario.CC_NUMBER = $('#cardNumber').val();
-                            $rootScope.usuario.CC_MONTHYEAR = $('#expirationMonthYear').val();
-                            $rootScope.usuario.CC_CVV = $('#cvv').val();
-                            $rootScope.usuario.CC_BANDEIRA = $('#cardBandeira').val();
-                        }
                     }
                 });
             }
@@ -231,7 +273,7 @@ app.controller('Cadastro', function($rootScope, $scope) {
 app.controller('ConecteSeCodigo', function($rootScope, $scope, $routeParams) {
     if (Page.active) {
         $rootScope.BARRA_SALDO = false;
-        $rootScope.Titulo = "Autenticação de dois fatores";
+        $rootScope.Titulo = "Validação";
 
         $scope.reenviarCodSms = function (DATA) {
             var _function = function () {
@@ -269,6 +311,7 @@ app.controller('ConecteSeCodigo', function($rootScope, $scope, $routeParams) {
                     data: {
                         REDIRECT: $rootScope.REDIRECT || '',
                         EMAIL: $rootScope.usuario.EMAIL,
+                        ENVIADO_PARA: $rootScope.usuario.ENVIADO_PARA,
                         CONFIRME_DADOS: $rootScope.usuario.CONFIRME_DADOS,
                         ESQUECEU_SENHA: $rootScope.usuario.ESQUECEU_SENHA,
                         HASH: $rootScope.usuario.CODIGO,
@@ -290,7 +333,19 @@ app.controller('CardNew', function($rootScope, $scope, $routeParams) {
     var cc = CC.get();
     $scope.LST = {};
     $.each(cc, function (ID_CC, VALS_CC) {
-        VALS_CC.IMG = 'https://m.market4u.com.br/skin/default/images/bandeira_cc/' + VALS_CC.BANDEIRA + '.png';
+        switch (VALS_CC.TIPO_CC) {
+            case 'VR':
+                VALS_CC.TIPO_CC_VALUE = 'Vale-refeição';
+                break;
+            case 'VA':
+                VALS_CC.TIPO_CC_VALUE = 'Vale-alimentação';
+                break;
+            default:
+            case 'CC/DEBITO':
+                VALS_CC.TIPO_CC_VALUE = 1 ? 'Crédito' : 'Crédito/débito';
+                break;
+        }
+        VALS_CC.IMG = config.url_api() + 'skin/default/images/bandeira_cc/' + VALS_CC.BANDEIRA + '.png';
         $scope.LST[ID_CC] = VALS_CC;
     });
 
@@ -324,123 +379,112 @@ app.controller('CardNew', function($rootScope, $scope, $routeParams) {
     };
 });
 
-app.controller('AddCardNew', function($rootScope, $scope) {
+app.controller('AddCardNew', function($rootScope, $scope, ReturnData) {
     $rootScope.Titulo = "Adicionar";
     $rootScope.MenuBottom = true;
     $rootScope.NO_WHATSAPP = false;
+    $rootScope.TIPOS = ReturnData.TIPOS;
+    $rootScope.PG = {'TIPO':'CC/DEBITO', 'cardBandeira': 'VR'};
 
     $scope.salvar = function () {
-        if (!$('#cardName').val().length)
-            $('#cardName').focus();
-        else if (!$('#cardNumber').val().length)
+        if (!$('#cardNumber').val().length)
             $('#cardNumber').focus();
         else if (!$('#expirationMonthYear').val().length)
             $('#expirationMonthYear').focus();
         else if (!$('#cvv').val().length)
             $('#cvv').focus();
+        else if (!$('#cardName').val().length)
+            $('#cardName').focus();
+        else if (!$('#cardCpfCnpj').val().length)
+            $('#cardCpfCnpj').focus();
         else if (!parseInt($('#formCadastro').attr('invalid'))) {
             var expirationMonthYear = $('#expirationMonthYear').val().toString().split('/');
             var cardData = {
                 cardNumber: $('#cardNumber').val().toString().replace(/ /g, ''),
                 holderName: $('#cardName').val().toString(),
+                CpfCnpj: $('#cardCpfCnpj').val().toString(),
                 securityCode: $('#cvv').val().toString(),
                 expirationMonth: expirationMonthYear[0],
-                expirationYear: expirationMonthYear[1]
+                expirationYear: expirationMonthYear[1],
+                TIPO_CC: $('[name="TIPO"]:checked').val().toString()
             };
-            var checkout = new DirectCheckout(Login.getData().JUNO.public, Login.getData().JUNO.production);
-            if (checkout.isValidCardNumber(cardData.cardNumber)) {
-                if (checkout.isValidExpireDate(cardData.expirationMonth, '20' + cardData.expirationYear)) {
-                    if (checkout.isValidSecurityCode(cardData.cardNumber, cardData.securityCode)) {
-                        CC.add(cardData, checkout.getCardType(cardData.cardNumber));
-                        $rootScope.location('#!/card-new');
-                    } else {
-                        $('#cvv').focus();
-                        $rootScope.dadosInvalidosCC('Cód. de segurança inválido');
+            switch (cardData.TIPO_CC) {
+                case 'VA':
+                case 'VR':
+                case 'CC/DEBITO':
+                    var valido_year_month = false;
+                    var anoatual = parseInt(new Date().getFullYear());
+                    var mesatual = parseInt(new Date().getMonth()) + 1;
+                    if (parseInt(cardData.expirationMonth) >= 1 && parseInt(cardData.expirationMonth) <= 12 && parseInt('20' + cardData.expirationYear) >= anoatual) {
+                        if (anoatual == parseInt('20' + cardData.expirationYear)) {
+                            if (parseInt(cardData.expirationMonth) >= mesatual)
+                                valido_year_month = true;
+                        } else
+                            valido_year_month = true;
                     }
-                } else {
-                    $('#expirationMonthYear').focus();
-                    $rootScope.dadosInvalidosCC('Validade inválido');
-                }
-            } else {
-                $('#cardNumber').focus();
-                $rootScope.dadosInvalidosCC('Número do cartão inválido');
+                    if (valido_year_month) {
+                        if (cardData.securityCode) {
+                            var valido = false;
+                            var bandeira = false;
+                            switch (cardData.TIPO_CC) {
+                                case 'VA':
+                                case 'VR':
+                                    bandeira = $('[name="cardBandeira"]:checked').length ? $('[name="cardBandeira"]:checked').val().toString() : false;
+                                    switch (bandeira) {
+                                        case 'VR':
+                                            switch (cardData.TIPO_CC) {
+                                                case 'VR':
+                                                    valido = cardData.cardNumber.substring(0, 6) == '627416' && cardData.cardNumber.length == 16 ? true : false;
+                                                    break;
+                                                case 'VA':
+                                                    valido = cardData.cardNumber.substring(0, 6) == '637036' && cardData.cardNumber.length == 16 ? true : false;
+                                                    break;
+                                            }
+                                            break;
+                                    }
+                                    if (valido) {
+                                        CC.add(cardData, bandeira);
+                                        $rootScope.location('#!/card-new');
+                                    } else {
+                                        $('#cardNumber').focus();
+                                        $rootScope.dadosInvalidosCC('Número do cartão inválido');
+                                    }
+                                    break;
+                                case 'CC/DEBITO':
+                                    Factory.ajax(
+                                        {
+                                            action: 'cadastro/cc',
+                                            data: {
+                                                VALUE: cardData.cardNumber.substr(0, 6)
+                                            }
+                                        },
+                                        function (data) {
+                                            if (data.bandeira) {
+                                                CC.add(cardData, data.bandeira);
+                                                $rootScope.location('#!/card-new');
+                                            } else {
+                                                $('#cardNumber').focus();
+                                                $rootScope.dadosInvalidosCC('Número do cartão inválido');
+                                            }
+                                        }
+                                    );
+                                    break;
+                            }
+                        } else {
+                            $('#cvv').focus();
+                            $rootScope.dadosInvalidosCC('Cód. de segurança inválido');
+                        }
+                    } else {
+                        $('#expirationMonthYear').focus();
+                        $rootScope.dadosInvalidosCC('Validade inválido');
+                    }
+                    break;
+                default:
+                    $rootScope.dadosInvalidosCC();
+                    break;
             }
         } else
             $rootScope.dadosInvalidosCC();
-    };
-});
-
-app.controller('MinhaCarteira', function($rootScope, $scope, $routeParams, ReturnData) {
-    $rootScope.BARRA_SALDO = false;
-    $rootScope.Titulo = "Minha Carteira";
-    $rootScope.NO_WHATSAPP = false;
-    $rootScope.FORMA_PAGAMENTO = null;
-
-    // PagSeguro
-    $.each(ReturnData.FORMAS_PG, function (idx, f_pg) {
-        switch (f_pg.GATEWAY) {
-            case 'PAGSEGURO':
-                $rootScope.pagseguro(0, null, 1000);
-                break;
-            case 'JUNO':
-                var cc = CC.get();
-                var active = 1;
-                var count = 0;
-                ReturnData.FORMAS_PG[idx]['LST'] = [];
-                $.each(cc, function (ID, vals) {
-                    ReturnData.FORMAS_PG[idx]['LST'].push({
-                        ACTIVE: active,
-                        ID: ID,
-                        IMG: "https://m.market4u.com.br/skin/default/images/bandeira_cc/" + vals.BANDEIRA + ".png",
-                        TEXT: vals.TEXT,
-                        VALS: {1: vals.HASH}
-                    });
-                    active = 0;
-                    count++;
-                });
-                if (count) {
-                    ReturnData.FORMAS_PG[idx]['LST'].push({
-                        'ID': 0,
-                        'ACTIVE': 0,
-                        'TEXT': 'Novo cartão'
-                    });
-                }
-                break;
-        }
-    });
-
-    $rootScope.FORMAS_PG = ReturnData.FORMAS_PG;
-
-    $rootScope.VALOR_PG = 50;
-    $scope.itens = [
-        {
-            value: 30,
-        },
-        {
-            value: 50,
-            active: 1,
-            popular: 1
-        },
-        {
-            value: 70,
-        },
-        {
-            value: 100,
-        },
-        {
-            value: 150,
-        },
-        {
-            value: 300,
-        }
-    ];
-
-    $scope.select = function (item) {
-        $.each($scope.itens, function (idx, item_each) {
-            item_each.active = 0;
-        });
-        item.active = 1;
-        $rootScope.VALOR_PG = item.value;
     };
 });
 
@@ -501,16 +545,146 @@ app.controller('HistoricoTransacoesLst', function($rootScope, $scope, $routePara
     $rootScope.border_top = 1;
     $rootScope.Titulo = "Compras";
     $scope.LST = ReturnData.LST;
+    $rootScope.NO_WHATSAPP = true;
 
     $scope.click = function(reg) {
         $rootScope.location('#!/historico-transacoes/' + reg.ID);
     };
 });
 
-app.controller('HistoricoTransacoesGet', function($rootScope, $scope, $routeParams, ReturnData) {
+
+app.controller('EstornoItensPedidoGet', function ($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.border_top = 1;
-    $rootScope.Titulo = "Compras";
-    $scope.REG = ReturnData;
+    $rootScope.Titulo = "Estorno";
+    $rootScope.NO_WHATSAPP = false;
+    $rootScope.VALOR_TOTAL_ESTORNO = 0;
+    $rootScope.PEDIDO = ReturnData.PEDIDO;
+
+    $scope.calcularKG = function(produto) {
+        if(produto.UNIDADE_MEDIDA === 'KG') {
+            if(produto.ITEMESTORNO === true) {
+                produto.QTDE_ESTORNO = produto.QTDE;
+                produto.VALOR_ESTORNO = produto.UNITARIO;
+                $rootScope.VALOR_TOTAL_ESTORNO += produto.UNITARIO;
+            }else{
+                produto.QTDE_ESTORNO = 0;
+                produto.VALOR_ESTORNO = 0;
+                $rootScope.VALOR_TOTAL_ESTORNO -= produto.UNITARIO;
+            }
+        }else{
+            if(produto.ITEMESTORNO === false) {
+                $rootScope.VALOR_TOTAL_ESTORNO -= (produto.UNITARIO * produto.QTDE_ESTORNO);
+                produto.QTDE_ESTORNO = 0;
+                produto.VALOR_ESTORNO = 0;
+            }
+        }
+    };
+
+    $scope.addQtdeProduto = function (produto) {
+        if(produto.QTDE_ESTORNO < produto.QTDE) {
+            produto.QTDE_ESTORNO = parseInt(produto.QTDE_ESTORNO) + 1;
+            produto.VALOR_ESTORNO = produto.UNITARIO * produto.QTDE_ESTORNO;
+            $rootScope.VALOR_TOTAL_ESTORNO += produto.UNITARIO * produto.QTDE_ESTORNO;
+        }
+    };
+
+    $scope.removeQtdeProduto = function (produto) {
+        if(produto.QTDE_ESTORNO > 0) {
+            $rootScope.VALOR_TOTAL_ESTORNO -= (produto.UNITARIO * produto.QTDE_ESTORNO);
+            produto.QTDE_ESTORNO = parseInt(produto.QTDE_ESTORNO) - 1;
+            produto.VALOR_ESTORNO = produto.UNITARIO * produto.QTDE_ESTORNO;
+        }
+    };
+
+    $scope.solicitarEstorno = function (pedido) {
+        $scope.data = pedido.PRODUTOS.filter(function (item) {
+            return item.ITEMESTORNO === true;
+        });
+
+        if($scope.data.length) {
+            pedido.NENHUM = false;
+
+            var validador = $scope.validarDados(pedido.MOTIVO, $scope.data);
+
+            pedido.PRODUTOS.map(function (produto)
+            {
+                produto.ERRO_QTD_ESTORNO = !!validador.PRODUTOS.find(element => element === produto.PRODUTOID);
+            });
+
+            pedido.MOTIVO_NULO = validador.MOTIVO === true;
+
+            if(validador.MOTIVO !== true && validador.PRODUTOS.length <= 0) {
+                try {
+                    navigator.notification.confirm('',
+                        function (buttonIndex) {
+                            if (buttonIndex == (Factory.$rootScope.device == 'ios' ? 2 : 1)) {
+                                $scope.enviarSolicitacaoEstorno(pedido);
+                            }
+                        },
+                        'Realmente deseja fazer esta solicitação de estorno?',
+                        Factory.$rootScope.device == 'ios' ? 'Não,Sim' : 'Sim,Não'
+                    );
+                } catch (e) {
+                    if (confirm('Realmente deseja fazer esta solicitação de estorno?')) {
+                        $scope.enviarSolicitacaoEstorno(pedido);
+                    }
+                }
+            }else{
+                $('.scrollable').animate({scrollTop: 0}, 1000);
+            }
+        }else{
+            pedido.PRODUTOS.map(function (produto) {
+                produto.ERRO_QTD_ESTORNO = false;
+            });
+
+            pedido.NENHUM = true;
+
+            $('.scrollable').animate({scrollTop: 0}, 1000);
+        }
+    };
+
+    $scope.validarDados = function (motivo, produtosParaEstorno) {
+        var errors, erroMotivo = false, errorsProduto = [];
+
+        produtosParaEstorno.map(function (value) {
+            if(value.UNIDADE_MEDIDA === 'KG') value.QTDE_ESTORNO = value.QTDE;
+            if(value.QTDE_ESTORNO <= 0 && value.UNIDADE_MEDIDA !== 'KG') errorsProduto.push(value.PRODUTOID);
+        });
+
+        if(motivo === undefined || motivo.length <= 3) erroMotivo = true;
+
+        errors = {"MOTIVO" : erroMotivo, "PRODUTOS" : errorsProduto};
+
+        return errors;
+    };
+
+    $scope.enviarSolicitacaoEstorno = function (pedido) {
+        Factory.ajax({
+                action: 'estorno/solicitarestorno',
+                data: {
+                    'PEDIDO' : {
+                        'ID'        : pedido.ID,
+                        'DATAHORA'  : pedido.DATAHORA,
+                        'MOTIVO'    : pedido.MOTIVO,
+                        'PRODUTOS'  : JSON.stringify($scope.data)
+                    }
+                }
+            },
+            function (data) {
+                if (data.status === 0){
+                    $rootScope.PEDIDO.ERROESTORNO = true;
+                    $rootScope.PEDIDO = '';
+
+                }else if (data.status === 1){
+                    window.history.go(-1);
+
+                }else if(data.status === 2){
+                    $rootScope.PEDIDO = data.PEDIDO;
+
+                }
+            }
+        );
+    }
 });
 
 app.controller('NotificacoesLst', function($rootScope, $scope, $routeParams, ReturnData) {
@@ -525,11 +699,170 @@ app.controller('NotificacoesLst', function($rootScope, $scope, $routeParams, Ret
 
 app.controller('NotificacoesGet', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.border_top = 1;
-    $rootScope.Titulo = ReturnData.TITULO;
+    $rootScope.Titulo = 'Notificação';
     $scope.REG = ReturnData;
+
+    $scope.click = function(data) {
+        switch (data.TYPE) {
+            case 'BP': // Busca de produtos
+                Factory.$rootScope.STEP = 1;
+                Factory.$rootScope.TIPO_PG = 'COMPRAR';
+                Factory.$rootScope.Layers('produtos-busca');
+                Factory.$rootScope.PESQUISA = data.URL;
+                break;
+            case 'L': // Layers
+                switch (data.URL) {
+                    case '[MINHA_CARTEIRA]':
+                        Factory.$rootScope.Layers('feed-minha-carteira');
+                        break;
+                    default:
+                        if (data.URL.indexOf('[PESQUISA#') != -1) {
+                            Factory.$rootScope.Layers(
+                                'pesquisa-satisfacao-form',
+                                {
+                                    ID: parseInt(data.URL.split('#')[1].replace(']', ''))
+                                }
+                            );
+                        }
+                        break;
+                }
+                break;
+            case 'C': // Categorias
+                Factory.$rootScope.location('#!/');
+                setTimeout(function () {
+                    Factory.$rootScope.clickItem('index');
+                    Factory.$rootScope.getCompras({ID: parseInt(data.URL)});
+                }, 2000);
+                break;
+            case 'P': // Produto
+                Factory.$rootScope.getProduto(data.URL);
+                break;
+            case 'LI':
+            case 'LE':
+                if (data.URL)
+                    Factory.$rootScope.location(data.URL, 1, 1);
+                break;
+            case 'redirect':
+                if (data.URL)
+                    Factory.$rootScope.location(data.URL, 0, 1);
+                break;
+            default:
+                if (data.ID)
+                    Factory.$rootScope.location('#!/notificacoes/' + data.ID);
+                break;
+        }
+    };
 });
 
-function fotoCadastro(){
+documento_cadastro_novo = null;
+function documentoCadastroNovo(){
+    $('#documentoCadastro').change(function(){
+        var _campo = $(this);
+
+        //Limite default de 80MB para todos os arquivos menos xlsx e xls.
+        var _maxsize = 102400000;
+        var _maxsize_msg = 100;
+
+        //Verifica se existe limitação no campo e converte o valor de MB para bytes.
+        if(parseInt(_campo.data('maxsize'))){
+            _maxsize = parseInt(_campo.data('maxsize')) * 1048576;
+            _maxsize_msg = parseInt(_campo.data('maxsize'));
+        }
+
+        var i = 0, len = this.files.length;
+        for ( ; i < len; i++ ){
+            var file = this.files[i];
+            var _ok = true;
+
+            var _name_split     = file.name.split('.');
+            var _ext            = _name_split[_name_split.length - 1].toLowerCase();
+
+            if(file.size > _maxsize) {
+                Factory.alert('Arquivo muito grande, utilizar menor ou igual a ' + _maxsize_msg + 'MB!');
+                _campo.val('');
+                _ok = false;
+            }
+
+            if(_ok === true && _campo.data('ext')){
+                var _ext_permitidos = _campo.data('ext').split(',');
+                if(_ext_permitidos.indexOf(_ext) == -1){
+                    Factory.alert('Tipo de arquivo não aceito. Utilizar:'+' '+_campo.data('ext'));
+                    _campo.val('');
+                    _ok = false;
+                }
+            }
+
+            if(_ok) {
+                clearTimeout(Factory.timeout);
+                Factory.timeout = setTimeout(function(){
+                    documento_cadastro_novo = file;
+                    var oFReader = new FileReader();
+                    oFReader.readAsDataURL(file);
+                    oFReader.onload = function (oFREvent) {
+                        document.getElementById('documentoCadastroImg').src = oFREvent.target.result;
+                        $('#documentoCadastroImg').show();
+                    };
+                }, 1000);
+            }
+        }
+    });
+}
+
+foto_cadastro_novo = null;
+function fotoCadastroNovo(){
+    $('#fotoCadastro').change(function(){
+        var _campo = $(this);
+
+        //Limite default de 80MB para todos os arquivos menos xlsx e xls.
+        var _maxsize = 102400000;
+        var _maxsize_msg = 100;
+
+        //Verifica se existe limitação no campo e converte o valor de MB para bytes.
+        if(parseInt(_campo.data('maxsize'))){
+            _maxsize = parseInt(_campo.data('maxsize')) * 1048576;
+            _maxsize_msg = parseInt(_campo.data('maxsize'));
+        }
+
+        var i = 0, len = this.files.length;
+        for ( ; i < len; i++ ){
+            var file = this.files[i];
+            var _ok = true;
+
+            var _name_split     = file.name.split('.');
+            var _ext            = _name_split[_name_split.length - 1].toLowerCase();
+
+            if(file.size > _maxsize) {
+                Factory.alert('Arquivo muito grande, utilizar menor ou igual a ' + _maxsize_msg + 'MB!');
+                _campo.val('');
+                _ok = false;
+            }
+
+            if(_ok === true && _campo.data('ext')){
+                var _ext_permitidos = _campo.data('ext').split(',');
+                if(_ext_permitidos.indexOf(_ext) == -1){
+                    Factory.alert('Tipo de arquivo não aceito. Utilizar:'+' '+_campo.data('ext'));
+                    _campo.val('');
+                    _ok = false;
+                }
+            }
+
+            if(_ok) {
+                clearTimeout(Factory.timeout);
+                Factory.timeout = setTimeout(function(){
+                    foto_cadastro_novo = file;
+                    var oFReader = new FileReader();
+                    oFReader.readAsDataURL(file);
+                    oFReader.onload = function (oFREvent) {
+                        document.getElementById('fotoCadastroImg').src = oFREvent.target.result;
+                        $('#fotoCadastroImg').show();
+                    };
+                }, 1000);
+            }
+        }
+    });
+}
+
+function fotoCadastroAtualizar(){
     $('#fotoCadastro').change(function(){
         var _campo = $(this);
 

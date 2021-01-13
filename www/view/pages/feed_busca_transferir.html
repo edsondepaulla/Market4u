@@ -1,0 +1,44 @@
+<div class="content_feed_transferir_layer">
+    <div class="search_content">
+        <div class="search_box_content">
+            <i class="mdi-action-search icon_search_in_list_follow"></i>
+            <input type="text" class="search_in_list_follow_" placeholder="{{PLACEHOLDER}}">
+        </div>
+    </div>
+    <div class="list_search_content">
+        <div class="content_inner_search" ng-if="FOLLOW.length > 0">
+            <div class="content_title_when_find"></div>
+            <ul class="list_reciver_content_search">
+                <li class="single_follow_searched" ng-repeat="item in FOLLOW">
+                    <div class="single_follow_searched_image" ng-click="Layers('feed-perfil', item.ID)">
+                        <img src="{{item.IMAGEM || default_image}}" alt="" onerror="angular.element(this).scope().defaultImage(this);">
+                    </div>
+                    <div class="single_follow_searched_info">
+                        <div class="info_content_single_follow" ng-click="Layers('feed-perfil', item.ID)">
+                            <span class="username_single_follow">{{item.USERNAME ? '@' + item.USERNAME : item.NOME}}</span>
+                        </div>
+                        <div class="transfer_icone" ng-if="!check_type" ng-click="Layers('feed-minha-carteira', item.ID)">
+                            <div class="content_button_transfer">
+                                <i class="mdi-editor-attach-money"></i>
+                            </div>
+                        </div>
+                        <div class="transfer_icone" ng-if="check_type" >
+                            <div class="content_button_transfer" data-type="seguir" data-status="follow" ng-click="manageStateFollow(item.ID, $event.currentTarget, false)"  ng-if="!item.RELACIONAMENTO">
+                                <i class="mdi-social-person-add"></i>
+                            </div>
+                            <div class="content_button_transfer is_relacionated" ng-click="manageStateFollow(item.ID, $event.currentTarget, true)" data-type="deixar_seguir" data-status="unfollow" ng-if="item.RELACIONAMENTO == 'S'">
+                                <i class="mdi-social-people"></i>
+                            </div>
+                            <div class="content_button_transfer is_relacionated" data-type="pendente" data-status="unfollow" ng-click="manageStateFollow(item.ID, $event.currentTarget, true)" ng-if="item.RELACIONAMENTO == 'P' || tem.RELACIONAMENTO == 'N'">
+                                <i class="mdi-social-person-outline"></i>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="single_follow_searched non_user_transfer_found">
+            <span>Nenhum usuário encontrado!</span>
+        </div>
+    </div>
+</div>

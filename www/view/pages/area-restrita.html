@@ -1,5 +1,17 @@
-<md-content class="scrollable-content" style="padding: 10px" scroll md-scroll-y>
-    Área restrita
+<md-content class="scrollable-content" style="padding: 10px; text-align: center" scroll md-scroll-y>
+    <div ng-if="usuario.RESTRITO">
+        Para usar <b>sistema market4u Web</b>, acesse <b>app.{{$root.DOMINIO}}</b> no seu <b>computador</b>.
 
-    <a ng-click="AcessoRestrito('/')">Acessar</a>
+        <br>
+        <br>Código multifator: <b>{{CODIGO}}</b>
+        <a ng-click="$root.clickEscanear('area-restrita')" id="acesso_rapido">Escanear código QR, acesso rápido!</a>
+
+        <br><br><br>
+        Para usar <b>sistema market4u via celular</b>
+        <br>clique no botão abaixo:
+        <br><a ng-click="AcessoRestrito('/')" id="acesso_via_celular">Acessar sistema</a>
+    </div>
+    <div ng-if="!usuario.RESTRITO">
+        <a ng-click="$root.clickEscanear('area-restrita')" id="acesso_rapido">Escanear código QR</a>
+    </div>
 </md-content>

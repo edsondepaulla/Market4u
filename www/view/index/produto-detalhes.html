@@ -1,0 +1,71 @@
+<div box="produto">
+    <div class="scrollable-content flex produto_detalhes" md-scroll-y>
+        <div ng-if="$root.QTDE_PRODUTOS[VALS.PROD_ID]&&(VALS.UNIDADE_MEDIDA=='U'||VALS.UNIDADE_MEDIDA=='COMBO')&& $root.LOCAL.ITEM.MAPS.PROXIMO" class="addRemoveQtdeProduto" unidade_medida="{{VALS.UNIDADE_MEDIDA}}">
+            <i ng-click="addRemoveQtdeProd(VALS, '+')" class="mdi mdi-content-add-circle"></i>
+            <span>{{$root.QTDE_PRODUTOS[VALS.PROD_ID]?$root.QTDE_PRODUTOS[VALS.PROD_ID]:0}}</span>
+            <i ng-click="addRemoveQtdeProd(VALS, '-')" class="mdi mdi-content-remove-circle"></i>
+        </div>
+
+        <div class="content_upper_single_product">
+            <div class="content_single_product_image">
+                <img data-src="{{VALS.IMAGEM}}" src="img/market4u.png" alt="">
+            </div>
+            <div class="content_title_single_product">
+                <div class="content_qtd_single_product">
+                    <div class="content_of_aviseme">
+                        <a class="aviseme_buttons" ng-if="VALS.INVENTARIO == 0" ng-click="addMeAvise(VALS.PROD_ID,$root.LOCAL.ITEM.ID,$root.PRODUTOS_COMPRAS.USUARIO)" id="me_avise">Me Avise</a>
+                    </div>
+                    <div class="content_middle_single_product" style="margin-right: auto;" ng-if="$root.LOCAL.ITEM.MAPS.PROXIMO && VALS.INVENTARIO !== 0">
+                        <div class="content_price_single_product">
+                            <label class="de" ng-if="VALS.DE_PRECO_FORMAT">{{VALS.DE_PRECO_FORMAT}}</label>
+                            <label>{{VALS.PRECO_FORMAT}}</label>
+                        </div>
+                    </div>
+                    <div class="content_all_unit" ng-if="VALS.INVENTARIO">
+                        <div class="box_content_qtd_single_product">
+                            <div class="content_value_single_product">
+                                <b>{{VALS.INVENTARIO}}</b>
+                            </div>
+                            <div class="content_unity_value_single_product">
+                                <span>{{VALS.INVENTARIO > 1 || VALS.INVENTARIO == 0  ? 'unidades' : 'unidade'}}</span>
+                            </div>
+                        </div>
+                        <div class="text_down_unit">
+                            <span><b>{{VALS.INVENTARIO > 1 || VALS.INVENTARIO == 0  ? 'estimadas' : 'estimada'}}</b></span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="content_middle_single_product" ng-if="$root.LOCAL.ITEM.MAPS.PROXIMO && VALS.INVENTARIO == 0">
+                <div class="content_price_single_product">
+                    <label class="de" ng-if="VALS.DE_PRECO_FORMAT">{{VALS.DE_PRECO_FORMAT}}</label>
+                    <label>{{VALS.PRECO_FORMAT}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="content_promotions" ng-if="VALS.PROMOCAO">
+            <div class="content_single_promotion_tag" ng-repeat="ITEM in VALS.PROMOCAO">
+                <span class="caller_promotion"><i class="mdi-editor-attach-money"></i></span>
+                <span ng-bind-html="ITEM">{{ITEM}}</span>
+            </div>
+        </div>
+        <div class="content_button_fixed">
+            <div class="buttons_place">
+
+                <a class="button_customize_gradient" ng-if="VALS.UNIDADE_MEDIDA!='KG'&& $root.LOCAL.ITEM.MAPS.PROXIMO" ng-click="addRemoveQtdeProd(VALS, '+')" id="comprar">COMPRAR</a>
+            </div>
+        </div>
+    </div>
+    <div class="modalAviseMeSended">
+        <div class="content_inner_modalAviseMeSended">
+            <div class="title_modalAviseMeSended">
+                <span><b>Seu pedido foi enviado.</b></span>
+            </div>
+            <div class="content_modalAviseMeSended">
+                <span>Assim que esse produto estiver disponível, você receberá uma notificação 😉</span>
+            </div>
+        </div>
+    </div>
+</div>

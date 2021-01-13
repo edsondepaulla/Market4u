@@ -1,13 +1,11 @@
-<script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/plugins/crypto-js.js"></script>
-
 <i mn-touch swipe-right="swipeRight()" ng-if="controller == 'Index'" class="btn_maps mdi mdi-action-view-headline" ng-click="menuOpen()"></i>
-<span swipe-right="swipeRight()" ng-if="controller == 'Index' && $root.QTDE_PUSH" ng-click="menuOpen()" id="qtde_push">{{$root.QTDE_PUSH}}</span>
+<span swipe-right="swipeRight()" ng-if="controller == 'Index' && ($root.QTDE_PUSH || $root.QTDE_SAC || $root.PESQUISA_ATIVA) " ng-click="menuOpen()" id="qtde_push">{{$root.QTDE_PUSH + $root.QTDE_SAC + $root.PESQUISA_ATIVA}}</span>
 <div id="top" ng-if="controller == 'Index'">
-    <div ng-if="usuario.MEUSALDO_ATIVADO" ng-click="location('#!/minha-carteira')" style="display: inline-block;">
-        Meu saldo
-        <b>{{usuario.MEUSALDO_FORMAT}}</b>
+    <div ng-if="usuario.MEUSALDO_ATIVADO" ng-click="Layers('feed-minha-carteira')" style="display: inline-block;">
+        <i class="mdi mdi-editor-attach-money"></i> Minha carteira
+        <b>{{usuario.MEUSALDO_FORMAT}} <i ng-if="$root.usuario.VOUCHER" style="font-weight: normal;font-size: 11px;"> + {{$root.usuario.VOUCHER_FORMAT}}</i></b>
     </div>
-    <div id="sem_saldo" ng-if="!usuario.MEUSALDO && usuario.MEUSALDO_ATIVADO" ng-click="location('#!/minha-carteira')">
+    <div id="sem_saldo" ng-if="!usuario.MEUSALDO && usuario.MEUSALDO_ATIVADO" ng-click="Layers('feed-minha-carteira')">
         Adicionar saldo <i class="mdi mdi-content-add-circle"></i>
     </div>
 </div>
@@ -16,8 +14,14 @@
         <i class="mdi mdi-navigation-chevron-left"></i>
     </a>
     <div class="textoTitulo" ng-bind-html="Titulo"></div>
+    <div class="to_meu_perf" ng-if="controller == 'FeedSocial'" ng-click="Layers('feed-perfil', usuario.ID)">
+        <img src="{{usuario.url_avatar }}" alt="" onerror="Factory.$rootScope.defaultImage(this);">
+        <div class="title_perfil_toolbar">
+           @{{usuario.USERNAME }}
+        </div>
+    </div>
 </div>
-<img ng-if="controller != 'Index'" ng-click="location('#!/')" src="img/logo.png" border="0">
+<img ng-if="controller != 'Index' && controller != 'FeedSocial'" ng-click="location('#!/')" src="img/logo.png" border="0">
 <div ng-click="$root.clickItem('busca_locais')" ng-if="controller == 'Index' && $root.LOCAL.TEXTO" id="local">
     <i class="mdi mdi-maps-place"></i> LOCAL
     <span>{{$root.LOCAL.TEXTO}}</span>

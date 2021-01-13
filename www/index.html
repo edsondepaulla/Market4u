@@ -99,23 +99,56 @@
     </script>
 
     <link onerror="semInternet()" href="https://fonts.googleapis.com/css?family=Montserrat%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2Cregular%2Citalic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;ver=5.3.2#038;subset=latin,latin-ext" rel="stylesheet" type="text/css">
-    <link onerror="semInternet()" href="https://m-dev4.market4u.com.br/Mobile/www/css/style-sistema.css" rel="stylesheet" type="text/css">
-    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/config.js"></script>
-    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/app.js"></script>
-    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/functions.js"></script>
-    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/main.js"></script>
-    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/modulos/location.js"></script>
-    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/modulos/index.js"></script>
-    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/modulos/login.js"></script>
-    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/modulos/bar-code-scanner.js"></script>
-    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/modulos/bluetooth.js"></script>
-    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/modulos/sac.js"></script>
-    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/modulos/chat.js"></script>
+
+    <script type="text/javascript">
+      var subdominio = 'm';
+      var ambiente = localStorage.getItem("ambiente") ? localStorage.getItem("ambiente") : 'prod';
+      if (ambiente != 'prod')
+        subdominio += '-' + ambiente;
+      var url = subdominio+'.market4u.com.br';
+
+      var s = document.createElement("link");
+      s.onerror = "semInternet()";
+      s.href = 'https://' + url + '/Mobile/www/css/style-sistema.css';
+      s.rel = "stylesheet";
+      s.type = "text/css";
+      $("head").append(s);
+
+      var itens = [
+        'config',
+        'app',
+        'functions',
+        'main',
+        'modulos/location',
+        'modulos/index',
+        'modulos/login',
+        'modulos/bar-code-scanner',
+        'modulos/bluetooth'
+      ];
+      var qtde_load = 0;
+      itens.forEach(function(item) {
+        var s = document.createElement("script");
+        s.onerror = function() {
+          semInternet();
+        }
+        s.onload = function() {
+          qtde_load++;
+          if(itens.length == qtde_load){
+            angular.element(function () {
+              angular.bootstrap(document, ['App']);
+            });
+          }
+        };
+        s.type = "text/javascript";
+        s.src = 'https://' + url + '/Mobile/www/js/' + item + '.js';
+        document.getElementsByTagName('head')[0].appendChild(s);
+      });
+    </script>
   </head>
-  <body addsaldo="{{!usuario.MEUSALDO && usuario.MEUSALDO_ATIVADO?1:0}}" device="{{device}}" new_iphone="{{new_iphone}}" controller="{{controller}}" ng-app="App">
+  <body addsaldo="{{!usuario.MEUSALDO && usuario.MEUSALDO_ATIVADO?1:0}}" device="{{device}}" new_iphone="{{new_iphone}}" controller="{{controller}}">
     <div id="carregando" style="display: none">
       <div>
-        <img src="img/loader.gif" border="0">
+        <img src="{{$root.BASE}}img/loader.gif" border="0">
         Carregando...
       </div>
     </div>
@@ -123,7 +156,7 @@
     <div mn-touch swipe-right="swipeRight()" ng-if="toolbar" id="toolbar" ng-include src="$root.BASE+'view/pages/toolbar.html'"></div>
 
     <div class="app" ng-controller="Main">
-      <a style="display: none" ng-if="usuario.WHATSAPP.ATIVO && $root.NO_WHATSAPP" id="whatsapp" ng-click="whatsapp()">
+      <a style="display: none" ng-if="usuario.WHATSAPP.ATIVO && $root.NO_WHATSAPP" id="whatsapp" ng-click="whatsapp(WHATSAPP.url)">
         <img src="img/whatsapp.png">
       </a>
 

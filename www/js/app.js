@@ -18,7 +18,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
     $mdThemingProvider.generateThemesOnDemand(true);
     $httpProvider.defaults.withCredentials = true;
 
-    var base = config.url_api[config.ambiente];
+    var base = config.url_api();
 
     $sceDelegateProvider.resourceUrlWhitelist([
         'self',
@@ -35,7 +35,16 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
         })
         .when("/area-restrita", {
             templateUrl: base + "Mobile/www/view/pages/area-restrita.html",
-            controller: 'AreaRestrita'
+            controller: 'AreaRestrita',
+            resolve: {
+                ReturnData: function ($route) {
+                    return Factory.ajax(
+                        {
+                            action: 'options/arearestrita'
+                        }
+                    );
+                }
+            }
         })
         .when("/index/:STEP", {
             templateUrl: base + "Mobile/www/view/index/index.html",
@@ -50,7 +59,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                                 $rootScope.location('#!/');
                             break;
                     }
-                    return;
+
                 }
             }
         })
@@ -67,7 +76,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                                 $rootScope.location('#!/');
                             break;
                     }
-                    return;
+
                 }
             }
         })
@@ -78,7 +87,7 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                 ReturnData: function ($route, $rootScope) {
                     if (parseInt(Login.getData().ID)) {
                         $rootScope.location('#!/');
-                        return;
+
                     } else
                         return Login.get('#!/cadastro');
                 }
@@ -119,16 +128,12 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
         })
         .when("/add-card-new", {
             templateUrl: base + "Mobile/www/view/conecte-se/addcard-new.html",
-            controller: 'AddCardNew'
-        })
-        .when("/minha-carteira", {
-            templateUrl: base + "Mobile/www/view/conecte-se/carteira.html",
-            controller: 'MinhaCarteira',
+            controller: 'AddCardNew',
             resolve: {
                 ReturnData: function ($route) {
                     return Factory.ajax(
                         {
-                            action: 'cadastro/minhacarteira'
+                            action: 'cadastro/addcard'
                         }
                     );
                 }
@@ -226,6 +231,22 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                 }
             }
         })
+        .when("/pedido-estorno/:ID", {
+            templateUrl: base + "Mobile/www/view/conecte-se/estorno-pedido.html",
+            controller: 'EstornoItensPedidoGet',
+            resolve: {
+                ReturnData: function ($route) {
+                    return Factory.ajax(
+                        {
+                            action: 'estorno/getitenspedido',
+                            data: {
+                                ID: $route.current.params.ID
+                            }
+                        }
+                    );
+                }
+            }
+        })
         .when("/notificacoes", {
             templateUrl: base + "Mobile/www/view/conecte-se/notificacoes.html",
             controller: 'NotificacoesLst',
@@ -259,6 +280,25 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             templateUrl: base + "Mobile/www/view/pages/suporte.html",
             controller: 'Suporte'
         })
+        .when("/pesquisa-satisfacao", {
+            templateUrl: base + "Mobile/www/view/pages/pesquisa-satisfacao.html",
+            controller: 'PesquisaSatisfacao',
+            resolve: {
+                ReturnData: async function ($route) {
+                    let pesquisa = await Factory.ajax(
+                        {
+                            action: 'pesquisa/getpesquisainfo'
+                        }
+                    );
+                    let respondidas = await Factory.ajax(
+                        {
+                            action: 'pesquisa/getpesquisasrespondidas',
+                        }
+                    );
+                    return {pesquisa, respondidas};
+                }
+            }
+        })
         .when("/sac", {
             templateUrl: base + "Mobile/www/view/pages/sac.html",
             controller: 'SacLst',
@@ -273,6 +313,50 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                         }
                     );
                 }
+            }
+        })
+        .when("/meu-social", {
+            templateUrl: base + "Mobile/www/view/pages/feed_social.html",
+            controller: 'FeedSocial',
+            resolve: {
+                ReturnData: function () {
+                    const feed = {
+                        follow: Factory.ajax(
+                            {
+                                action: 'redesocial/conexoes',
+                                data: {
+                                    limit: 15,
+                                    offset:0
+                                }
+                            }),
+                        activities: Factory.ajax(
+                            {
+                                action: 'redesocial/feed',
+                                data: {
+                                    limit: 30,
+                                    offset:0,
+                                    todos:true
+                                }
+                            }),
+                        requests: Factory.ajax(
+                            {
+                                action: 'redesocial/solicitacoespendentes',
+                                data: {
+                                    limit: 30,
+                                    offset:0,
+                                }
+                            }),
+                    }
+                    return feed;
+
+                }
+            }
+        })
+        .when("/meu-social/busca-transferir", {
+            templateUrl: base + "Mobile/www/view/pages/feed_busca_transferir.html",
+            controller: 'FeedTransferirSocial',
+            resolve: {
+                ReturnData: function () {}
             }
         })
         .when("/sac/:ID", {
@@ -310,11 +394,21 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
             resolve: {
                 ReturnData: function ($route) {
                     Factory.$rootScope.MenuBottom = 1;
+                    Factory.$rootScope.MenuSocial = false;
+                    Factory.$rootScope.MenuTop = true;
                     var get = 0;
                     switch ($route.current.params.SET) {
                         case 'BLUETOOTH':
                         case 'VENDA_BEBIDA_PROIBIDA':
                         case 'BEB_ALC':
+                        case 'BEB_ALC1':
+                        case 'BEB_ALC2':
+                        case 'BEB_ALC3':
+                        case 'BEB_ALC4':
+                        case 'BEB_ALC5':
+                        case 'BEB_ALC6':
+                        case 'BEB_ALC7':
+                        case 'BEB_ALC8':
                             if (!Page.active) {
                                 window.history.go(-1);
                                 return [];
@@ -322,6 +416,23 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                                 switch ($route.current.params.SET) {
                                     case 'BLUETOOTH':
                                     case 'BEB_ALC':
+                                    case 'BEB_ALC1':
+                                    case 'BEB_ALC2':
+                                    case 'BEB_ALC3':
+                                    case 'BEB_ALC4':
+                                    case 'BEB_ALC5':
+                                    case 'BEB_ALC6':
+                                    case 'BEB_ALC7':
+                                    case 'BEB_ALC8':
+                                        clearTimeout(Factory.timeout);
+                                        Factory.timeout = setTimeout(function () {
+                                            Factory.ajax(
+                                                {
+                                                    action: 'options/command',
+                                                    data: $route.current.params
+                                                }
+                                            );
+                                        }, 500);
                                         return {};
                                         break;
                                     default:
@@ -331,7 +442,19 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                             }
                             break;
                         default:
-                            get = 1;
+                            if($route.current.params.SET.indexOf('PORTA_') !== -1){
+                                clearTimeout(Factory.timeout);
+                                Factory.timeout = setTimeout(function () {
+                                    Factory.ajax(
+                                        {
+                                            action: 'options/command',
+                                            data: $route.current.params
+                                        }
+                                    );
+                                }, 500);
+                                return {};
+                            }else
+                                get = 1;
                             break;
                     }
                     if (get) {
@@ -345,12 +468,34 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                 }
             }
         })
+        .when("/checkin", {
+            templateUrl: base + "Mobile/www/view/checkin/checkin.html",
+            controller: 'Checkin',
+            resolve: {
+                ReturnData: function ($route) {
+                    return Factory.ajax(
+                        {
+                            action: 'checkin/index'
+                        }
+                    );
+                }
+            }
+        })
         .when("/ajuda", {
             templateUrl: base + "Mobile/www/view/ajuda/index.html",
             controller: 'Ajuda'
         })
         .when("/sem-internet", {
-            templateUrl: base + "Mobile/www/view/sem-internet/index.html",
+            template: '<div id="semInternet">\n' +
+                    '    <img width="90" src="img/erro_conexao.png"><br><br>\n' +
+                    '\n' +
+                    '    <h3 style="margin-top: 10px">\n' +
+                    '        Não existe conexão com a internet.<br>\n' +
+                    '        <br><a onclick="window.history.go(-1);" style="color: #224887; padding-top: 5px">Clique aqui e tente novamente</a>\n' +
+                    '    </h3>\n' +
+                    '\n' +
+                    '    <div id="wifi" ng-include src="$root.BASE+\'view/pages/wifi.html\'"></div>\n' +
+                    '</div>',
             controller: 'SemInternet'
         });
 });

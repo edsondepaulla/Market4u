@@ -7,7 +7,7 @@
         <li ng-repeat="item in LST">
             <img ng-if="item.IMG" src="{{item.IMG}}">
             <p>{{item.NAME}}</p>
-            <label>Crédito</label>
+            <label>{{item.TIPO_CC_VALUE}}</label>
             <span>{{item.TEXT}}</span>
             <i class="mdi mdi-action-highlight-remove" ng-click="remove(item.ID)"></i>
         </li>

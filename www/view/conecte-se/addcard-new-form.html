@@ -1,0 +1,50 @@
+<div ng-if="PG.TIPO=='CC/DEBITO'||PG.TIPO=='JCC'||PG.TIPO=='GNCC'">
+    <label class="margin_t_10" for="cardNumber"><b>Formas de pagamento</b></label>
+    <img style="display: inline;" src="img/bandeira_cc/mastercard.png"> <i>MasterCard</i><br>
+    <img style="display: inline;" src="img/bandeira_cc/visa.png"> <i>Visa</i><br>
+    <img style="display: inline;" src="img/bandeira_cc/elo.png"> <i>Elo</i><br>
+    <img style="display: inline;" src="img/bandeira_cc/amex.png"> <i>Amex</i><br>
+    <img style="display: inline;" src="img/bandeira_cc/hipercard.png"> <i>HiperCard</i>
+</div>
+
+<label class="margin_t_10" for="cardNumber">Número do cartão</label>
+<label class="box1" for="cardNumber">
+    <input type="text" tipo="{{PG.TIPO}}" id="cardNumber" ng-model="PG.cardNumber" placeholder="9999 9999 9999 9999" autocomplete="cc-number" />
+    <span class="msgValidator">Número do cartão inválido</span>
+    <script type="application/javascript">setTimeout(function(){mask('#cardNumber', ['9999 9999 9999 9999', '9999 9999 9999 9999999999999'], 19);}, 1000);</script>
+    <img id="imgBandeira" onerror="$(this).hide()" />
+</label>
+<input type="hidden" id="cardBandeira" />
+
+<div class="margin_t_10">
+    <div class="float-left">
+        <label for="expirationMonthYear">Validade</label>
+        <div>
+            <label for="expirationMonthYear" class="box1 float-left" style="width: 102px;">
+                <input maxlength="5" type="text" id="expirationMonthYear" ng-model="PG.expirationMonthYear" placeholder="mm/aa" autocomplete="cc-exp" />
+                <span class="msgValidator" style="width: 130px;">Validade inválido</span>
+                <script type="application/javascript">setTimeout(function(){mask('#expirationMonthYear', ['99/99']);}, 1000);</script>
+            </label>
+            <div class="clearBoth"></div>
+        </div>
+    </div>
+    <div class="float-right">
+        <label for="cvv">Cód. de segurança</label>
+        <label class="box1" for="cvv" style="width: 140px;">
+            <input type="password" id="cvv" ng-model="PG.cvv" placeholder="999" autocomplete="cc-csc" />
+        </label>
+    </div>
+    <div class="clearBoth"></div>
+</div>
+
+<label for="cardName" class="margin_t_10">Nome do titular</label>
+<label class="box1" for="cardName">
+    <input type="text" id="cardName" ng-model="PG.cardName" placeholder="Ex: JOÃO DA SILVA" autocomplete="cc-name" />
+</label>
+
+<label for="cardCpfCnpj" class="margin_t_10">CPF/CNPJ do titular</label>
+<label class="box1" for="cardCpfCnpj">
+    <input type="text" id="cardCpfCnpj" ng-model="PG.cardCpfCnpj" placeholder="Ex: 999.999.999-99" autocomplete="cc-cpf-cnpj" />
+    <span class="msgValidator">CPF/CNPJ do titular inválido</span>
+    <script type="application/javascript">setTimeout(function(){mask('#cardCpfCnpj', ['999.999.999-99', '99.999.999/9999-99'], 14);}, 1000);</script>
+</label>

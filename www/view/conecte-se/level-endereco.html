@@ -7,7 +7,7 @@
         <span class="msgValidator">CEP inválido</span>
     </label>
 
-    <div id="boxEnderecoCompleto" style="display: {{$root.usuario.ID?'block':'none'}}">
+    <div id="boxEnderecoCompleto" style="display: {{$root.usuario.POSTALCODE?'block':'none'}}">
         <label for="street" class="margin_t_10">Endereço<span class="campo_obg">*</span></label>
         <label class="box1" for="street">
             <input type="text" id="street" obg="1" placeholder="Insira o endereço" ng-model="$root.usuario.STREET" />

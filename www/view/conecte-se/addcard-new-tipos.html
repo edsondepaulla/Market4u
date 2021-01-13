@@ -1,0 +1,14 @@
+<li ng-repeat="TIPO in $root.TIPOS">
+    <label>
+        <input type="radio" name="TIPO" value="{{TIPO.VALUE}}" ng-model="PG.TIPO" />
+        {{TIPO.NOME}}
+    </label>
+
+    <div ng-if="TIPO.BANDEIRAS && PG.TIPO == TIPO.VALUE">
+        <b>Formas de pagamento</b>
+        <label ng-repeat="BAND in TIPO.BANDEIRAS" style="display: block;padding: 5px 0">
+            <input type="radio" name="cardBandeira" value="{{BAND.TIPO}}" ng-model="PG.cardBandeira" />
+            <img style="margin-left: 5px" width="25" src="{{$root.URL}}skin/default/images/bandeira_cc/{{BAND.TIPO}}.png"> {{BAND.VALUE}}
+        </label>
+    </div>
+</li>

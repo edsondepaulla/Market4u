@@ -1,0 +1,114 @@
+<div class="list_of_profile_content">
+    <div class="info_profile_content {{UserID == USER.ID ? 'is_my_profile':''}} ">
+        <div class="upper_profile"></div>
+        <div class="down_profile"></div>
+        <div class="image_limitless">
+            <img src="{{USER.IMAGEM}}" alt="" onerror="angular.element(this).scope().defaultImage(this);">
+        </div>
+        <div class="title_name_profile">
+            <span class="username_profile" ng-if="USER.USERNAME">@{{USER.USERNAME}}</span>
+            <span class="name_profile">{{USER.NOME}}</span>
+            <div class="actions_buttons_profile" ng-if="UserID != USER.ID">
+                <!-------------------------------------BOTOES PARA CADA ESTADO DO RELACIONAMENTO---------------------------->
+                <button class="button_follow follow_profile follow_states" ng-if="!USER.SEGUINDO" ng-click="flowOfFollowsManage($event.currentTarget)" data-followstate="seguir"><i class="mdi-social-person-add"></i>  Seguir</button>
+                <button class="button_follow followed_profile follow_states" ng-if="USER.SEGUINDO == 'S'" ng-click="flowOfFollowsManage($event.currentTarget)" data-followstate="seguindo">Seguindo</button>
+                <button class="button_follow followed_profile follow_states" ng-if="USER.SEGUINDO == 'N' || USER.SEGUINDO == 'P'" ng-click="flowOfFollowsManage($event.currentTarget)" data-followstate="pendente">Pendente</button>
+                <!-----------------------------------------------FIM--------------------------------------------------------->
+
+                <button class="button_follow transfer_profile" ng-click="Layers('feed-minha-carteira', USER.ID)"><i class="mdi-editor-attach-money"></i>  Transferir</button>
+            </div>
+        </div>
+        <div class="show_numbers_profiles {{UserID == USER.ID ? 'my_profile_show_follows':''}} {{!USER.USERNAME ? 'non_username_margin' : ''}}">
+            <div class="show_follows_count profile_seguindo" ng-click="Layers('feed-ver-todos', {type_:'follow', sub_type:'seguindo', perfil_id:USER.ID})">
+                <span class="number_show">{{USER.following}}</span>
+                <span class="text_show">Seguindo</span>
+            </div>
+            <div class="show_follows_count profile_seguidores" ng-click="Layers('feed-ver-todos', {type_:'follow', sub_type:'seguidores', perfil_id: USER.ID})">
+                <span class="number_show">{{USER.followers}}</span>
+                <span class="text_show">{{USER.followers  == 1 ? 'Seguidor' : 'Seguidores'}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="feed_content">
+        <div class="title_feed_content">
+            <span class="title_feed">Atividades</span>
+        </div>
+        <ul class="list_social feed all_social profile_feed" ng-if="(USER.PRIVACIDADE == 'PUBLICO' && (USER.TIPO_CONTA =='PUBLICO' || (USER.TIPO_CONTA =='PRIVADO' && USER.SEGUINDO =='S'))) || UserID == USER.ID">
+            <li class="single_feed" ng-if="FEED" ng-repeat="item in FEED"  data-feed="{{item.ID}}">
+                <div class="upper_single_feed">
+                    <div class="content_limit_circle feed">
+                        <div class="img_single_feed" ng-click="Layers('feed-perfil',item.CLIENTE_ID)">
+                            <img src="{{item.IMAGEM || default_image}}" onerror="angular.element(this).scope().defaultImage(this);">
+                        </div>
+                    </div>
+                    <div class="single_content_content_info" ng-if="item.TIPO == 'C'">
+                        <div class="name_feed" >
+                            <span ng-click="Layers('feed-perfil',item.CLIENTE_ID)"> {{UserID == item.CLIENTE_ID ? 'Você': '@'+ item.USERNAME}} </span>
+
+                            <div class="like_feed_button" ng-click="GiveLike($event.currentTarget)">
+                                <div class="show_likes_count {{item.CURTIDO == 1 ? 'liked_number':'' }}" ng-if="item.QTD_CURTIDAS > 0">{{item.QTD_CURTIDAS}}</div>
+                                <i class="mdi-action-favorite liked" ng-if="item.CURTIDO == 1"></i>
+                                <i class="mdi-action-favorite-outline no_like" ng-if="item.CURTIDO == 0"></i>
+                            </div>
+                        </div>
+                        <div class="info_feed">Comprou <span class="valor_info_feed" ng-if="UserID == item.CLIENTE_ID">R${{item.TOTAL.replace('.',',')}}</span> em <b>{{item.NOME_ABV}}</b></div>
+                    </div>
+                    <div class="single_content_content_info" ng-if="item.TIPO == 'D'">
+                        <div class="name_feed" ng-click="Layers('feed-perfil',item.CLIENTE_ID)">{{UserID == item.CLIENTE_ID ? 'Você': '@'+ item.USERNAME}}</div>
+                        <div class="info_feed">Depositou <span class="valor_info_feed reciver_transfer" ng-if="UserID == item.CLIENTE_ID">R${{item.TOTAL.replace('.',',')}}</span> na sua <b>carteira</b></div>
+                    </div>
+                    <div class="single_content_content_info" ng-if="item.TIPO == 'T'">
+                        <div class="transfer_title_with_like">
+                            <div class="name_feed_t" ng-click="Layers('feed-perfil', UserID == item.CLIENTE_DESTINO_ID ? item.CLIENTE_DESTINO_ID : item.CLIENTE_ID)" >{{UserID == item.CLIENTE_ID || UserID == item.CLIENTE_DESTINO_ID ? 'Você': '@'+ item.USERNAME}}</div>
+                            <div class="like_feed_button" ng-click="GiveLike($event.currentTarget)">
+                                <div class="show_likes_count {{item.CURTIDO == 1 ? 'liked_number':'' }}" ng-if="item.QTD_CURTIDAS > 0">{{item.QTD_CURTIDAS}}</div>
+                                <i class="mdi-action-favorite liked" ng-if="item.CURTIDO == 1"></i>
+                                <i class="mdi-action-favorite-outline no_like" ng-if="item.CURTIDO == 0"></i>
+                            </div>
+                        </div>
+                        <div class="info_feed info_t">
+                            <span ng-if="UserID == item.CLIENTE_DESTINO_ID" >recebeu de
+                                <span class="name_feed_t" ng-click="Layers('feed-perfil', item.CLIENTE_ID)">
+                                    <b>@{{item.USERNAME}}</b>
+                                </span>
+                                 <span ng-if="UserID == item.CLIENTE_DESTINO_ID" class="valor_info_feed valor_t {{UserID == item.CLIENTE_DESTINO_ID ? 'reciver_transfer' :'' }}"> R${{item.TOTAL.replace('.',',')}}</span>
+                            </span>
+                            <span ng-if="UserID != item.CLIENTE_DESTINO_ID" >transferiu para
+                                <span class="name_feed_t"  ng-click="Layers('feed-perfil', item.CLIENTE_DESTINO_ID)">
+                                    <b>@{{item.CLIENTE_DESTINO_USERNAME}}</b>
+                                </span>
+                                 <span ng-if="UserID == item.CLIENTE_ID" class="valor_info_feed valor_t {{UserID == item.CLIENTE_DESTINO_ID ? 'reciver_transfer' :'' }}"> R${{item.TOTAL.replace('.',',')}}</span>
+                            </span>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="bottom_info_content_feed">
+                    <i class="typeOfFeed mdi-action-lock-outline" ng-if="item.CLIENTE_TIPO_CONTA =='PRIVADO' || item.CLIENTE_PRIVACIDADE =='PRIVADO'"></i>
+                    <i class="typeOfFeed mdi-social-group" ng-if="item.CLIENTE_TIPO_CONTA =='PUBLICO' && item.CLIENTE_PRIVACIDADE =='PUBLICO'"></i>
+                    <span class="datahora_feed_info"> | {{item.DATAHORA}}</span>
+                    <span class="show_transactions_feed_id" ng-if="item.CLIENTE_ID == UserID || item.CLIENTE_DESTINO_ID == UserID" ng-click="Layers('historico-transacoes-detalhes', item.ID)">Recibo</span>
+                </div>
+            </li>
+            <li id="loader_feed_social" class="single_feed not_feed">
+                <img src="{{$root.BASE}}img/loader.gif" alt="">
+            </li>
+            <li ng-if="FEED == '' " class="single_feed not_feed">
+                <span>Nenhuma atividade encontrada</span>
+            </li>
+        </ul>
+        <div class="no_permitted_feed" ng-if="UserID != USER.ID && (USER.PRIVACIDADE == 'PRIVADO' || (USER.TIPO_CONTA =='PRIVADO' && USER.SEGUINDO !='S'))">
+            <div class="content_icon_no_permitted_feed">
+                <i class="mdi mdi-action-lock-outline"></i>
+            </div>
+            <div class="content_text_no_permitted_feed">
+                <span ng-if="USER.PRIVACIDADE =='PUBLICO' && USER.TIPO_CONTA =='PRIVADO'">Conta privada</span>
+                <span ng-if="USER.PRIVACIDADE =='PRIVADO'">Atividades privadas</span>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

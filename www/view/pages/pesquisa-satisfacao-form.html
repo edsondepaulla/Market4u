@@ -1,0 +1,24 @@
+<div class="form_selected_content">
+    <div class="fields_content" style="overflow: scroll;">
+        <div class="explain_obt {{pesquisa.PESQUISA_RESP ? 'separator_info_pesquisa_header' : ''}}">
+            <span ng-if="!pesquisa.PESQUISA_RESP" >Perguntas obrigatórias *</span>
+            <span ng-if="pesquisa.PESQUISA_RESP" class="pesquisa_respondida_show_info">Pesquisa respondida!</span>
+        </div>
+        <form action=""></form>
+        <div class="content_save_buttons_pesquisa">
+            <div class="single_button_pesquisa" ng-click="savePesquisa()">
+                <button class="button_grad">Enviar pesquisa</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal_show_error_pesquisa" ng-click="closeModalError()">
+    <div class="upper_modal_error_pesquisa">
+        <i class="mdi mdi-navigation-close"></i>
+    </div>
+    <div class="down_modal_error_pesquisa">
+        <span>Por favor preencha todos os campos obrigatórios!</span>
+    </div>
+</div>
+
+

@@ -1,0 +1,18 @@
+<md-content style="padding-bottom: 100px;" class="scrollable-content" scroll md-scroll-y>
+    <div class="list-group" ng-if="ABERTOS.length > 0">
+        <div ng-repeat="item in ABERTOS" ng-click="openKey(item.ID)"  id="senhaId"  class="card-checkin">
+            <div class="content_checkin" id="ng-repeat">
+                <div class="cont">
+                    <h4 class="h4-checkin" id="h4-checkin_{{item.ID}}">{{item.CONDOMINIO}}</h4>
+                    <h4 class="h4-endereco" id="h4-endereco_{{item.ID}}">{{ item.ENDERECO }}</h4>
+                    <h4 class="h4-endereco" id="h4-datahora_{{item.ID}}"><span>{{item.DATAHORA}} </span></h4>
+                    <h4 class="h4-senha" id="h4-senha_{{item.ID}}">{{item.SENHA_ENTRADA}}</h4>
+                </div>
+                <i class="mdi-content-send send" id="send_{{item.ID}}"></i>
+            </div>
+        </div>
+    </div>
+    <div class="item-checkin" ng-if="ABERTOS.length == 0">
+        <h4 class="h4-item">Não existem visitas cadastradas para o dia de hoje.</h4>
+    </div>
+</md-content>

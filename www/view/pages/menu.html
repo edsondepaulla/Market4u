@@ -8,7 +8,8 @@
         </div>
         <div ng-if="usuario.ID" ng-click="location('#!/cadastro')">
             <b>{{usuario.NOME}}</b>
-            <label>{{usuario.EMAIL}}</label>
+            <label style="color: #00CB00; font-weight: 500" ng-if="usuario.USERNAME">@{{usuario.USERNAME}}</label>
+            <label ng-if="!usuario.USERNAME">{{usuario.EMAIL}}</label>
             <a>Perfil</a>
         </div>
     </div>
@@ -20,18 +21,30 @@
                 Denuncie violência contra mulher
             </a>
         </li>
-        <li data-id="{{menu.id}}" class="{{controller == menu.controller?'active':''}}" ng-repeat="menu in MenuLeft" ng-if="usuario.ID || menu.logado">
-            <a ng-click="location(menu.url, menu.external, menu.pageStart?1:0)">
+        <li data-id="{{menu.id}}" class="{{controller == menu.controller?'active':''}} {{menu.has_pesquisa && $root.PESQUISA_ATIVA ? 'show_icon_pesquisa':''}}" ng-repeat="menu in MenuLeft" ng-if="usuario.ID || menu.logado">
+            <a ng-click="menu.minhacarteira?Layers('feed-minha-carteira'):location(menu.url, menu.external, menu.pageStart?1:0)">
                 <i ng-if="menu.icon" class="mdi {{menu.icon}}"></i>
                 {{menu.titulo}}
                 <span ng-if="menu.id=='PUSH' && $root.QTDE_PUSH">{{$root.QTDE_PUSH}}</span>
+                <span ng-if="menu.id=='SAC' && $root.QTDE_SAC">{{$root.QTDE_SAC}}</span>
             </a>
         </li>
         <li class="{{controller == 'AreaRestrita'?'active':''}}" ng-if="usuario.RESTRITO">
-            <a ng-click="swipeLeft();AcessoRestrito('/');">
+            <a ng-click="swipeLeft();location('#!/area-restrita');">
                 <i class="mdi mdi-action-lock"></i>
                 Área restrita
             </a>
+        </li>
+        <li class="{{controller == 'AreaRestrita'?'active':''}}" ng-if="!usuario.RESTRITO">
+            <a ng-click="swipeLeft();$root.clickEscanear('area-restrita');">
+                <i class="mdi mdi-action-lock"></i>
+                Área restrita
+            </a>
+        </li>
+
+        <li ng-if="usuario.CHECKIN == 1" ng-click="location('#!/checkin')">
+                <i class="mdi-maps-directions-bus"></i>
+                Checkin
         </li>
         <li ng-if="usuario.ID">
             <a style="color: #e94847" ng-click="logout()">
@@ -41,7 +54,11 @@
         </li>
     </ul>
     <div id="bottom">
-        <img ng-if="usuario.FACEBOOK.ATIVO" ng-click="AppBrowser(usuario.FACEBOOK)" id="icon_facebook" width="25" src="img/icon-facebook.png" border="0">
-        <img ng-if="usuario.INSTAGRAM.ATIVO" ng-click="AppBrowser(usuario.INSTAGRAM)" id="icon_instagram" style="float: left" width="37" src="img/icon-instagram.png" border="0">
+        <img ng-if="usuario.FACEBOOK.ATIVO" ng-click="AppBrowser(usuario.FACEBOOK)" src="{{$root.BASE}}img/facebook.png" border="0">
+        <img ng-if="usuario.INSTAGRAM.ATIVO" ng-click="AppBrowser(usuario.INSTAGRAM)" src="{{$root.BASE}}img/instagram.png" border="0">
+        <img ng-if="usuario.TIKTOK.ATIVO" ng-click="AppBrowser(usuario.TIKTOK)" src="{{$root.BASE}}img/tiktok.png" border="0">
+        <img ng-if="usuario.YOUTUBE.ATIVO" ng-click="AppBrowser(usuario.YOUTUBE)" src="{{$root.BASE}}img/youtube.png" border="0">
+        <img ng-if="usuario.LINKEDIN.ATIVO" ng-click="AppBrowser(usuario.LINKEDIN)" src="{{$root.BASE}}img/linkedin.png" border="0">
+        <img ng-if="usuario.TWITTER.ATIVO" ng-click="AppBrowser(usuario.TWITTER)" src="{{$root.BASE}}img/twitter.png" border="0">
     </div>
 </div>

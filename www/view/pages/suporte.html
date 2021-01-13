@@ -1,8 +1,20 @@
 <ul>
-    <li ng-if="usuario.WHATSAPP.ATIVO" ng-click="whatsapp()">
-        <p style="font-weight: 500; margin: 0; padding: 0 5px">Precisa de ajuda ou teve algum problema? Não se preocupe, toque abaixo e fale com alguem do nosso suporte :)</p>
-        <img src="img/whatsapp.png">
-        <a>Contatar suporte</a>
+    <li ng-click="location('#!/sac')" ng-if="$root.usuario.ID == 475 || $root.usuario.ID == 1906 " >
+        <p style="font-weight: 500; margin: 0; padding: 0 5px">Precisa de ajuda ou teve algum problema? Não se preocupe, toque abaixo e fale com alguém do nosso suporte  😀</p>
+        <div id="panelIdSac">
+            <i id="supIconSac1" class="mdi-communication-chat"></i>
+
+            <i id="supIconSac2" class="mdi-communication-chat"></i>
+        </div>
+        <a>Contatar suporte <span id="valueMessageSac" ng-if="$root.QTDE_SAC">{{$root.QTDE_SAC}}</span></a>
+    </li>
+    <li ng-if="$root.usuario.WHATSAPP.ATIVO" ng-click="whatsapp($root.usuario.WHATSAPP.url)">
+        <div class="upper_whats_suporte">
+            <img src="img/whatsapp.png">
+        </div>
+        <div class="down_whats_suporte">
+            <span class="title_suporte_whatsapp">Contatar suporte</span>
+        </div>
     </li>
     <li ng-if="$root.usuario.FAQ" ng-click="location('#!/faq')">
         <i class="mdi mdi-communication-live-help"></i>
@@ -15,6 +27,20 @@
     <li ng-click="AppBrowser($root.usuario.POLITICA_DE_PRIVACIDADE)">
         <i class="mdi mdi-action-list"></i>
         <a>Termos de Privacidade</a>
+    </li>
+    <li ng-click="AppBrowser($root.usuario.COD_DEFESA_CONSUMIDOR)">
+        <i class="mdi mdi-action-list"></i>
+        <a>Código de Defesa do Consumidor</a>
+    </li>
+    <li id="redes_sociais">
+        <img ng-if="usuario.FACEBOOK.ATIVO" ng-click="AppBrowser(usuario.FACEBOOK)" src="{{$root.BASE}}img/facebook.png" border="0">
+        <img ng-if="usuario.INSTAGRAM.ATIVO" ng-click="AppBrowser(usuario.INSTAGRAM)" src="{{$root.BASE}}img/instagram.png" border="0">
+        <img ng-if="usuario.TIKTOK.ATIVO" ng-click="AppBrowser(usuario.TIKTOK)" src="{{$root.BASE}}img/tiktok.png" border="0">
+        <img ng-if="usuario.YOUTUBE.ATIVO" ng-click="AppBrowser(usuario.YOUTUBE)" src="{{$root.BASE}}img/youtube.png" border="0">
+        <img ng-if="usuario.LINKEDIN.ATIVO" ng-click="AppBrowser(usuario.LINKEDIN)" src="{{$root.BASE}}img/linkedin.png" border="0">
+        <img ng-if="usuario.TWITTER.ATIVO" ng-click="AppBrowser(usuario.TWITTER)" src="{{$root.BASE}}img/twitter.png" border="0">
+        <br>
+        <a>Segue a gente nas <b>redes sociais</b> 😀</a>
     </li>
     <li style="border-bottom: 0;" id="wifi" ng-include src="$root.BASE+'view/pages/wifi.html'"></li>
     <li style="position: fixed; left: 0; bottom: 0; width: 100%">

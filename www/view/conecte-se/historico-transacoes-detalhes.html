@@ -1,67 +1,154 @@
-<md-content style="padding: 15px 0 110px;" class="scrollable-content" scroll md-scroll-y>
-    <i style="font-size: 26px;vertical-align: sub;" class="mdi mdi-editor-attach-money"></i> <span ng-bind-html="REG.TIPO_DESCRICAO"></span>
-    <div class="clearBoth"></div>
+<div class="historico_content">
+    <h4 ng-if = "!REG.ESTORNO && REG.TEMPOESTORNO && REG.TIPO == 'C' && false" id = "avisoCC" ng-include src = "$root.BASE+'view/conecte-se/aviso-estorno.html'"></h4>
 
-    <a ng-if="REG.TIPO=='CA'" id="fechar_compra" ng-click="fecharCompra()"><i class="mdi mdi-editor-attach-money"></i> Finalizar compra</a>
-
-    <div class="float-left margin-r-15" ng-if="REG.TOTAL">
-        <br><b>{{REG.TIPO=='C'?'TOTAL':'VALOR'}}</b><br>
-        {{REG.TOTAL}}
+    <div class="local_content" ng-if = "REG.M_ID && !REG.CLIENTE_DESTINO">
+        <div class="upper_local">
+            <span class="mdi-communication-location-on icon_local"></span>
+        </div>
+        <div class="down_local">
+            <span class="title_local">
+                {{REG.M_NOME ? REG.M_NOME : 'market4u'}}
+            </span>
+            <span class="address_local">
+                {{REG.M_ENDERECO}}, {{REG.M_NUMERO}} - {{REG.M_BAIRRO}} - {{REG.M_ESTADO}}
+            </span>
+        </div>
     </div>
 
-    <div class="float-left margin-r-15" ng-if="REG.DESCONTO">
-        <br><b>DESCONTO</b><br>
-        {{REG.DESCONTO}}
+    <div class="date_historico_content {{REG.TIPO=='CA' ? 'spaced_flex' : ''}}">
+        <span ng-if = "REG.TIPO=='CA'" class="finalizar_historico_compra" ng-click = "fecharCompra()">
+            <i class="mdi mdi-editor-attach-money"></i>
+            Finalizar compra
+        </span>
+        <div ng-if = "REG.DESTRAVA_NOVO && REG.DESTRAVAR_APOS_PG">
+            <a class="finalizar_historico_compra dest" ng-click="clickMenu('destravar_novo', {TIPO: REG.DESTRAVA_NOVO, NOME: 'KIBON'})"><i class="mdi mdi-action-lock-open"></i> Destravar</a>
+        </div>
     </div>
 
-    <div class="float-left" ng-if="REG.SUB_TOTAL">
-        <br><b>SUB-TOTAL</b><br>
-        {{REG.SUB_TOTAL}}
-    </div>
-    <div class="clearBoth"></div>
+    <div class="aviso_historico {{ !REG.M_ID && REG.CLIENTE_DESTINO ? 'non_margin' : ''}}">
+        <div class="content_aviso_historico"  ng-if = "REG.ESTORNO == 'SE' || REG.ESTORNO == 'SA' || REG.ESTORNO == 'SR'">
+            <span ng-if = "REG.ESTORNO == 'SE'" > Estorno em análise!</span>
+            <span ng-if = "REG.ESTORNO == 'SA'" > Estorno aceito!</span>
+            <span ng-if = "REG.ESTORNO == 'SR'" > Estorno rejeitado!</span>
+        </div>
 
-    <div style="z-index: 9999" ng-if="REG.QR_CODE" ng-click="$root.AppBrowser(REG.QR_CODE)">
-        <br><b>Nota fiscal</b><br>
-        <a style="text-decoration: underline; padding: 0 10px; margin: 0; display: block; color: #00CB00; font-size: 18px">Clique aqui</a>
-    </div>
+        <div ng-if = "REG.SAC">
+            <div>SAC</div>
+            <div><a ng-click = "redirecionarParaSac()" style = "color: #00CB00;">#{{ REG.SAC }}</a></div>
+        </div>
 
-    <div ng-if="REG.M_ID">
-        <br><b>LOCAL</b><br>
-        {{REG.M_NOME?REG.M_NOME+' - ':''}}{{REG.M_ENDERECO}}, {{REG.M_NUMERO}} - {{REG.M_BAIRRO}} - {{REG.M_ESTADO}}
-    </div>
+        <div ng-if = "!REG.ESTORNO && REG.TEMPOESTORNO && REG.TIPO == 'C' && false" class="content_of_solicitar_estorno">
+            <div  style="margin-left: 15px;">
+                <a style="background-color: #00CB00; color: #fff;" class = "btn btn-success" id = "btn-estornar" ng-click = "estornar()">
+                    Solicitar Estorno
+                </a>
+            </div>
+        </div>
 
-    <div ng-if="REG.PRODUTOS.length" id="Produtos">
-        <br><b>PRODUTOS</b><br>
-        <ul>
-            <li ng-repeat="PROD in REG.PRODUTOS">
-                <div class="info">
-                    <h4>{{PROD.NOME}}</h4>
-                    <span>{{PROD.CAT_DESCRICAO}}</span>
-                    <span ng-if="PROD.QTDE != NULL">Quantidade <b>{{PROD.QTDE}}</b></span>
-                    <label class="total_de" ng-if="PROD.DE_PRECO_FORMAT"><span class="v">{{PROD.DE_PRECO_FORMAT}}</span></label>
-                    <label><span class="v">{{PROD.PRECO_FORMAT}}</span></label>
-                    <p ng-if="PROD.DESCRICAO != NULL">{{PROD.DESCRICAO}}</p>
-                </div>
-                <div class="clearBoth"></div>
-            </li>
-        </ul>
-    </div>
+        <div class="content_title_sac" ng-if = "REG.SAC">
+            <div class="upper_title_sac">
+                <div>SAC</div>
+            </div>
+            <div>
+                <a ng-click = "redirecionarParaSac()" style = "color: #00CB00;">#{{ REG.SAC }}</a>
+            </div>
+        </div>
 
-    <div ng-if="REG.FP.length">
-        <br><b>FORMAS DE PAGAMENTO</b><br>
-        <i ng-repeat="fp in REG.FP">
-            {{fp.NOME}} ({{fp.VALOR}}{{fp.DESCRICAO}}) <br>
-            <a style="text-decoration: underline" ng-click="AppBrowser(fp.open_browser)" ng-if="REG.AG_PG&&fp.open_browser">Pagar agora</a>
-        </i>
-    </div>
+        <div class="info_transaction_content">
+            <span ng-bind-html="REG.TIPO_DESCRICAO"></span>
+            <span class="nota_fiscal_historico" ng-if = "REG.QR_CODE" ng-click = "$root.AppBrowser(REG.QR_CODE)">Nota fiscal</span>
+        </div>
 
-    <div ng-if="REG.P_ID">
-        <br><b>PRODUTO</b><br>
-        {{REG.P_UPC_CODE}} - {{REG.P_NOME}}
-    </div>
+        <div class="products_content" ng-if="REG.PRODUTOS.length">
+            <ul class="list_of_products">
+                <li ng-repeat="PROD in REG.PRODUTOS" class="single_product_historico">
+                    <div class="upper_single_product">
+                        <div class="qtd_product_historico">
+                            <span>{{PROD.QTDE}}</span>
+                        </div>
+                        <div class="nome_product_historico">
+                            <span>{{PROD.NOME}}</span>
+                        </div>
+                    </div>
+                    <div class="price_of_historico">
+                        <label class="total_de" ng-if="PROD.DE_PRECO_FORMAT"><span class="v">{{PROD.DE_PRECO_FORMAT}}</span></label>
+                        <label><span class="v">{{PROD.PRECO_FORMAT}}</span></label>
+                        <p ng-if="PROD.DESCRICAO != NULL">{{PROD.DESCRICAO}}</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
 
-    <div>
-        <br><b>DATA</b><br>
-        {{REG.DATAHORA}}
+        <div  class="content_transfer_historico" ng-if = "REG.CLIENTE_DESTINO">
+            <div class="desntinatario_transfer_historico">
+                <b>{{REG.TRANS_DE_PARA}}:</b>
+            </div>
+            <div class="nome_destinatario_transfer_historico">
+                 <span class="username_transfer_historico">
+                    @{{REG.TRANS_USERNAME}}
+                </span> -
+                <span class="nome_completo_transfer_historico">
+                    {{REG.TRANS_NOME}}
+                </span>
+            </div>
+        </div>
+
+        <div class = "float-left margin-r-15" ng-if = "REG.VOUCHER && REG.TIPO=='D'">
+            <br><b>VOUCHER</b><br>
+            {{REG.VOUCHER}}
+        </div>
+
+        <div class="total_content">
+            <div class="total_historico total_repre" ng-if = "REG.TOTAL">
+                <span><b>{{REG.TIPO == 'C' ? 'Total' : 'Valor'}}:</b></span>
+                <span ng-if="!REG.CLIENTE_DESTINO">{{REG.TOTAL}}</span>
+                <span ng-if="REG.CLIENTE_DESTINO" class="{{REG.TRANS_DE_PARA == 'De' ? 'recebido_transfer_historico' : 'enviado_transfer_historico'}}">{{REG.TOTAL}}</span>
+            </div>
+            <div class="discount_historico total_repre" ng-if = "REG.DESCONTO && REG.DESCONTO !='0.00'">
+                <span><b>Desconto:</b></span>
+                <span>{{REG.DESCONTO}}</span>
+            </div>
+            <div class="sub_total_historico total_repre" ng-if = "REG.SUB_TOTAL">
+                <span><b>Sub total:</b></span>
+                <span>{{REG.SUB_TOTAL}}</span>
+            </div>
+        </div>
+
+
+        <div class="separator_historico" ng-if="REG.FP.length"></div>
+
+        <div class="content_formar_pagamento_historico" ng-if="REG.FP.length">
+            <div class="title_forma_pagamento_princiapal">
+                <span>Formas de pagamento</span>
+            </div>
+            <ul class="list_forma_pagamento_historico">
+                <li class="single_forma_pagamento_historico" ng-repeat="fp in REG.FP">
+                    <div class="upper_single_forma_pagamento_historico">
+                        <span class="name_single_forma_pagamento_historico">{{fp.NOME}}</span>
+                        <span class="valor_single_forma_pagamento_historico">{{fp.VALOR}}</span>
+                    </div>
+                    <div class="down_single_forma_pagamento_historico">
+                        <span class="descricao_single_forma_pagamento_historico"> {{fp.DESCRICAO}} </span>
+                        <div ng-bind-html="fp.DESCRICAO_EXTRA"></div>
+                        <a style="text-decoration: underline" ng-click="AppBrowser(fp.open_browser)" ng-if="REG.AG_PG&&fp.open_browser">Pagar agora</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="content_of_date">
+            <span class="date_transition_historico">{{REG.DATAHORA}}</span>
+        </div>
+        <div ng-if = "REG.P_ID">
+            <br><b>PRODUTO</b><br>
+            {{REG.P_UPC_CODE}} - {{REG.P_NOME}}
+        </div>
+
+        <div id="modal_aviso_qrcode" ng-if="$root.AVISO_QRCODE && REG.TIPO=='CA'">
+            <div>
+                <img src="{{$root.BASE}}img/aviso_qrcode.jpg" border="0">
+                <h4 ng-if="$root.LOCAL.ITEM.QRCODE_PG_DATA">A partir do dia <b>{{$root.LOCAL.ITEM.QRCODE_PG_DATA}}</b> será obrigatório o uso do QR Code!</h4>
+                <a ng-click="$root.ok_qrcode()">CIENTE</a>
+            </div>
+        </div>
     </div>
-</md-content>
+</div>

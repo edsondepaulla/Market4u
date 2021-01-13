@@ -20,10 +20,14 @@
             <br><b>Código Promocional</b>.
             <br><br>
         </div>
-        Segue a gente nas <b>redes sociais</b>, sempre compartilhamos Códigos. :)
-        <div style="margin-top: 10px">
-            <img ng-if="usuario.FACEBOOK.ATIVO" ng-click="AppBrowser(usuario.FACEBOOK)" width="32" style="margin-right: 20px;" src="img/icon-facebook.png" border="0">
-            <img ng-if="usuario.INSTAGRAM.ATIVO" ng-click="AppBrowser(usuario.INSTAGRAM)" width="50" src="img/icon-instagram.png" border="0">
+        Segue a gente nas <b>redes sociais</b>, sempre compartilhamos Códigos. 😀
+        <div style="margin-top: 10px" id="redes_sociais">
+            <img ng-if="usuario.FACEBOOK.ATIVO" ng-click="AppBrowser(usuario.FACEBOOK)" src="{{$root.BASE}}img/facebook.png" border="0">
+            <img ng-if="usuario.INSTAGRAM.ATIVO" ng-click="AppBrowser(usuario.INSTAGRAM)" src="{{$root.BASE}}img/instagram.png" border="0">
+            <img ng-if="usuario.TIKTOK.ATIVO" ng-click="AppBrowser(usuario.TIKTOK)" src="{{$root.BASE}}img/tiktok.png" border="0">
+            <img ng-if="usuario.YOUTUBE.ATIVO" ng-click="AppBrowser(usuario.YOUTUBE)" src="{{$root.BASE}}img/youtube.png" border="0">
+            <img ng-if="usuario.LINKEDIN.ATIVO" ng-click="AppBrowser(usuario.LINKEDIN)" src="{{$root.BASE}}img/linkedin.png" border="0">
+            <img ng-if="usuario.TWITTER.ATIVO" ng-click="AppBrowser(usuario.TWITTER)" src="{{$root.BASE}}img/twitter.png" border="0">
         </div>
     </h4>
 </md-content>

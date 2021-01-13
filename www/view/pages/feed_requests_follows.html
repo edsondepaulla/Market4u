@@ -1,0 +1,30 @@
+<div class="content_all_social_feed_style">
+    <div class="content_all_request">
+        <div class="close_content_all_follow">
+        </div>
+        <ul class="list_all_request">
+            <!--        <li class="single_all_request" ng-if="REQUESTS" ng-repeat="item in REQUESTS" >-->
+            <li class="single_all_request"  ng-if="PENDING_REQUESTS" ng-repeat="item in PENDING_REQUESTS">
+                <div class="upper_content_request_single">
+                    <div class="content_image_request_single">
+                        <img src="{{item.IMAGEM || default_image}}" alt=""  onerror="angular.element(this).scope().defaultImage(this);">
+                    </div>
+                    <div class="info_profile_request_single" ng-click="Layers('feed-perfil', item.SEGUIDOR_ID)">
+                        <div class="username_single_request_single">
+                            <span>@{{item.SEGUIDOR_USERNAME}}</span>
+                        </div>
+                        <div class="name_single_request_single">
+                            <span>{{item.SEGUIDOR_NOME}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom_content_request_single">
+                    <div class="button_area_request_single">
+                        <button class="button_of_request accept_request_request_single" ng-click="responseRequest('S',item.ID, $event.currentTarget)">Aceitar</button>
+                        <button class="button_of_request deny_request_request_single" ng-click="responseRequest('N',item.ID, $event.currentTarget)">Recusar</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

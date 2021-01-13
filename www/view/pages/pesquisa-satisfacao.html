@@ -1,0 +1,68 @@
+<div class="pesquisa_content">
+    <div class="content_responder_pesquisa" ng-if="pesquisa != ''" ng-click="Layers('pesquisa-satisfacao-form', {ID:pesquisa.PESQUISA_ID})">
+        <div class="single_responder_pesquisa">
+            <div class="upper_responder_pesquisa">
+                <div class="title_single_responder_pesquisa">
+                    <span>{{pesquisa.PESQUISA_TITULO}}</span>
+                </div>
+            </div>
+            <div class="sub_title_show_qtd_perguntas">
+                <span><span class="number_of_perguntas">{{pesquisa.PERGUNTA_QTDE}}</span>  {{pesquisa.PERGUNTA_QTDE == 1 ? 'pergunta' : 'perguntas'}}</span>
+            </div>
+            <div class="down_single_responder_pesquisa ">
+                <div class="description_of_single_responder_pesquisa spacing_lateral">
+                    <span ng-bind-html="pesquisa.PESQUISA_DESCRICAO" >{{pesquisa.PESQUISA_DESCRICAO}}</span>
+                </div>
+                <div class="has_voucher spacing_lateral" ng-if="pesquisa.VOUCHER_TEXT != ''">
+                    <b>*</b>
+                    <span ng-bind-html="pesquisa.VOUCHER_TEXT">{{pesquisa.VOUCHER_TEXT}}</span>
+                </div>
+                <div class="button_single_responder_pesquisa" >
+                    <button class="button_customize_gradient button_pesquisa_grad">Responder pesquisa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="no_pesquisas_found" ng-if="pesquisa == ''">
+        <span>Nenhuma pesquisa ativa no momento!</span>
+    </div>
+    <div class="respondidas_content">
+        <div class="text_respondidas_title">
+            <span>Pesquisas respondidas</span>
+        </div>
+        <ul class="content_list_respondidas" ng-if="respondidas != ''">
+            <li class="single_respondida" ng-repeat="item in respondidas"  >
+                <div class="upper_single_respondida" ng-click="openAnsweredSearch($event.currentTarget)">
+                    <div class="single_respondida_title">
+                        <span>{{item.PESQUISA_TITULO}}</span>
+                    </div>
+                    <div class="icon_drop_info_pesquisa_respondida">
+                        <i class="mdi mdi-navigation-chevron-left"></i>
+                    </div>
+                </div>
+                <div class="down_single_respondidas">
+                    <div class="description_single_respondidas">
+                        <span ng-bind-html="item.PESQUISA_DESCRICAO">{{item.PESQUISA_DESCRICAO}}</span>
+                    </div>
+                    <div class="has_voucher historico_has_voucher" ng-if="item.VOUCHER_TEXT != ''">
+                        <div class="upper_text_voucher">
+                            <div class="circle_icon_voucher">
+                                <i class="mdi-maps-local-offer"></i>
+                                <div class="text_voucher">
+                                    <span ng-bind-html="item.VOUCHER_TEXT">{{item.VOUCHER_TEXT}}</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="down_text_respondidas" ng-click="Layers('pesquisa-satisfacao-form', {ID:item.PESQUISA_ID})">
+                        <span class="ver_minhas_respostas">Ver minhas respostas</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="no_respondidas" ng-if="respondidas == ''">
+            <span>Você ainda não respondeu nenhuma pesquisa!</span>
+        </div>
+    </div>
+</div>

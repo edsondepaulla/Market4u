@@ -1,5 +1,5 @@
 <form class="form" id="formCadastroCodigo" onsubmit="return false;" method="post">
-    <label style="text-align: center">Uma mensagem com um código de verificação foi enviada para <br><b>{{$root.usuario.ENVIADO_PARA.MSG}}</b><i ng-if="$root.usuario.ENVIADO_PARA.TIPO == 'EMAIL'"><br>(Verifique sua caixa de SPAM)</i>.</label>
+    <label style="text-align: center">Uma mensagem com um código de verificação foi enviada para <br><b>{{$root.usuario.ENVIADO_PARA.MSG}}</b><i ng-if="$root.usuario.ENVIADO_PARA.TIPO == 'EMAIL'"><br>(Verifique sua caixa de SPAM)</i></label>
 
     <a ng-if="$root.usuario.ENVIADO_PARA.CODIGO" ng-click="reenviarCodSms($root.usuario.ENVIADO_PARA)">Não recebeu um código de verificação? <br>{{$root.usuario.ENVIADO_PARA.TIPO == 'EMAIL'?'Enviar':'Reenviar'}} código para SMS</a>
 
@@ -7,6 +7,11 @@
     <label for="codigo" class="box1 margin_t_10" id="boxCodigo">
         <input id="codigo" placeholder="Insira o código recebido" type="number" ng-model="$root.usuario.CODIGO" />
     </label>
+    <script type="application/javascript">
+        setTimeout(function() {
+            mask('#codigo', ['999999']);
+        }, 1000);
+    </script>
 
     <label for="senha" ng-if="$root.usuario.ESQUECEU_SENHA" class="margin_t_10">Nova senha</label>
     <label for="senha" ng-if="$root.usuario.ESQUECEU_SENHA" class="box1">

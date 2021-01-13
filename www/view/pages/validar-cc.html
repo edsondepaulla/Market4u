@@ -1,0 +1,25 @@
+<div style="padding: 10px">
+    <h4>
+        Ao iniciar a verificação, vamos fazer uma pequena cobrança no seu cartão de crédito <b>(final {{ULTIMOS_DIGITOS}})</b> de um valor entre R$0,50 e R$10,00. Em seguida iremos te perguntar qual foi o valor cobrado. <b>Após confirmar o valor, o cartão será verificado e a cobrança será estornada.</b>
+    </h4>
+
+    <ul>
+        <li ng-if="!VERIFICAR">
+            <button ng-click="iniciarVerificacao()">Iniciar verificação</button>
+        </li>
+        <li ng-if="VERIFICAR">
+            <div onclick="$('#cod_verificar_cc').focus()">
+                <label for="cod_verificar_cc">Valor</label>
+                <input id="cod_verificar_cc" placeholder="0,00" type="text">
+            </div>
+            <script type="application/javascript">
+                mask('#cod_verificar_cc', ['9,99']);
+            </script>
+            <button ng-click="verificar()">Verificar</button>
+        </li>
+    </ul>
+
+    <h4 style="margin-top: 15px">
+        Caso você não tenha acesso à sua fatura no momento, confirme o valor assim que puder e retorne a essa tela para informá-lo.
+    </h4>
+</div>
