@@ -2,7 +2,7 @@
 <widget id="br.com.mobile.market4u" version="1.0.29" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>market4u</name>
     <description>
-        Seu mercado sem sair de casa
+        No seu tempo, do seu jeito
     </description>
     <content src="index.html#!/" />
     <access origin="*" />
@@ -31,7 +31,7 @@
     <preference name="target-device" value="handset" />
     <preference name="phonegap-version" value="cli-9.0.0" />
     <preference name="ios-version" value="cli-10.0.0" />
-    <preference name="SwiftVersion" value="3.0" />
+    <preference name="SwiftVersion" value="4.0" />
     <preference name="android-build-tool" value="gradle" />
     <platform name="android">
         <allow-intent href="market:*" />
@@ -39,7 +39,6 @@
         <icon density="mdpi" src="res/android/icon48.png" />
         <icon density="hdpi" src="res/android/icon72.png" />
         <icon density="xhdpi" src="res/android/icon96.png" />
-        <icon density="xxhdpi" src="res/android/icon96.png" />
         <icon density="xxhdpi" src="res/android/icon144.png" />
         <icon density="xxxhdpi" src="res/android/icon196.png" />
         <preference name="android-minSdkVersion" value="23" />
@@ -50,7 +49,7 @@
         <splash density="port-xhdpi" src="res/screen/android/720.png" />
         <resource-file src="google-services.json" target="app/google-services.json" />
     </platform>
-    <!--<platform name="ios">
+    <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <icon height="16" src="res/ios/16.png" width="16" />
@@ -114,19 +113,18 @@
         <edit-config target="NSBluetoothAlwaysUsageDescription" file="*-Info.plist" mode="merge">
             <string>Permissões de acesso</string>
         </edit-config>
-    </platform>-->
-    <engine name="ios" spec="^5.1.1" />
+    </platform>
+    <engine name="ios" spec="^5.0.1" />
     <engine name="android" spec="~8.0.0" />
     <plugin name="cordova-plugin-ios-non-exempt-encryption" />
 
-    <plugin name="phonegap-plugin-push" spec="^2.2.0">
+    <plugin name="phonegap-plugin-push" spec="2.2.3"><!--ANDROID-->
+    <!--<plugin name="phonegap-plugin-push" spec="2.3.0">--><!--IOS-->
         <variable name="FCM_VERSION" value="15.0.0" />
-    </plugin> <!--Android-->
-    <!--<plugin name="cordova-push-notifications" />--> <!--IOS-->
+    </plugin>
 
     <plugin name="cordova-plugin-keyboard" spec="^1.1.5" />
     <plugin name="cordova-plugin-splashscreen" />
-    <plugin name="cordova-plugin-device" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <plugin name="cordova-plugin-request-location-accuracy" spec="*" />
     <plugin name="cordova.plugins.diagnostic" spec="*" />
@@ -137,13 +135,11 @@
     <plugin name="cordova-plugin-safariviewcontroller" spec="~1.6.0" />
     <plugin name="cordova-plugin-geolocation" />
     <plugin name="cordova-plugin-dialogs" spec="^2.0.1" />
-
-    <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.3" /> <!--Android-->
-
+    <plugin name="cordova-plugin-local-notification" spec="0.9.0-beta.3" />
     <plugin name="phonegap-plugin-barcodescanner" />
     <plugin name="cordova-plugin-bluetooth-status"/>
     <plugin name="cordova-plugin-ble-central"/>
-    <plugin name="cordova-plugin-customurlscheme" spec="5.0.1">
+    <plugin name="cordova-plugin-customurlscheme" spec="5.0.0">
         <param name="URL_SCHEME" value="market4uapp" />
     </plugin>
 </widget>
